@@ -2,6 +2,7 @@
 # http://code.google.com/p/wkhtmltopdf/
 
 require 'logger'
+require 'digest/md5'
 
 class WickedPdf
   attr_accessor :exe_path, :log_file, :logger
@@ -19,7 +20,8 @@ class WickedPdf
 
     logger.info "\n\n-- wkhtmltopdf command --"
 
-    tmp_file = "tmp/wkhtmltopdf-#{rand(42)}.html"
+    # Hack?
+    tmp_file = "tmp/wkhtmltopdf-#{Digest::MD5.hexdigest(Time.now.to_i.to_s)}.html"
     File.open(tmp_file, "w") { |f| f.write(string) }
     path = "#{path + ' ' + tmp_file + ' -'}"
 
