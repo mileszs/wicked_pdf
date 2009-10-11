@@ -3,12 +3,14 @@
 
 require 'logger'
 require 'digest/md5'
+require 'tempfile'
 
 class WickedPdf
   attr_accessor :exe_path, :log_file, :logger
 
-  def initialize
-    @exe_path = `which wkhtmltopdf`.chomp
+  def initialize(wkhtmltopdf_binary = nil)
+    @exe_path = wkhtmltopdf_binary 
+    @exe_path ||= `which wkhtmltopdf`.chomp
     @log_file = "#{RAILS_ROOT}/log/wkhtmltopdf.log"
     @logger   = RAILS_DEFAULT_LOGGER
   end
@@ -19,17 +21,16 @@ class WickedPdf
     path << ' -q'
 
     logger.info "\n\n-- wkhtmltopdf command --"
-
-    # Hack?
-    tmp_file = "tmp/wkhtmltopdf-#{Digest::MD5.hexdigest(Time.now.to_i.to_s)}.html"
-    File.open(tmp_file, "w") { |f| f.write(string) }
-    path = "#{path + ' ' + tmp_file + ' -'}"
+    tmp_file = Tempfile.new('wicked_pdf', 'tmp')
+    tmp_file.write(string)
+    tmp_file.close
+    path = path + ' ' + tmp_file.path + ' -'
+    tmp_file.unlink
 
     logger.info path
     logger.info ''
 
     pdf = `#{path}`
-    File.delete(tmp_file)
     pdf
   end
 end

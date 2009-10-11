@@ -20,8 +20,9 @@ Next:
           format.html
           format.pdf do
             render :pdf => "file_name", 
-                   :template => "things/show.pdf.erb", 
-                   :layout => "pdf.html"
+                   :template => "things/show.pdf.erb", # OPTIONAL
+                   :layout => "pdf.html", # OPTIONAL
+                   :wkhtmltopdf => '/usr/local/bin/wkhtmltopdf' # OPTIONAL, path to binary
           end
         end
       end
