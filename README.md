@@ -6,6 +6,7 @@ Wicked PDF uses the shell utility [wkhtmltopdf](http://code.google.com/p/wkhtmlt
 
 This sollution (with TmpFile) may (will?) not work, if you're using ruby 1.8.6. Use 1.8.7 instead.
 
+
 ### Installation
 
 First, be sure to install [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/).
