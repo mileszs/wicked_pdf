@@ -4,6 +4,8 @@
 
 Wicked PDF uses the shell utility [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) to serve a PDF file to a user from HTML.  In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, and let Wicked take care of the hard stuff.
 
+This sollution (with TmpFile) may (will?) not work, if you're using ruby 1.8.6. Use 1.8.7 instead.
+
 ### Installation
 
 First, be sure to install [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/).
