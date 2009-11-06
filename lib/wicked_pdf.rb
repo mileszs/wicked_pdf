@@ -25,12 +25,12 @@ class WickedPdf
     tmp_file.write(string)
     tmp_file.close
     path = path + ' ' + tmp_file.path + ' -'
-    tmp_file.unlink
 
     logger.info path
     logger.info ''
 
     pdf = `#{path}`
+    tmp_file.unlink
     pdf
   end
 end
