@@ -7,10 +7,12 @@ Wicked PDF uses the shell utility [wkhtmltopdf](http://code.google.com/p/wkhtmlt
 ### Installation
 
 First, be sure to install [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/).
+Note that versions before 0.9.0 [have problems](http://code.google.com/p/wkhtmltopdf/issues/detail?id=82&q=vodnik) on some machines with reading/writing to streams.
+This plugin relies on streams to communicate with wkhtmltopdf.
 
 Next:
 
-    script/plugin install git://github.com/mileszs/wicked_pdf.git
+    script/plugin install git://github.com/jcrisp/wicked_pdf.git
 
 ### Usage
 
