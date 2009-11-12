@@ -1,0 +1,1472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>
+      /Library/Ruby/Gems/1.8/gems/rcov-0.8.1.2.0/lib/rcov.rb - C0 code coverage
+      information
+    </title>
+    <style type='text/css'>
+      body { background-color: rgb(240, 240, 245); }
+    </style>
+    <style type='text/css'>
+      span.cross-ref-title { font-size: 140%; } span.cross-ref a {
+      text-decoration: none; } span.cross-ref { background-color:#f3f7fa;
+      border: 1px dashed #333; margin: 1em; padding: 0.5em; overflow: hidden; }
+      a.crossref-toggle { text-decoration: none; } span.marked0 {
+      background-color: rgb(185, 210, 200); display: block; } span.marked1 {
+      background-color: rgb(190, 215, 205); display: block; } span.inferred0 {
+      background-color: rgb(175, 200, 200); display: block; } span.inferred1 {
+      background-color: rgb(180, 205, 205); display: block; } span.uncovered0 {
+      background-color: rgb(225, 110, 110); display: block; } span.uncovered1 {
+      background-color: rgb(235, 120, 120); display: block; } span.overview {
+      border-bottom: 8px solid black; } div.overview { border-bottom: 8px solid
+      black; } body { font-family: verdana, arial, helvetica; } div.footer {
+      font-size: 68%; margin-top: 1.5em; } h1, h2, h3, h4, h5, h6 {
+      margin-bottom: 0.5em; } h5 { margin-top: 0.5em; } .hidden { display: none;
+      } div.separator { height: 10px; } /* Commented out for better readability,
+      esp. on IE */ /* table tr td, table tr th { font-size: 68%; } td.value
+      table tr td { font-size: 11px; } */ table.percent_graph { height: 12px;
+      border: #808080 1px solid; empty-cells: show; } table.percent_graph
+      td.covered { height: 10px; background: #00f000; } table.percent_graph
+      td.uncovered { height: 10px; background: #e00000; } table.percent_graph
+      td.NA { height: 10px; background: #eaeaea; } table.report {
+      border-collapse: collapse; width: 100%; } table.report td.heading {
+      background: #dcecff; border: #d0d0d0 1px solid; font-weight: bold;
+      text-align: center; } table.report td.heading:hover { background: #c0ffc0;
+      } table.report td.text { border: #d0d0d0 1px solid; } table.report
+      td.value, table.report td.lines_total, table.report td.lines_code {
+      text-align: right; border: #d0d0d0 1px solid; } table.report tr.light {
+      background-color: rgb(240, 240, 245); } table.report tr.dark {
+      background-color: rgb(230, 230, 235); } 
+    </style>
+    <script type='text/javascript'>
+       // <![CDATA[ function toggleCode( id ) { if ( document.getElementById )
+      elem = document.getElementById( id ); else if ( document.all ) elem =
+      eval( "document.all." + id ); else return false; elemStyle = elem.style;
+      if ( elemStyle.display != "block" ) { elemStyle.display = "block" } else {
+      elemStyle.display = "none" } return true; } // Make cross-references
+      hidden by default document.writeln( "<style
+      type=\"text/css\">span.cross-ref { display: none }</style>" ) // ]]> 
+    </script>
+    <style type='text/css'>
+      span.run0 { background-color: rgb(178, 204, 255); display: block; }
+      span.run1 { background-color: rgb(178, 206, 255); display: block; }
+      span.run2 { background-color: rgb(178, 209, 255); display: block; }
+      span.run3 { background-color: rgb(178, 211, 255); display: block; }
+      span.run4 { background-color: rgb(178, 214, 255); display: block; }
+      span.run5 { background-color: rgb(178, 218, 255); display: block; }
+      span.run6 { background-color: rgb(178, 220, 255); display: block; }
+      span.run7 { background-color: rgb(178, 223, 255); display: block; }
+      span.run8 { background-color: rgb(178, 225, 255); display: block; }
+      span.run9 { background-color: rgb(178, 228, 255); display: block; }
+      span.run10 { background-color: rgb(178, 232, 255); display: block; }
+      span.run11 { background-color: rgb(178, 234, 255); display: block; }
+      span.run12 { background-color: rgb(178, 237, 255); display: block; }
+      span.run13 { background-color: rgb(178, 239, 255); display: block; }
+      span.run14 { background-color: rgb(178, 242, 255); display: block; }
+      span.run15 { background-color: rgb(178, 246, 255); display: block; }
+      span.run16 { background-color: rgb(178, 248, 255); display: block; }
+      span.run17 { background-color: rgb(178, 251, 255); display: block; }
+      span.run18 { background-color: rgb(178, 253, 255); display: block; }
+      span.run19 { background-color: rgb(178, 255, 253); display: block; }
+      span.run20 { background-color: rgb(178, 255, 249); display: block; }
+      span.run21 { background-color: rgb(178, 255, 247); display: block; }
+      span.run22 { background-color: rgb(178, 255, 244); display: block; }
+      span.run23 { background-color: rgb(178, 255, 242); display: block; }
+      span.run24 { background-color: rgb(178, 255, 239); display: block; }
+      span.run25 { background-color: rgb(178, 255, 235); display: block; }
+      span.run26 { background-color: rgb(178, 255, 233); display: block; }
+      span.run27 { background-color: rgb(178, 255, 230); display: block; }
+      span.run28 { background-color: rgb(178, 255, 228); display: block; }
+      span.run29 { background-color: rgb(178, 255, 225); display: block; }
+      span.run30 { background-color: rgb(178, 255, 221); display: block; }
+      span.run31 { background-color: rgb(178, 255, 219); display: block; }
+      span.run32 { background-color: rgb(178, 255, 216); display: block; }
+      span.run33 { background-color: rgb(178, 255, 214); display: block; }
+      span.run34 { background-color: rgb(178, 255, 211); display: block; }
+      span.run35 { background-color: rgb(178, 255, 207); display: block; }
+      span.run36 { background-color: rgb(178, 255, 205); display: block; }
+      span.run37 { background-color: rgb(178, 255, 202); display: block; }
+      span.run38 { background-color: rgb(178, 255, 200); display: block; }
+      span.run39 { background-color: rgb(178, 255, 197); display: block; }
+      span.run40 { background-color: rgb(178, 255, 193); display: block; }
+      span.run41 { background-color: rgb(178, 255, 191); display: block; }
+      span.run42 { background-color: rgb(178, 255, 188); display: block; }
+      span.run43 { background-color: rgb(178, 255, 186); display: block; }
+      span.run44 { background-color: rgb(178, 255, 183); display: block; }
+      span.run45 { background-color: rgb(178, 255, 179); display: block; }
+      span.run46 { background-color: rgb(179, 255, 178); display: block; }
+      span.run47 { background-color: rgb(182, 255, 178); display: block; }
+      span.run48 { background-color: rgb(184, 255, 178); display: block; }
+      span.run49 { background-color: rgb(187, 255, 178); display: block; }
+      span.run50 { background-color: rgb(191, 255, 178); display: block; }
+      span.run51 { background-color: rgb(193, 255, 178); display: block; }
+      span.run52 { background-color: rgb(196, 255, 178); display: block; }
+      span.run53 { background-color: rgb(198, 255, 178); display: block; }
+      span.run54 { background-color: rgb(201, 255, 178); display: block; }
+      span.run55 { background-color: rgb(205, 255, 178); display: block; }
+      span.run56 { background-color: rgb(207, 255, 178); display: block; }
+      span.run57 { background-color: rgb(210, 255, 178); display: block; }
+      span.run58 { background-color: rgb(212, 255, 178); display: block; }
+      span.run59 { background-color: rgb(215, 255, 178); display: block; }
+      span.run60 { background-color: rgb(219, 255, 178); display: block; }
+      span.run61 { background-color: rgb(221, 255, 178); display: block; }
+      span.run62 { background-color: rgb(224, 255, 178); display: block; }
+      span.run63 { background-color: rgb(226, 255, 178); display: block; }
+      span.run64 { background-color: rgb(229, 255, 178); display: block; }
+      span.run65 { background-color: rgb(233, 255, 178); display: block; }
+      span.run66 { background-color: rgb(235, 255, 178); display: block; }
+      span.run67 { background-color: rgb(238, 255, 178); display: block; }
+      span.run68 { background-color: rgb(240, 255, 178); display: block; }
+      span.run69 { background-color: rgb(243, 255, 178); display: block; }
+      span.run70 { background-color: rgb(247, 255, 178); display: block; }
+      span.run71 { background-color: rgb(249, 255, 178); display: block; }
+      span.run72 { background-color: rgb(252, 255, 178); display: block; }
+      span.run73 { background-color: rgb(255, 255, 178); display: block; }
+      span.run74 { background-color: rgb(255, 252, 178); display: block; }
+      span.run75 { background-color: rgb(255, 248, 178); display: block; }
+      span.run76 { background-color: rgb(255, 246, 178); display: block; }
+      span.run77 { background-color: rgb(255, 243, 178); display: block; }
+      span.run78 { background-color: rgb(255, 240, 178); display: block; }
+      span.run79 { background-color: rgb(255, 238, 178); display: block; }
+      span.run80 { background-color: rgb(255, 234, 178); display: block; }
+      span.run81 { background-color: rgb(255, 232, 178); display: block; }
+      span.run82 { background-color: rgb(255, 229, 178); display: block; }
+      span.run83 { background-color: rgb(255, 226, 178); display: block; }
+      span.run84 { background-color: rgb(255, 224, 178); display: block; }
+      span.run85 { background-color: rgb(255, 220, 178); display: block; }
+      span.run86 { background-color: rgb(255, 218, 178); display: block; }
+      span.run87 { background-color: rgb(255, 215, 178); display: block; }
+      span.run88 { background-color: rgb(255, 212, 178); display: block; }
+      span.run89 { background-color: rgb(255, 210, 178); display: block; }
+      span.run90 { background-color: rgb(255, 206, 178); display: block; }
+      span.run91 { background-color: rgb(255, 204, 178); display: block; }
+      span.run92 { background-color: rgb(255, 201, 178); display: block; }
+      span.run93 { background-color: rgb(255, 198, 178); display: block; }
+      span.run94 { background-color: rgb(255, 196, 178); display: block; }
+      span.run95 { background-color: rgb(255, 192, 178); display: block; }
+      span.run96 { background-color: rgb(255, 189, 178); display: block; }
+      span.run97 { background-color: rgb(255, 187, 178); display: block; }
+      span.run98 { background-color: rgb(255, 184, 178); display: block; }
+      span.run99 { background-color: rgb(255, 182, 178); display: block; }
+      span.run100 { background-color: rgb(255, 178, 178); display: block; } 
+    </style>
+  </head>
+  <body>
+    <h3>
+      C0 code coverage information
+    </h3>
+    <p>
+      Generated on Thu Nov 12 11:27:50 +1100 2009 with 
+      <a href='http://eigenclass.org/hiki/rcov'>
+        rcov 0.8.1.2
+      </a>
+    </p>
+    <hr />
+    <pre><span class='marked0'>Code reported as executed by Ruby looks like
+    this... </span><span class='marked1'>and this: this line is also marked as
+    covered. </span><span class='inferred0'>Lines considered as run by rcov, but
+    not reported by Ruby, look like this, </span><span class='inferred1'>and
+    this: these lines were inferred by rcov (using simple heuristics).
+    </span><span class='uncovered0'>Finally, here&apos;s a line marked as not
+    executed. </span></pre> 
+    <table class='report'> <thead> <tr> <td class='heading'> Name </td> <td
+    class='heading'> Total lines </td> <td class='heading'> Lines of code </td>
+    <td class='heading'> Total coverage </td> <td class='heading'> Code coverage
+    </td> </tr> </thead> <tbody> <tr class='light'> <td> <a
+    href='-Library-Ruby-Gems-1_8-gems-rcov-0_8_1_2_0-lib-rcov_rb.html'>
+    /Library/Ruby/Gems/1.8/gems/rcov-0.8.1.2.0/lib/rcov.rb </a> </td> <td
+    class='lines_total'> <tt> 988 </tt> </td> <td class='lines_code'> <tt> 602
+    </tt> </td> <td> <table cellspacing='0' align='right' cellpadding='0'> <tr>
+    <td> <tt class='coverage_total'> 3.2% </tt> &nbsp; </td> <td> <table
+    class='percent_graph' cellspacing='0' cellpadding='0' width='100'> <tr> <td
+    class='covered' width='3' /> <td class='uncovered' width='97' /> </tr>
+    </table> </td> </tr> </table> </td> <td> <table cellspacing='0'
+    align='right' cellpadding='0'> <tr> <td> <tt class='coverage_code'> 2.7%
+    </tt> &nbsp; </td> <td> <table class='percent_graph' cellspacing='0'
+    cellpadding='0' width='100'> <tr> <td class='covered' width='3' /> <td
+    class='uncovered' width='97' /> </tr> </table> </td> </tr> </table> </td>
+    </tr> </tbody> </table><pre><span class="uncovered1"><a name="line1"></a> 1
+    # rcov Copyright (c) 2004-2006 Mauricio Fernandez &lt;mfp@acm.org&gt;
+    </span><span class="uncovered0"><a name="line2"></a> 2 # </span><span
+    class="uncovered1"><a name="line3"></a> 3 # See LEGAL and LICENSE for
+    licensing information. </span><span class="uncovered0"><a name="line4"></a>
+    4 </span><span class="uncovered1"><a name="line5"></a> 5 # NOTE: if you're
+    reading this in the XHTML code coverage report generated by </span><span
+    class="uncovered0"><a name="line6"></a> 6 # rcov, you'll notice that only
+    code inside methods is reported as covered, </span><span
+    class="uncovered1"><a name="line7"></a> 7 # very much like what happens when
+    you run it with --test-unit-only. </span><span class="uncovered0"><a
+    name="line8"></a> 8 # This is due to the fact that we're running rcov on
+    itself: the code below is </span><span class="uncovered1"><a
+    name="line9"></a> 9 # already loaded before coverage tracing is activated,
+    so only code inside </span><span class="uncovered0"><a name="line10"></a> 10
+    # methods is actually executed under rcov's inspection. </span><span
+    class="uncovered1"><a name="line11"></a> 11 </span><span
+    class="uncovered0"><a name="line12"></a> 12 require 'rcov/version'
+    </span><span class="uncovered1"><a name="line13"></a> 13 </span><span
+    class="uncovered0"><a name="line14"></a> 14 SCRIPT_LINES__ = {} unless
+    defined? SCRIPT_LINES__ </span><span class="uncovered1"><a
+    name="line15"></a> 15 </span><span class="uncovered0"><a name="line16"></a>
+    16 module Rcov </span><span class="uncovered1"><a name="line17"></a> 17
+    </span><span class="uncovered0"><a name="line18"></a> 18 #
+    Rcov::CoverageInfo is but a wrapper for an array, with some additional
+    </span><span class="uncovered1"><a name="line19"></a> 19 # checks. It is
+    returned by FileStatistics#coverage. </span><span class="uncovered0"><a
+    name="line20"></a> 20 class CoverageInfo </span><span class="uncovered1"><a
+    name="line21"></a> 21 def initialize(coverage_array) </span><span
+    class="uncovered0"><a name="line22"></a> 22 @cover = coverage_array.clone
+    </span><span class="uncovered1"><a name="line23"></a> 23 end </span><span
+    class="uncovered0"><a name="line24"></a> 24 </span><span
+    class="uncovered1"><a name="line25"></a> 25 # Return the coverage status for
+    the requested line. There are four possible </span><span
+    class="uncovered0"><a name="line26"></a> 26 # return values: </span><span
+    class="uncovered1"><a name="line27"></a> 27 # * nil if there's no
+    information for the requested line (i.e. it doesn't exist) </span><span
+    class="uncovered0"><a name="line28"></a> 28 # * true if the line was
+    reported by Ruby as executed </span><span class="uncovered1"><a
+    name="line29"></a> 29 # * :inferred if rcov inferred it was executed,
+    despite not being reported </span><span class="uncovered0"><a
+    name="line30"></a> 30 # by Ruby. </span><span class="uncovered1"><a
+    name="line31"></a> 31 # * false otherwise, i.e. if it was not reported by
+    Ruby and rcov's </span><span class="uncovered0"><a name="line32"></a> 32 #
+    heuristics indicated that it was not executed </span><span
+    class="uncovered1"><a name="line33"></a> 33 def [](line) </span><span
+    class="uncovered0"><a name="line34"></a> 34 @cover[line] </span><span
+    class="uncovered1"><a name="line35"></a> 35 end </span><span
+    class="uncovered0"><a name="line36"></a> 36 </span><span
+    class="uncovered1"><a name="line37"></a> 37 def []=(line, val) # :nodoc:
+    </span><span class="uncovered0"><a name="line38"></a> 38 unless [true,
+    false, :inferred].include? val </span><span class="uncovered1"><a
+    name="line39"></a> 39 raise RuntimeError, &quot;What does #{val} mean?&quot;
+    </span><span class="uncovered0"><a name="line40"></a> 40 end </span><span
+    class="uncovered1"><a name="line41"></a> 41 return if line &lt; 0 || line
+    &gt;= @cover.size </span><span class="uncovered0"><a name="line42"></a> 42
+    @cover[line] = val </span><span class="uncovered1"><a name="line43"></a> 43
+    end </span><span class="uncovered0"><a name="line44"></a> 44 </span><span
+    class="uncovered1"><a name="line45"></a> 45 # Return an Array holding the
+    code coverage information. </span><span class="uncovered0"><a
+    name="line46"></a> 46 def to_a </span><span class="uncovered1"><a
+    name="line47"></a> 47 @cover.clone </span><span class="uncovered0"><a
+    name="line48"></a> 48 end </span><span class="uncovered1"><a
+    name="line49"></a> 49 </span><span class="uncovered0"><a name="line50"></a>
+    50 def method_missing(meth, *a, &amp;b) # :nodoc: </span><span
+    class="uncovered1"><a name="line51"></a> 51 @cover.send(meth, *a, &amp;b)
+    </span><span class="uncovered0"><a name="line52"></a> 52 end </span><span
+    class="uncovered1"><a name="line53"></a> 53 end </span><span
+    class="uncovered0"><a name="line54"></a> 54 </span><span
+    class="uncovered1"><a name="line55"></a> 55 # A FileStatistics object
+    associates a filename to: </span><span class="uncovered0"><a
+    name="line56"></a> 56 # 1. its source code </span><span
+    class="uncovered1"><a name="line57"></a> 57 # 2. the per-line coverage
+    information after correction using rcov's heuristics </span><span
+    class="uncovered0"><a name="line58"></a> 58 # 3. the per-line execution
+    counts </span><span class="uncovered1"><a name="line59"></a> 59 #
+    </span><span class="uncovered0"><a name="line60"></a> 60 # A FileStatistics
+    object can be therefore be built given the filename, the </span><span
+    class="uncovered1"><a name="line61"></a> 61 # associated source code, and an
+    array holding execution counts (i.e. how many </span><span
+    class="uncovered0"><a name="line62"></a> 62 # times each line has been
+    executed). </span><span class="uncovered1"><a name="line63"></a> 63 #
+    </span><span class="uncovered0"><a name="line64"></a> 64 # FileStatistics is
+    relatively intelligent: it handles normal comments, </span><span
+    class="uncovered1"><a name="line65"></a> 65 #
+    &lt;tt&gt;=begin/=end&lt;/tt&gt;, heredocs, many multiline-expressions... It
+    uses a </span><span class="uncovered0"><a name="line66"></a> 66 # number of
+    heuristics to determine what is code and what is a comment, and to
+    </span><span class="uncovered1"><a name="line67"></a> 67 # refine the
+    initial (incomplete) coverage information. </span><span
+    class="uncovered0"><a name="line68"></a> 68 # </span><span
+    class="uncovered1"><a name="line69"></a> 69 # Basic usage is as follows:
+    </span><span class="uncovered0"><a name="line70"></a> 70 # sf =
+    FileStatistics.new(&quot;foo.rb&quot;, [&quot;puts 1&quot;, &quot;if true
+    &amp;&amp;&quot;, &quot; false&quot;, </span><span class="uncovered1"><a
+    name="line71"></a> 71 # &quot;puts 2&quot;, &quot;end&quot;], [1, 1, 0, 0,
+    0]) </span><span class="uncovered0"><a name="line72"></a> 72 # sf.num_lines
+    # =&gt; 5 </span><span class="uncovered1"><a name="line73"></a> 73 #
+    sf.num_code_lines # =&gt; 5 </span><span class="uncovered0"><a
+    name="line74"></a> 74 # sf.coverage[2] # =&gt; true </span><span
+    class="uncovered1"><a name="line75"></a> 75 # sf.coverage[3] # =&gt;
+    :inferred </span><span class="uncovered0"><a name="line76"></a> 76 #
+    sf.code_coverage # =&gt; 0.6 </span><span class="uncovered1"><a
+    name="line77"></a> 77 # </span><span class="uncovered0"><a
+    name="line78"></a> 78 # The array of strings representing the source code
+    and the array of execution </span><span class="uncovered1"><a
+    name="line79"></a> 79 # counts would normally be obtained from a
+    Rcov::CodeCoverageAnalyzer. </span><span class="uncovered0"><a
+    name="line80"></a> 80 class FileStatistics </span><span
+    class="uncovered1"><a name="line81"></a> 81 attr_reader :name, :lines,
+    :coverage, :counts </span><span class="uncovered0"><a name="line82"></a> 82
+    def initialize(name, lines, counts, comments_run_by_default = false)
+    </span><span class="uncovered1"><a name="line83"></a> 83 @name = name
+    </span><span class="uncovered0"><a name="line84"></a> 84 @lines = lines
+    </span><span class="uncovered1"><a name="line85"></a> 85 initial_coverage =
+    counts.map{|x| (x || 0) &gt; 0 ? true : false } </span><span
+    class="uncovered0"><a name="line86"></a> 86 @coverage = CoverageInfo.new
+    initial_coverage </span><span class="uncovered1"><a name="line87"></a> 87
+    @counts = counts </span><span class="uncovered0"><a name="line88"></a> 88
+    @is_begin_comment = nil </span><span class="uncovered1"><a
+    name="line89"></a> 89 # points to the line defining the heredoc identifier
+    </span><span class="uncovered0"><a name="line90"></a> 90 # but only if it
+    was marked (we don't care otherwise) </span><span class="uncovered1"><a
+    name="line91"></a> 91 @heredoc_start = Array.new(lines.size, false)
+    </span><span class="uncovered0"><a name="line92"></a> 92
+    @multiline_string_start = Array.new(lines.size, false) </span><span
+    class="uncovered1"><a name="line93"></a> 93 extend_heredocs </span><span
+    class="uncovered0"><a name="line94"></a> 94 find_multiline_strings
+    </span><span class="uncovered1"><a name="line95"></a> 95 precompute_coverage
+    comments_run_by_default </span><span class="uncovered0"><a
+    name="line96"></a> 96 end </span><span class="uncovered1"><a
+    name="line97"></a> 97 </span><span class="uncovered0"><a name="line98"></a>
+    98 # Merge code coverage and execution count information. </span><span
+    class="uncovered1"><a name="line99"></a> 99 # As for code coverage, a line
+    will be considered </span><span class="uncovered0"><a name="line100"></a>100
+    # * covered for sure (true) if it is covered in either +self+ or in the
+    </span><span class="uncovered1"><a name="line101"></a>101 # +coverage+ array
+    </span><span class="uncovered0"><a name="line102"></a>102 # * considered
+    &lt;tt&gt;:inferred&lt;/tt&gt; if the neither +self+ nor the +coverage+
+    array </span><span class="uncovered1"><a name="line103"></a>103 # indicate
+    that it was definitely executed, but it was &lt;tt&gt;inferred&lt;/tt&gt;
+    </span><span class="uncovered0"><a name="line104"></a>104 # in either one
+    </span><span class="uncovered1"><a name="line105"></a>105 # * not covered
+    (&lt;tt&gt;false&lt;/tt&gt;) if it was uncovered in both </span><span
+    class="uncovered0"><a name="line106"></a>106 # </span><span
+    class="uncovered1"><a name="line107"></a>107 # Execution counts are just
+    summated on a per-line basis. </span><span class="uncovered0"><a
+    name="line108"></a>108 def merge(lines, coverage, counts) </span><span
+    class="uncovered1"><a name="line109"></a>109 coverage.each_with_index do |v,
+    idx| </span><span class="uncovered0"><a name="line110"></a>110 case
+    @coverage[idx] </span><span class="uncovered1"><a name="line111"></a>111
+    when :inferred </span><span class="uncovered0"><a name="line112"></a>112
+    @coverage[idx] = v || @coverage[idx] </span><span class="uncovered1"><a
+    name="line113"></a>113 when false </span><span class="uncovered0"><a
+    name="line114"></a>114 @coverage[idx] ||= v </span><span
+    class="uncovered1"><a name="line115"></a>115 end </span><span
+    class="uncovered0"><a name="line116"></a>116 end </span><span
+    class="uncovered1"><a name="line117"></a>117 counts.each_with_index{|v, idx|
+    @counts[idx] += v } </span><span class="uncovered0"><a
+    name="line118"></a>118 precompute_coverage false </span><span
+    class="uncovered1"><a name="line119"></a>119 end </span><span
+    class="uncovered0"><a name="line120"></a>120 </span><span
+    class="uncovered1"><a name="line121"></a>121 # Total coverage rate if
+    comments are also considered &quot;executable&quot;, given as </span><span
+    class="uncovered0"><a name="line122"></a>122 # a fraction, i.e. from 0 to
+    1.0. </span><span class="uncovered1"><a name="line123"></a>123 # A comment
+    is attached to the code following it (RDoc-style): it will be </span><span
+    class="uncovered0"><a name="line124"></a>124 # considered executed if the
+    the next statement was executed. </span><span class="uncovered1"><a
+    name="line125"></a>125 def total_coverage </span><span class="uncovered0"><a
+    name="line126"></a>126 return 0 if @coverage.size == 0 </span><span
+    class="uncovered1"><a name="line127"></a>127 @coverage.inject(0.0) {|s,a| s
+    + (a ? 1:0) } / @coverage.size </span><span class="uncovered0"><a
+    name="line128"></a>128 end </span><span class="uncovered1"><a
+    name="line129"></a>129 </span><span class="uncovered0"><a
+    name="line130"></a>130 # Code coverage rate: fraction of lines of code
+    executed, relative to the </span><span class="uncovered1"><a
+    name="line131"></a>131 # total amount of lines of code (loc). Returns a
+    float from 0 to 1.0. </span><span class="uncovered0"><a
+    name="line132"></a>132 def code_coverage </span><span class="uncovered1"><a
+    name="line133"></a>133 indices = (0...@lines.size).select{|i| is_code? i }
+    </span><span class="uncovered0"><a name="line134"></a>134 return 0 if
+    indices.size == 0 </span><span class="uncovered1"><a name="line135"></a>135
+    count = 0 </span><span class="uncovered0"><a name="line136"></a>136
+    indices.each {|i| count += 1 if @coverage[i] } </span><span
+    class="uncovered1"><a name="line137"></a>137 1.0 * count / indices.size
+    </span><span class="uncovered0"><a name="line138"></a>138 end </span><span
+    class="uncovered1"><a name="line139"></a>139 </span><span
+    class="uncovered0"><a name="line140"></a>140 # Number of lines of code
+    (loc). </span><span class="uncovered1"><a name="line141"></a>141 def
+    num_code_lines </span><span class="uncovered0"><a name="line142"></a>142
+    (0...@lines.size).select{|i| is_code? i}.size </span><span
+    class="uncovered1"><a name="line143"></a>143 end </span><span
+    class="uncovered0"><a name="line144"></a>144 </span><span
+    class="uncovered1"><a name="line145"></a>145 # Total number of lines.
+    </span><span class="uncovered0"><a name="line146"></a>146 def num_lines
+    </span><span class="uncovered1"><a name="line147"></a>147 @lines.size
+    </span><span class="uncovered0"><a name="line148"></a>148 end </span><span
+    class="uncovered1"><a name="line149"></a>149 </span><span
+    class="uncovered0"><a name="line150"></a>150 # Returns true if the given
+    line number corresponds to code, as opposed to a </span><span
+    class="uncovered1"><a name="line151"></a>151 # comment (either # or
+    =begin/=end blocks). </span><span class="uncovered0"><a
+    name="line152"></a>152 def is_code?(lineno) </span><span
+    class="uncovered1"><a name="line153"></a>153 unless @is_begin_comment
+    </span><span class="uncovered0"><a name="line154"></a>154 @is_begin_comment
+    = Array.new(@lines.size, false) </span><span class="uncovered1"><a
+    name="line155"></a>155 pending = [] </span><span class="uncovered0"><a
+    name="line156"></a>156 state = :code </span><span class="uncovered1"><a
+    name="line157"></a>157 @lines.each_with_index do |line, index| </span><span
+    class="uncovered0"><a name="line158"></a>158 case state </span><span
+    class="uncovered1"><a name="line159"></a>159 when :code </span><span
+    class="uncovered0"><a name="line160"></a>160 if /^=begin\b/ =~ line
+    </span><span class="uncovered1"><a name="line161"></a>161 state = :comment
+    </span><span class="uncovered0"><a name="line162"></a>162 pending &lt;&lt;
+    index </span><span class="uncovered1"><a name="line163"></a>163 end
+    </span><span class="uncovered0"><a name="line164"></a>164 when :comment
+    </span><span class="uncovered1"><a name="line165"></a>165 pending &lt;&lt;
+    index </span><span class="uncovered0"><a name="line166"></a>166 if /^=end\b/
+    =~ line </span><span class="uncovered1"><a name="line167"></a>167 state =
+    :code </span><span class="uncovered0"><a name="line168"></a>168
+    pending.each{|idx| @is_begin_comment[idx] = true} </span><span
+    class="uncovered1"><a name="line169"></a>169 pending.clear </span><span
+    class="uncovered0"><a name="line170"></a>170 end </span><span
+    class="uncovered1"><a name="line171"></a>171 end </span><span
+    class="uncovered0"><a name="line172"></a>172 end </span><span
+    class="uncovered1"><a name="line173"></a>173 end </span><span
+    class="uncovered0"><a name="line174"></a>174 @lines[lineno] &amp;&amp;
+    !@is_begin_comment[lineno] &amp;&amp; </span><span class="uncovered1"><a
+    name="line175"></a>175 @lines[lineno] !~ /^\s*(#|$)/ </span><span
+    class="uncovered0"><a name="line176"></a>176 end </span><span
+    class="uncovered1"><a name="line177"></a>177 </span><span
+    class="uncovered0"><a name="line178"></a>178 private </span><span
+    class="uncovered1"><a name="line179"></a>179 </span><span
+    class="uncovered0"><a name="line180"></a>180 def find_multiline_strings
+    </span><span class="uncovered1"><a name="line181"></a>181 state =
+    :awaiting_string </span><span class="uncovered0"><a name="line182"></a>182
+    wanted_delimiter = nil </span><span class="uncovered1"><a
+    name="line183"></a>183 string_begin_line = 0 </span><span
+    class="uncovered0"><a name="line184"></a>184 @lines.each_with_index do
+    |line, i| </span><span class="uncovered1"><a name="line185"></a>185
+    matching_delimiters = Hash.new{|h,k| k} </span><span class="uncovered0"><a
+    name="line186"></a>186 matching_delimiters.update(&quot;{&quot; =&gt;
+    &quot;}&quot;, &quot;[&quot; =&gt; &quot;]&quot;, &quot;(&quot; =&gt;
+    &quot;)&quot;) </span><span class="uncovered1"><a name="line187"></a>187
+    case state </span><span class="uncovered0"><a name="line188"></a>188 when
+    :awaiting_string </span><span class="uncovered1"><a name="line189"></a>189 #
+    very conservative, doesn't consider the last delimited string but
+    </span><span class="uncovered0"><a name="line190"></a>190 # only the very
+    first one </span><span class="uncovered1"><a name="line191"></a>191 if md =
+    /^[^#]*%(?:[qQ])?(.)/.match(line) </span><span class="uncovered0"><a
+    name="line192"></a>192 wanted_delimiter =
+    /(?!\\).#{Regexp.escape(matching_delimiters[md[1]])}/ </span><span
+    class="uncovered1"><a name="line193"></a>193 # check if closed on the very
+    same line </span><span class="uncovered0"><a name="line194"></a>194 #
+    conservative again, we might have several quoted strings with the
+    </span><span class="uncovered1"><a name="line195"></a>195 # same delimiter
+    on the same line, leaving the last one open </span><span
+    class="uncovered0"><a name="line196"></a>196 unless
+    wanted_delimiter.match(md.post_match) </span><span class="uncovered1"><a
+    name="line197"></a>197 state = :want_end_delimiter </span><span
+    class="uncovered0"><a name="line198"></a>198 string_begin_line = i
+    </span><span class="uncovered1"><a name="line199"></a>199 end </span><span
+    class="uncovered0"><a name="line200"></a>200 end </span><span
+    class="uncovered1"><a name="line201"></a>201 when :want_end_delimiter
+    </span><span class="uncovered0"><a name="line202"></a>202
+    @multiline_string_start[i] = string_begin_line </span><span
+    class="uncovered1"><a name="line203"></a>203 if wanted_delimiter.match(line)
+    </span><span class="uncovered0"><a name="line204"></a>204 state =
+    :awaiting_string </span><span class="uncovered1"><a name="line205"></a>205
+    end </span><span class="uncovered0"><a name="line206"></a>206 end
+    </span><span class="uncovered1"><a name="line207"></a>207 end </span><span
+    class="uncovered0"><a name="line208"></a>208 end </span><span
+    class="uncovered1"><a name="line209"></a>209 </span><span
+    class="uncovered0"><a name="line210"></a>210 def
+    precompute_coverage(comments_run_by_default = true) </span><span
+    class="uncovered1"><a name="line211"></a>211 changed = false </span><span
+    class="uncovered0"><a name="line212"></a>212 lastidx = lines.size - 1
+    </span><span class="uncovered1"><a name="line213"></a>213 if
+    (!is_code?(lastidx) || /^__END__$/ =~ @lines[-1]) &amp;&amp;
+    !@coverage[lastidx] </span><span class="uncovered0"><a
+    name="line214"></a>214 # mark the last block of comments </span><span
+    class="uncovered1"><a name="line215"></a>215 @coverage[lastidx] ||=
+    :inferred </span><span class="uncovered0"><a name="line216"></a>216
+    (lastidx-1).downto(0) do |i| </span><span class="uncovered1"><a
+    name="line217"></a>217 break if is_code?(i) </span><span
+    class="uncovered0"><a name="line218"></a>218 @coverage[i] ||= :inferred
+    </span><span class="uncovered1"><a name="line219"></a>219 end </span><span
+    class="uncovered0"><a name="line220"></a>220 end </span><span
+    class="uncovered1"><a name="line221"></a>221 (0...lines.size).each do |i|
+    </span><span class="uncovered0"><a name="line222"></a>222 next if
+    @coverage[i] </span><span class="uncovered1"><a name="line223"></a>223 line
+    = @lines[i] </span><span class="uncovered0"><a name="line224"></a>224 if
+    /^\s*(begin|ensure|else|case)\s*(?:#.*)?$/ =~ line &amp;&amp;
+    next_expr_marked?(i) or </span><span class="uncovered1"><a
+    name="line225"></a>225 /^\s*(?:end|\})\s*(?:#.*)?$/ =~ line &amp;&amp;
+    prev_expr_marked?(i) or </span><span class="uncovered0"><a
+    name="line226"></a>226 /^\s*(?:end\b|\})/ =~ line &amp;&amp;
+    prev_expr_marked?(i) &amp;&amp; next_expr_marked?(i) or </span><span
+    class="uncovered1"><a name="line227"></a>227 /^\s*rescue\b/ =~ line
+    &amp;&amp; next_expr_marked?(i) or </span><span class="uncovered0"><a
+    name="line228"></a>228 /(do|\{)\s*(\|[^|]*\|\s*)?(?:#.*)?$/ =~ line
+    &amp;&amp; next_expr_marked?(i) or </span><span class="uncovered1"><a
+    name="line229"></a>229 prev_expr_continued?(i) &amp;&amp;
+    prev_expr_marked?(i) or </span><span class="uncovered0"><a
+    name="line230"></a>230 comments_run_by_default &amp;&amp; !is_code?(i) or
+    </span><span class="uncovered1"><a name="line231"></a>231
+    /^\s*((\)|\]|\})\s*)+(?:#.*)?$/ =~ line &amp;&amp; prev_expr_marked?(i) or
+    </span><span class="uncovered0"><a name="line232"></a>232
+    prev_expr_continued?(i+1) &amp;&amp; next_expr_marked?(i) </span><span
+    class="uncovered1"><a name="line233"></a>233 @coverage[i] ||= :inferred
+    </span><span class="uncovered0"><a name="line234"></a>234 changed = true
+    </span><span class="uncovered1"><a name="line235"></a>235 end </span><span
+    class="uncovered0"><a name="line236"></a>236 end </span><span
+    class="uncovered1"><a name="line237"></a>237 (@lines.size-1).downto(0) do
+    |i| </span><span class="uncovered0"><a name="line238"></a>238 next if
+    @coverage[i] </span><span class="uncovered1"><a name="line239"></a>239 if
+    !is_code?(i) and @coverage[i+1] </span><span class="uncovered0"><a
+    name="line240"></a>240 @coverage[i] = :inferred </span><span
+    class="uncovered1"><a name="line241"></a>241 changed = true </span><span
+    class="uncovered0"><a name="line242"></a>242 end </span><span
+    class="uncovered1"><a name="line243"></a>243 end </span><span
+    class="uncovered0"><a name="line244"></a>244 </span><span
+    class="uncovered1"><a name="line245"></a>245 extend_heredocs if changed
+    </span><span class="uncovered0"><a name="line246"></a>246 </span><span
+    class="uncovered1"><a name="line247"></a>247 # if there was any change, we
+    have to recompute; we'll eventually </span><span class="uncovered0"><a
+    name="line248"></a>248 # reach a fixed point and stop there </span><span
+    class="uncovered1"><a name="line249"></a>249
+    precompute_coverage(comments_run_by_default) if changed </span><span
+    class="uncovered0"><a name="line250"></a>250 end </span><span
+    class="uncovered1"><a name="line251"></a>251 </span><span
+    class="uncovered0"><a name="line252"></a>252 require 'strscan' </span><span
+    class="uncovered1"><a name="line253"></a>253 def extend_heredocs
+    </span><span class="uncovered0"><a name="line254"></a>254 i = 0 </span><span
+    class="uncovered1"><a name="line255"></a>255 while i &lt; @lines.size
+    </span><span class="uncovered0"><a name="line256"></a>256 unless is_code? i
+    </span><span class="uncovered1"><a name="line257"></a>257 i += 1
+    </span><span class="uncovered0"><a name="line258"></a>258 next </span><span
+    class="uncovered1"><a name="line259"></a>259 end </span><span
+    class="uncovered0"><a name="line260"></a>260 #FIXME: using a restrictive
+    regexp so that only &lt;&lt;[A-Z_a-z]\w* </span><span class="uncovered1"><a
+    name="line261"></a>261 # matches when unquoted, so as to avoid problems with
+    1&lt;&lt;2 </span><span class="uncovered0"><a name="line262"></a>262 # (keep
+    in mind that whereas puts &lt;&lt;2 is valid, puts 1&lt;&lt;2 is a
+    </span><span class="uncovered1"><a name="line263"></a>263 # parse error, but
+    a = 1&lt;&lt;2 is of course fine) </span><span class="uncovered0"><a
+    name="line264"></a>264 scanner = StringScanner.new(@lines[i]) </span><span
+    class="uncovered1"><a name="line265"></a>265 j = k = i </span><span
+    class="uncovered0"><a name="line266"></a>266 loop do </span><span
+    class="uncovered1"><a name="line267"></a>267 scanned_text =
+    scanner.search_full(/&lt;&lt;(-?)(?:(['&quot;`])((?:(?!\2).)+)\2|([A-Z_a-z]\
+    *))/, </span><span class="uncovered0"><a name="line268"></a>268 true, true)
+    </span><span class="uncovered1"><a name="line269"></a>269 # k is the first
+    line after the end delimiter for the last heredoc </span><span
+    class="uncovered0"><a name="line270"></a>270 # scanned so far </span><span
+    class="uncovered1"><a name="line271"></a>271 unless scanner.matched?
+    </span><span class="uncovered0"><a name="line272"></a>272 i = k </span><span
+    class="uncovered1"><a name="line273"></a>273 break </span><span
+    class="uncovered0"><a name="line274"></a>274 end </span><span
+    class="uncovered1"><a name="line275"></a>275 term = scanner[3] || scanner[4]
+    </span><span class="uncovered0"><a name="line276"></a>276 # try to ignore
+    symbolic bitshifts like 1&lt;&lt;LSHIFT </span><span class="uncovered1"><a
+    name="line277"></a>277 ident_text =
+    &quot;&lt;&lt;#{scanner[1]}#{scanner[2]}#{term}#{scanner[2]}&quot;
+    </span><span class="uncovered0"><a name="line278"></a>278 if
+    scanned_text[/\d+\s*#{Regexp.escape(ident_text)}/] </span><span
+    class="uncovered1"><a name="line279"></a>279 # it was preceded by a number,
+    ignore </span><span class="uncovered0"><a name="line280"></a>280 i = k
+    </span><span class="uncovered1"><a name="line281"></a>281 break </span><span
+    class="uncovered0"><a name="line282"></a>282 end </span><span
+    class="uncovered1"><a name="line283"></a>283 must_mark = [] </span><span
+    class="uncovered0"><a name="line284"></a>284 end_of_heredoc = (scanner[1] ==
+    &quot;-&quot;) ? </span><span class="uncovered1"><a name="line285"></a>285
+    /^\s*#{Regexp.escape(term)}$/ : /^#{Regexp.escape(term)}$/ </span><span
+    class="uncovered0"><a name="line286"></a>286 loop do </span><span
+    class="uncovered1"><a name="line287"></a>287 break if j == @lines.size
+    </span><span class="uncovered0"><a name="line288"></a>288 must_mark &lt;&lt;
+    j </span><span class="uncovered1"><a name="line289"></a>289 if
+    end_of_heredoc =~ @lines[j] </span><span class="uncovered0"><a
+    name="line290"></a>290 must_mark.each do |n| </span><span
+    class="uncovered1"><a name="line291"></a>291 @heredoc_start[n] = i
+    </span><span class="uncovered0"><a name="line292"></a>292 end </span><span
+    class="uncovered1"><a name="line293"></a>293 if (must_mark +
+    [i]).any?{|lineidx| @coverage[lineidx]} </span><span class="uncovered0"><a
+    name="line294"></a>294 @coverage[i] ||= :inferred </span><span
+    class="uncovered1"><a name="line295"></a>295 must_mark.each{|lineidx|
+    @coverage[lineidx] ||= :inferred} </span><span class="uncovered0"><a
+    name="line296"></a>296 end </span><span class="uncovered1"><a
+    name="line297"></a>297 # move the &quot;first line after heredocs&quot;
+    index </span><span class="uncovered0"><a name="line298"></a>298 k = (j += 1)
+    </span><span class="uncovered1"><a name="line299"></a>299 break </span><span
+    class="uncovered0"><a name="line300"></a>300 end </span><span
+    class="uncovered1"><a name="line301"></a>301 j += 1 </span><span
+    class="uncovered0"><a name="line302"></a>302 end </span><span
+    class="uncovered1"><a name="line303"></a>303 end </span><span
+    class="uncovered0"><a name="line304"></a>304 </span><span
+    class="uncovered1"><a name="line305"></a>305 i += 1 </span><span
+    class="uncovered0"><a name="line306"></a>306 end </span><span
+    class="uncovered1"><a name="line307"></a>307 end </span><span
+    class="uncovered0"><a name="line308"></a>308 </span><span
+    class="uncovered1"><a name="line309"></a>309 def next_expr_marked?(lineno)
+    </span><span class="uncovered0"><a name="line310"></a>310 return false if
+    lineno &gt;= @lines.size </span><span class="uncovered1"><a
+    name="line311"></a>311 found = false </span><span class="uncovered0"><a
+    name="line312"></a>312 idx = (lineno+1).upto(@lines.size-1) do |i|
+    </span><span class="uncovered1"><a name="line313"></a>313 next unless
+    is_code? i </span><span class="uncovered0"><a name="line314"></a>314 found =
+    true </span><span class="uncovered1"><a name="line315"></a>315 break i
+    </span><span class="uncovered0"><a name="line316"></a>316 end </span><span
+    class="uncovered1"><a name="line317"></a>317 return false unless found
+    </span><span class="uncovered0"><a name="line318"></a>318 @coverage[idx]
+    </span><span class="uncovered1"><a name="line319"></a>319 end </span><span
+    class="uncovered0"><a name="line320"></a>320 </span><span
+    class="uncovered1"><a name="line321"></a>321 def prev_expr_marked?(lineno)
+    </span><span class="uncovered0"><a name="line322"></a>322 return false if
+    lineno &lt;= 0 </span><span class="uncovered1"><a name="line323"></a>323
+    found = false </span><span class="uncovered0"><a name="line324"></a>324 idx
+    = (lineno-1).downto(0) do |i| </span><span class="uncovered1"><a
+    name="line325"></a>325 next unless is_code? i </span><span
+    class="uncovered0"><a name="line326"></a>326 found = true </span><span
+    class="uncovered1"><a name="line327"></a>327 break i </span><span
+    class="uncovered0"><a name="line328"></a>328 end </span><span
+    class="uncovered1"><a name="line329"></a>329 return false unless found
+    </span><span class="uncovered0"><a name="line330"></a>330 @coverage[idx]
+    </span><span class="uncovered1"><a name="line331"></a>331 end </span><span
+    class="uncovered0"><a name="line332"></a>332 </span><span
+    class="uncovered1"><a name="line333"></a>333 def
+    prev_expr_continued?(lineno) </span><span class="uncovered0"><a
+    name="line334"></a>334 return false if lineno &lt;= 0 </span><span
+    class="uncovered1"><a name="line335"></a>335 return false if lineno &gt;=
+    @lines.size </span><span class="uncovered0"><a name="line336"></a>336 found
+    = false </span><span class="uncovered1"><a name="line337"></a>337 if
+    @multiline_string_start[lineno] &amp;&amp; </span><span
+    class="uncovered0"><a name="line338"></a>338 @multiline_string_start[lineno]
+    &lt; lineno </span><span class="uncovered1"><a name="line339"></a>339 return
+    true </span><span class="uncovered0"><a name="line340"></a>340 end
+    </span><span class="uncovered1"><a name="line341"></a>341 # find index of
+    previous code line </span><span class="uncovered0"><a name="line342"></a>342
+    idx = (lineno-1).downto(0) do |i| </span><span class="uncovered1"><a
+    name="line343"></a>343 if @heredoc_start[i] </span><span
+    class="uncovered0"><a name="line344"></a>344 found = true </span><span
+    class="uncovered1"><a name="line345"></a>345 break @heredoc_start[i]
+    </span><span class="uncovered0"><a name="line346"></a>346 end </span><span
+    class="uncovered1"><a name="line347"></a>347 next unless is_code? i
+    </span><span class="uncovered0"><a name="line348"></a>348 found = true
+    </span><span class="uncovered1"><a name="line349"></a>349 break i
+    </span><span class="uncovered0"><a name="line350"></a>350 end </span><span
+    class="uncovered1"><a name="line351"></a>351 return false unless found
+    </span><span class="uncovered0"><a name="line352"></a>352 #TODO: write a
+    comprehensive list </span><span class="uncovered1"><a name="line353"></a>353
+    if is_code?(lineno) &amp;&amp;
+    /^\s*((\)|\]|\})\s*)+(?:#.*)?$/.match(@lines[lineno]) </span><span
+    class="uncovered0"><a name="line354"></a>354 return true </span><span
+    class="uncovered1"><a name="line355"></a>355 end </span><span
+    class="uncovered0"><a name="line356"></a>356 #FIXME: / matches regexps too
+    </span><span class="uncovered1"><a name="line357"></a>357 # the following
+    regexp tries to reject #{interpolation} </span><span class="uncovered0"><a
+    name="line358"></a>358 r =
+    /(,|\.|\+|-|\*|\/|&lt;|&gt;|%|&amp;&amp;|\|\||&lt;&lt;|\(|\[|\{|=|and|or|\\)
+    s*(?:#(?![{$@]).*)?$/.match @lines[idx] </span><span class="uncovered1"><a
+    name="line359"></a>359 # try to see if a multi-line expression with opening,
+    closing delimiters </span><span class="uncovered0"><a name="line360"></a>360
+    # started on that line </span><span class="uncovered1"><a
+    name="line361"></a>361 [%w!( )!].each do |opening_str, closing_str|
+    </span><span class="uncovered0"><a name="line362"></a>362 # conservative:
+    only consider nesting levels opened in that line, not </span><span
+    class="uncovered1"><a name="line363"></a>363 # previous ones too.
+    </span><span class="uncovered0"><a name="line364"></a>364 # next regexp
+    considers interpolation too </span><span class="uncovered1"><a
+    name="line365"></a>365 line = @lines[idx].gsub(/#(?![{$@]).*$/,
+    &quot;&quot;) </span><span class="uncovered0"><a name="line366"></a>366
+    opened = line.scan(/#{Regexp.escape(opening_str)}/).size </span><span
+    class="uncovered1"><a name="line367"></a>367 closed =
+    line.scan(/#{Regexp.escape(closing_str)}/).size </span><span
+    class="uncovered0"><a name="line368"></a>368 return true if opened - closed
+    &gt; 0 </span><span class="uncovered1"><a name="line369"></a>369 end
+    </span><span class="uncovered0"><a name="line370"></a>370 if
+    /(do|\{)\s*\|[^|]*\|\s*(?:#.*)?$/.match @lines[idx] </span><span
+    class="uncovered1"><a name="line371"></a>371 return false </span><span
+    class="uncovered0"><a name="line372"></a>372 end </span><span
+    class="uncovered1"><a name="line373"></a>373 </span><span
+    class="uncovered0"><a name="line374"></a>374 r </span><span
+    class="uncovered1"><a name="line375"></a>375 end </span><span
+    class="uncovered0"><a name="line376"></a>376 end </span><span
+    class="uncovered1"><a name="line377"></a>377 </span><span
+    class="uncovered0"><a name="line378"></a>378 </span><span
+    class="uncovered1"><a name="line379"></a>379 autoload :RCOV__,
+    &quot;rcov/lowlevel.rb&quot; </span><span class="uncovered0"><a
+    name="line380"></a>380 </span><span class="uncovered1"><a
+    name="line381"></a>381 class DifferentialAnalyzer </span><span
+    class="uncovered0"><a name="line382"></a>382 require 'thread' </span><span
+    class="uncovered1"><a name="line383"></a>383 @@mutex = Mutex.new
+    </span><span class="uncovered0"><a name="line384"></a>384 </span><span
+    class="uncovered1"><a name="line385"></a>385 def
+    initialize(install_hook_meth, remove_hook_meth, reset_meth) </span><span
+    class="uncovered0"><a name="line386"></a>386 @cache_state = :wait
+    </span><span class="uncovered1"><a name="line387"></a>387 @start_raw_data =
+    data_default </span><span class="uncovered0"><a name="line388"></a>388
+    @end_raw_data = data_default </span><span class="uncovered1"><a
+    name="line389"></a>389 @aggregated_data = data_default </span><span
+    class="uncovered0"><a name="line390"></a>390 @install_hook_meth =
+    install_hook_meth </span><span class="uncovered1"><a name="line391"></a>391
+    @remove_hook_meth= remove_hook_meth </span><span class="uncovered0"><a
+    name="line392"></a>392 @reset_meth= reset_meth </span><span
+    class="uncovered1"><a name="line393"></a>393 end </span><span
+    class="uncovered0"><a name="line394"></a>394 </span><span
+    class="uncovered1"><a name="line395"></a>395 # Execute the code in the given
+    block, monitoring it in order to gather </span><span class="uncovered0"><a
+    name="line396"></a>396 # information about which code was executed.
+    </span><span class="uncovered1"><a name="line397"></a>397 def run_hooked
+    </span><span class="uncovered0"><a name="line398"></a>398 install_hook
+    </span><span class="uncovered1"><a name="line399"></a>399 yield </span><span
+    class="uncovered0"><a name="line400"></a>400 ensure </span><span
+    class="uncovered1"><a name="line401"></a>401 remove_hook </span><span
+    class="uncovered0"><a name="line402"></a>402 end </span><span
+    class="uncovered1"><a name="line403"></a>403 </span><span
+    class="uncovered0"><a name="line404"></a>404 # Start monitoring execution to
+    gather information. Such data will be </span><span class="uncovered1"><a
+    name="line405"></a>405 # collected until #remove_hook is called.
+    </span><span class="uncovered0"><a name="line406"></a>406 # </span><span
+    class="uncovered1"><a name="line407"></a>407 # Use #run_hooked instead if
+    possible. </span><span class="uncovered0"><a name="line408"></a>408 def
+    install_hook </span><span class="uncovered1"><a name="line409"></a>409
+    @start_raw_data = raw_data_absolute </span><span class="uncovered0"><a
+    name="line410"></a>410 Rcov::RCOV__.send(@install_hook_meth) </span><span
+    class="marked1"><a name="line411"></a>411 @cache_state = :hooked
+    </span><span class="marked0"><a name="line412"></a>412 @@mutex.synchronize{
+    self.class.hook_level += 1 } </span><span class="inferred1"><a
+    name="line413"></a>413 end </span><span class="inferred0"><a
+    name="line414"></a>414 </span><span class="inferred1"><a
+    name="line415"></a>415 # Stop collecting information. </span><span
+    class="inferred0"><a name="line416"></a>416 # #remove_hook will also stop
+    collecting info if it is run inside a </span><span class="inferred1"><a
+    name="line417"></a>417 # #run_hooked block. </span><span class="marked0"><a
+    name="line418"></a>418 def remove_hook </span><span class="marked1"><a
+    name="line419"></a>419 @@mutex.synchronize do </span><span
+    class="marked0"><a name="line420"></a>420 self.class.hook_level -= 1
+    </span><span class="marked1"><a name="line421"></a>421
+    Rcov::RCOV__.send(@remove_hook_meth) if self.class.hook_level == 0
+    </span><span class="inferred0"><a name="line422"></a>422 end </span><span
+    class="uncovered1"><a name="line423"></a>423 @end_raw_data =
+    raw_data_absolute </span><span class="uncovered0"><a name="line424"></a>424
+    @cache_state = :done </span><span class="uncovered1"><a
+    name="line425"></a>425 # force computation of the stats for the traced code
+    in this run; </span><span class="uncovered0"><a name="line426"></a>426 # we
+    cannot simply let it be if self.class.hook_level == 0 because </span><span
+    class="uncovered1"><a name="line427"></a>427 # some other analyzer could
+    install a hook, causing the raw_data_absolute </span><span
+    class="uncovered0"><a name="line428"></a>428 # to change again. </span><span
+    class="uncovered1"><a name="line429"></a>429 # TODO: lazy computation of
+    raw_data_relative, only when the hook gets </span><span
+    class="uncovered0"><a name="line430"></a>430 # activated again. </span><span
+    class="uncovered1"><a name="line431"></a>431 raw_data_relative </span><span
+    class="uncovered0"><a name="line432"></a>432 end </span><span
+    class="uncovered1"><a name="line433"></a>433 </span><span
+    class="uncovered0"><a name="line434"></a>434 # Remove the data collected so
+    far. Further collection will start from </span><span class="uncovered1"><a
+    name="line435"></a>435 # scratch. </span><span class="uncovered0"><a
+    name="line436"></a>436 def reset </span><span class="uncovered1"><a
+    name="line437"></a>437 @@mutex.synchronize do </span><span
+    class="uncovered0"><a name="line438"></a>438 if self.class.hook_level == 0
+    </span><span class="uncovered1"><a name="line439"></a>439 # Unfortunately
+    there's no way to report this as covered with rcov: </span><span
+    class="uncovered0"><a name="line440"></a>440 # if we run the tests under
+    rcov self.class.hook_level will be &gt;= 1 ! </span><span
+    class="uncovered1"><a name="line441"></a>441 # It is however executed when
+    we run the tests normally. </span><span class="uncovered0"><a
+    name="line442"></a>442 Rcov::RCOV__.send(@reset_meth) </span><span
+    class="uncovered1"><a name="line443"></a>443 @start_raw_data = data_default
+    </span><span class="uncovered0"><a name="line444"></a>444 @end_raw_data =
+    data_default </span><span class="uncovered1"><a name="line445"></a>445 else
+    </span><span class="uncovered0"><a name="line446"></a>446 @start_raw_data =
+    @end_raw_data = raw_data_absolute </span><span class="uncovered1"><a
+    name="line447"></a>447 end </span><span class="uncovered0"><a
+    name="line448"></a>448 @raw_data_relative = data_default </span><span
+    class="uncovered1"><a name="line449"></a>449 @aggregated_data = data_default
+    </span><span class="uncovered0"><a name="line450"></a>450 end </span><span
+    class="uncovered1"><a name="line451"></a>451 end </span><span
+    class="uncovered0"><a name="line452"></a>452 </span><span
+    class="uncovered1"><a name="line453"></a>453 protected </span><span
+    class="uncovered0"><a name="line454"></a>454 </span><span
+    class="uncovered1"><a name="line455"></a>455 def data_default </span><span
+    class="uncovered0"><a name="line456"></a>456 raise &quot;must be implemented
+    by the subclass&quot; </span><span class="uncovered1"><a
+    name="line457"></a>457 end </span><span class="uncovered0"><a
+    name="line458"></a>458 </span><span class="uncovered1"><a
+    name="line459"></a>459 def self.hook_level </span><span
+    class="uncovered0"><a name="line460"></a>460 raise &quot;must be implemented
+    by the subclass&quot; </span><span class="uncovered1"><a
+    name="line461"></a>461 end </span><span class="uncovered0"><a
+    name="line462"></a>462 </span><span class="uncovered1"><a
+    name="line463"></a>463 def raw_data_absolute </span><span
+    class="uncovered0"><a name="line464"></a>464 raise &quot;must be implemented
+    by the subclass&quot; </span><span class="uncovered1"><a
+    name="line465"></a>465 end </span><span class="uncovered0"><a
+    name="line466"></a>466 </span><span class="uncovered1"><a
+    name="line467"></a>467 def aggregate_data(aggregated_data, delta)
+    </span><span class="uncovered0"><a name="line468"></a>468 raise &quot;must
+    be implemented by the subclass&quot; </span><span class="uncovered1"><a
+    name="line469"></a>469 end </span><span class="uncovered0"><a
+    name="line470"></a>470 </span><span class="uncovered1"><a
+    name="line471"></a>471 def compute_raw_data_difference(first, last)
+    </span><span class="uncovered0"><a name="line472"></a>472 raise &quot;must
+    be implemented by the subclass&quot; </span><span class="uncovered1"><a
+    name="line473"></a>473 end </span><span class="uncovered0"><a
+    name="line474"></a>474 </span><span class="uncovered1"><a
+    name="line475"></a>475 private </span><span class="uncovered0"><a
+    name="line476"></a>476 def raw_data_relative </span><span
+    class="uncovered1"><a name="line477"></a>477 case @cache_state </span><span
+    class="uncovered0"><a name="line478"></a>478 when :wait </span><span
+    class="uncovered1"><a name="line479"></a>479 return @aggregated_data
+    </span><span class="uncovered0"><a name="line480"></a>480 when :hooked
+    </span><span class="uncovered1"><a name="line481"></a>481 new_start =
+    raw_data_absolute </span><span class="uncovered0"><a name="line482"></a>482
+    new_diff = compute_raw_data_difference(@start_raw_data, new_start)
+    </span><span class="uncovered1"><a name="line483"></a>483 @start_raw_data =
+    new_start </span><span class="uncovered0"><a name="line484"></a>484 when
+    :done </span><span class="uncovered1"><a name="line485"></a>485 @cache_state
+    = :wait </span><span class="uncovered0"><a name="line486"></a>486 new_diff =
+    compute_raw_data_difference(@start_raw_data, </span><span
+    class="uncovered1"><a name="line487"></a>487 @end_raw_data) </span><span
+    class="uncovered0"><a name="line488"></a>488 end </span><span
+    class="uncovered1"><a name="line489"></a>489 </span><span
+    class="uncovered0"><a name="line490"></a>490
+    aggregate_data(@aggregated_data, new_diff) </span><span
+    class="uncovered1"><a name="line491"></a>491 </span><span
+    class="uncovered0"><a name="line492"></a>492 @aggregated_data </span><span
+    class="uncovered1"><a name="line493"></a>493 end </span><span
+    class="uncovered0"><a name="line494"></a>494 </span><span
+    class="uncovered1"><a name="line495"></a>495 end </span><span
+    class="uncovered0"><a name="line496"></a>496 </span><span
+    class="uncovered1"><a name="line497"></a>497 # A CodeCoverageAnalyzer is
+    responsible for tracing code execution and </span><span
+    class="uncovered0"><a name="line498"></a>498 # returning code coverage and
+    execution count information. </span><span class="uncovered1"><a
+    name="line499"></a>499 # </span><span class="uncovered0"><a
+    name="line500"></a>500 # Note that you must &lt;tt&gt;require
+    'rcov'&lt;/tt&gt; before the code you want to </span><span
+    class="uncovered1"><a name="line501"></a>501 # analyze is parsed (i.e.
+    before it gets loaded or required). You can do that </span><span
+    class="uncovered0"><a name="line502"></a>502 # by either invoking ruby with
+    the &lt;tt&gt;-rrcov&lt;/tt&gt; command-line option or </span><span
+    class="uncovered1"><a name="line503"></a>503 # just: </span><span
+    class="uncovered0"><a name="line504"></a>504 # require 'rcov' </span><span
+    class="uncovered1"><a name="line505"></a>505 # require 'mycode' </span><span
+    class="uncovered0"><a name="line506"></a>506 # # .... </span><span
+    class="uncovered1"><a name="line507"></a>507 # </span><span
+    class="uncovered0"><a name="line508"></a>508 # == Example </span><span
+    class="uncovered1"><a name="line509"></a>509 # </span><span
+    class="uncovered0"><a name="line510"></a>510 # analyzer =
+    Rcov::CodeCoverageAnalyzer.new </span><span class="uncovered1"><a
+    name="line511"></a>511 # analyzer.run_hooked do </span><span
+    class="uncovered0"><a name="line512"></a>512 # do_foo </span><span
+    class="uncovered1"><a name="line513"></a>513 # # all the code executed as a
+    result of this method call is traced </span><span class="uncovered0"><a
+    name="line514"></a>514 # end </span><span class="uncovered1"><a
+    name="line515"></a>515 # # .... </span><span class="uncovered0"><a
+    name="line516"></a>516 # </span><span class="uncovered1"><a
+    name="line517"></a>517 # analyzer.run_hooked do </span><span
+    class="uncovered0"><a name="line518"></a>518 # do_bar </span><span
+    class="uncovered1"><a name="line519"></a>519 # # the code coverage
+    information generated in this run is aggregated </span><span
+    class="uncovered0"><a name="line520"></a>520 # # to the previously recorded
+    one </span><span class="uncovered1"><a name="line521"></a>521 # end
+    </span><span class="uncovered0"><a name="line522"></a>522 # </span><span
+    class="uncovered1"><a name="line523"></a>523 # analyzer.analyzed_files #
+    =&gt; [&quot;foo.rb&quot;, &quot;bar.rb&quot;, ... ] </span><span
+    class="uncovered0"><a name="line524"></a>524 # lines, marked_info,
+    count_info = analyzer.data(&quot;foo.rb&quot;) </span><span
+    class="uncovered1"><a name="line525"></a>525 # </span><span
+    class="uncovered0"><a name="line526"></a>526 # In this example, two pieces
+    of code are monitored, and the data generated in </span><span
+    class="uncovered1"><a name="line527"></a>527 # both runs are aggregated.
+    +lines+ is an array of strings representing the </span><span
+    class="uncovered0"><a name="line528"></a>528 # source code of
+    &lt;tt&gt;foo.rb&lt;/tt&gt;. +marked_info+ is an array holding false,
+    </span><span class="uncovered1"><a name="line529"></a>529 # true values
+    indicating whether the corresponding lines of code were reported
+    </span><span class="uncovered0"><a name="line530"></a>530 # as executed by
+    Ruby. +count_info+ is an array of integers representing how </span><span
+    class="uncovered1"><a name="line531"></a>531 # many times each line of code
+    has been executed (more precisely, how many </span><span
+    class="uncovered0"><a name="line532"></a>532 # events where reported by Ruby
+    --- a single line might correspond to several </span><span
+    class="uncovered1"><a name="line533"></a>533 # events, e.g. many method
+    calls). </span><span class="uncovered0"><a name="line534"></a>534 #
+    </span><span class="uncovered1"><a name="line535"></a>535 # You can have
+    several CodeCoverageAnalyzer objects at a time, and it is </span><span
+    class="uncovered0"><a name="line536"></a>536 # possible to nest the
+    #run_hooked / #install_hook/#remove_hook blocks: each </span><span
+    class="uncovered1"><a name="line537"></a>537 # analyzer will manage its data
+    separately. Note however that no special </span><span class="uncovered0"><a
+    name="line538"></a>538 # provision is taken to ignore code executed
+    &quot;inside&quot; the CodeCoverageAnalyzer </span><span
+    class="uncovered1"><a name="line539"></a>539 # class. At any rate this will
+    not pose a problem since it's easy to ignore it </span><span
+    class="uncovered0"><a name="line540"></a>540 # manually: just don't do
+    </span><span class="uncovered1"><a name="line541"></a>541 # lines, coverage,
+    counts = analyzer.data(&quot;/path/to/lib/rcov.rb&quot;) </span><span
+    class="uncovered0"><a name="line542"></a>542 # if you're not interested in
+    that information. </span><span class="uncovered1"><a name="line543"></a>543
+    class CodeCoverageAnalyzer &lt; DifferentialAnalyzer </span><span
+    class="uncovered0"><a name="line544"></a>544 @hook_level = 0 </span><span
+    class="inferred1"><a name="line545"></a>545 # defined this way instead of
+    attr_accessor so that it's covered </span><span class="marked0"><a
+    name="line546"></a>546 def self.hook_level # :nodoc: </span><span
+    class="marked1"><a name="line547"></a>547 @hook_level </span><span
+    class="inferred0"><a name="line548"></a>548 end </span><span
+    class="marked1"><a name="line549"></a>549 def self.hook_level=(x) # :nodoc:
+    </span><span class="marked0"><a name="line550"></a>550 @hook_level = x
+    </span><span class="inferred1"><a name="line551"></a>551 end </span><span
+    class="uncovered0"><a name="line552"></a>552 </span><span
+    class="uncovered1"><a name="line553"></a>553 def initialize </span><span
+    class="uncovered0"><a name="line554"></a>554 @script_lines__ =
+    SCRIPT_LINES__ </span><span class="uncovered1"><a name="line555"></a>555
+    super(:install_coverage_hook, :remove_coverage_hook, </span><span
+    class="uncovered0"><a name="line556"></a>556 :reset_coverage) </span><span
+    class="uncovered1"><a name="line557"></a>557 end </span><span
+    class="uncovered0"><a name="line558"></a>558 </span><span
+    class="uncovered1"><a name="line559"></a>559 # Return an array with the
+    names of the files whose code was executed inside </span><span
+    class="uncovered0"><a name="line560"></a>560 # the block given to
+    #run_hooked or between #install_hook and #remove_hook. </span><span
+    class="uncovered1"><a name="line561"></a>561 def analyzed_files </span><span
+    class="uncovered0"><a name="line562"></a>562 update_script_lines__
+    </span><span class="uncovered1"><a name="line563"></a>563
+    raw_data_relative.select do |file, lines| </span><span class="uncovered0"><a
+    name="line564"></a>564 @script_lines__.has_key?(file) </span><span
+    class="uncovered1"><a name="line565"></a>565 end.map{|fname,| fname}
+    </span><span class="uncovered0"><a name="line566"></a>566 end </span><span
+    class="uncovered1"><a name="line567"></a>567 </span><span
+    class="uncovered0"><a name="line568"></a>568 # Return the available data
+    about the requested file, or nil if none of its </span><span
+    class="uncovered1"><a name="line569"></a>569 # code was executed or it
+    cannot be found. </span><span class="uncovered0"><a name="line570"></a>570 #
+    The return value is an array with three elements: </span><span
+    class="uncovered1"><a name="line571"></a>571 # lines, marked_info,
+    count_info = analyzer.data(&quot;foo.rb&quot;) </span><span
+    class="uncovered0"><a name="line572"></a>572 # +lines+ is an array of
+    strings representing the </span><span class="uncovered1"><a
+    name="line573"></a>573 # source code of &lt;tt&gt;foo.rb&lt;/tt&gt;.
+    +marked_info+ is an array holding false, </span><span class="uncovered0"><a
+    name="line574"></a>574 # true values indicating whether the corresponding
+    lines of code were reported </span><span class="uncovered1"><a
+    name="line575"></a>575 # as executed by Ruby. +count_info+ is an array of
+    integers representing how </span><span class="uncovered0"><a
+    name="line576"></a>576 # many times each line of code has been executed
+    (more precisely, how many </span><span class="uncovered1"><a
+    name="line577"></a>577 # events where reported by Ruby --- a single line
+    might correspond to several </span><span class="uncovered0"><a
+    name="line578"></a>578 # events, e.g. many method calls). </span><span
+    class="uncovered1"><a name="line579"></a>579 # </span><span
+    class="uncovered0"><a name="line580"></a>580 # The returned data corresponds
+    to the aggregation of all the statistics </span><span class="uncovered1"><a
+    name="line581"></a>581 # collected in each #run_hooked or
+    #install_hook/#remove_hook runs. You can </span><span class="uncovered0"><a
+    name="line582"></a>582 # reset the data at any time with #reset to start
+    from scratch. </span><span class="uncovered1"><a name="line583"></a>583 def
+    data(filename) </span><span class="uncovered0"><a name="line584"></a>584
+    raw_data = raw_data_relative </span><span class="uncovered1"><a
+    name="line585"></a>585 update_script_lines__ </span><span
+    class="uncovered0"><a name="line586"></a>586 unless
+    @script_lines__.has_key?(filename) &amp;&amp; </span><span
+    class="uncovered1"><a name="line587"></a>587 raw_data.has_key?(filename)
+    </span><span class="uncovered0"><a name="line588"></a>588 return nil
+    </span><span class="uncovered1"><a name="line589"></a>589 end </span><span
+    class="uncovered0"><a name="line590"></a>590
+    refine_coverage_info(@script_lines__[filename], raw_data[filename])
+    </span><span class="uncovered1"><a name="line591"></a>591 end </span><span
+    class="uncovered0"><a name="line592"></a>592 </span><span
+    class="uncovered1"><a name="line593"></a>593 # Data for the first file
+    matching the given regexp. </span><span class="uncovered0"><a
+    name="line594"></a>594 # See #data. </span><span class="uncovered1"><a
+    name="line595"></a>595 def data_matching(filename_re) </span><span
+    class="uncovered0"><a name="line596"></a>596 raw_data = raw_data_relative
+    </span><span class="uncovered1"><a name="line597"></a>597
+    update_script_lines__ </span><span class="uncovered0"><a
+    name="line598"></a>598 </span><span class="uncovered1"><a
+    name="line599"></a>599 match = raw_data.keys.sort.grep(filename_re).first
+    </span><span class="uncovered0"><a name="line600"></a>600 return nil unless
+    match </span><span class="uncovered1"><a name="line601"></a>601 </span><span
+    class="uncovered0"><a name="line602"></a>602
+    refine_coverage_info(@script_lines__[match], raw_data[match]) </span><span
+    class="uncovered1"><a name="line603"></a>603 end </span><span
+    class="uncovered0"><a name="line604"></a>604 </span><span
+    class="uncovered1"><a name="line605"></a>605 # Execute the code in the given
+    block, monitoring it in order to gather </span><span class="uncovered0"><a
+    name="line606"></a>606 # information about which code was executed.
+    </span><span class="uncovered1"><a name="line607"></a>607 def run_hooked;
+    super end </span><span class="inferred0"><a name="line608"></a>608
+    </span><span class="inferred1"><a name="line609"></a>609 # Start monitoring
+    execution to gather code coverage and execution count </span><span
+    class="inferred0"><a name="line610"></a>610 # information. Such data will be
+    collected until #remove_hook is called. </span><span class="inferred1"><a
+    name="line611"></a>611 # </span><span class="inferred0"><a
+    name="line612"></a>612 # Use #run_hooked instead if possible. </span><span
+    class="marked1"><a name="line613"></a>613 def install_hook; super end
+    </span><span class="inferred0"><a name="line614"></a>614 </span><span
+    class="inferred1"><a name="line615"></a>615 # Stop collecting code coverage
+    and execution count information. </span><span class="inferred0"><a
+    name="line616"></a>616 # #remove_hook will also stop collecting info if it
+    is run inside a </span><span class="inferred1"><a name="line617"></a>617 #
+    #run_hooked block. </span><span class="marked0"><a name="line618"></a>618
+    def remove_hook; super end </span><span class="uncovered1"><a
+    name="line619"></a>619 </span><span class="uncovered0"><a
+    name="line620"></a>620 # Remove the data collected so far. The coverage and
+    execution count </span><span class="uncovered1"><a name="line621"></a>621 #
+    &quot;history&quot; will be erased, and further collection will start from
+    scratch: </span><span class="uncovered0"><a name="line622"></a>622 # no code
+    is considered executed, and therefore all execution counts are 0.
+    </span><span class="uncovered1"><a name="line623"></a>623 # Right after
+    #reset, #analyzed_files will return an empty array, and </span><span
+    class="uncovered0"><a name="line624"></a>624 # #data(filename) will return
+    nil. </span><span class="uncovered1"><a name="line625"></a>625 def reset;
+    super end </span><span class="uncovered0"><a name="line626"></a>626
+    </span><span class="uncovered1"><a name="line627"></a>627 def
+    dump_coverage_info(formatters) # :nodoc: </span><span class="uncovered0"><a
+    name="line628"></a>628 update_script_lines__ </span><span
+    class="uncovered1"><a name="line629"></a>629 raw_data_relative.each do
+    |file, lines| </span><span class="uncovered0"><a name="line630"></a>630 next
+    if @script_lines__.has_key?(file) == false </span><span
+    class="uncovered1"><a name="line631"></a>631 lines = @script_lines__[file]
+    </span><span class="uncovered0"><a name="line632"></a>632 raw_coverage_array
+    = raw_data_relative[file] </span><span class="uncovered1"><a
+    name="line633"></a>633 </span><span class="uncovered0"><a
+    name="line634"></a>634 line_info, marked_info, </span><span
+    class="uncovered1"><a name="line635"></a>635 count_info =
+    refine_coverage_info(lines, raw_coverage_array) </span><span
+    class="uncovered0"><a name="line636"></a>636 formatters.each do |formatter|
+    </span><span class="uncovered1"><a name="line637"></a>637
+    formatter.add_file(file, line_info, marked_info, count_info) </span><span
+    class="uncovered0"><a name="line638"></a>638 end </span><span
+    class="uncovered1"><a name="line639"></a>639 end </span><span
+    class="uncovered0"><a name="line640"></a>640 formatters.each{|formatter|
+    formatter.execute} </span><span class="uncovered1"><a name="line641"></a>641
+    end </span><span class="uncovered0"><a name="line642"></a>642 </span><span
+    class="uncovered1"><a name="line643"></a>643 private </span><span
+    class="uncovered0"><a name="line644"></a>644 </span><span
+    class="uncovered1"><a name="line645"></a>645 def data_default; {} end
+    </span><span class="uncovered0"><a name="line646"></a>646 </span><span
+    class="uncovered1"><a name="line647"></a>647 def raw_data_absolute
+    </span><span class="uncovered0"><a name="line648"></a>648
+    Rcov::RCOV__.generate_coverage_info </span><span class="uncovered1"><a
+    name="line649"></a>649 end </span><span class="uncovered0"><a
+    name="line650"></a>650 </span><span class="uncovered1"><a
+    name="line651"></a>651 def aggregate_data(aggregated_data, delta)
+    </span><span class="uncovered0"><a name="line652"></a>652 delta.each_pair do
+    |file, cov_arr| </span><span class="uncovered1"><a name="line653"></a>653
+    dest = (aggregated_data[file] ||= Array.new(cov_arr.size, 0)) </span><span
+    class="uncovered0"><a name="line654"></a>654 cov_arr.each_with_index{|x,i|
+    dest[i] += x} </span><span class="uncovered1"><a name="line655"></a>655 end
+    </span><span class="uncovered0"><a name="line656"></a>656 end </span><span
+    class="uncovered1"><a name="line657"></a>657 </span><span
+    class="uncovered0"><a name="line658"></a>658 def
+    compute_raw_data_difference(first, last) </span><span class="uncovered1"><a
+    name="line659"></a>659 difference = {} </span><span class="uncovered0"><a
+    name="line660"></a>660 last.each_pair do |fname, cov_arr| </span><span
+    class="uncovered1"><a name="line661"></a>661 unless first.has_key?(fname)
+    </span><span class="uncovered0"><a name="line662"></a>662 difference[fname]
+    = cov_arr.clone </span><span class="uncovered1"><a name="line663"></a>663
+    else </span><span class="uncovered0"><a name="line664"></a>664 orig_arr =
+    first[fname] </span><span class="uncovered1"><a name="line665"></a>665
+    diff_arr = Array.new(cov_arr.size, 0) </span><span class="uncovered0"><a
+    name="line666"></a>666 changed = false </span><span class="uncovered1"><a
+    name="line667"></a>667 cov_arr.each_with_index do |x, i| </span><span
+    class="uncovered0"><a name="line668"></a>668 diff_arr[i] = diff = (x || 0) -
+    (orig_arr[i] || 0) </span><span class="uncovered1"><a name="line669"></a>669
+    changed = true if diff != 0 </span><span class="uncovered0"><a
+    name="line670"></a>670 end </span><span class="uncovered1"><a
+    name="line671"></a>671 difference[fname] = diff_arr if changed </span><span
+    class="uncovered0"><a name="line672"></a>672 end </span><span
+    class="uncovered1"><a name="line673"></a>673 end </span><span
+    class="uncovered0"><a name="line674"></a>674 difference </span><span
+    class="uncovered1"><a name="line675"></a>675 end </span><span
+    class="uncovered0"><a name="line676"></a>676 </span><span
+    class="uncovered1"><a name="line677"></a>677 </span><span
+    class="uncovered0"><a name="line678"></a>678 def refine_coverage_info(lines,
+    covers) </span><span class="uncovered1"><a name="line679"></a>679
+    marked_info = [] </span><span class="uncovered0"><a name="line680"></a>680
+    count_info = [] </span><span class="uncovered1"><a name="line681"></a>681
+    lines.size.times do |i| </span><span class="uncovered0"><a
+    name="line682"></a>682 c = covers[i] </span><span class="uncovered1"><a
+    name="line683"></a>683 marked_info &lt;&lt; ((c &amp;&amp; c &gt; 0) ? true
+    : false) </span><span class="uncovered0"><a name="line684"></a>684
+    count_info &lt;&lt; (c || 0) </span><span class="uncovered1"><a
+    name="line685"></a>685 end </span><span class="uncovered0"><a
+    name="line686"></a>686 </span><span class="uncovered1"><a
+    name="line687"></a>687 script_lines_workaround(lines, marked_info,
+    count_info) </span><span class="uncovered0"><a name="line688"></a>688 end
+    </span><span class="uncovered1"><a name="line689"></a>689 </span><span
+    class="uncovered0"><a name="line690"></a>690 # Try to detect repeated data,
+    based on observed repetitions in line_info: </span><span
+    class="uncovered1"><a name="line691"></a>691 # this is a workaround for
+    SCRIPT_LINES__[filename] including as many copies </span><span
+    class="uncovered0"><a name="line692"></a>692 # of the file as the number of
+    times it was parsed. </span><span class="uncovered1"><a
+    name="line693"></a>693 def script_lines_workaround(line_info, coverage_info,
+    count_info) </span><span class="uncovered0"><a name="line694"></a>694
+    is_repeated = lambda do |div| </span><span class="uncovered1"><a
+    name="line695"></a>695 n = line_info.size / div </span><span
+    class="uncovered0"><a name="line696"></a>696 break false unless
+    line_info.size % div == 0 &amp;&amp; n &gt; 1 </span><span
+    class="uncovered1"><a name="line697"></a>697 different = false </span><span
+    class="uncovered0"><a name="line698"></a>698 n.times do |i| </span><span
+    class="uncovered1"><a name="line699"></a>699 if (0...div).map{|j|
+    line_info[i+j*n]}.uniq.size != 1 </span><span class="uncovered0"><a
+    name="line700"></a>700 different = true </span><span class="uncovered1"><a
+    name="line701"></a>701 break </span><span class="uncovered0"><a
+    name="line702"></a>702 end </span><span class="uncovered1"><a
+    name="line703"></a>703 end </span><span class="uncovered0"><a
+    name="line704"></a>704 </span><span class="uncovered1"><a
+    name="line705"></a>705 ! different </span><span class="uncovered0"><a
+    name="line706"></a>706 end </span><span class="uncovered1"><a
+    name="line707"></a>707 </span><span class="uncovered0"><a
+    name="line708"></a>708 factors = braindead_factorize(line_info.size)
+    </span><span class="uncovered1"><a name="line709"></a>709 factors.each do
+    |n| </span><span class="uncovered0"><a name="line710"></a>710 if
+    is_repeated[n] </span><span class="uncovered1"><a name="line711"></a>711
+    line_info = line_info[0, line_info.size / n] </span><span
+    class="uncovered0"><a name="line712"></a>712 coverage_info =
+    coverage_info[0, coverage_info.size / n] </span><span class="uncovered1"><a
+    name="line713"></a>713 count_info = count_info[0, count_info.size / n]
+    </span><span class="uncovered0"><a name="line714"></a>714 end </span><span
+    class="uncovered1"><a name="line715"></a>715 end if factors.size &gt; 1 #
+    don't even try if it's prime </span><span class="uncovered0"><a
+    name="line716"></a>716 </span><span class="uncovered1"><a
+    name="line717"></a>717 [line_info, coverage_info, count_info] </span><span
+    class="uncovered0"><a name="line718"></a>718 end </span><span
+    class="uncovered1"><a name="line719"></a>719 </span><span
+    class="uncovered0"><a name="line720"></a>720 def braindead_factorize(num)
+    </span><span class="uncovered1"><a name="line721"></a>721 return [0] if num
+    == 0 </span><span class="uncovered0"><a name="line722"></a>722 return [-1] +
+    braindead_factorize(-num) if num &lt; 0 </span><span class="uncovered1"><a
+    name="line723"></a>723 factors = [] </span><span class="uncovered0"><a
+    name="line724"></a>724 while num % 2 == 0 </span><span class="uncovered1"><a
+    name="line725"></a>725 factors &lt;&lt; 2 </span><span class="uncovered0"><a
+    name="line726"></a>726 num /= 2 </span><span class="uncovered1"><a
+    name="line727"></a>727 end </span><span class="uncovered0"><a
+    name="line728"></a>728 size = num </span><span class="uncovered1"><a
+    name="line729"></a>729 n = 3 </span><span class="uncovered0"><a
+    name="line730"></a>730 max = Math.sqrt(num) </span><span
+    class="uncovered1"><a name="line731"></a>731 while n &lt;= max &amp;&amp; n
+    &lt;= size </span><span class="uncovered0"><a name="line732"></a>732 while
+    size % n == 0 </span><span class="uncovered1"><a name="line733"></a>733 size
+    /= n </span><span class="uncovered0"><a name="line734"></a>734 factors
+    &lt;&lt; n </span><span class="uncovered1"><a name="line735"></a>735 end
+    </span><span class="uncovered0"><a name="line736"></a>736 n += 2
+    </span><span class="uncovered1"><a name="line737"></a>737 end </span><span
+    class="uncovered0"><a name="line738"></a>738 factors &lt;&lt; size if size
+    != 1 </span><span class="uncovered1"><a name="line739"></a>739 factors
+    </span><span class="uncovered0"><a name="line740"></a>740 end </span><span
+    class="uncovered1"><a name="line741"></a>741 </span><span
+    class="uncovered0"><a name="line742"></a>742 def update_script_lines__
+    </span><span class="uncovered1"><a name="line743"></a>743 @script_lines__ =
+    @script_lines__.merge(SCRIPT_LINES__) </span><span class="uncovered0"><a
+    name="line744"></a>744 end </span><span class="uncovered1"><a
+    name="line745"></a>745 </span><span class="uncovered0"><a
+    name="line746"></a>746 public </span><span class="uncovered1"><a
+    name="line747"></a>747 def marshal_dump # :nodoc: </span><span
+    class="uncovered0"><a name="line748"></a>748 # @script_lines__ is updated
+    just before serialization so as to avoid </span><span class="uncovered1"><a
+    name="line749"></a>749 # missing files in SCRIPT_LINES__ </span><span
+    class="uncovered0"><a name="line750"></a>750 ivs = {} </span><span
+    class="uncovered1"><a name="line751"></a>751 update_script_lines__
+    </span><span class="uncovered0"><a name="line752"></a>752
+    instance_variables.each{|iv| ivs[iv] = instance_variable_get(iv)}
+    </span><span class="uncovered1"><a name="line753"></a>753 ivs </span><span
+    class="uncovered0"><a name="line754"></a>754 end </span><span
+    class="uncovered1"><a name="line755"></a>755 </span><span
+    class="uncovered0"><a name="line756"></a>756 def marshal_load(ivs) # :nodoc:
+    </span><span class="uncovered1"><a name="line757"></a>757 ivs.each_pair{|iv,
+    val| instance_variable_set(iv, val)} </span><span class="uncovered0"><a
+    name="line758"></a>758 end </span><span class="uncovered1"><a
+    name="line759"></a>759 </span><span class="uncovered0"><a
+    name="line760"></a>760 end # CodeCoverageAnalyzer </span><span
+    class="uncovered1"><a name="line761"></a>761 </span><span
+    class="uncovered0"><a name="line762"></a>762 # A CallSiteAnalyzer can be
+    used to obtain information about: </span><span class="uncovered1"><a
+    name="line763"></a>763 # * where a method is defined (&quot;+defsite+&quot;)
+    </span><span class="uncovered0"><a name="line764"></a>764 # * where a method
+    was called from (&quot;+callsite+&quot;) </span><span class="uncovered1"><a
+    name="line765"></a>765 # </span><span class="uncovered0"><a
+    name="line766"></a>766 # == Example </span><span class="uncovered1"><a
+    name="line767"></a>767 # &lt;tt&gt;example.rb&lt;/tt&gt;: </span><span
+    class="uncovered0"><a name="line768"></a>768 # class X </span><span
+    class="uncovered1"><a name="line769"></a>769 # def f1; f2 end </span><span
+    class="uncovered0"><a name="line770"></a>770 # def f2; 1 + 1 end
+    </span><span class="uncovered1"><a name="line771"></a>771 # def f3; f1 end
+    </span><span class="uncovered0"><a name="line772"></a>772 # end </span><span
+    class="uncovered1"><a name="line773"></a>773 # </span><span
+    class="uncovered0"><a name="line774"></a>774 # analyzer =
+    Rcov::CallSiteAnalyzer.new </span><span class="uncovered1"><a
+    name="line775"></a>775 # x = X.new </span><span class="uncovered0"><a
+    name="line776"></a>776 # analyzer.run_hooked do </span><span
+    class="uncovered1"><a name="line777"></a>777 # x.f1 </span><span
+    class="uncovered0"><a name="line778"></a>778 # end </span><span
+    class="uncovered1"><a name="line779"></a>779 # # .... </span><span
+    class="uncovered0"><a name="line780"></a>780 # </span><span
+    class="uncovered1"><a name="line781"></a>781 # analyzer.run_hooked do
+    </span><span class="uncovered0"><a name="line782"></a>782 # x.f3
+    </span><span class="uncovered1"><a name="line783"></a>783 # # the
+    information generated in this run is aggregated </span><span
+    class="uncovered0"><a name="line784"></a>784 # # to the previously recorded
+    one </span><span class="uncovered1"><a name="line785"></a>785 # end
+    </span><span class="uncovered0"><a name="line786"></a>786 # </span><span
+    class="uncovered1"><a name="line787"></a>787 # analyzer.analyzed_classes #
+    =&gt; [&quot;X&quot;, ... ] </span><span class="uncovered0"><a
+    name="line788"></a>788 # analyzer.methods_for_class(&quot;X&quot;) # =&gt;
+    [&quot;f1&quot;, &quot;f2&quot;, &quot;f3&quot;] </span><span
+    class="uncovered1"><a name="line789"></a>789 #
+    analyzer.defsite(&quot;X#f1&quot;) # =&gt; DefSite object </span><span
+    class="uncovered0"><a name="line790"></a>790 #
+    analyzer.callsites(&quot;X#f2&quot;) # =&gt; hash with CallSite =&gt; count
+    </span><span class="uncovered1"><a name="line791"></a>791 # # associations
+    </span><span class="uncovered0"><a name="line792"></a>792 # defsite =
+    analyzer.defsite(&quot;X#f1&quot;) </span><span class="uncovered1"><a
+    name="line793"></a>793 # defsite.file # =&gt; &quot;example.rb&quot;
+    </span><span class="uncovered0"><a name="line794"></a>794 # defsite.line #
+    =&gt; 2 </span><span class="uncovered1"><a name="line795"></a>795 #
+    </span><span class="uncovered0"><a name="line796"></a>796 # You can have
+    several CallSiteAnalyzer objects at a time, and it is </span><span
+    class="uncovered1"><a name="line797"></a>797 # possible to nest the
+    #run_hooked / #install_hook/#remove_hook blocks: each </span><span
+    class="uncovered0"><a name="line798"></a>798 # analyzer will manage its data
+    separately. Note however that no special </span><span class="uncovered1"><a
+    name="line799"></a>799 # provision is taken to ignore code executed
+    &quot;inside&quot; the CallSiteAnalyzer </span><span class="uncovered0"><a
+    name="line800"></a>800 # class. </span><span class="uncovered1"><a
+    name="line801"></a>801 # </span><span class="uncovered0"><a
+    name="line802"></a>802 # +defsite+ information is only available for methods
+    that were called under </span><span class="uncovered1"><a
+    name="line803"></a>803 # the inspection of the CallSiteAnalyzer, i.o.w. you
+    will only have +defsite+ </span><span class="uncovered0"><a
+    name="line804"></a>804 # information for those methods for which callsite
+    information is </span><span class="uncovered1"><a name="line805"></a>805 #
+    available. </span><span class="uncovered0"><a name="line806"></a>806 class
+    CallSiteAnalyzer &lt; DifferentialAnalyzer </span><span
+    class="uncovered1"><a name="line807"></a>807 # A method definition site.
+    </span><span class="uncovered0"><a name="line808"></a>808 class DefSite &lt;
+    Struct.new(:file, :line) </span><span class="uncovered1"><a
+    name="line809"></a>809 end </span><span class="uncovered0"><a
+    name="line810"></a>810 </span><span class="uncovered1"><a
+    name="line811"></a>811 # Object representing a method call site.
+    </span><span class="uncovered0"><a name="line812"></a>812 # It corresponds
+    to a part of the callstack starting from the context that </span><span
+    class="uncovered1"><a name="line813"></a>813 # called the method.
+    </span><span class="uncovered0"><a name="line814"></a>814 class CallSite
+    &lt; Struct.new(:backtrace) </span><span class="uncovered1"><a
+    name="line815"></a>815 # The depth of a CallSite is the number of stack
+    frames </span><span class="uncovered0"><a name="line816"></a>816 # whose
+    information is included in the CallSite object. </span><span
+    class="uncovered1"><a name="line817"></a>817 def depth </span><span
+    class="uncovered0"><a name="line818"></a>818 backtrace.size </span><span
+    class="uncovered1"><a name="line819"></a>819 end </span><span
+    class="uncovered0"><a name="line820"></a>820 </span><span
+    class="uncovered1"><a name="line821"></a>821 # File where the method call
+    originated. </span><span class="uncovered0"><a name="line822"></a>822 #
+    Might return +nil+ or &quot;&quot; if it is not meaningful (C extensions,
+    etc). </span><span class="uncovered1"><a name="line823"></a>823 def
+    file(level = 0) </span><span class="uncovered0"><a name="line824"></a>824
+    stack_frame = backtrace[level] </span><span class="uncovered1"><a
+    name="line825"></a>825 stack_frame ? stack_frame[2] : nil </span><span
+    class="uncovered0"><a name="line826"></a>826 end </span><span
+    class="uncovered1"><a name="line827"></a>827 </span><span
+    class="uncovered0"><a name="line828"></a>828 # Line where the method call
+    originated. </span><span class="uncovered1"><a name="line829"></a>829 #
+    Might return +nil+ or 0 if it is not meaningful (C extensions, etc).
+    </span><span class="uncovered0"><a name="line830"></a>830 def line(level =
+    0) </span><span class="uncovered1"><a name="line831"></a>831 stack_frame =
+    backtrace[level] </span><span class="uncovered0"><a name="line832"></a>832
+    stack_frame ? stack_frame[3] : nil </span><span class="uncovered1"><a
+    name="line833"></a>833 end </span><span class="uncovered0"><a
+    name="line834"></a>834 </span><span class="uncovered1"><a
+    name="line835"></a>835 # Name of the method where the call originated.
+    </span><span class="uncovered0"><a name="line836"></a>836 # Returns +nil+ if
+    the call originated in +toplevel+. </span><span class="uncovered1"><a
+    name="line837"></a>837 # Might return +nil+ if it could not be determined.
+    </span><span class="uncovered0"><a name="line838"></a>838 def
+    calling_method(level = 0) </span><span class="uncovered1"><a
+    name="line839"></a>839 stack_frame = backtrace[level] </span><span
+    class="uncovered0"><a name="line840"></a>840 stack_frame ? stack_frame[1] :
+    nil </span><span class="uncovered1"><a name="line841"></a>841 end
+    </span><span class="uncovered0"><a name="line842"></a>842 </span><span
+    class="uncovered1"><a name="line843"></a>843 # Name of the class holding the
+    method where the call originated. </span><span class="uncovered0"><a
+    name="line844"></a>844 # Might return +nil+ if it could not be determined.
+    </span><span class="uncovered1"><a name="line845"></a>845 def
+    calling_class(level = 0) </span><span class="uncovered0"><a
+    name="line846"></a>846 stack_frame = backtrace[level] </span><span
+    class="uncovered1"><a name="line847"></a>847 stack_frame ? stack_frame[0] :
+    nil </span><span class="uncovered0"><a name="line848"></a>848 end
+    </span><span class="uncovered1"><a name="line849"></a>849 end </span><span
+    class="uncovered0"><a name="line850"></a>850 </span><span
+    class="uncovered1"><a name="line851"></a>851 @hook_level = 0 </span><span
+    class="uncovered0"><a name="line852"></a>852 # defined this way instead of
+    attr_accessor so that it's covered </span><span class="uncovered1"><a
+    name="line853"></a>853 def self.hook_level # :nodoc: </span><span
+    class="uncovered0"><a name="line854"></a>854 @hook_level </span><span
+    class="uncovered1"><a name="line855"></a>855 end </span><span
+    class="uncovered0"><a name="line856"></a>856 def self.hook_level=(x) #
+    :nodoc: </span><span class="uncovered1"><a name="line857"></a>857
+    @hook_level = x </span><span class="uncovered0"><a name="line858"></a>858
+    end </span><span class="uncovered1"><a name="line859"></a>859 </span><span
+    class="uncovered0"><a name="line860"></a>860 def initialize </span><span
+    class="uncovered1"><a name="line861"></a>861 super(:install_callsite_hook,
+    :remove_callsite_hook, </span><span class="uncovered0"><a
+    name="line862"></a>862 :reset_callsite) </span><span class="uncovered1"><a
+    name="line863"></a>863 end </span><span class="uncovered0"><a
+    name="line864"></a>864 </span><span class="uncovered1"><a
+    name="line865"></a>865 # Classes whose methods have been called.
+    </span><span class="uncovered0"><a name="line866"></a>866 # Returns an array
+    of strings describing the classes (just klass.to_s for </span><span
+    class="uncovered1"><a name="line867"></a>867 # each of them). Singleton
+    classes are rendered as: </span><span class="uncovered0"><a
+    name="line868"></a>868 # #&lt;Class:MyNamespace::MyClass&gt; </span><span
+    class="uncovered1"><a name="line869"></a>869 def analyzed_classes
+    </span><span class="uncovered0"><a name="line870"></a>870
+    raw_data_relative.first.keys.map{|klass, meth| klass}.uniq.sort </span><span
+    class="uncovered1"><a name="line871"></a>871 end </span><span
+    class="uncovered0"><a name="line872"></a>872 </span><span
+    class="uncovered1"><a name="line873"></a>873 # Methods that were called for
+    the given class. See #analyzed_classes for </span><span
+    class="uncovered0"><a name="line874"></a>874 # the notation used for
+    singleton classes. </span><span class="uncovered1"><a name="line875"></a>875
+    # Returns an array of strings or +nil+ </span><span class="uncovered0"><a
+    name="line876"></a>876 def methods_for_class(classname) </span><span
+    class="uncovered1"><a name="line877"></a>877 a =
+    raw_data_relative.first.keys.select{|kl,_| kl == classname}.map{|_,meth|
+    meth}.sort </span><span class="uncovered0"><a name="line878"></a>878
+    a.empty? ? nil : a </span><span class="uncovered1"><a name="line879"></a>879
+    end </span><span class="uncovered0"><a name="line880"></a>880 alias_method
+    :analyzed_methods, :methods_for_class </span><span class="uncovered1"><a
+    name="line881"></a>881 </span><span class="uncovered0"><a
+    name="line882"></a>882 # Returns a hash with &lt;tt&gt;CallSite =&gt; call
+    count&lt;/tt&gt; associations or +nil+ </span><span class="uncovered1"><a
+    name="line883"></a>883 # Can be called in two ways: </span><span
+    class="uncovered0"><a name="line884"></a>884 #
+    analyzer.callsites(&quot;Foo#f1&quot;) # instance method </span><span
+    class="uncovered1"><a name="line885"></a>885 #
+    analyzer.callsites(&quot;Foo.g1&quot;) # singleton method of the class
+    </span><span class="uncovered0"><a name="line886"></a>886 # or </span><span
+    class="uncovered1"><a name="line887"></a>887 #
+    analyzer.callsites(&quot;Foo&quot;, &quot;f1&quot;) </span><span
+    class="uncovered0"><a name="line888"></a>888 #
+    analyzer.callsites(&quot;#&lt;class:Foo&gt;&quot;, &quot;g1&quot;)
+    </span><span class="uncovered1"><a name="line889"></a>889 def
+    callsites(classname_or_fullname, methodname = nil) </span><span
+    class="uncovered0"><a name="line890"></a>890 rawsites =
+    raw_data_relative.first[expand_name(classname_or_fullname, methodname)]
+    </span><span class="uncovered1"><a name="line891"></a>891 return nil unless
+    rawsites </span><span class="uncovered0"><a name="line892"></a>892 ret = {}
+    </span><span class="uncovered1"><a name="line893"></a>893 # could be a job
+    for inject but it's slow and I don't mind the extra loc </span><span
+    class="uncovered0"><a name="line894"></a>894 rawsites.each_pair do
+    |backtrace, count| </span><span class="uncovered1"><a name="line895"></a>895
+    ret[CallSite.new(backtrace)] = count </span><span class="uncovered0"><a
+    name="line896"></a>896 end </span><span class="uncovered1"><a
+    name="line897"></a>897 ret </span><span class="uncovered0"><a
+    name="line898"></a>898 end </span><span class="uncovered1"><a
+    name="line899"></a>899 </span><span class="uncovered0"><a
+    name="line900"></a>900 # Returns a DefSite object corresponding to the given
+    method </span><span class="uncovered1"><a name="line901"></a>901 # Can be
+    called in two ways: </span><span class="uncovered0"><a
+    name="line902"></a>902 # analyzer.defsite(&quot;Foo#f1&quot;) # instance
+    method </span><span class="uncovered1"><a name="line903"></a>903 #
+    analyzer.defsite(&quot;Foo.g1&quot;) # singleton method of the class
+    </span><span class="uncovered0"><a name="line904"></a>904 # or </span><span
+    class="uncovered1"><a name="line905"></a>905 #
+    analyzer.defsite(&quot;Foo&quot;, &quot;f1&quot;) </span><span
+    class="uncovered0"><a name="line906"></a>906 #
+    analyzer.defsite(&quot;#&lt;class:Foo&gt;&quot;, &quot;g1&quot;)
+    </span><span class="uncovered1"><a name="line907"></a>907 def
+    defsite(classname_or_fullname, methodname = nil) </span><span
+    class="uncovered0"><a name="line908"></a>908 file, line =
+    raw_data_relative[1][expand_name(classname_or_fullname, methodname)]
+    </span><span class="uncovered1"><a name="line909"></a>909 return nil unless
+    file &amp;&amp; line </span><span class="uncovered0"><a
+    name="line910"></a>910 DefSite.new(file, line) </span><span
+    class="uncovered1"><a name="line911"></a>911 end </span><span
+    class="uncovered0"><a name="line912"></a>912 </span><span
+    class="uncovered1"><a name="line913"></a>913 private </span><span
+    class="uncovered0"><a name="line914"></a>914 </span><span
+    class="uncovered1"><a name="line915"></a>915 def
+    expand_name(classname_or_fullname, methodname = nil) </span><span
+    class="uncovered0"><a name="line916"></a>916 if methodname.nil? </span><span
+    class="uncovered1"><a name="line917"></a>917 case classname_or_fullname
+    </span><span class="uncovered0"><a name="line918"></a>918 when /(.*)#(.*)/:
+    classname, methodname = $1, $2 </span><span class="uncovered1"><a
+    name="line919"></a>919 when /(.*)\.(.*)/: classname, methodname =
+    &quot;#&lt;Class:#{$1}&gt;&quot;, $2 </span><span class="uncovered0"><a
+    name="line920"></a>920 else </span><span class="uncovered1"><a
+    name="line921"></a>921 raise ArgumentError, &quot;Incorrect method
+    name&quot; </span><span class="uncovered0"><a name="line922"></a>922 end
+    </span><span class="uncovered1"><a name="line923"></a>923 </span><span
+    class="uncovered0"><a name="line924"></a>924 return [classname, methodname]
+    </span><span class="uncovered1"><a name="line925"></a>925 end </span><span
+    class="uncovered0"><a name="line926"></a>926 </span><span
+    class="uncovered1"><a name="line927"></a>927 [classname_or_fullname,
+    methodname] </span><span class="uncovered0"><a name="line928"></a>928 end
+    </span><span class="uncovered1"><a name="line929"></a>929 </span><span
+    class="uncovered0"><a name="line930"></a>930 def data_default; [{}, {}] end
+    </span><span class="uncovered1"><a name="line931"></a>931 </span><span
+    class="uncovered0"><a name="line932"></a>932 def raw_data_absolute
+    </span><span class="uncovered1"><a name="line933"></a>933 raw,
+    method_def_site = RCOV__.generate_callsite_info </span><span
+    class="uncovered0"><a name="line934"></a>934 ret1 = {} </span><span
+    class="uncovered1"><a name="line935"></a>935 ret2 = {} </span><span
+    class="uncovered0"><a name="line936"></a>936 raw.each_pair do |(klass,
+    method), hash| </span><span class="uncovered1"><a name="line937"></a>937
+    begin </span><span class="uncovered0"><a name="line938"></a>938 key =
+    [klass.to_s, method.to_s] </span><span class="uncovered1"><a
+    name="line939"></a>939 ret1[key] = hash.clone
+    #Marshal.load(Marshal.dump(hash)) </span><span class="uncovered0"><a
+    name="line940"></a>940 ret2[key] = method_def_site[[klass, method]]
+    </span><span class="uncovered1"><a name="line941"></a>941 #rescue Exception
+    </span><span class="uncovered0"><a name="line942"></a>942 end </span><span
+    class="uncovered1"><a name="line943"></a>943 end </span><span
+    class="uncovered0"><a name="line944"></a>944 </span><span
+    class="uncovered1"><a name="line945"></a>945 [ret1, ret2] </span><span
+    class="uncovered0"><a name="line946"></a>946 end </span><span
+    class="uncovered1"><a name="line947"></a>947 </span><span
+    class="uncovered0"><a name="line948"></a>948 def
+    aggregate_data(aggregated_data, delta) </span><span class="uncovered1"><a
+    name="line949"></a>949 callsites1, defsites1 = aggregated_data </span><span
+    class="uncovered0"><a name="line950"></a>950 callsites2, defsites2 = delta
+    </span><span class="uncovered1"><a name="line951"></a>951 </span><span
+    class="uncovered0"><a name="line952"></a>952 callsites2.each_pair do
+    |(klass, method), hash| </span><span class="uncovered1"><a
+    name="line953"></a>953 dest_hash = (callsites1[[klass, method]] ||= {})
+    </span><span class="uncovered0"><a name="line954"></a>954 hash.each_pair do
+    |callsite, count| </span><span class="uncovered1"><a name="line955"></a>955
+    dest_hash[callsite] ||= 0 </span><span class="uncovered0"><a
+    name="line956"></a>956 dest_hash[callsite] += count </span><span
+    class="uncovered1"><a name="line957"></a>957 end </span><span
+    class="uncovered0"><a name="line958"></a>958 end </span><span
+    class="uncovered1"><a name="line959"></a>959 </span><span
+    class="uncovered0"><a name="line960"></a>960 defsites1.update(defsites2)
+    </span><span class="uncovered1"><a name="line961"></a>961 end </span><span
+    class="uncovered0"><a name="line962"></a>962 </span><span
+    class="uncovered1"><a name="line963"></a>963 def
+    compute_raw_data_difference(first, last) </span><span class="uncovered0"><a
+    name="line964"></a>964 difference = {} </span><span class="uncovered1"><a
+    name="line965"></a>965 default = Hash.new(0) </span><span
+    class="uncovered0"><a name="line966"></a>966 </span><span
+    class="uncovered1"><a name="line967"></a>967 callsites1, defsites1 = *first
+    </span><span class="uncovered0"><a name="line968"></a>968 callsites2,
+    defsites2 = *last </span><span class="uncovered1"><a name="line969"></a>969
+    </span><span class="uncovered0"><a name="line970"></a>970
+    callsites2.each_pair do |(klass, method), hash| </span><span
+    class="uncovered1"><a name="line971"></a>971 old_hash = callsites1[[klass,
+    method]] || default </span><span class="uncovered0"><a
+    name="line972"></a>972 hash.each_pair do |callsite, count| </span><span
+    class="uncovered1"><a name="line973"></a>973 diff = hash[callsite] -
+    (old_hash[callsite] || 0) </span><span class="uncovered0"><a
+    name="line974"></a>974 if diff &gt; 0 </span><span class="uncovered1"><a
+    name="line975"></a>975 difference[[klass, method]] ||= {} </span><span
+    class="uncovered0"><a name="line976"></a>976 difference[[klass,
+    method]][callsite] = diff </span><span class="uncovered1"><a
+    name="line977"></a>977 end </span><span class="uncovered0"><a
+    name="line978"></a>978 end </span><span class="uncovered1"><a
+    name="line979"></a>979 end </span><span class="uncovered0"><a
+    name="line980"></a>980 </span><span class="uncovered1"><a
+    name="line981"></a>981 [difference, defsites1.update(defsites2)]
+    </span><span class="uncovered0"><a name="line982"></a>982 end </span><span
+    class="uncovered1"><a name="line983"></a>983 </span><span
+    class="uncovered0"><a name="line984"></a>984 end </span><span
+    class="uncovered1"><a name="line985"></a>985 </span><span
+    class="uncovered0"><a name="line986"></a>986 end # Rcov </span><span
+    class="inferred1"><a name="line987"></a>987 </span><span
+    class="inferred0"><a name="line988"></a>988 # vi: set sw=2: </span></pre>
+    <hr />
+    <p> Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'> rcov
+    code coverage analysis tool for Ruby </a> version 0.8.1.2. </p>
+    <p>
+      <a href='http://validator.w3.org/check/referer'>
+        <img src='http://www.w3.org/Icons/valid-xhtml10' height='31' alt='Valid XHTML 1.0!' width='88' />
+      </a>
+      <a href='http://jigsaw.w3.org/css-validator/check/referer'>
+        <img src='http://jigsaw.w3.org/css-validator/images/vcss' alt='Valid CSS!' style='border:0;width:88px;height:31px' />
+      </a>
+    </p>
+  </body>
+</html>
