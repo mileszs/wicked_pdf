@@ -10,6 +10,7 @@ class WickedPdf
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path 
     @exe_path ||= `which wkhtmltopdf`.chomp
+    raise "Location of wkhtmltopdf unknown" if @exe_path.length == 0
   end
 
   def pdf_from_string(string)
