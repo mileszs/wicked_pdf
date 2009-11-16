@@ -13,8 +13,8 @@ class WickedPdf
     raise "Location of wkhtmltopdf unknown" if @exe_path.length == 0
   end
 
-  def pdf_from_string(string, header_footer=nil)
-    command_for_stdin_stdout = "#{@exe_path} #{header_footer} - - -q" # -q for no errors on stdout
+  def pdf_from_string(string, options=nil)
+    command_for_stdin_stdout = "#{@exe_path} #{options} - - -q" # -q for no errors on stdout
     Open3.popen3(command_for_stdin_stdout) do |stdin, stdout, stderr|
       stdin.write(string)
       stdin.close

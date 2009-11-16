@@ -24,7 +24,7 @@ module PdfHelper
 
       html_string = render_to_string(:template => options[:template], :layout => options[:layout])
       w = WickedPdf.new(options[:wkhtmltopdf])
-      w.pdf_from_string(html_string, parse_header_footer(:header => options[:header], :footer => options[:footer]))
+      w.pdf_from_string(html_string, options(:header => options[:header], :footer => options[:footer], :toc => options[:toc], :outline => options[:outline]))
     end
 
     def make_and_send_pdf(pdf_name, options = {})
@@ -33,6 +33,10 @@ module PdfHelper
         :filename => pdf_name + '.pdf',
         :type => 'application/pdf'
       )
+    end
+
+    def options opts
+      "#{parse_header_footer(:header => opts[:header], :footer => opts[:footer])} #{parse_toc(opts[:toc])} #{parse_outline(opts[:outline])}"
     end
 
     def parse_header_footer opts
@@ -56,5 +60,27 @@ module PdfHelper
         end
       end
       r
+    end
+
+    def parse_toc opts
+      unless opts.blank?
+        r=""
+        r += [:font_name, :depth, :header_text, :header_fs, :l1_font_size, :l2_font_size, :l3_font_size, :l4_font_size, :l5_font_size, :l6_font_size, :l7_font_size, :l1_indentation, :l2_indentation, :l3_indentation, :l4_indentation, :l5_indentation, :l6_indentation, :l7_indentation].collect do |o|
+          "--toc-#{o.to_s.gsub('_', '-')} '#{opts[o]}'" unless opts[o].blank?
+        end.join(' ')
+        r += [:no_dots, :disable_links, :disable_back_links].collect do |o|
+          "--toc-#{o.to_s.gsub('_', '-')}" unless opts[o].blank?
+        end.join(' ')
+        r
+      end
+    end
+
+    def parse_outline opts
+      unless opts.blank?
+        r=""
+        r += "--outline " unless opts[:outline].blank?
+        r += "--outline-depth '#{opts[:outline_depth]}'" unless opts[:outline_depth].blank?
+        r
+      end
     end
 end
