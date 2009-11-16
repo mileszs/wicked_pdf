@@ -33,7 +33,7 @@ Next:
                                :left => "TEXT", #OPTIONAL
                                :right => "TEXT", #OPTIONAL
                                :spacing => REAL, #OPTIONAL
-                               :line => ""}, #OPTIONAL
+                               :line => true}, #OPTIONAL
                    :footer => {:html => {:template => "public/header.pdf.erb" OR :url => "www.header.bbb"}, #OPTIONAL
                                :center => "TEXT", #OPTIONAL
                                :font_name => "NAME", #OPTIONAL
@@ -41,7 +41,7 @@ Next:
                                :left => "TEXT", #OPTIONAL
                                :right => "TEXT", #OPTIONAL
                                :spacing => REAL, #OPTIONAL
-                               :line => ""}, #OPTIONAL
+                               :line => true}, #OPTIONAL
                    :toc => {:font_name => "NAME", #OPTIONAL
                             :depth => LEVEL, #OPTIONAL
                             :header_text => "TEXT", #OPTIONAL
@@ -60,10 +60,10 @@ Next:
                             :l5_indentation => NUM, #OPTIONAL
                             :l6_indentation => NUM, #OPTIONAL
                             :l7_indentation => NUM, #OPTIONAL
-                            :no_dots => "", #OPTIONAL
-                            :disable_links => "", #OPTIONAL
-                            :disable_back_links => ""}, #OPTIONAL
-                   :outline => {:outline => "", #OPTIONAL
+                            :no_dots => true, #OPTIONAL
+                            :disable_links => true, #OPTIONAL
+                            :disable_back_links => true}, #OPTIONAL
+                   :outline => {:outline => true, #OPTIONAL
                                 :outline_depth => LEVEL} #OPTIONAL
           end
         end
