@@ -13,6 +13,7 @@ This plugin relies on streams to communicate with wkhtmltopdf.
 Next:
 
     script/plugin install git://github.com/jcrisp/wicked_pdf.git
+    script/generate wicked_pdf
 
 ### Usage
 
@@ -24,7 +25,46 @@ Next:
             render :pdf => "file_name", 
                    :template => "things/show.pdf.erb", # OPTIONAL
                    :layout => "pdf.html", # OPTIONAL
-                   :wkhtmltopdf => '/usr/local/bin/wkhtmltopdf' # OPTIONAL, path to binary
+                   :wkhtmltopdf => '/usr/local/bin/wkhtmltopdf', # OPTIONAL, path to binary
+                   :header => {:html => {:template => "public/header.pdf.erb" OR :url => "www.header.bbb"}, #OPTIONAL
+                               :center => "TEXT", #OPTIONAL
+                               :font_name => "NAME", #OPTIONAL
+                               :font_size => SIZE, #OPTIONAL
+                               :left => "TEXT", #OPTIONAL
+                               :right => "TEXT", #OPTIONAL
+                               :spacing => REAL, #OPTIONAL
+                               :line => ""}, #OPTIONAL
+                   :footer => {:html => {:template => "public/header.pdf.erb" OR :url => "www.header.bbb"}, #OPTIONAL
+                               :center => "TEXT", #OPTIONAL
+                               :font_name => "NAME", #OPTIONAL
+                               :font_size => SIZE, #OPTIONAL
+                               :left => "TEXT", #OPTIONAL
+                               :right => "TEXT", #OPTIONAL
+                               :spacing => REAL, #OPTIONAL
+                               :line => ""}, #OPTIONAL
+                   :toc => {:font_name => "NAME", #OPTIONAL
+                            :depth => LEVEL, #OPTIONAL
+                            :header_text => "TEXT", #OPTIONAL
+                            :header_fs => SIZE, #OPTIONAL
+                            :l1_font_size => SIZE, #OPTIONAL 
+                            :l2_font_size => SIZE, #OPTIONAL 
+                            :l3_font_size => SIZE, #OPTIONAL
+                            :l4_font_size => SIZE, #OPTIONAL
+                            :l5_font_size => SIZE, #OPTIONAL
+                            :l6_font_size => SIZE, #OPTIONAL
+                            :l7_font_size => SIZE, #OPTIONAL
+                            :l1_indentation => NUM, #OPTIONAL
+                            :l2_indentation => NUM, #OPTIONAL
+                            :l3_indentation => NUM, #OPTIONAL
+                            :l4_indentation => NUM, #OPTIONAL
+                            :l5_indentation => NUM, #OPTIONAL
+                            :l6_indentation => NUM, #OPTIONAL
+                            :l7_indentation => NUM, #OPTIONAL
+                            :no_dots => "", #OPTIONAL
+                            :disable_links => "", #OPTIONAL
+                            :disable_back_links => ""}, #OPTIONAL
+                   :outline => {:outline => "", #OPTIONAL
+                                :outline_depth => LEVEL} #OPTIONAL
           end
         end
       end
