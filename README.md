@@ -26,6 +26,10 @@ Next:
                    :template => "things/show.pdf.erb", # OPTIONAL
                    :layout => "pdf.html", # OPTIONAL
                    :wkhtmltopdf => '/usr/local/bin/wkhtmltopdf', # OPTIONAL, path to binary
+                   :margin => {:top => SIZE, #OPTIONAL
+                               :bottom  => SIZE, #OPTIONAL
+                               :left  => SIZE, #OPTIONAL
+                               :right  => SIZE} #OPTIONAL
                    :header => {:html => {:template => "public/header.pdf.erb" OR :url => "www.header.bbb"}, #OPTIONAL
                                :center => "TEXT", #OPTIONAL
                                :font_name => "NAME", #OPTIONAL

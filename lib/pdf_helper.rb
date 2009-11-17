@@ -20,7 +20,7 @@ module PdfHelper
     def make_pdf(options = {})
       html_string = render_to_string(:template => options[:template], :layout => options[:layout])
       w = WickedPdf.new(options[:wkhtmltopdf])
-      w.pdf_from_string(html_string, options(:header => options[:header], :footer => options[:footer], :toc => options[:toc], :outline => options[:outline]))
+      w.pdf_from_string(html_string, parse_options(:header => options[:header], :footer => options[:footer], :layout => options[:layout], :toc => options[:toc], :outline => options[:outline], :margin => options[:margin]))
     end
 
     def make_and_send_pdf(pdf_name, options = {})
@@ -39,8 +39,8 @@ module PdfHelper
       end
     end
 
-    def options opts
-      "#{parse_header_footer(:header => opts[:header], :footer => opts[:footer])} #{parse_toc(opts[:toc])} #{parse_outline(opts[:outline])}"
+    def parse_options opts
+      "#{parse_header_footer(:header => opts[:header], :footer => opts[:footer], :layout => opts[:layout])} #{parse_toc(opts[:toc])} #{parse_outline(opts[:outline])}" + "#{parse_margins(opts[:margin])}"
     end
 
     def parse_header_footer opts
@@ -59,13 +59,13 @@ module PdfHelper
             unless opts[hf][:html][:template].blank?
               Tempfile.open("pdf.html") do |f|
                 p f.path
-                f << render_to_string(opts[hf][:html][:template])
+                f << render_to_string(:template => opts[hf][:html][:template], :layout => opts[:layout])
                 r += "--#{hf.to_s}-html 'file://#{f.path}' "
               end
             end
           end
         end
-      end
+      end unless opts.blank?
       r
     end
 
@@ -90,6 +90,17 @@ module PdfHelper
         r=""
         r += "--outline " unless opts[:outline].blank?
         r += "--outline-depth '#{opts[:outline_depth]}' " unless opts[:outline_depth].blank?
+        r
+      end
+    end
+
+    def parse_margins opts
+      unless opts.blank? 
+        r=""
+        r += "--margin-top #{opts[:top]} " unless opts[:top].blank?
+        r += "--margin-top #{opts[:bottom]} " unless opts[:bottom].blank?
+        r += "--margin-top #{opts[:left]} " unless opts[:left].blank?
+        r += "--margin-top #{opts[:right]} " unless opts[:right].blank?
         r
       end
     end
