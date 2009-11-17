@@ -18,21 +18,25 @@ module PdfHelper
 
   private
     def make_pdf(options = {})
-      options[:wkhtmltopdf] ||= nil
-      options[:layout] ||= false
-      options[:template] ||= File.join(controller_path, action_name)
-
       html_string = render_to_string(:template => options[:template], :layout => options[:layout])
       w = WickedPdf.new(options[:wkhtmltopdf])
       w.pdf_from_string(html_string, options(:header => options[:header], :footer => options[:footer], :toc => options[:toc], :outline => options[:outline]))
     end
 
     def make_and_send_pdf(pdf_name, options = {})
-      send_data(
-        make_pdf(options),
-        :filename => pdf_name + '.pdf',
-        :type => 'application/pdf'
-      )
+      options[:wkhtmltopdf] ||= nil
+      options[:layout] ||= false
+      options[:template] ||= File.join(controller_path, action_name)
+
+      if options[:show_as_html]
+        render :text => render_to_string(:template => options[:template], :layout => options[:layout])
+      else
+        send_data(
+          make_pdf(options),
+          :filename => pdf_name + '.pdf',
+          :type => 'application/pdf'
+        )
+      end
     end
 
     def options opts

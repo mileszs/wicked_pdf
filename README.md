@@ -72,6 +72,9 @@ Next:
 
 By default, it will render without a layout (:layout => false) and the template for the current controller and action.  (So, the template line in the above code is actually unnecessary.)
 
+Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster, just use it like normally but adding "debug=1" as a param:
+http://localhost:3001/CONTROLLER/X.pdf=debug=1
+
 ### Inspiration
 
 You may have noticed: this plugin is heavily inspired by the PrinceXML plugin [princely](http://github.com/mbleigh/princely/tree/master).  PrinceXML's cost was prohibitive for me. So, with a little help from some friends (thanks [jqr](http://github.com/jqr)), I tracked down wkhtmltopdf, and here we are.
