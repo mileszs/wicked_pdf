@@ -20,7 +20,7 @@ module PdfHelper
     def make_pdf(options = {})
       html_string = render_to_string(:template => options[:template], :layout => options[:layout])
       w = WickedPdf.new(options[:wkhtmltopdf])
-      w.pdf_from_string(html_string, parse_options(:header => options[:header], :footer => options[:footer], :layout => options[:layout], :toc => options[:toc], :outline => options[:outline], :margin => options[:margin]))
+      w.pdf_from_string(html_string, parse_options(options))
     end
 
     def make_and_send_pdf(pdf_name, options = {})
@@ -40,7 +40,11 @@ module PdfHelper
     end
 
     def parse_options opts
-      "#{parse_header_footer(:header => opts[:header], :footer => opts[:footer], :layout => opts[:layout])} #{parse_toc(opts[:toc])} #{parse_outline(opts[:outline])}" + "#{parse_margins(opts[:margin])}"
+      "#{parse_header_footer(:header => opts.delete(:header), :footer => opts.delete(:footer), :layout => opts[:layout])} \
+       #{parse_toc(opts.delete(:toc))} \
+       #{parse_outline(opts.delete(:outline))} \
+       #{parse_margins(opts.delete(:margin))} \
+       #{parse_others(opts)}"
     end
 
     def parse_header_footer opts
@@ -49,10 +53,10 @@ module PdfHelper
         unless opts[hf].blank?
           r += [:center, :font_name, :left, :right].collect do |o|
             "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} '#{opts[hf][o]} '" unless opts[hf][o].blank?
-          end.join(' ')
+          end.join
           r += [:font_size, :spacing].collect do |o|
             "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} #{opts[hf][o]} " unless opts[hf][o].blank?
-          end.join(' ')
+          end.join
           r += "--#{hf.to_s}-line " unless opts[hf][:line].blank?
           unless opts[hf][:html].blank?
             r += "--#{hf.to_s}-html '#{opts[hf][:html][:url]}' " unless opts[hf][:html][:url].blank?
@@ -74,13 +78,13 @@ module PdfHelper
         r=""
         r += [:font_name, :header_text].collect do |o|
           "--toc-#{o.to_s.gsub('_', '-')} '#{opts[o]}' " unless opts[o].blank?
-        end.join(' ')
+        end.join
         r += [:depth, :header_fs, :l1_font_size, :l2_font_size, :l3_font_size, :l4_font_size, :l5_font_size, :l6_font_size, :l7_font_size, :l1_indentation, :l2_indentation, :l3_indentation, :l4_indentation, :l5_indentation, :l6_indentation, :l7_indentation].collect do |o|
           "--toc-#{o.to_s.gsub('_', '-')} #{opts[o]} " unless opts[o].blank?
-        end.join(' ')
+        end.join
         r += [:no_dots, :disable_links, :disable_back_links].collect do |o|
           "--toc-#{o.to_s.gsub('_', '-')} " unless opts[o].blank?
-        end.join(' ')
+        end.join
         r
       end
     end
@@ -101,6 +105,22 @@ module PdfHelper
         r += "--margin-top #{opts[:bottom]} " unless opts[:bottom].blank?
         r += "--margin-top #{opts[:left]} " unless opts[:left].blank?
         r += "--margin-top #{opts[:right]} " unless opts[:right].blank?
+        r
+      end
+    end
+    
+    def parse_others opts
+      unless opts.blank? 
+        r=""
+        r += [:orientation, :page_size, :proxy, :username, :password, :cover, :dpi, :encoding, :user_style_sheet].collect do |o|
+          "--#{o.to_s.gsub('_', '-')} '#{opts[o]}' " unless opts[o].blank?
+        end.join
+        r += [:redirect_delay, :zoom, :page_offset].collect do |o|
+          "--#{o.to_s.gsub('_', '-')} #{opts[o]} " unless opts[o].blank?
+        end.join
+        r += [:book, :default_header, :toc, :disable_javascript, :greyscale, :lowquality, :enable_plugins, :disable_internal_links, :disable_external_links, :print_media_type, :disable_smart_shrinking, :use_xserver, :no_background].collect do |o|
+          "--#{o.to_s.gsub('_', '-')} " unless opts[o].blank?
+        end.join
         r
       end
     end

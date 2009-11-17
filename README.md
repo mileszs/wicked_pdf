@@ -10,6 +10,8 @@ First, be sure to install [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/).
 Note that versions before 0.9.0 [have problems](http://code.google.com/p/wkhtmltopdf/issues/detail?id=82&q=vodnik) on some machines with reading/writing to streams.
 This plugin relies on streams to communicate with wkhtmltopdf.
 
+More information about [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) could be found [here](http://madalgo.au.dk/~jakobt/wkhtmltopdf-0.9.0_beta2-doc.html).
+
 Next:
 
     script/plugin install git://github.com/jcrisp/wicked_pdf.git
@@ -29,7 +31,31 @@ Next:
                    :margin => {:top => SIZE, #OPTIONAL
                                :bottom  => SIZE, #OPTIONAL
                                :left  => SIZE, #OPTIONAL
-                               :right  => SIZE} #OPTIONAL
+                               :right  => SIZE}, #OPTIONAL
+                   :orientation => 'Landscape or Portrait', #OPTIONAL, default Portrait
+                   :page_size => 'A4, Letter, ...', #OPTIONAL, default A4
+                   :proxy => 'TEXT', #OPTIONAL
+                   :username => 'TEXT', #OPTIONAL
+                   :password => 'TEXT', #OPTIONAL
+                   :cover => 'URL', #OPTIONAL
+                   :dpi => "dpi", #OPTIONAL
+                   :encoding => "TEXT", #OPTIONAL
+                   :user_style_sheet => "URL", #OPTIONAL
+                   :redirect_delay => NUMBER, #OPTIONAL
+                   :zoom => FLOAT, #OPTIONAL
+                   :page_offset => NUMBER, #OPTIONAL
+                   :book => true,  #OPTIONAL
+                   :default_header => true,  #OPTIONAL
+                   :disable_javascript => true,  #OPTIONAL
+                   :greyscale => true,  #OPTIONAL 
+                   :lowquality => true,  #OPTIONAL
+                   :enable_plugins => true,  #OPTIONAL
+                   :disable_internal_links => true,  #OPTIONAL
+                   :disable_external_links => true,  #OPTIONAL
+                   :print_media_type => true,  #OPTIONAL
+                   :disable_smart_shrinking => true,  #OPTIONAL
+                   :use_xserver => true,  #OPTIONAL
+                   :no_background => true,  #OPTIONAL
                    :header => {:html => {:template => "public/header.pdf.erb" OR :url => "www.header.bbb"}, #OPTIONAL
                                :center => "TEXT", #OPTIONAL
                                :font_name => "NAME", #OPTIONAL
