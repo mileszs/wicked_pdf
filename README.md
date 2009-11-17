@@ -76,7 +76,7 @@ By default, it will render without a layout (:layout => false) and the template 
 
 Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster, just use it like normally but adding "debug=1" as a param:
 
-http://localhost:3001/CONTROLLER/X.pdf=debug=1
+http://localhost:3001/CONTROLLER/X.pdf?debug=1
 
 ### Inspiration
 
