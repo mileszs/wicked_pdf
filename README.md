@@ -72,7 +72,10 @@ Next:
 
 By default, it will render without a layout (:layout => false) and the template for the current controller and action.  (So, the template line in the above code is actually unnecessary.)
 
+### Parameters
+
 Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster, just use it like normally but adding "debug=1" as a param:
+
 http://localhost:3001/CONTROLLER/X.pdf=debug=1
 
 ### Inspiration
