@@ -43,8 +43,11 @@ module PdfHelper
       r=""
       [:header, :footer].collect do |hf| 
         unless opts[hf].blank?
-          r += [:center, :font_name, :font_size, :left, :right, :spacing].collect do |o|
-            "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} '#{opts[hf][o]}'" unless opts[hf][o].blank?
+          r += [:center, :font_name, :left, :right].collect do |o|
+            "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} '#{opts[hf][o]} '" unless opts[hf][o].blank?
+          end.join(' ')
+          r += [:font_size, :spacing].collect do |o|
+            "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} #{opts[hf][o]} " unless opts[hf][o].blank?
           end.join(' ')
           r += "--#{hf.to_s}-line " unless opts[hf][:line].blank?
           unless opts[hf][:html].blank?
@@ -65,11 +68,14 @@ module PdfHelper
     def parse_toc opts
       unless opts.blank?
         r=""
-        r += [:font_name, :depth, :header_text, :header_fs, :l1_font_size, :l2_font_size, :l3_font_size, :l4_font_size, :l5_font_size, :l6_font_size, :l7_font_size, :l1_indentation, :l2_indentation, :l3_indentation, :l4_indentation, :l5_indentation, :l6_indentation, :l7_indentation].collect do |o|
-          "--toc-#{o.to_s.gsub('_', '-')} '#{opts[o]}'" unless opts[o].blank?
+        r += [:font_name, :header_text].collect do |o|
+          "--toc-#{o.to_s.gsub('_', '-')} '#{opts[o]}' " unless opts[o].blank?
+        end.join(' ')
+        r += [:depth, :header_fs, :l1_font_size, :l2_font_size, :l3_font_size, :l4_font_size, :l5_font_size, :l6_font_size, :l7_font_size, :l1_indentation, :l2_indentation, :l3_indentation, :l4_indentation, :l5_indentation, :l6_indentation, :l7_indentation].collect do |o|
+          "--toc-#{o.to_s.gsub('_', '-')} #{opts[o]} " unless opts[o].blank?
         end.join(' ')
         r += [:no_dots, :disable_links, :disable_back_links].collect do |o|
-          "--toc-#{o.to_s.gsub('_', '-')}" unless opts[o].blank?
+          "--toc-#{o.to_s.gsub('_', '-')} " unless opts[o].blank?
         end.join(' ')
         r
       end
@@ -79,7 +85,7 @@ module PdfHelper
       unless opts.blank?
         r=""
         r += "--outline " unless opts[:outline].blank?
-        r += "--outline-depth '#{opts[:outline_depth]}'" unless opts[:outline_depth].blank?
+        r += "--outline-depth '#{opts[:outline_depth]}' " unless opts[:outline_depth].blank?
         r
       end
     end
