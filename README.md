@@ -28,6 +28,7 @@ Next:
                    :template => "things/show.pdf.erb", # OPTIONAL
                    :layout => "pdf.html", # OPTIONAL
                    :wkhtmltopdf => '/usr/local/bin/wkhtmltopdf', # OPTIONAL, path to binary
+                   :show_as_html => !params[:debug].blank?, #OPTIONAL, maybe you just want to allow debuging in development environment?
                    :margin => {:top => SIZE, #OPTIONAL
                                :bottom  => SIZE, #OPTIONAL
                                :left  => SIZE, #OPTIONAL
@@ -104,7 +105,9 @@ By default, it will render without a layout (:layout => false) and the template 
 
 ### Parameters
 
-Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster, just use it like normally but adding "debug=1" as a param:
+Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster.
+
+First of all you must configure the render parameter ":show_as_html" and then just use it like normally but adding "debug=1" as a param:
 
 http://localhost:3001/CONTROLLER/X.pdf?debug=1
 
