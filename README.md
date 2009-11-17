@@ -103,6 +103,24 @@ Next:
 
 By default, it will render without a layout (:layout => false) and the template for the current controller and action.  (So, the template line in the above code is actually unnecessary.)
 
+### Styles
+
+You must define absolute path's to CSS files, the best option is to make a custom layout for pdf's like this:
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <%= stylesheet_link_tag "http://#{request.host}:#{request.port}/stylesheets/pdf", :media => "all" -%>
+      </head>
+      <body>
+        <div id="content">
+          <%= yield %>
+        </div>
+      </body>
+    </html>
+
 ### Configuration
 
 You can put your default configuration, applied to all pdf's at "wicked_pdf.rb" initializer.
