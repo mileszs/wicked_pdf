@@ -103,7 +103,11 @@ Next:
 
 By default, it will render without a layout (:layout => false) and the template for the current controller and action.  (So, the template line in the above code is actually unnecessary.)
 
-### Parameters
+### Configuration
+
+You can put your default configuration, applied to all pdf's at "wicked_pdf.rb" initializer.
+
+### Debugging
 
 Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster.
 
