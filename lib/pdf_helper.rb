@@ -102,9 +102,9 @@ module PdfHelper
       unless opts.blank? 
         r=""
         r += "--margin-top #{opts[:top]} " unless opts[:top].blank?
-        r += "--margin-top #{opts[:bottom]} " unless opts[:bottom].blank?
-        r += "--margin-top #{opts[:left]} " unless opts[:left].blank?
-        r += "--margin-top #{opts[:right]} " unless opts[:right].blank?
+        r += "--margin-bottom #{opts[:bottom]} " unless opts[:bottom].blank?
+        r += "--margin-left #{opts[:left]} " unless opts[:left].blank?
+        r += "--margin-right #{opts[:right]} " unless opts[:right].blank?
         r
       end
     end
