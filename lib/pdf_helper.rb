@@ -52,7 +52,7 @@ module PdfHelper
       [:header, :footer].collect do |hf| 
         unless opts[hf].blank?
           r += [:center, :font_name, :left, :right].collect do |o|
-            "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} '#{opts[hf][o]} '" unless opts[hf][o].blank?
+            "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} '#{opts[hf][o]}' " unless opts[hf][o].blank?
           end.join
           r += [:font_size, :spacing].collect do |o|
             "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} #{opts[hf][o]} " unless opts[hf][o].blank?
