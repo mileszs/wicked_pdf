@@ -91,7 +91,7 @@ module PdfHelper
     end
 
     def parse_margins opts
-      make_options(opts, [:top, :bottom, :lef, :right], "margin")
+      make_options(opts, [:top, :bottom, :lef, :right], "margin", :numeric)
     end
     
     def parse_others opts
