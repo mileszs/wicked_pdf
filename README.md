@@ -14,7 +14,7 @@ More information about [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) coul
 
 Next:
 
-    script/plugin install git://github.com/jcrisp/wicked_pdf.git
+    script/plugin install git://github.com/lleirborras/wicked_pdf.git
     script/generate wicked_pdf
 
 ### Usage
