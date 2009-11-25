@@ -14,7 +14,7 @@ This plugin relies on streams to communicate with wkhtmltopdf.
 
 Next:
 
-    script/plugin install git://github.com/jcrisp/wicked_pdf.git
+    script/plugin install git://github.com/mileszs/wicked_pdf.git
 
 ### Usage
 
@@ -37,5 +37,7 @@ By default, it will render without a layout (:layout => false) and the template 
 ### Inspiration
 
 You may have noticed: this plugin is heavily inspired by the PrinceXML plugin [princely](http://github.com/mbleigh/princely/tree/master).  PrinceXML's cost was prohibitive for me. So, with a little help from some friends (thanks [jqr](http://github.com/jqr)), I tracked down wkhtmltopdf, and here we are.
+
+### Awesome Peoples
 
 Also, thanks to [galdomedia](http://github.com/galdomedia) and [jcrisp](http://github.com/jcrisp) and, although not quite merged in yet, [lleirborras](http://github.com/lleirborras) for all their hard work and patience with my delays in merging in their enhancements.
