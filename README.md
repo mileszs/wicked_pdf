@@ -4,8 +4,7 @@
 
 Wicked PDF uses the shell utility [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) to serve a PDF file to a user from HTML.  In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, and let Wicked take care of the hard stuff.
 
-This sollution (with TmpFile) may (will?) not work, if you're using ruby 1.8.6. Use 1.8.7 instead.
-
+_Wicked PDF requires Ruby 1.8.7_
 
 ### Installation
 
@@ -22,7 +21,7 @@ Next:
         respond_to do |format|
           format.html
           format.pdf do
-            render :pdf => "file_name", 
+            render :pdf => "file_name",
                    :template => "things/show.pdf.erb", # OPTIONAL
                    :layout => "pdf.html", # OPTIONAL
                    :wkhtmltopdf => '/usr/local/bin/wkhtmltopdf' # OPTIONAL, path to binary
@@ -31,8 +30,10 @@ Next:
       end
     end
 
-By default, it will render without a layout (:layout => false) and the template for the current controller and action.  (So, the template line in the above code is actually unnecessary.)
+By default, it will render without a layout (:layout => false) and the template for the current controller and action.
 
 ### Inspiration
 
 You may have noticed: this plugin is heavily inspired by the PrinceXML plugin [princely](http://github.com/mbleigh/princely/tree/master).  PrinceXML's cost was prohibitive for me. So, with a little help from some friends (thanks [jqr](http://github.com/jqr)), I tracked down wkhtmltopdf, and here we are.
+
+Also, thanks to [galdomedia](http://github.com/galdomedia) and [jcrisp](http://github.com/jcrisp) and, although not quite merged in yet, [lleirborras](http://github.com/lleirborras) for all their hard work and patience with my delays in merging in their enhancements.

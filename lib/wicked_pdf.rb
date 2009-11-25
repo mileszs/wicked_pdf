@@ -9,7 +9,7 @@ class WickedPdf
   attr_accessor :exe_path, :log_file, :logger
 
   def initialize(wkhtmltopdf_binary = nil)
-    @exe_path = wkhtmltopdf_binary 
+    @exe_path = wkhtmltopdf_binary
     @exe_path ||= `which wkhtmltopdf`.chomp
     @log_file = "#{RAILS_ROOT}/log/wkhtmltopdf.log"
     @logger   = RAILS_DEFAULT_LOGGER

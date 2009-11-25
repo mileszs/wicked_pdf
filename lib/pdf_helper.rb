@@ -7,7 +7,7 @@ module PdfHelper
     end
   end
 
-  def render_with_wicked_pdf(options = nil, *args, &block)  
+  def render_with_wicked_pdf(options = nil, *args, &block)
     if options.is_a?(Hash) && options.has_key?(:pdf)
       logger.info '*'*15 + 'WICKED' + '*'*15
       make_and_send_pdf(options.delete(:pdf), options)
