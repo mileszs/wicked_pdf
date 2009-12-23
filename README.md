@@ -112,7 +112,8 @@ You must define absolute path's to CSS files, the best option is to make a custo
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
       <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <%= stylesheet_link_tag "http://#{request.host}:#{request.port}/stylesheets/pdf", :media => "all" -%>
+        <%= stylesheet_link_tag "#{RAILS_ROOT}/public/stylesheets/pdf" -%>
+        <%= stylesheet_link_tag "pdf" -%>
       </head>
       <body>
         <div id="content">
