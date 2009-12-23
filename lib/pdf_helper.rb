@@ -50,7 +50,7 @@ module PdfHelper
     end
 
     def make_options opts, names, prefix="", type=:string
-      names.collect {|o| make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", opts[o], type) unless opts[o].blank?}.join
+      names.collect {|o| make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", opts[o], type) unless opts.blank? || opts[o].blank?}.join
     end
 
     def parse_header_footer opts
