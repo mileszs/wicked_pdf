@@ -35,12 +35,6 @@ module PdfHelper
       end
     end
 
-    def parse_options opts
-      s = "#{parse_header_footer(:header => opts.delete(:header), :footer => opts.delete(:footer), :layout => opts[:layout])} "
-      s += "#{parse_toc(opts.delete(:toc))} #{parse_outline(opts.delete(:outline))} "
-      s + "#{parse_margins(opts.delete(:margin))} #{parse_others(opts)} "
-    end
-
     def make_option name, value, type=:string
       "--#{name.gsub('_', '-')} " + case type
         when :boolean: ""
@@ -51,6 +45,12 @@ module PdfHelper
 
     def make_options opts, names, prefix="", type=:string
       names.collect {|o| make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", opts[o], type) unless opts[o].blank?}.join
+    end
+
+    def parse_options opts
+      "#{parse_header_footer(:header => opts.delete(:header), :footer => opts.delete(:footer), :layout => opts[:layout])} " + \
+      "#{parse_toc(opts.delete(:toc))} #{parse_outline(opts.delete(:outline))} " + \
+      "#{parse_margins(opts.delete(:margin))} #{parse_others(opts)} "
     end
 
     def parse_header_footer opts
