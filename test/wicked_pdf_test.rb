@@ -1,16 +1,7 @@
 require 'test_helper'
 
-require File.dirname(__FILE__) + "/../lib/wicked_pdf.rb"
-require File.dirname(__FILE__) + "/../generators/wicked_pdf/templates/tempfile.rb"
-
-WICKED_PDF = {
-  #:wkhtmltopdf => '/usr/local/bin/wkhtmltopdf',
-  #:layout => "pdf.html",
-  :exe_path => '/usr/local/bin/wkhtmltopdf'
-}
-RAILS_ENV="test"
+WICKED_PDF = { :exe_path => '/usr/local/bin/wkhtmltopdf' }
 HTML_DOCUMENT = "<html><body>Hello World</body></html>"
-
 
 class WickedPdfTest < ActiveSupport::TestCase
   test "should generate PDF from html document" do
@@ -39,6 +30,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     assert_raise RuntimeError do
       WickedPdf.new fp 
     end
+    File.chmod 0755, fp
   end
 
   test "should raise exception when pdf generation fails" do

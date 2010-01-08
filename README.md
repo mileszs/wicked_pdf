@@ -105,15 +105,14 @@ By default, it will render without a layout (:layout => false) and the template 
 
 ### Styles
 
-You must define absolute path's to CSS files, the best option is to make a custom layout for pdf's like this:
+You must define absolute path's to CSS files, the best option is to use *wicked_pdf_stylesheet_link_tag* helper.
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
       <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <%= stylesheet_link_tag "#{RAILS_ROOT}/public/stylesheets/pdf" -%>
-        <%= stylesheet_link_tag "pdf" -%>
+        <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
       </head>
       <body>
         <div id="content">

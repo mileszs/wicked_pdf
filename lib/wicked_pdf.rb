@@ -6,7 +6,6 @@ require 'digest/md5'
 require 'open3'
 
 class WickedPdf
-
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path 
     @exe_path ||= WICKED_PDF[:exe_path] unless WICKED_PDF.empty?

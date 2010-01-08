@@ -16,6 +16,11 @@ module PdfHelper
     end
   end
 
+  def parse_options opts
+    "#{parse_header_footer(:header => opts.delete(:header), :footer => opts.delete(:footer), :layout => opts[:layout])} " + \
+    "#{parse_toc(opts.delete(:toc))} #{parse_outline(opts.delete(:outline))} #{parse_margins(opts.delete(:margin))} #{parse_others(opts)} "
+  end
+
   private
     def make_pdf(options = {})
       html_string = render_to_string(:template => options[:template], :layout => options[:layout])
@@ -47,12 +52,6 @@ module PdfHelper
       names.collect {|o| make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", opts[o], type) unless opts[o].blank?}.join
     end
 
-    def parse_options opts
-      "#{parse_header_footer(:header => opts.delete(:header), :footer => opts.delete(:footer), :layout => opts[:layout])} " + \
-      "#{parse_toc(opts.delete(:toc))} #{parse_outline(opts.delete(:outline))} " + \
-      "#{parse_margins(opts.delete(:margin))} #{parse_others(opts)} "
-    end
-
     def parse_header_footer opts
       r=""
       [:header, :footer].collect do |hf| 
@@ -63,12 +62,10 @@ module PdfHelper
           r += make_options(opt_hf, [:line], "#{hf.to_s}", :boolean)
           unless opt_hf[:html].blank?
             r += make_option("#{hf.to_s}-html", opt_hf[:html][:url]) unless opt_hf[:html][:url].blank?
-            unless opt_hf[:html][:template].blank?
-              Tempfile.open("wicked_pdf.html") do |f|
-                f << render_to_string(:template => opt_hf[:html][:template], :layout => opts[:layout])
-                r += make_option("#{hf.to_s}-html", "file://#{f.path}")
-              end
-            end
+            WickedPdfTempfile.open("wicked_pdf.html") do |f|
+              f << render_to_string(:template => opt_hf[:html][:template], :layout => opts[:layout])
+              r += make_option("#{hf.to_s}-html", "file://#{f.path}")
+            end unless opt_hf[:html][:template].blank?
           end
         end
       end unless opts.blank?
@@ -86,7 +83,7 @@ module PdfHelper
     def parse_outline opts
       unless opts.blank?
         r = make_options(opts, [:outline], "", :boolean)
-        r + make_options(opts, [:outline_depth])
+        r + make_options(opts, [:outline_depth], "", :numeric)
       end
     end
 
@@ -98,7 +95,7 @@ module PdfHelper
       unless opts.blank? 
         r = make_options(opts, [:orientation, :page_size, :proxy, :username, :password, :cover, :dpi, :encoding, :user_style_sheet])
         r += make_options(opts, [:redirect_delay, :zoom, :page_offset], "", :numeric)
-        r + make_options(opts, [:book, :default_header, :toc, :disable_javascript, :greyscale, :lowquality, :enable_plugins, :disable_internal_links, :disable_external_links, :print_media_type, :disable_smart_shrinking, :use_xserver, :no_background], "", :boolean)
+        r + make_options(opts, [:book, :default_header, :disable_javascript, :greyscale, :lowquality, :enable_plugins, :disable_internal_links, :disable_external_links, :print_media_type, :disable_smart_shrinking, :use_xserver, :no_background], "", :boolean)
       end
     end
 end
