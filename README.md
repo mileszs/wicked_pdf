@@ -127,6 +127,10 @@ You must define absolute path's to CSS files, the best option is to use *wicked_
 
 You can put your default configuration, applied to all pdf's at "wicked_pdf.rb" initializer.
 
+### Further Reading
+
+Andreas Happe's post [Generating PDFs from Ruby on Rails](http://snikt.net/index.php/2010/03/03/generating-pdfs-from-ruby-on-rails)
+
 ### Debugging
 
 Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster.
