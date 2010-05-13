@@ -1,6 +1,6 @@
 require 'test_helper'
 
-WICKED_PDF = { :exe_path => '/usr/local/bin/wkhtmltopdf' }
+WICKED_PDF = { :exe_path => '/Users/reidab/code/rails/paydici/vendor/bin/wkhtmltopdf-0.9.3-OS-X.i368' }
 HTML_DOCUMENT = "<html><body>Hello World</body></html>"
 
 # Provide a public accessor to the normally-private parse_options function
@@ -33,20 +33,29 @@ class WickedPdfTest < ActiveSupport::TestCase
   end
 
   test "should raise exception when wkhtmltopdf is not executable" do
-    fp = File.expand_path(File.dirname(__FILE__)) + '/wkhtmltopdf'
-    File.chmod 0000, fp
-    assert_raise RuntimeError do
-      WickedPdf.new fp 
+    begin
+      tmp = Tempfile.new('wkhtmltopdf')
+      fp = tmp.path
+      File.chmod 0000, fp
+      assert_raise RuntimeError do
+        WickedPdf.new fp
+      end
+    ensure
+      tmp.delete
     end
-    File.chmod 0755, fp
   end
 
   test "should raise exception when pdf generation fails" do
-    fp = File.expand_path(File.dirname(__FILE__)) + '/wkhtmltopdf'
-    File.chmod 0777, fp
-    wp = WickedPdf.new fp
-    assert_raise RuntimeError do
-      wp.pdf_from_string HTML_DOCUMENT 
+    begin
+      tmp = Tempfile.new('wkhtmltopdf')
+      fp = tmp.path
+      File.chmod 0777, fp
+      wp = WickedPdf.new fp
+      assert_raise RuntimeError do
+        wp.pdf_from_string HTML_DOCUMENT
+      end
+    ensure
+      tmp.delete
     end
   end
 
