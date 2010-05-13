@@ -40,7 +40,7 @@ class WickedPdf
     ].join(' ')
   end
 
-  def make_option name, value, type=:string
+  def make_option(name, value, type=:string)
     "--#{name.gsub('_', '-')} " + case type
       when :boolean: ""
       when :numeric: value.to_s
@@ -48,11 +48,11 @@ class WickedPdf
     end + " "
   end
 
-  def make_options options, names, prefix="", type=:string
+  def make_options(options, names, prefix="", type=:string)
     names.collect {|o| make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", options[o], type) unless options[o].blank?}.join
   end
 
-  def parse_header_footer options
+  def parse_header_footer(options)
     r=""
     [:header, :footer].collect do |hf|
       unless options[hf].blank?
@@ -68,7 +68,7 @@ class WickedPdf
     r
   end
 
-  def parse_toc options
+  def parse_toc(options)
     unless options.blank?
       r = make_options(options, [ :font_name, :header_text], "toc")
       r +=make_options(options, [ :depth,
@@ -93,18 +93,18 @@ class WickedPdf
     end
   end
 
-  def parse_outline options
+  def parse_outline(options)
     unless options.blank?
       r = make_options(options, [:outline], "", :boolean)
       r +=make_options(options, [:outline_depth], "", :numeric)
     end
   end
 
-  def parse_margins options
+  def parse_margins(options)
     make_options(options, [:top, :bottom, :left, :right], "margin", :numeric) unless options.blank?
   end
 
-  def parse_others options
+  def parse_others(options)
     unless options.blank?
       r = make_options(options, [ :orientation,
                                   :page_size,
