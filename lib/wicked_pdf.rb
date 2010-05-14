@@ -6,9 +6,12 @@ require 'digest/md5'
 require 'open3'
 
 class WickedPdf
+  @@config = {}
+  cattr_accessor :config
+
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path
-    @exe_path ||= WICKED_PDF[:exe_path] unless WICKED_PDF.empty?
+    @exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
     @exe_path ||= `which wkhtmltopdf`.chomp
     raise "Location of wkhtmltopdf unknown" if @exe_path.empty?
     raise "Bad wkhtmltopdf's path" unless File.exists?(@exe_path)
