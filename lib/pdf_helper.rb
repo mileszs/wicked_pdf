@@ -36,7 +36,9 @@ module PdfHelper
       if options[:show_as_html]
         render :text => render_to_string(:template => options[:template], :layout => options[:layout])
       else
-        send_data(make_pdf(options), :filename => pdf_name + '.pdf', :type => 'application/pdf')
+        pdf_content = make_pdf(options)
+        File.open(options[:save_to_file], 'wb') {|file| file << pdf_content } if options[:save_to_file]
+        send_data(pdf_content, :filename => pdf_name + '.pdf', :type => 'application/pdf')
       end
     end
 
