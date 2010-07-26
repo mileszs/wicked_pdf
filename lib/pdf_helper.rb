@@ -35,7 +35,7 @@ module PdfHelper
       options[:disposition] ||= "inline"
 
       if options[:show_as_html]
-        render :text => render_to_string(:template => options[:template], :layout => options[:layout])
+        render :template => options[:template], :layout => options[:layout], :content_type => "text/html"
       else
         send_data(make_pdf(options), :filename => pdf_name + '.pdf', :type => 'application/pdf', :disposition => options[:disposition])
       end
