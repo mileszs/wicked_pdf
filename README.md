@@ -28,7 +28,7 @@ Next:
           format.pdf do
             render :pdf => "file_name",
                    :template => "things/show.pdf.erb", # OPTIONAL
-                   :layout => "pdf.html", # OPTIONAL
+                   :layout => "pdf.html", # OPTIONAL -- use 'pdf.html' for a pfd.html.erb file
                    :wkhtmltopdf => '/usr/local/bin/wkhtmltopdf', # OPTIONAL, path to binary
                    :show_as_html => !params[:debug].blank?, #OPTIONAL, maybe you just want to allow debuging in development environment?
                    :margin => {:top => SIZE, #OPTIONAL
