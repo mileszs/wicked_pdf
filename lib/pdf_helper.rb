@@ -32,11 +32,12 @@ module PdfHelper
       options[:wkhtmltopdf] ||= nil
       options[:layout] ||= false
       options[:template] ||= File.join(controller_path, action_name)
+      options[:disposition] ||= "inline"
 
       if options[:show_as_html]
         render :text => render_to_string(:template => options[:template], :layout => options[:layout])
       else
-        send_data(make_pdf(options), :filename => pdf_name + '.pdf', :type => 'application/pdf')
+        send_data(make_pdf(options), :filename => pdf_name + '.pdf', :type => 'application/pdf', :disposition => options[:disposition])
       end
     end
 
