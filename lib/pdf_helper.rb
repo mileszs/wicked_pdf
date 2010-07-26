@@ -42,8 +42,8 @@ module PdfHelper
 
     def make_option name, value, type=:string
       "--#{name.gsub('_', '-')} " + case type
-        when :boolean: ""
-        when :numeric: value.to_s
+        when :boolean then ""
+        when :numeric then value.to_s
         else "'#{value}'"
       end + " "
     end
