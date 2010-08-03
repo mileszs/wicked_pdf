@@ -16,7 +16,7 @@ class WickedPdf
   end
 
   def pdf_from_string(string, options=nil)
-    command_for_stdin_stdout = "#{@exe_path} #{options} - - -q" # -q for no errors on stdout
+    command_for_stdin_stdout = "#{@exe_path} #{options} -q - - " # -q for no errors on stdout
     p "*"*15 + command_for_stdin_stdout + "*"*15 if Rails.env == 'development'
     Open3.popen3(command_for_stdin_stdout) do |stdin, stdout, stderr|
       stdin.write(string)
