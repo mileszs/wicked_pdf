@@ -5,6 +5,8 @@ require 'logger'
 require 'digest/md5'
 require 'open3'
 
+require 'wicked_pdf_railtie'
+
 class WickedPdf
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path
