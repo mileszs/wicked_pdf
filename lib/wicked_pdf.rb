@@ -4,6 +4,7 @@
 require 'logger'
 require 'digest/md5'
 require 'open3'
+require 'active_support/core_ext/class/attribute_accessors'
 
 require 'wicked_pdf_railtie'
 
@@ -22,7 +23,7 @@ class WickedPdf
 
   def pdf_from_string(string, options={})
     command_for_stdin_stdout = "#{@exe_path} #{parse_options(options)} -q - - " # -q for no errors on stdout
-    p "*"*15 + command_for_stdin_stdout + "*"*15 if Rails.env == 'development'
+    p "*"*15 + command_for_stdin_stdout + "*"*15 unless defined?(Rails) and Rails.env != 'development'
     Open3.popen3(command_for_stdin_stdout) do |stdin, stdout, stderr|
       stdin.write(string)
       stdin.close
