@@ -33,7 +33,9 @@ module PdfHelper
       if options[:show_as_html]
         render :template => options[:template], :layout => options[:layout], :content_type => "text/html"
       else
-        send_data(make_pdf(options), :filename => pdf_name + '.pdf', :type => 'application/pdf', :disposition => options[:disposition])
+        pdf_content = make_pdf(options)
+        File.open(options[:save_to_file], 'wb') {|file| file << pdf_content } if options[:save_to_file]
+        send_data(pdf_content, :filename => pdf_name + '.pdf', :type => 'application/pdf', :disposition => options[:disposition]) unless options[:save_only]
       end
     end
 
