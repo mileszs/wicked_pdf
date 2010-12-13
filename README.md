@@ -145,4 +145,4 @@ You may have noticed: this plugin is heavily inspired by the PrinceXML plugin [p
 
 ### Awesome Peoples
 
-Also, thanks to [galdomedia](http://github.com/galdomedia) and [jcrisp](http://github.com/jcrisp) and [lleirborras](http://github.com/lleirborras) for all their hard work and patience with my delays in merging in their enhancements.
+Also, thanks to [galdomedia](http://github.com/galdomedia) and [jcrisp](http://github.com/jcrisp) and [lleirborras](http://github.com/lleirborras), [tiennou](http://github.com/tiennou), and everyone else for all their hard work and patience with my delays in merging in their enhancements.
