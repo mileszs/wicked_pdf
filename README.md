@@ -107,7 +107,7 @@ By default, it will render without a layout (:layout => false) and the template 
 
 ### Styles
 
-You must define absolute path's to CSS files, the best option is to use *wicked_pdf_stylesheet_link_tag* helper.
+You must define absolute path's to CSS files and images; the best option is to use the *wicked_pdf_stylesheet_link_tag* and *wicked_pdf_image_tag* helpers.
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
