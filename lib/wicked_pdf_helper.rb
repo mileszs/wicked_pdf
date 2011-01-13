@@ -6,4 +6,8 @@ module WickedPdfHelper
   def wicked_pdf_image_tag(img, options={})
     image_tag Rails.root.join('public','images',img).to_s, options
   end
+
+  def wicked_pdf_javascript_src_tag(jsfile, options={})
+    javascript_src_tag Rails.root.join('public','javascripts',jsfile).to_s, options
+  end
 end
