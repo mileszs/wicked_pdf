@@ -135,7 +135,7 @@ Andreas Happe's post [Generating PDFs from Ruby on Rails](http://snikt.net/index
 
 Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster.
 
-First of all you must configure the render parameter ":show_as_html" and then just use it like normally but adding "debug=1" as a param:
+First of all you must configure the render parameter ":show_as_html => params[:debug]" and then just use it like normally but adding "debug=1" as a param:
 
 http://localhost:3001/CONTROLLER/X.pdf?debug=1
 
