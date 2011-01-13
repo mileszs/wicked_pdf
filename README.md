@@ -18,86 +18,98 @@ Next:
 
     script/plugin install git://github.com/mileszs/wicked_pdf.git
     script/generate wicked_pdf
-
-### Usage
+### Basic Usage
 
     class ThingsController < ApplicationController
       def show
         respond_to do |format|
           format.html
           format.pdf do
-            render :pdf => "file_name",
-                   :template => "things/show.pdf.erb", # OPTIONAL
-                   :layout => "pdf.html", # OPTIONAL -- use 'pdf.html' for a pfd.html.erb file
-                   :wkhtmltopdf => '/usr/local/bin/wkhtmltopdf', # OPTIONAL, path to binary
-                   :show_as_html => !params[:debug].blank?, #OPTIONAL, maybe you just want to allow debuging in development environment?
-                   :margin => {:top => SIZE, #OPTIONAL
-                               :bottom  => SIZE, #OPTIONAL
-                               :left  => SIZE, #OPTIONAL
-                               :right  => SIZE}, #OPTIONAL
-                   :orientation => 'Landscape or Portrait', #OPTIONAL, default Portrait
-                   :page_size => 'A4, Letter, ...', #OPTIONAL, default A4
-                   :proxy => 'TEXT', #OPTIONAL
-                   :username => 'TEXT', #OPTIONAL
-                   :password => 'TEXT', #OPTIONAL
-                   :cover => 'URL', #OPTIONAL
-                   :dpi => "dpi", #OPTIONAL
-                   :encoding => "TEXT", #OPTIONAL
-                   :user_style_sheet => "URL", #OPTIONAL
-                   :redirect_delay => NUMBER, #OPTIONAL
-                   :zoom => FLOAT, #OPTIONAL
-                   :page_offset => NUMBER, #OPTIONAL
-                   :book => true,  #OPTIONAL
-                   :default_header => true,  #OPTIONAL
-                   :disable_javascript => true,  #OPTIONAL
-                   :greyscale => true,  #OPTIONAL 
-                   :lowquality => true,  #OPTIONAL
-                   :enable_plugins => true,  #OPTIONAL
-                   :disable_internal_links => true,  #OPTIONAL
-                   :disable_external_links => true,  #OPTIONAL
-                   :print_media_type => true,  #OPTIONAL
-                   :disable_smart_shrinking => true,  #OPTIONAL
-                   :use_xserver => true,  #OPTIONAL
-                   :no_background => true,  #OPTIONAL
-                   :header => {:html => {:template => "public/header.pdf.erb" OR :url => "www.header.bbb"}, #OPTIONAL
-                               :center => "TEXT", #OPTIONAL
-                               :font_name => "NAME", #OPTIONAL
-                               :font_size => SIZE, #OPTIONAL
-                               :left => "TEXT", #OPTIONAL
-                               :right => "TEXT", #OPTIONAL
-                               :spacing => REAL, #OPTIONAL
-                               :line => true}, #OPTIONAL
-                   :footer => {:html => {:template => "public/header.pdf.erb" OR :url => "www.header.bbb"}, #OPTIONAL
-                               :center => "TEXT", #OPTIONAL
-                               :font_name => "NAME", #OPTIONAL
-                               :font_size => SIZE, #OPTIONAL
-                               :left => "TEXT", #OPTIONAL
-                               :right => "TEXT", #OPTIONAL
-                               :spacing => REAL, #OPTIONAL
-                               :line => true}, #OPTIONAL
-                   :toc => {:font_name => "NAME", #OPTIONAL
-                            :depth => LEVEL, #OPTIONAL
-                            :header_text => "TEXT", #OPTIONAL
-                            :header_fs => SIZE, #OPTIONAL
-                            :l1_font_size => SIZE, #OPTIONAL 
-                            :l2_font_size => SIZE, #OPTIONAL 
-                            :l3_font_size => SIZE, #OPTIONAL
-                            :l4_font_size => SIZE, #OPTIONAL
-                            :l5_font_size => SIZE, #OPTIONAL
-                            :l6_font_size => SIZE, #OPTIONAL
-                            :l7_font_size => SIZE, #OPTIONAL
-                            :l1_indentation => NUM, #OPTIONAL
-                            :l2_indentation => NUM, #OPTIONAL
-                            :l3_indentation => NUM, #OPTIONAL
-                            :l4_indentation => NUM, #OPTIONAL
-                            :l5_indentation => NUM, #OPTIONAL
-                            :l6_indentation => NUM, #OPTIONAL
-                            :l7_indentation => NUM, #OPTIONAL
-                            :no_dots => true, #OPTIONAL
-                            :disable_links => true, #OPTIONAL
-                            :disable_back_links => true}, #OPTIONAL
-                   :outline => {:outline => true, #OPTIONAL
-                                :outline_depth => LEVEL} #OPTIONAL
+            render :pdf => "file_name"
+          end
+        end
+      end
+    end
+
+### Advanced Usage with all available options
+
+    class ThingsController < ApplicationController
+      def show
+        respond_to do |format|
+          format.html
+          format.pdf do
+            render :pdf                            => 'file_name',
+                   :template                       => 'things/show.pdf.erb',        
+                   :layout                         => 'pdf.html',                   # use 'pdf.html' for a pfd.html.erb file
+                   :wkhtmltopdf                    => '/usr/local/bin/wkhtmltopdf', # path to binary
+                   :show_as_html                   => params[:debug].present?,      # allow debuging based on url param
+                   :orientation                    => 'Landscape',                  # default Portrait
+                   :page_size                      => 'A4, Letter, ...',            # default A4
+                   :proxy                          => 'TEXT',
+                   :username                       => 'TEXT',
+                   :password                       => 'TEXT',
+                   :cover                          => 'URL',
+                   :dpi                            => 'dpi',
+                   :encoding                       => 'TEXT',
+                   :user_style_sheet               => 'URL',
+                   :redirect_delay                 => NUMBER,
+                   :zoom                           => FLOAT,
+                   :page_offset                    => NUMBER,
+                   :book                           => true,
+                   :default_header                 => true,
+                   :disable_javascript             => false,
+                   :greyscale                      => true,
+                   :lowquality                     => true,
+                   :enable_plugins                 => true,
+                   :disable_internal_links         => true,
+                   :disable_external_links         => true,
+                   :print_media_type               => true,
+                   :disable_smart_shrinking        => true,
+                   :use_xserver                    => true,
+                   :no_background                  => true,
+                   :margin => {:top                => SIZE,                         # default 10 (mm)
+                               :bottom             => SIZE,
+                               :left               => SIZE,
+                               :right              => SIZE},
+                   :header => {:html => {:template => 'users/header.pdf.erb' OR :url => 'www.header.bbb'},
+                               :center             => 'TEXT',
+                               :font_name          => 'NAME',
+                               :font_size          => SIZE,
+                               :left               => 'TEXT',
+                               :right              => 'TEXT',
+                               :spacing            => REAL,
+                               :line               => true},
+                   :footer => {:html => {:template => 'public/header.pdf.erb' OR :url => 'www.header.bbb'},
+                               :center             => 'TEXT',
+                               :font_name          => 'NAME',
+                               :font_size          => SIZE,
+                               :left               => 'TEXT',
+                               :right              => 'TEXT',
+                               :spacing            => REAL,
+                               :line               => true},
+                   :toc    => {:font_name          => "NAME",
+                               :depth              => LEVEL,
+                               :header_text        => "TEXT",
+                               :header_fs          => SIZE,
+                               :l1_font_size       => SIZE,
+                               :l2_font_size       => SIZE,
+                               :l3_font_size       => SIZE,
+                               :l4_font_size       => SIZE,
+                               :l5_font_size       => SIZE,
+                               :l6_font_size       => SIZE,
+                               :l7_font_size       => SIZE,
+                               :l1_indentation     => NUM,
+                               :l2_indentation     => NUM,
+                               :l3_indentation     => NUM,
+                               :l4_indentation     => NUM,
+                               :l5_indentation     => NUM,
+                               :l6_indentation     => NUM,
+                               :l7_indentation     => NUM,
+                               :no_dots            => true,
+                               :disable_links      => true,
+                               :disable_back_links => true},
+                   :outline => {:outline           => true,
+                                :outline_depth     => LEVEL}
           end
         end
       end
