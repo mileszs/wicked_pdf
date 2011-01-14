@@ -127,8 +127,12 @@ You must define absolute path's to CSS files, images, and javascripts; the best 
       <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+        <%= wicked_pdf_javascript_include_tag "number_pages" %>
       </head>
-      <body>
+      <body onload='number_pages'>
+        <div id="header">
+          <%= wicked_pdf_image_tag 'mysite.jpg' %>
+        </div>
         <div id="content">
           <%= yield %>
         </div>
