@@ -143,25 +143,25 @@ You must define absolute path's to CSS files, images, and javascripts; the best 
 
 A bit of javascript can help you number your pages, create a template or header/footer file with this:
 
-   <html>
-     <head>
-       <script>
-         function number_pages() {
-           var vars={};
-           var x=document.location.search.substring(1).split('&');
-           for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
-           var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
-           for(var i in x) {
-             var y = document.getElementsByClassName(x[i]);
-             for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
-           }
-         }
-       </script>
-     </head>
-     <body onload="number_pages()">
-       Page <span class="page"></span> of <span class="topage"></span>
-     </body>
-   </html>
+    <html>
+      <head>
+        <script>
+          function number_pages() {
+            var vars={};
+            var x=document.location.search.substring(1).split('&');
+            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+            for(var i in x) {
+              var y = document.getElementsByClassName(x[i]);
+              for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+            }
+          }
+        </script>
+      </head>
+      <body onload="number_pages()">
+        Page <span class="page"></span> of <span class="topage"></span>
+      </body>
+    </html>
 
 Anything with a class listed in "var x" above will be auto-filled at render time.
 
