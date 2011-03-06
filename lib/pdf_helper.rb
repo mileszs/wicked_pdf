@@ -10,6 +10,7 @@ module PdfHelper
   def render_with_wicked_pdf(options = nil, *args, &block)
     if options.is_a?(Hash) && options.has_key?(:pdf)
       logger.info '*'*15 + 'WICKED' + '*'*15
+      options[:basic_auth] = request.env["HTTP_AUTHORIZATION"].split(" ").last if request.env["HTTP_AUTHORIZATION"]
       make_and_send_pdf(options.delete(:pdf), (WickedPdf.config || {}).merge(options))
     else
       render_without_wicked_pdf(options, *args, &block)

@@ -47,7 +47,17 @@ class WickedPdf
       parse_outline(options.delete(:outline)),
       parse_margins(options.delete(:margin)),
       parse_others(options),
+      parse_basic_auth(options)
     ].join(' ')
+  end
+
+  def parse_basic_auth(options)
+    if options[:basic_auth]
+      user, passwd = Base64.decode64(options[:basic_auth]).split(":")
+      "--username #{user} --password #{passwd} "
+    else
+      ""
+    end
   end
 
   def make_option(name, value, type=:string)
