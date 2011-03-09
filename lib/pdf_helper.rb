@@ -19,7 +19,8 @@ module PdfHelper
 
   private
     def make_pdf(options = {})
-      html_string = render_to_string(:template => options[:template], :layout => options[:layout])
+      options[:format] ||= :pdf
+      html_string = render_to_string_with_format(:template => options[:template], :layout => options[:layout], :format => options[:format])
       w = WickedPdf.new(options[:wkhtmltopdf])
       w.pdf_from_string(html_string, options)
     end
