@@ -6,7 +6,7 @@ module PdfHelper
       alias_method_chain :render, :wicked_pdf
     end
   end
-
+  
   def render_with_wicked_pdf(options = nil, *args, &block)
     if options.is_a?(Hash) && options.has_key?(:pdf)
       logger.info '*'*15 + 'WICKED' + '*'*15
@@ -20,9 +20,15 @@ module PdfHelper
   private
     def make_pdf(options = {})
       options[:format] ||= :pdf
-      html_string = render_to_string_with_format(:template => options[:template], :layout => options[:layout], :format => options[:format])
-      w = WickedPdf.new(options[:wkhtmltopdf])
-      w.pdf_from_string(html_string, options)
+      original_format = @template_format
+      begin
+        @template_format = options[:format]
+        html_string = render_to_string( :template => options[:template], :layout => options[:layout] )
+        w = WickedPdf.new(options[:wkhtmltopdf])
+        w.pdf_from_string(html_string, options)
+      ensure
+        @template_format = original_format
+      end
     end
 
     def make_and_send_pdf(pdf_name, options = {})
