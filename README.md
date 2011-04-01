@@ -39,12 +39,14 @@ Next:
           format.html
           format.pdf do
             render :pdf                            => 'file_name',
-                   :template                       => 'things/show.pdf.erb',        
+                   :template                       => 'things/show.pdf.erb',
                    :layout                         => 'pdf.html',                   # use 'pdf.html' for a pfd.html.erb file
                    :wkhtmltopdf                    => '/usr/local/bin/wkhtmltopdf', # path to binary
                    :show_as_html                   => params[:debug].present?,      # allow debuging based on url param
                    :orientation                    => 'Landscape',                  # default Portrait
                    :page_size                      => 'A4, Letter, ...',            # default A4
+                   :save_to_file                   => Rails.root.join('pdfs', "#{filename}.pdf"),
+                   :save_only                      => false,                        # depends on :save_to_file being set first
                    :proxy                          => 'TEXT',
                    :username                       => 'TEXT',
                    :password                       => 'TEXT',
