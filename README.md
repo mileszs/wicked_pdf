@@ -119,6 +119,23 @@ Next:
 
 By default, it will render without a layout (:layout => false) and the template for the current controller and action.
 
+### Super Advanced Usage ###
+
+If you need to just create a pdf and not display it:
+
+    # create a pdf from a string
+    pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
+		
+		# or from your controller, using views & templates and all wicked_pdf options as normal
+    pdf = render_to_string :pdf => "some_file_name"
+		
+    # then save to a file
+    save_path = Rails.root.join('pdfs','filename.pdf')
+    File.open(save_path, 'wb') do |file|
+      file << pdf
+    end
+
+
 ### Styles
 
 You must define absolute path's to CSS files, images, and javascripts; the best option is to use the *wicked_pdf_stylesheet_link_tag*, *wicked_pdf_image_tag*, and *wicked_pdf_javascript_include_tag* helpers.
