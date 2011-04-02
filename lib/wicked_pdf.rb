@@ -128,6 +128,8 @@ class WickedPdf
     unless options.blank?
       r = make_options(options, [ :orientation,
                                   :page_size,
+                                  :page_width,
+                                  :page_height,
                                   :proxy,
                                   :username,
                                   :password,
