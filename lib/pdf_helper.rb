@@ -1,6 +1,6 @@
 module PdfHelper
   require 'wicked_pdf'
-
+  require 'wicked_pdf_tempfile'
   def self.included(base)
     base.class_eval do
       alias_method_chain :render, :wicked_pdf
