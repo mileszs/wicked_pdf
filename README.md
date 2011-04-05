@@ -39,12 +39,14 @@ Next:
           format.html
           format.pdf do
             render :pdf                            => 'file_name',
-                   :template                       => 'things/show.pdf.erb',        
+                   :template                       => 'things/show.pdf.erb',
                    :layout                         => 'pdf.html',                   # use 'pdf.html' for a pfd.html.erb file
                    :wkhtmltopdf                    => '/usr/local/bin/wkhtmltopdf', # path to binary
                    :show_as_html                   => params[:debug].present?,      # allow debuging based on url param
                    :orientation                    => 'Landscape',                  # default Portrait
                    :page_size                      => 'A4, Letter, ...',            # default A4
+                   :save_to_file                   => Rails.root.join('pdfs', "#{filename}.pdf"),
+                   :save_only                      => false,                        # depends on :save_to_file being set first
                    :proxy                          => 'TEXT',
                    :username                       => 'TEXT',
                    :password                       => 'TEXT',
@@ -116,6 +118,23 @@ Next:
     end
 
 By default, it will render without a layout (:layout => false) and the template for the current controller and action.
+
+### Super Advanced Usage ###
+
+If you need to just create a pdf and not display it:
+
+    # create a pdf from a string
+    pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
+		
+		# or from your controller, using views & templates and all wicked_pdf options as normal
+    pdf = render_to_string :pdf => "some_file_name"
+		
+    # then save to a file
+    save_path = Rails.root.join('pdfs','filename.pdf')
+    File.open(save_path, 'wb') do |file|
+      file << pdf
+    end
+
 
 ### Styles
 
