@@ -2,7 +2,7 @@ require 'test_helper'
 
 class WickedPdfHelperTest < ActionView::TestCase
   test 'wicked_pdf_stylesheet_link_tag should return the same as stylesheet_link_tag when passed a full path' do
-    assert_equal stylesheet_link_tag('pdf', "file://#{Rails.root.join('public','stylesheets','pdf')}"),
+    assert_equal stylesheet_link_tag('pdf', "#{Rails.root.join('public','stylesheets','pdf')}"),
                  wicked_pdf_stylesheet_link_tag('pdf')
   end
 
