@@ -21,6 +21,6 @@ class PdfHelperTest < ActionController::TestCase
     options = @ac.send( :prerender_header_and_footer,
                         :header => {:html => { :template => 'hf.html.erb'}});
     assert !options[:header][:html].has_key?(:template)
-    assert_match /^file:\/\/.*wicked_pdf.*\.html/, options[:header][:html][:url]
+    assert_match /^file:\/\/.*wicked_header_pdf.*\.html/, options[:header][:html][:url]
   end
 end
