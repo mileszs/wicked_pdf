@@ -73,7 +73,9 @@ Next:
                                :bottom             => SIZE,
                                :left               => SIZE,
                                :right              => SIZE},
-                   :header => {:html => {:template => 'users/header.pdf.erb' OR :url => 'www.header.bbb'},
+                   :header => {:html => { :template => 'users/header.pdf.erb', # use :template OR :url
+                                          :url      => 'www.example.com',
+                                          :locals   => { :foo => @bar }},
                                :center             => 'TEXT',
                                :font_name          => 'NAME',
                                :font_size          => SIZE,
@@ -81,7 +83,9 @@ Next:
                                :right              => 'TEXT',
                                :spacing            => REAL,
                                :line               => true},
-                   :footer => {:html => {:template => 'public/header.pdf.erb' OR :url => 'www.header.bbb'},
+                   :footer => {:html => { :template => 'shared/footer.pdf.erb', # use :template OR :url
+                                          :url      => 'www.example.com',
+                                          :locals   => { :foo => @bar }},
                                :center             => 'TEXT',
                                :font_name          => 'NAME',
                                :font_size          => SIZE,
