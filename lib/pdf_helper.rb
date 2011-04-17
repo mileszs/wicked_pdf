@@ -12,8 +12,8 @@ module PdfHelper
 
   def render_with_wicked_pdf(options = nil, *args, &block)
     if options.is_a?(Hash) && options.has_key?(:pdf)
-      logger.info '*'*15 + 'WICKED' + '*'*15
-      options[:basic_auth] = request.env["HTTP_AUTHORIZATION"].split(" ").last if request.env["HTTP_AUTHORIZATION"]
+      log_pdf_creation
+      options[:basic_auth] = set_basic_auth
       make_and_send_pdf(options.delete(:pdf), (WickedPdf.config || {}).merge(options))
     else
       render_without_wicked_pdf(options, *args, &block)
@@ -22,8 +22,8 @@ module PdfHelper
 
   def render_to_string_with_wicked_pdf(options = nil, *args, &block)
     if options.is_a?(Hash) && options.has_key?(:pdf)
-      logger.info '*'*15 + 'WICKED' + '*'*15
-      options[:basic_auth] = request.env["HTTP_AUTHORIZATION"].split(" ").last if request.env["HTTP_AUTHORIZATION"]
+      log_pdf_creation
+      options[:basic_auth] = set_basic_auth
       options.delete :pdf
       make_pdf((WickedPdf.config || {}).merge(options))
     else
@@ -32,6 +32,14 @@ module PdfHelper
   end
 
   private
+
+    def log_pdf_creation
+      logger.info '*'*15 + 'WICKED' + '*'*15
+    end
+
+    def set_basic_auth
+      request.env["HTTP_AUTHORIZATION"].split(" ").last if request.env["HTTP_AUTHORIZATION"]
+    end
 
     def clean_temp_files
       if defined?(@hf_tempfiles)
