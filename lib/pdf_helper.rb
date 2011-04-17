@@ -1,6 +1,7 @@
 module PdfHelper
   require 'wicked_pdf'
   require 'wicked_pdf_tempfile'
+
   def self.included(base)
     base.class_eval do
       alias_method_chain :render, :wicked_pdf
@@ -19,25 +20,24 @@ module PdfHelper
   end
 
   private
-  def clean_temp_files
+
+    def clean_temp_files
       if defined?(@hf_tempfiles)
-          @hf_tempfiles.each do | tf |
-              tf.close!
-          end
+        @hf_tempfiles.each { |tf| tf.close! }
       end
-  end
+    end
+
     def make_pdf(options = {})
       html_string = render_to_string(:template => options[:template], :layout => options[:layout])
       w = WickedPdf.new(options[:wkhtmltopdf])
       w.pdf_from_string(html_string, options)
     end
 
-    def make_and_send_pdf(pdf_name, options = {})
+    def make_and_send_pdf(pdf_name, options={})
       options[:wkhtmltopdf] ||= nil
-      options[:layout] ||= false
-      options[:template] ||= File.join(controller_path, action_name)
+      options[:layout]      ||= false
+      options[:template]    ||= File.join(controller_path, action_name)
       options[:disposition] ||= "inline"
-
       options = prerender_header_and_footer(options)
       if options[:show_as_html]
         render :template => options[:template], :layout => options[:layout], :content_type => "text/html"
@@ -53,16 +53,14 @@ module PdfHelper
     def prerender_header_and_footer(options)
       [:header, :footer].each do |hf|
         if options[hf] && options[hf][:html] && options[hf][:html][:template]
-            @hf_tempfiles = [] if ! defined?(@hf_tempfiles)
-            @hf_tempfiles.push( tf=WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
-            tf.write render_to_string(:template => options[hf][:html][:template],
-                                  :layout => options[:layout])
-            tf.flush
-            options[hf][:html].delete(:template)
-            options[hf][:html][:url] = "file://#{tf.path}"
+          @hf_tempfiles = [] if ! defined?(@hf_tempfiles)
+          @hf_tempfiles.push( tf=WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
+          tf.write render_to_string(:template => options[hf][:html][:template], :layout => options[:layout])
+          tf.flush
+          options[hf][:html].delete(:template)
+          options[hf][:html][:url] = "file://#{tf.path}"
         end
       end
-
-      return options
+      options
     end
 end
