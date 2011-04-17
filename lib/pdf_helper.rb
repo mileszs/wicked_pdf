@@ -1,9 +1,10 @@
 module PdfHelper
   require 'wicked_pdf'
-
+  require 'wicked_pdf_tempfile'
   def self.included(base)
     base.class_eval do
       alias_method_chain :render, :wicked_pdf
+      after_filter :clean_temp_files
     end
   end
 
@@ -18,6 +19,13 @@ module PdfHelper
   end
 
   private
+  def clean_temp_files
+      if defined?(@hf_tempfiles)
+          @hf_tempfiles.each do | tf |
+              tf.close!
+          end
+      end
+  end
     def make_pdf(options = {})
       html_string = render_to_string(:template => options[:template], :layout => options[:layout])
       w = WickedPdf.new(options[:wkhtmltopdf])
@@ -45,12 +53,13 @@ module PdfHelper
     def prerender_header_and_footer(options)
       [:header, :footer].each do |hf|
         if options[hf] && options[hf][:html] && options[hf][:html][:template]
-          WickedPdfTempfile.open("wicked_pdf.html") do |f|
-            f << render_to_string(:template => options[hf][:html][:template],
+            @hf_tempfiles = [] if ! defined?(@hf_tempfiles)
+            @hf_tempfiles.push( tf=WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
+            tf.write render_to_string(:template => options[hf][:html][:template],
                                   :layout => options[:layout])
+            tf.flush
             options[hf][:html].delete(:template)
-            options[hf][:html][:url] = "file://#{f.path}"
-          end
+            options[hf][:html][:url] = "file://#{tf.path}"
         end
       end
 
