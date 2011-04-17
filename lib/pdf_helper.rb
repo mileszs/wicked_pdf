@@ -29,6 +29,7 @@ module PdfHelper
 
     def make_pdf(options = {})
       html_string = render_to_string(:template => options[:template], :layout => options[:layout])
+      options = prerender_header_and_footer(options)
       w = WickedPdf.new(options[:wkhtmltopdf])
       w.pdf_from_string(html_string, options)
     end
@@ -38,7 +39,6 @@ module PdfHelper
       options[:layout]      ||= false
       options[:template]    ||= File.join(controller_path, action_name)
       options[:disposition] ||= "inline"
-      options = prerender_header_and_footer(options)
       if options[:show_as_html]
         render :template => options[:template], :layout => options[:layout], :content_type => "text/html"
       else
