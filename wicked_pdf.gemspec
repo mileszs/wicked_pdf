@@ -6,7 +6,6 @@ Gem::Specification.new do |s|
   s.homepage          = "http://github.com/mileszs/wicked_pdf"
   s.email             = "miles.sterrett@gmail.com"
   s.authors           = [ "Miles Z. Sterret" ]
-  s.has_rdoc          = false
 
   s.files             = %w( README.md Rakefile MIT-LICENSE )
   s.files            += Dir.glob("lib/**/*")
