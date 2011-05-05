@@ -188,6 +188,10 @@ A bit of javascript can help you number your pages, create a template or header/
 
 Anything with a class listed in "var x" above will be auto-filled at render time.
 
+If you do not have explicit page breaks (and therefore do not have any "page" class), you can also use wkhtmltopdf's built in page number generation by setting one of the headers to "[page]":
+
+    render :pdf => 'filename', :template => 'index.pdf', :layout => 'print.pdf', :header => { :right => '[page]' }
+
 ### Configuration
 
 You can put your default configuration, applied to all pdf's at "wicked_pdf.rb" initializer.
