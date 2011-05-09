@@ -12,7 +12,7 @@ First, be sure to install [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/).
 Note that versions before 0.9.0 [have problems](http://code.google.com/p/wkhtmltopdf/issues/detail?id=82&q=vodnik) on some machines with reading/writing to streams.
 This plugin relies on streams to communicate with wkhtmltopdf.
 
-More information about [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) could be found [here](http://madalgo.au.dk/~jakobt/wkhtmltopdf-0.9.0_beta2-doc.html).
+More information about [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) could be found [here](http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html).
 
 Next:
 
@@ -130,7 +130,7 @@ If you need to just create a pdf and not display it:
     # create a pdf from a string
     pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
 		
-		# or from your controller, using views & templates and all wicked_pdf options as normal
+    # or from your controller, using views & templates and all wicked_pdf options as normal
     pdf = render_to_string :pdf => "some_file_name"
 		
     # then save to a file
@@ -190,7 +190,7 @@ Anything with a class listed in "var x" above will be auto-filled at render time
 
 If you do not have explicit page breaks (and therefore do not have any "page" class), you can also use wkhtmltopdf's built in page number generation by setting one of the headers to "[page]":
 
-    render :pdf => 'filename', :template => 'index.pdf', :layout => 'print.pdf', :header => { :right => '[page]' }
+    render :pdf => 'filename', :header => { :right => '[page] of [topage]' }
 
 ### Configuration
 
