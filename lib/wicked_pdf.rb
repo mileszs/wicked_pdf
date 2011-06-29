@@ -22,23 +22,24 @@ class WickedPdf
     raise "Wkhtmltopdf is not executable" unless File.executable?(@exe_path)
   end
 
+  def command
+    "#{@exe_path} #{parse_options(options)} -q - - " # -q for no errors on stdout
+  end
+
+  def log_debug
+    p "*"*15 + command + "*"*15 unless defined?(Rails) and Rails.env != 'development'
+  end
+
   def pdf_from_string(string, options={})
-    command_for_stdin_stdout = "#{@exe_path} #{parse_options(options)} -q - - " # -q for no errors on stdout
-    p "*"*15 + command_for_stdin_stdout + "*"*15 unless defined?(Rails) and Rails.env != 'development'
-    pdf, err = begin
-      Open3.popen3(command_for_stdin_stdout) do |stdin, stdout, stderr|
-        stdin.binmode
-        stdout.binmode
-        stderr.binmode
-        stdin.write(string)
-        stdin.close
-        [stdout.read, stderr.read]
-      end
-    rescue Exception => e
-      raise "Failed to execute #{@exe_path}: #{e}"
+    pdf = IO.popen(command, 'wb+') do |stream|
+      stream.puts(string)
+      stream.close_write
+      stream.gets(nil)
     end
-    raise "PDF could not be generated!\n#{err}" if pdf and pdf.length == 0
+    raise "PDF could not be generated!" if pdf and pdf.length == 0
     pdf
+  rescue Exception => e
+    raise "Failed to execute #{@exe_path}: #{e}"
   end
 
   private
