@@ -25,10 +25,13 @@ class WickedPdf
   def pdf_from_string(string, options={})
     command = "#{@exe_path} #{parse_options(options)} -q - - " # -q for no errors on stdout
     p "*"*15 + command + "*"*15 unless defined?(Rails) and Rails.env != 'development'
-    pdf = IO.popen(command, 'wb+') do |stream|
-      stream.puts(string)
-      stream.close_write
-      stream.gets(nil)
+    pdf, err = Open3.popen3(command) do |stdin, stdout, stderr|
+      stdin.binmode
+      stdout.binmode
+      stderr.binmode
+      stdin.write(string)
+      stdin.close
+      [stdout.read, stderr.read]
     end
     raise "PDF could not be generated!" if pdf and pdf.length == 0
     pdf
