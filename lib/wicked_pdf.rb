@@ -57,7 +57,7 @@ class WickedPdf
     def parse_basic_auth(options)
       if options[:basic_auth]
         user, passwd = Base64.decode64(options[:basic_auth]).split(":")
-        "--username #{user} --password #{passwd} "
+        "--username '#{user}' --password '#{passwd}'"
       else
         ""
       end
