@@ -36,7 +36,7 @@ class WickedPdf
     raise "PDF could not be generated!" if pdf and pdf.rstrip.length == 0
     pdf
   rescue Exception => e
-    raise "Failed to execute #{@exe_path}: #{e}"
+    raise "Failed to execute:\n#{command}\nError: #{e}"
   end
 
   private
