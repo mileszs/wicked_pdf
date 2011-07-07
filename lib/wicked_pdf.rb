@@ -33,7 +33,7 @@ class WickedPdf
       stdin.close
       [stdout.read, stderr.read]
     end
-    raise "PDF could not be generated!" if pdf and pdf.length == 0
+    raise "PDF could not be generated!" if pdf and pdf.rstrip.length == 0
     pdf
   rescue Exception => e
     raise "Failed to execute #{@exe_path}: #{e}"
