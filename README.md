@@ -2,7 +2,7 @@
 
 ## A PDF generation plugin for Ruby on Rails
 
-Wicked PDF uses the shell utility [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) to serve a PDF file to a user from HTML.  In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, and let Wicked take care of the hard stuff.
+Wicked PDF uses the shell utility [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) to serve a PDF file to a user from HTML.  In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, then let Wicked take care of the hard stuff.
 
 _Wicked PDF has been verified to work on Ruby 1.8.7 and 1.9.2; Rails 2 and Rails 3_
 
@@ -40,7 +40,7 @@ Next:
           format.pdf do
             render :pdf                            => 'file_name',
                    :template                       => 'things/show.pdf.erb',
-                   :layout                         => 'pdf.html',                   # use 'pdf.html' for a pfd.html.erb file
+                   :layout                         => 'pdf.html',                   # use 'pdf.html' for a pdf.html.erb file
                    :wkhtmltopdf                    => '/usr/local/bin/wkhtmltopdf', # path to binary
                    :show_as_html                   => params[:debug].present?,      # allow debuging based on url param
                    :orientation                    => 'Landscape',                  # default Portrait
@@ -146,7 +146,7 @@ If you need to display utf encoded characters, add this to your pdf views or lay
 
 ### Styles
 
-You must define absolute path's to CSS files, images, and javascripts; the best option is to use the *wicked_pdf_stylesheet_link_tag*, *wicked_pdf_image_tag*, and *wicked_pdf_javascript_include_tag* helpers.
+You must define absolute paths to CSS files, images, and javascripts; the best option is to use the *wicked_pdf_stylesheet_link_tag*, *wicked_pdf_image_tag*, and *wicked_pdf_javascript_include_tag* helpers.
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -168,7 +168,7 @@ You must define absolute path's to CSS files, images, and javascripts; the best 
 
 ### Page Numbering
 
-A bit of javascript can help you number your pages, create a template or header/footer file with this:
+A bit of javascript can help you number your pages. Create a template or header/footer file with this:
 
     <html>
       <head>
