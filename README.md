@@ -18,6 +18,11 @@ Next:
 
     script/plugin install git://github.com/mileszs/wicked_pdf.git
     script/generate wicked_pdf
+
+or add this to your Gemfile:
+
+    gem 'wicked_pdf'
+
 ### Basic Usage
 
     class ThingsController < ApplicationController
