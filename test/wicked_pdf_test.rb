@@ -10,7 +10,7 @@ class WickedPdf
   end
 end
 
-class WickedPdfTest < ActiveSupport::TestCase
+class WickedPdfTests < ActiveSupport::TestCase
 
   test "should generate PDF from html document" do
     wp = WickedPdf.new
