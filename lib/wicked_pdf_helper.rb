@@ -11,7 +11,8 @@ module WickedPdfHelper
   end
 
   def wicked_pdf_javascript_src_tag(jsfile, options={})
-    javascript_src_tag "file://#{Rails.root.join('public','javascripts',jsfile)}", options
+    source = "file://#{Rails.root.join('public','javascripts',jsfile)}"
+    content_tag("script", "", { "type" => Mime::JS, "src" => path_to_javascript(source) }.merge(options))
   end
 
   def wicked_pdf_javascript_include_tag(*sources)
