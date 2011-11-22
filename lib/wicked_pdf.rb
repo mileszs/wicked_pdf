@@ -16,7 +16,7 @@ class WickedPdf
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path
     @exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
-    @exe_path ||= `which wkhtmltopdf`.chomp
+    @exe_path ||= (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
     raise "Location of wkhtmltopdf unknown" if @exe_path.empty?
     raise "Bad wkhtmltopdf's path" unless File.exists?(@exe_path)
     raise "Wkhtmltopdf is not executable" unless File.executable?(@exe_path)
