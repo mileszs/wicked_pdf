@@ -20,7 +20,7 @@ module WickedPdfHelper
   module Assets
     def wicked_pdf_stylesheet_link_tag(*sources)
       sources.collect { |source|
-        "<style type='text/css'>#{Rails.application.assets.find_asset(source+".css").body}</style>"
+        "<style type='text/css'>#{Rails.application.assets.find_asset(source+".css")}</style>"
       }.join("\n").html_safe
     end
 
@@ -35,7 +35,7 @@ module WickedPdfHelper
     end
 
     def wicked_pdf_javascript_include_tag(*sources)
-      sources.collect{ |source| wicked_pdf_javascript_src_tag(source, {}) }.join("\n").html_safe
+      sources.collect{ |source| "<script type='text/javascript'>#{Rails.application.assets.find_asset(source+".js")}</script>" }.join("\n").html_safe
     end
   end
 end
