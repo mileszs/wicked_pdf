@@ -208,6 +208,7 @@ You can put your default configuration, applied to all pdf's at "wicked_pdf.rb" 
 ### Further Reading
 
 Andreas Happe's post [Generating PDFs from Ruby on Rails](http://starseeders.net/generating-pdfs-from-ruby-on-rails/)
+StackOverflow [questions with the tag "wicked-pdf"](http://stackoverflow.com/questions/tagged/wicked-pdf)
 
 ### Debugging
 
