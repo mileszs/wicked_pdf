@@ -79,7 +79,8 @@ or add this to your Gemfile:
                                :bottom             => SIZE,
                                :left               => SIZE,
                                :right              => SIZE},
-                   :header => {:html => { :template => 'users/header.pdf.erb', # use :template OR :url
+                   :header => {:html => { :template => 'users/header.pdf.erb',  # use :template OR :url
+                                          :layout   => 'pdf_plain.html',        # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
                                           :url      => 'www.example.com',
                                           :locals   => { :foo => @bar }},
                                :center             => 'TEXT',
@@ -90,6 +91,7 @@ or add this to your Gemfile:
                                :spacing            => REAL,
                                :line               => true},
                    :footer => {:html => { :template => 'shared/footer.pdf.erb', # use :template OR :url
+                                          :layout   => 'pdf_plain.html',        # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
                                           :url      => 'www.example.com',
                                           :locals   => { :foo => @bar }},
                                :center             => 'TEXT',
