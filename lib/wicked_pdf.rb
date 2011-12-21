@@ -107,6 +107,15 @@ class WickedPdf
           r += make_options(opt_hf, [:center, :font_name, :left, :right], "#{hf.to_s}")
           r += make_options(opt_hf, [:font_size, :spacing], "#{hf.to_s}", :numeric)
           r += make_options(opt_hf, [:line], "#{hf.to_s}", :boolean)
+          if options[hf] && options[hf][:content]
+            @hf_tempfiles = [] if ! defined?(@hf_tempfiles)
+            @hf_tempfiles.push( tf=WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
+            tf.write options[hf][:content]
+            tf.flush
+            options[hf].delete(:content)
+            options[hf][:html] = {}
+            options[hf][:html][:url] = "file://#{tf.path}"
+          end
           unless opt_hf[:html].blank?
             r += make_option("#{hf.to_s}-html", opt_hf[:html][:url]) unless opt_hf[:html][:url].blank?
           end
