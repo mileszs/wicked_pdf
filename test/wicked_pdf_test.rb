@@ -126,6 +126,13 @@ class WickedPdfTest < ActiveSupport::TestCase
       assert_equal "--#{o.to_s.gsub('_', '-')} 'opts'", wp.get_parsed_options(o => "opts").strip
     end
 
+    [:cookie, :post].each do |o|
+      assert_equal "--#{o.to_s.gsub('_', '-')} name value", wp.get_parsed_options(o => "name value").strip
+
+      nv_formatter = ->(number){ "--#{o.to_s.gsub('_', '-')} par#{number} val#{number}" }
+      assert_equal "#{nv_formatter.call(1)} #{nv_formatter.call(2)}", wp.get_parsed_options(o => ['par1 val1', 'par2 val2']).strip
+    end
+
     [:redirect_delay, :zoom, :page_offset].each do |o|
       assert_equal "--#{o.to_s.gsub('_', '-')} 5", wp.get_parsed_options(o => 5).strip
     end
