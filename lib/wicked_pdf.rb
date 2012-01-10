@@ -5,6 +5,7 @@ require 'logger'
 require 'digest/md5'
 require 'open3'
 require 'active_support/core_ext/class/attribute_accessors'
+require 'active_support/core_ext/object/blank'
 
 require 'wicked_pdf_railtie'
 require 'wicked_pdf_tempfile'
