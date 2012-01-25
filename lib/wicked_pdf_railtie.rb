@@ -22,7 +22,9 @@ if defined?(Rails)
         else
           ActionView::Base.send :include, WickedPdfHelper
         end
-        Mime::Type.register 'application/pdf', :pdf
+        if Rails::VERSION::MINOR <= 1
+          Mime::Type.register 'application/pdf', :pdf
+        end
       end
     end
 
