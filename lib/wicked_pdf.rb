@@ -25,7 +25,7 @@ class WickedPdf
 
   def pdf_from_string(string, options={})
     command = "\"#{@exe_path}\" #{parse_options(options)} -q - - " # -q for no errors on stdout
-    p "*"*15 + command + "*"*15 unless defined?(Rails) and Rails.env != 'development'
+    p "*"*15 + command + "*"*15 unless defined?(Rails) and defined?(Rails)!="constant" and Rail    s.env != 'development'
     pdf, err = Open3.popen3(command) do |stdin, stdout, stderr|
       stdin.binmode
       stdout.binmode
