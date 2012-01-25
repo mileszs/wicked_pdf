@@ -2,6 +2,7 @@ require 'pdf_helper'
 require 'wicked_pdf_helper'
 
 if defined?(Rails)
+
   if Rails::VERSION::MAJOR == 2
 
     unless ActionController::Base.instance_methods.include? "render_with_wicked_pdf"
@@ -10,9 +11,7 @@ if defined?(Rails)
     unless ActionView::Base.instance_methods.include? "wicked_pdf_stylesheet_link_tag"
       ActionView::Base.send :include, WickedPdfHelper
     end
-    if Mime::Type.lookup_by_extension(:pdf) != 'application/pdf'
-      Mime::Type.register('application/pdf', :pdf)
-    end
+    
   else
 
     class WickedRailtie < Rails::Railtie
@@ -23,11 +22,13 @@ if defined?(Rails)
         else
           ActionView::Base.send :include, WickedPdfHelper
         end
-        if Rails::VERSION::MINOR <= 1 && Mime::Type.lookup_by_extension(:pdf) != 'application/pdf'
-          Mime::Type.register('application/pdf', :pdf)
-        end
       end
     end
 
   end
+  
+  if Mime::Type.lookup_by_extension(:pdf).nil?
+    Mime::Type.register('application/pdf', :pdf)
+  end
+  
 end
