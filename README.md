@@ -79,7 +79,8 @@ or add this to your Gemfile:
                                :bottom             => SIZE,
                                :left               => SIZE,
                                :right              => SIZE},
-                   :header => {:html => { :template => 'users/header.pdf.erb', # use :template OR :url
+                   :header => {:html => { :template => 'users/header.pdf.erb',  # use :template OR :url
+                                          :layout   => 'pdf_plain.html',        # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
                                           :url      => 'www.example.com',
                                           :locals   => { :foo => @bar }},
                                :center             => 'TEXT',
@@ -90,6 +91,7 @@ or add this to your Gemfile:
                                :spacing            => REAL,
                                :line               => true},
                    :footer => {:html => { :template => 'shared/footer.pdf.erb', # use :template OR :url
+                                          :layout   => 'pdf_plain.html',        # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
                                           :url      => 'www.example.com',
                                           :locals   => { :foo => @bar }},
                                :center             => 'TEXT',
@@ -207,7 +209,9 @@ You can put your default configuration, applied to all pdf's at "wicked_pdf.rb" 
 
 ### Further Reading
 
-Andreas Happe's post [Generating PDFs from Ruby on Rails](http://snikt.net/index.php/2010/03/03/generating-pdfs-from-ruby-on-rails)
+Andreas Happe's post [Generating PDFs from Ruby on Rails](http://starseeders.net/generating-pdfs-from-ruby-on-rails/)
+
+StackOverflow [questions with the tag "wicked-pdf"](http://stackoverflow.com/questions/tagged/wicked-pdf)
 
 ### Debugging
 

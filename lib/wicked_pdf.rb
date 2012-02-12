@@ -5,6 +5,7 @@ require 'logger'
 require 'digest/md5'
 require 'open3'
 require 'active_support/core_ext/class/attribute_accessors'
+require 'active_support/core_ext/object/blank'
 
 require 'wicked_pdf_railtie'
 require 'wicked_pdf_tempfile'
@@ -16,14 +17,14 @@ class WickedPdf
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path
     @exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
-    @exe_path ||= `which wkhtmltopdf`.chomp
+    @exe_path ||= (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
     raise "Location of wkhtmltopdf unknown" if @exe_path.empty?
     raise "Bad wkhtmltopdf's path" unless File.exists?(@exe_path)
     raise "Wkhtmltopdf is not executable" unless File.executable?(@exe_path)
   end
 
   def pdf_from_string(string, options={})
-    command = "#{@exe_path} #{parse_options(options)} -q - - " # -q for no errors on stdout
+    command = "\"#{@exe_path}\" #{parse_options(options)} -q - - " # -q for no errors on stdout
     p "*"*15 + command + "*"*15 unless defined?(Rails) and Rails.env != 'development'
     pdf, err = Open3.popen3(command) do |stdin, stdout, stderr|
       stdin.binmode
