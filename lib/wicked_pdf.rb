@@ -81,7 +81,7 @@ class WickedPdf
         when :boolean then ""
         when :numeric then value.to_s
         when :name_value then value.to_s
-        else "'#{value}'"
+        else "\"#{value}\""
       end + " "
     end
 
