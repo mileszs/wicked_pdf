@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'action_view/test_case'
 
 class WickedPdfHelperTest < ActionView::TestCase
   test 'wicked_pdf_stylesheet_link_tag should inline the stylesheets passed in' do
