@@ -102,8 +102,9 @@ class WickedPdf
     end
 
     def parse_toc(options)
+      r = '--toc ' unless options.nil?
       unless options.blank?
-        r = make_options(options, [ :font_name, :header_text], "toc")
+        r += make_options(options, [ :font_name, :header_text], "toc")
         r +=make_options(options, [ :depth,
                                     :header_fs,
                                     :l1_font_size,
@@ -124,6 +125,7 @@ class WickedPdf
                                     :disable_links,
                                     :disable_back_links], "toc", :boolean)
       end
+      return r
     end
 
     def parse_outline(options)
