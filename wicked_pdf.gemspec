@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = "wicked_pdf"
-  s.version           = "0.7.3"
+  s.version           = "0.7.4"
   s.date              = Time.now.strftime('%Y-%m-%d')
   s.summary           = "PDF generator (from HTML) plugin for Ruby on Rails"
   s.homepage          = "http://github.com/mileszs/wicked_pdf"
