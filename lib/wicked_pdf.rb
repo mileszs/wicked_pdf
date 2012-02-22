@@ -79,7 +79,7 @@ class WickedPdf
     end
 
     def make_option(name, value, type=:string)
-      if value.respond_to? :each
+      if value.is_a?(Array)
         return value.collect { |v| make_option(name, v, type) }.join('')
       end
       "--#{name.gsub('_', '-')} " + case type
