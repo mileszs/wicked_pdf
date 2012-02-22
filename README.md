@@ -60,6 +60,8 @@ or add this to your Gemfile:
                    :dpi                            => 'dpi',
                    :encoding                       => 'TEXT',
                    :user_style_sheet               => 'URL',
+                   :cookie                         => ['_session_id SESSION_ID'], # could be an array or a single string in a 'name value' format
+                   :post                           => ['query QUERY_PARAM'],    # could be an array or a single string in a 'name value' format
                    :redirect_delay                 => NUMBER,
                    :zoom                           => FLOAT,
                    :page_offset                    => NUMBER,
