@@ -3,7 +3,8 @@
 
 require 'logger'
 require 'digest/md5'
-require 'open3'
+require 'rbconfig'
+require Config::CONFIG['target_os'] == 'mingw32' ? 'win32/open3' : 'open3'
 require 'active_support/core_ext/class/attribute_accessors'
 require 'active_support/core_ext/object/blank'
 
@@ -24,7 +25,7 @@ class WickedPdf
   end
 
   def pdf_from_string(string, options={})
-    command = "\"#{@exe_path}\" #{parse_options(options)} -q - - " # -q for no errors on stdout
+    command = "\"#{@exe_path}\" #{parse_options(options)} #{'-q ' unless on_windows?}- - " # -q for no errors on stdout
     print_command(command) if in_development_mode?
     pdf, err = Open3.popen3(command) do |stdin, stdout, stderr|
       stdin.binmode
@@ -45,6 +46,10 @@ class WickedPdf
     def in_development_mode?
       (defined?(Rails) && Rails.env == 'development') ||
         (RAILS_ENV && RAILS_ENV == 'development')
+    end
+
+    def on_windows?
+      Config::CONFIG['target_os'] == 'mingw32'
     end
 
     def print_command(cmd)

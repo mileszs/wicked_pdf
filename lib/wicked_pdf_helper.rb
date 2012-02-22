@@ -7,11 +7,11 @@ module WickedPdfHelper
   end
 
   def wicked_pdf_image_tag(img, options={})
-    image_tag "file://#{Rails.root.join('public', 'images', img)}", options
+    image_tag "file:///#{Rails.root.join('public', 'images', img)}", options
   end
 
   def wicked_pdf_javascript_src_tag(jsfile, options={})
-    javascript_src_tag "file://#{Rails.root.join('public','javascripts',jsfile)}", options
+    javascript_src_tag "file:///#{Rails.root.join('public','javascripts',jsfile)}", options
   end
 
   def wicked_pdf_javascript_include_tag(*sources)
@@ -26,12 +26,12 @@ module WickedPdfHelper
 
     def wicked_pdf_image_tag(img, options={})
       asset = Rails.application.assets.find_asset(img)
-      image_tag "file://#{asset.pathname.to_s}", options
+      image_tag "file:///#{asset.pathname.to_s}", options
     end
 
     def wicked_pdf_javascript_src_tag(jsfile, options={})
       asset = Rails.application.assets.find_asset(jsfile)
-      javascript_include_tag "file://#{asset.pathname.to_s}", options
+      javascript_include_tag "file:///#{asset.pathname.to_s}", options
     end
 
     def wicked_pdf_javascript_include_tag(*sources)
