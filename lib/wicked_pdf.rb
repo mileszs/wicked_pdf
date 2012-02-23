@@ -45,7 +45,7 @@ class WickedPdf
 
     def in_development_mode?
       (defined?(Rails) && Rails.env == 'development') ||
-        (RAILS_ENV && RAILS_ENV == 'development')
+        (defined?(RAILS_ENV) && RAILS_ENV == 'development')
     end
 
     def on_windows?
