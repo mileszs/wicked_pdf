@@ -49,7 +49,7 @@ class WickedPdf
     end
 
     def on_windows?
-      Config::CONFIG['target_os'] == 'mingw32'
+      RbConfig::CONFIG['target_os'] == 'mingw32'
     end
 
     def print_command(cmd)
