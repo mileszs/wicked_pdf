@@ -53,6 +53,7 @@ module PdfHelper
     def make_pdf(options = {})
       html_string = render_to_string(:template => options[:template], :layout => options[:layout], :formats => options[:formats], :handlers => options[:handlers])
       options = prerender_header_and_footer(options)
+      options = prerender_cover(options)
       w = WickedPdf.new(options[:wkhtmltopdf])
       w.pdf_from_string(html_string, options)
     end
@@ -87,4 +88,14 @@ module PdfHelper
       end
       options
     end
+
+  def prerender_cover(options)
+    if options[:cover]
+      ctf = WickedPdfTempfile.new("wicked_cover_pdf.html")
+      ctf.write render_to_string(:template => options[:cover])
+      ctf.flush
+      options[:cover] = "file://#{ctf.path}"
+    end
+    options
+  end
 end

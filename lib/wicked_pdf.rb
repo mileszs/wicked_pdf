@@ -63,6 +63,7 @@ class WickedPdf
         parse_header_footer(:header => options.delete(:header),
                             :footer => options.delete(:footer),
                             :layout => options[:layout]),
+        parse_cover(options.delete(:cover)),
         parse_toc(options.delete(:toc)),
         parse_outline(options.delete(:outline)),
         parse_basic_auth(options)
@@ -148,6 +149,9 @@ class WickedPdf
       make_options(options, [:top, :bottom, :left, :right], "margin", :numeric) unless options.blank?
     end
 
+    def parse_cover(cover_url)
+      'cover ' + cover_url unless cover_url.nil?
+    end
     def parse_others(options)
       unless options.blank?
         r = make_options(options, [ :orientation,
@@ -157,7 +161,6 @@ class WickedPdf
                                     :proxy,
                                     :username,
                                     :password,
-                                    :cover,
                                     :dpi,
                                     :encoding,
                                     :user_style_sheet])
