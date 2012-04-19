@@ -182,7 +182,7 @@ class WickedPdf
     end
 
     def find_wkhtmltopdf_binary_path
-      possible_locations = %w[/usr/bin /usr/local/bin ~/bin]
+      possible_locations = (ENV['PATH'].split(':')+%w[/usr/bin /usr/local/bin ~/bin]).uniq
       exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
       exe_path ||= possible_locations.map{|l| File.expand_path("#{l}/#{EXE_NAME}") }.find{|location| File.exists? location}
       #This throws error if no bundle executable found, but Bundler defined
