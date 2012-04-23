@@ -187,9 +187,9 @@ class WickedPdf
       exe_path ||= begin
         (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
       rescue Exception => e
-        ''
+        nil
       end
       exe_path ||= possible_locations.map{|l| File.expand_path("#{l}/#{EXE_NAME}") }.find{|location| File.exists? location}
-      exe_path
+      exe_path || ''
     end
 end
