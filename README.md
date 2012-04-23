@@ -105,7 +105,7 @@ or add this to your Gemfile:
                                :right              => 'TEXT',
                                :spacing            => REAL,
                                :line               => true,
-                               :content            => 'HTML CONTENT ALREADY RENDERED'}, # optionally you can pass plain html already rendered (useful if using
+                               :content            => 'HTML CONTENT ALREADY RENDERED'}, # optionally you can pass plain html already rendered (useful if using pdf_from_string)
                    :toc    => {:font_name          => "NAME",
                                :depth              => LEVEL,
                                :header_text        => "TEXT",
