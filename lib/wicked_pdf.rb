@@ -25,7 +25,7 @@ class WickedPdf
   end
 
   def pdf_from_string(string, options={})
-    command = "\"#{@exe_path}\" #{parse_options(options)} #{'-q ' unless on_windows?}- - " # -q for no errors on stdout
+    command = "\"#{@exe_path}\" #{'-q ' unless on_windows?} #{parse_options(options)} - - " # -q for no errors on stdout
     print_command(command) if in_development_mode?
     pdf, err = Open3.popen3(command) do |stdin, stdout, stderr|
       stdin.binmode
@@ -58,13 +58,14 @@ class WickedPdf
 
     def parse_options(options)
       [
+        parse_margins(options.delete(:margin)),
+        parse_others(options),
         parse_header_footer(:header => options.delete(:header),
                             :footer => options.delete(:footer),
                             :layout => options[:layout]),
+        parse_cover(options.delete(:cover)),
         parse_toc(options.delete(:toc)),
         parse_outline(options.delete(:outline)),
-        parse_margins(options.delete(:margin)),
-        parse_others(options),
         parse_basic_auth(options)
       ].join(' ')
     end
@@ -111,7 +112,7 @@ class WickedPdf
     end
 
     def parse_toc(options)
-      r = '--toc ' unless options.nil?
+      r = 'toc ' unless options.nil?
       unless options.blank?
         r += make_options(options, [ :font_name, :header_text], "toc")
         r +=make_options(options, [ :depth,
@@ -148,6 +149,9 @@ class WickedPdf
       make_options(options, [:top, :bottom, :left, :right], "margin", :numeric) unless options.blank?
     end
 
+    def parse_cover(cover_url)
+      'cover ' + cover_url unless cover_url.nil?
+    end
     def parse_others(options)
       unless options.blank?
         r = make_options(options, [ :orientation,
@@ -157,7 +161,6 @@ class WickedPdf
                                     :proxy,
                                     :username,
                                     :password,
-                                    :cover,
                                     :dpi,
                                     :encoding,
                                     :user_style_sheet])
