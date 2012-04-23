@@ -92,7 +92,8 @@ or add this to your Gemfile:
                                :left               => 'TEXT',
                                :right              => 'TEXT',
                                :spacing            => REAL,
-                               :line               => true},
+                               :line               => true,
+                               :content            => 'HTML CONTENT ALREADY RENDERED'}, # optionally you can pass plain html already rendered (useful if using pdf_from_string)
                    :footer => {:html => { :template => 'shared/footer.pdf.erb', # use :template OR :url
                                           :layout   => 'pdf_plain.html',        # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
                                           :url      => 'www.example.com',
@@ -103,7 +104,8 @@ or add this to your Gemfile:
                                :left               => 'TEXT',
                                :right              => 'TEXT',
                                :spacing            => REAL,
-                               :line               => true},
+                               :line               => true,
+                               :content            => 'HTML CONTENT ALREADY RENDERED'}, # optionally you can pass plain html already rendered (useful if using
                    :toc    => {:font_name          => "NAME",
                                :depth              => LEVEL,
                                :header_text        => "TEXT",
@@ -140,6 +142,11 @@ If you need to just create a pdf and not display it:
 
     # create a pdf from a string
     pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
+
+    # create a pdf from string using templates, layouts and content option for header or footer
+    WickedPdf.new.pdf_from_string(
+        render_to_string(:pdf => "pdf_file.pdf", :template => 'templates/pdf.html.erb', :layout => 'pdfs/layout_pdf'), 
+        :footer => {:content => render_to_string({:template => 'templates/pdf_footer.html.erb', :layout => 'pdfs/layout_pdf'})}
 		
     # or from your controller, using views & templates and all wicked_pdf options as normal
     pdf = render_to_string :pdf => "some_file_name"
