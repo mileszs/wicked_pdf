@@ -61,7 +61,7 @@ or add this to your Gemfile:
                    :encoding                       => 'TEXT',
                    :user_style_sheet               => 'URL',
                    :cookie                         => ['_session_id SESSION_ID'], # could be an array or a single string in a 'name value' format
-                   :post                           => ['query QUERY_PARAM'],    # could be an array or a single string in a 'name value' format
+                   :post                           => ['query QUERY_PARAM'],      # could be an array or a single string in a 'name value' format
                    :redirect_delay                 => NUMBER,
                    :zoom                           => FLOAT,
                    :page_offset                    => NUMBER,
@@ -77,7 +77,8 @@ or add this to your Gemfile:
                    :disable_smart_shrinking        => true,
                    :use_xserver                    => true,
                    :no_background                  => true,
-                   :margin => {:top                => SIZE,                         # default 10 (mm)
+                   :extra                          => ''                        # directly inserted into the command to wkhtmltopdf
+                   :margin => {:top                => SIZE,                     # default 10 (mm)
                                :bottom             => SIZE,
                                :left               => SIZE,
                                :right              => SIZE},
