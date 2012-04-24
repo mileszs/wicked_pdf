@@ -44,6 +44,7 @@ or add this to your Gemfile:
           format.html
           format.pdf do
             render :pdf                            => 'file_name',
+                   :disposition	                   => 'attachment',                 # default 'inline'                   
                    :template                       => 'things/show.pdf.erb',
                    :layout                         => 'pdf.html',                   # use 'pdf.html' for a pdf.html.erb file
                    :wkhtmltopdf                    => '/usr/local/bin/wkhtmltopdf', # path to binary
