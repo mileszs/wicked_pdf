@@ -69,7 +69,7 @@ or add this to your Gemfile:
                    :book                           => true,
                    :default_header                 => true,
                    :disable_javascript             => false,
-                   :greyscale                      => true,
+                   :grayscale                      => true,
                    :lowquality                     => true,
                    :enable_plugins                 => true,
                    :disable_internal_links         => true,
