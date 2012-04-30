@@ -137,7 +137,7 @@ class WickedPdfTest < ActiveSupport::TestCase
       assert_equal "--#{o.to_s.gsub('_', '-')} 5", wp.get_parsed_options(o => 5).strip
     end
 
-    [ :book, :default_header, :disable_javascript, :greyscale, :lowquality,
+    [ :book, :default_header, :disable_javascript, :grayscale, :lowquality,
       :enable_plugins, :disable_internal_links, :disable_external_links,
       :print_media_type, :disable_smart_shrinking, :use_xserver, :no_background
     ].each do |o|
