@@ -17,25 +17,44 @@ module WickedPdfHelper
   def wicked_pdf_javascript_include_tag(*sources)
     sources.collect{ |source| wicked_pdf_javascript_src_tag(source, {}) }.join("\n").html_safe
   end
+
   module Assets
     def wicked_pdf_stylesheet_link_tag(*sources)
       sources.collect { |source|
-        "<style type='text/css'>#{Rails.application.assets.find_asset(source+".css")}</style>"
+        "<style type='text/css'>#{read_asset(source+".css")}</style>"
       }.join("\n").html_safe
     end
 
     def wicked_pdf_image_tag(img, options={})
-      asset = Rails.application.assets.find_asset(img)
-      image_tag "file:///#{asset.pathname.to_s}", options
+      image_tag "file://#{asset_pathname(img).to_s}", options
     end
 
     def wicked_pdf_javascript_src_tag(jsfile, options={})
-      asset = Rails.application.assets.find_asset(jsfile)
-      javascript_include_tag "file:///#{asset.pathname.to_s}", options
+      javascript_include_tag "file://#{asset_pathname(jsfile).to_s}", options
     end
 
     def wicked_pdf_javascript_include_tag(*sources)
-      sources.collect{ |source| "<script type='text/javascript'>#{Rails.application.assets.find_asset(source+".js")}</script>" }.join("\n").html_safe
+      sources.collect { |source|
+        "<script type='text/javascript'>#{read_asset(source+".js")}</script>"
+      }.join("\n").html_safe
+    end
+
+    private
+
+    def asset_pathname(source)
+      if Rails.configuration.assets.compile == false
+        File.join(Rails.public_path, asset_path(source))
+      else
+        Rails.application.assets.find_asset(source).pathname
+      end
+    end
+
+    def read_asset(source)
+      if Rails.configuration.assets.compile == false
+        IO.read(asset_pathname(source))
+      else
+        Rails.application.assets.find_asset(source).to_s
+      end
     end
   end
 end
