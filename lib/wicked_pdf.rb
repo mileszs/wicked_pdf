@@ -184,7 +184,7 @@ class WickedPdf
         r +=make_options(options, [ :book,
                                     :default_header,
                                     :disable_javascript,
-                                    :greyscale,
+                                    :grayscale,
                                     :lowquality,
                                     :enable_plugins,
                                     :disable_internal_links,

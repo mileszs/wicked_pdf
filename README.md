@@ -44,6 +44,7 @@ or add this to your Gemfile:
           format.html
           format.pdf do
             render :pdf                            => 'file_name',
+                   :disposition	                   => 'attachment',                 # default 'inline'                   
                    :template                       => 'things/show.pdf.erb',
                    :layout                         => 'pdf.html',                   # use 'pdf.html' for a pdf.html.erb file
                    :wkhtmltopdf                    => '/usr/local/bin/wkhtmltopdf', # path to binary
@@ -68,7 +69,7 @@ or add this to your Gemfile:
                    :book                           => true,
                    :default_header                 => true,
                    :disable_javascript             => false,
-                   :greyscale                      => true,
+                   :grayscale                      => true,
                    :lowquality                     => true,
                    :enable_plugins                 => true,
                    :disable_internal_links         => true,
@@ -105,7 +106,11 @@ or add this to your Gemfile:
                                :right              => 'TEXT',
                                :spacing            => REAL,
                                :line               => true,
+<<<<<<< HEAD
                                :content            => 'HTML CONTENT ALREADY RENDERED'}, # optionally you can pass plain html already rendered (useful if using
+=======
+                               :content            => 'HTML CONTENT ALREADY RENDERED'}, # optionally you can pass plain html already rendered (useful if using pdf_from_string)
+>>>>>>> coolmaster
                    :toc    => {:font_name          => "NAME",
                                :depth              => LEVEL,
                                :header_text        => "TEXT",
@@ -219,7 +224,7 @@ You can put your default configuration, applied to all pdf's at "wicked_pdf.rb" 
 
 ### Further Reading
 
-Andreas Happe's post [Generating PDFs from Ruby on Rails](http://starseeders.net/generating-pdfs-from-ruby-on-rails/)
+Andreas Happe's post [Generating PDFs from Ruby on Rails](http://snikt.net/rails/2012/04/26/wicked-pdf/)
 
 StackOverflow [questions with the tag "wicked-pdf"](http://stackoverflow.com/questions/tagged/wicked-pdf)
 
