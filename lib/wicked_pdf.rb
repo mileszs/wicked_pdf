@@ -12,16 +12,15 @@ require 'wicked_pdf_railtie'
 require 'wicked_pdf_tempfile'
 
 class WickedPdf
+  EXE_NAME = "wkhtmltopdf"
   @@config = {}
   cattr_accessor :config
 
   def initialize(wkhtmltopdf_binary_path = nil)
-    @exe_path = wkhtmltopdf_binary_path
-    @exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
-    @exe_path ||= (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
-    raise "Location of wkhtmltopdf unknown" if @exe_path.empty?
-    raise "Bad wkhtmltopdf's path" unless File.exists?(@exe_path)
-    raise "Wkhtmltopdf is not executable" unless File.executable?(@exe_path)
+    @exe_path = wkhtmltopdf_binary_path || find_wkhtmltopdf_binary_path
+    raise "Location of #{EXE_NAME} unknown" if @exe_path.empty?
+    raise "Bad #{EXE_NAME}'s path" unless File.exists?(@exe_path)
+    raise "#{EXE_NAME} is not executable" unless File.executable?(@exe_path)
   end
 
   def pdf_from_string(string, options={})
@@ -196,4 +195,15 @@ class WickedPdf
       end
     end
 
+    def find_wkhtmltopdf_binary_path
+      possible_locations = (ENV['PATH'].split(':')+%w[/usr/bin /usr/local/bin ~/bin]).uniq
+      exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
+      exe_path ||= begin
+        (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
+      rescue Exception => e
+        nil
+      end
+      exe_path ||= possible_locations.map{|l| File.expand_path("#{l}/#{EXE_NAME}") }.find{|location| File.exists? location}
+      exe_path || ''
+    end
 end
