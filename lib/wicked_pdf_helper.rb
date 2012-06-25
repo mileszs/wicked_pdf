@@ -43,7 +43,12 @@ module WickedPdfHelper
 
     def asset_pathname(source)
       if Rails.configuration.assets.compile == false
-        File.join(Rails.public_path, asset_path(source))
+        if ActionController::Base.asset_host
+          # asset_path returns an absolute URL using asset_host if asset_host is set
+          asset_path(source)
+        else
+          File.join(Rails.public_path, asset_path(source))
+        end
       else
         Rails.application.assets.find_asset(source).pathname
       end
@@ -51,7 +56,12 @@ module WickedPdfHelper
 
     def read_asset(source)
       if Rails.configuration.assets.compile == false
-        IO.read(asset_pathname(source))
+        if ActionController::Base.asset_host
+          require 'open-uri'
+          IO.read open(asset_pathname(source))
+        else
+          IO.read(asset_pathname(source))
+        end
       else
         Rails.application.assets.find_asset(source).to_s
       end
