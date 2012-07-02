@@ -48,11 +48,19 @@ module WickedPdfHelper
     end
 
     def wicked_pdf_image_tag(img, options={})
-      image_tag "file://#{asset_pathname(img).to_s}", options
+      if request.try(:format).to_s == 'application/pdf'
+        image_tag "file://#{asset_pathname(img).to_s}", options
+      else
+        image_tag img, options
+      end
     end
 
     def wicked_pdf_javascript_src_tag(jsfile, options={})
-      javascript_include_tag "file://#{asset_pathname(jsfile).to_s}", options
+      if request.try(:format).to_s == 'application/pdf'
+        javascript_include_tag "file://#{asset_pathname(jsfile).to_s}", options
+      else
+        javascript_include_tag jsfile, options
+      end
     end
 
     def wicked_pdf_javascript_include_tag(*sources)
@@ -67,6 +75,7 @@ module WickedPdfHelper
       if Rails.configuration.assets.compile == false
         File.join(Rails.public_path, asset_path(source))
       else
+        # raise Rails.application.assets.find_asset(source).logical_path.inspect
         Rails.application.assets.find_asset(source).pathname
       end
     end
