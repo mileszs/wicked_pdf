@@ -11,6 +11,9 @@ Gem::Specification.new do |s|
   s.files            += Dir.glob("lib/**/*")
   s.files            += Dir.glob("test/**/*")
 
+  s.add_dependency('rails')
+  s.add_development_dependency('rake')
+
   s.description       = <<desc
 Wicked PDF uses the shell utility wkhtmltopdf to serve a PDF file to a user from HTML.
 In other words, rather than dealing with a PDF generation DSL of some sort,
