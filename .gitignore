@@ -1,2 +1,3 @@
 coverage
 *.swp
+Gemfile.lock
