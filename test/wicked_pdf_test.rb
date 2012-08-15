@@ -1,6 +1,6 @@
 require 'test_helper'
 
-WickedPdf.config = { :exe_path => '/usr/local/bin/wkhtmltopdf' }
+WickedPdf.config = { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf' }
 HTML_DOCUMENT = "<html><body>Hello World</body></html>"
 
 # Provide a public accessor to the normally-private parse_options function

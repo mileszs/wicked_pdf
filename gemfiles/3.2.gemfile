@@ -1,0 +1,5 @@
+source "https://rubygems.org"
+
+gem 'rails', '~> 3.2.0'
+gem 'wicked_pdf', :path => '../'
+gemspec :path => '../'
