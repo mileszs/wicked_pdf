@@ -4,6 +4,7 @@ rvm:
   - 1.9.3
 
 before_script: "sudo apt-get install -y wkhtmltopdf"
+env: WKHTMLTOPDF_BIN=/usr/bin/wkhtmltopdf
 
 gemfile:
   - gemfiles/2.3.gemfile
