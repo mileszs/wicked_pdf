@@ -3,6 +3,10 @@ module PdfHelper
   require 'wicked_pdf_tempfile'
 
   def self.included(base)
+    # Protect from trying to augment modules that appear
+    # as the result of adding other gems.
+    return if base.class != ActionController::Base
+
     base.class_eval do
       alias_method_chain :render, :wicked_pdf
       alias_method_chain :render_to_string, :wicked_pdf
