@@ -1,39 +1,27 @@
 module WickedPdfHelper
-  def wicked_pdf_stylesheet_link_tag(*sources)
-    
-    if Rails.root.kind_of?(Pathname)
-      root_pathname = Rails.root
-    elsif Rails.root.kind_of?(String)
-      root_obj = Pathname(Rails.root)
-    end
+  def self.root_path
+    String === Rails.root ? Pathname.new(Rails.root) : Rails.root
+  end
 
-    css_dir = root_obj.join('public','stylesheets')
-    
-    begin
-      sources.collect { |source|
-        "<style type='text/css'>#{File.read(css_dir.join(source+'.css'))}</style>"
-      }.join("\n").html_safe
-    rescue NoMethodError
-      sources.collect { |source|
-        "<style type='text/css'>#{File.read(css_dir.join(source+'.css'))}</style>"
-      }.join("\n")
-    end
+  def wicked_pdf_stylesheet_link_tag(*sources)
+    css_dir = WickedPdfHelper.root_path.join('public', 'stylesheets')
+    css_text = sources.collect { |source|
+      "<style type='text/css'>#{File.read(css_dir.join(source+'.css'))}</style>"
+    }.join("\n")
+    css_text.respond_to?(:html_safe) ? css_text.html_safe : css_text
   end
 
   def wicked_pdf_image_tag(img, options={})
-    image_tag "file:///#{root_obj.join('public', 'images', img)}", options
+    image_tag "file://#{WickedPdfHelper.root_path.join('public', 'images', img)}", options
   end
 
   def wicked_pdf_javascript_src_tag(jsfile, options={})
-    javascript_src_tag "file:///#{root_obj.join('public','javascripts',jsfile)}", options
+    javascript_src_tag "file://#{WickedPdfHelper.root_path.join('public', 'javascripts', jsfile)}", options
   end
 
   def wicked_pdf_javascript_include_tag(*sources)
-    begin
-      sources.collect{ |source| wicked_pdf_javascript_src_tag(source, {}) }.join("\n").html_safe
-    rescue NoMethodError
-      sources.collect{ |source| wicked_pdf_javascript_src_tag(source, {}) }.join("\n")
-    end
+    js_text = sources.collect{ |source| wicked_pdf_javascript_src_tag(source, {}) }.join("\n")
+    js_text.respond_to?(:html_safe) ? js_text.html_safe : js_text
   end
 
   module Assets
