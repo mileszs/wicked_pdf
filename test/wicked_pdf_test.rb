@@ -84,7 +84,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     wp = WickedPdf.new
 
     [:font_name, :header_text].each do |o|
-      assert_equal  "--toc-#{o.to_s.gsub('_', '-')} \"toc\"",
+      assert_equal  "--toc --toc-#{o.to_s.gsub('_', '-')} \"toc\"",
                     wp.get_parsed_options(:toc => {o => "toc"}).strip
     end
 
@@ -92,12 +92,12 @@ class WickedPdfTest < ActiveSupport::TestCase
       :l5_font_size, :l6_font_size, :l7_font_size, :l1_indentation, :l2_indentation,
       :l3_indentation, :l4_indentation, :l5_indentation, :l6_indentation, :l7_indentation
     ].each do |o|
-      assert_equal  "--toc-#{o.to_s.gsub('_', '-')} 5",
+      assert_equal  "--toc --toc-#{o.to_s.gsub('_', '-')} 5",
                     wp.get_parsed_options(:toc => {o => 5}).strip
     end
 
     [:no_dots, :disable_links, :disable_back_links].each do |o|
-      assert_equal  "--toc-#{o.to_s.gsub('_', '-')}",
+      assert_equal  "--toc --toc-#{o.to_s.gsub('_', '-')}",
                     wp.get_parsed_options(:toc => {o => true}).strip
     end
   end
@@ -129,7 +129,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     [:cookie, :post].each do |o|
       assert_equal "--#{o.to_s.gsub('_', '-')} name value", wp.get_parsed_options(o => "name value").strip
 
-      nv_formatter = ->(number){ "--#{o.to_s.gsub('_', '-')} par#{number} val#{number}" }
+      nv_formatter = Proc.new{|number| "--#{o.to_s.gsub('_', '-')} par#{number} val#{number}" }
       assert_equal "#{nv_formatter.call(1)} #{nv_formatter.call(2)}", wp.get_parsed_options(o => ['par1 val1', 'par2 val2']).strip
     end
 
