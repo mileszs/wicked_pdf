@@ -1,4 +1,4 @@
-# Wicked PDF
+# Wicked PDF [![Build Status](https://secure.travis-ci.org/mileszs/wicked_pdf.png)](http://travis-ci.org/mileszs/wicked_pdf)
 
 ## A PDF generation plugin for Ruby on Rails
 
