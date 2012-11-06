@@ -40,6 +40,7 @@ class WickedPdf
       stderr.read
     end
     generated_pdf_file.rewind
+    generated_pdf_file.binmode
     pdf = generated_pdf_file.read
     raise "PDF could not be generated!" if pdf and pdf.rstrip.length == 0
     pdf
