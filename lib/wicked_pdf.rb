@@ -29,16 +29,19 @@ class WickedPdf
   end
 
   def pdf_from_string(string, options={})
-    command = "\"#{@exe_path}\" #{'-q ' unless on_windows?}#{parse_options(options)} - - " # -q for no errors on stdout
+    string_file = WickedPdfTempfile.new("wicked_pdf.html")
+    string_file.write(string)
+    string_file.close
+    
+    generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf")
+    command = "\"#{@exe_path}\" #{'-q ' unless on_windows?}#{parse_options(options)} \"file://#{string_file.path}\" \"#{generated_pdf_file.path}\" " # -q for no errors on stdout
     print_command(command) if in_development_mode?
-    pdf, err = Open3.popen3(command) do |stdin, stdout, stderr|
-      stdin.binmode
-      stdout.binmode
-      stderr.binmode
-      stdin.write(string)
-      stdin.close
-      [stdout.read, stderr.read]
+    err = Open3.popen3(command) do |stdin, stdout, stderr|
+      stderr.read
     end
+    generated_pdf_file.rewind
+    generated_pdf_file.binmode
+    pdf = generated_pdf_file.read
     raise "PDF could not be generated!" if pdf and pdf.rstrip.length == 0
     pdf
   rescue Exception => e
