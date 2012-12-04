@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.files             = %w( README.md Rakefile MIT-LICENSE )
   s.files            += Dir.glob("lib/**/*")
   s.files            += Dir.glob("test/**/*")
+  s.files            += Dir.glob("generators/**/*")
 
   s.add_dependency('rails')
   s.add_development_dependency('rake')
