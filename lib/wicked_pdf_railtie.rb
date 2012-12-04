@@ -17,7 +17,7 @@ if defined?(Rails)
     class WickedRailtie < Rails::Railtie
       initializer "wicked_pdf.register" do |app|
         ActionController::Base.send :include, PdfHelper
-        if Rails::VERSION::MINOR > 0
+        if Rails::VERSION::MINOR > 0 && Rails.configuration.assets.enabled
           ActionView::Base.send :include, WickedPdfHelper::Assets
         else
           ActionView::Base.send :include, WickedPdfHelper
