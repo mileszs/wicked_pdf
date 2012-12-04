@@ -64,7 +64,7 @@ module WickedPdfHelper
       if Rails.configuration.assets.compile == false
         if ActionController::Base.asset_host
           require 'open-uri'
-          open(asset_pathname(source)) {|f| f.read }
+          open(asset_pathname(source), 'r:UTF-8') {|f| f.read }
         else
           IO.read(asset_pathname(source))
         end
