@@ -121,7 +121,7 @@ class WickedPdf
             tf.flush
             options[hf].delete(:content)
             options[hf][:html] = {}
-            options[hf][:html][:url] = "file://#{tf.path}"
+            options[hf][:html][:url] = "file:///#{tf.path}"
           end
           unless opt_hf[:html].blank?
             r += make_option("#{hf.to_s}-html", opt_hf[:html][:url]) unless opt_hf[:html][:url].blank?

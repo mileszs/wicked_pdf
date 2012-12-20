@@ -240,7 +240,7 @@ First of all you must configure the render parameter ":show_as_html => params[:d
 
 http://localhost:3001/CONTROLLER/X.pdf?debug=1
 
-However, the wicked_pdf_* helpers will use file:// paths for assets when using :show_as_html, and your browser's cross-domain safety feature will kick in, and not render them. To get around this, you can load your assets like so in your templates:
+However, the wicked_pdf_* helpers will use file:/// paths for assets when using :show_as_html, and your browser's cross-domain safety feature will kick in, and not render them. To get around this, you can load your assets like so in your templates:
 
     <%= params[:debug].present? ? image_tag('foo') : wicked_pdf_image_tag('foo') %>
 

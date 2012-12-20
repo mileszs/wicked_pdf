@@ -86,7 +86,7 @@ module PdfHelper
           tf.write render_to_string(:template => options[hf][:html][:template], :layout => options[hf][:html][:layout], :locals => options[hf][:html][:locals], :formats => options[hf][:html][:formats], :handlers => options[hf][:html][:handlers])
           tf.flush
           options[hf][:html].delete(:template)
-          options[hf][:html][:url] = "file://#{tf.path}"
+          options[hf][:html][:url] = "file:///#{tf.path}"
         end
       end
       options

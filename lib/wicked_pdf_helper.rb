@@ -12,11 +12,11 @@ module WickedPdfHelper
   end
 
   def wicked_pdf_image_tag(img, options={})
-    image_tag "file://#{WickedPdfHelper.root_path.join('public', 'images', img)}", options
+    image_tag "file:///#{WickedPdfHelper.root_path.join('public', 'images', img)}", options
   end
 
   def wicked_pdf_javascript_src_tag(jsfile, options={})
-    javascript_src_tag "file://#{WickedPdfHelper.root_path.join('public', 'javascripts', jsfile)}", options
+    javascript_src_tag "file:///#{WickedPdfHelper.root_path.join('public', 'javascripts', jsfile)}", options
   end
 
   def wicked_pdf_javascript_include_tag(*sources)
@@ -32,11 +32,11 @@ module WickedPdfHelper
     end
 
     def wicked_pdf_image_tag(img, options={})
-      image_tag "file://#{asset_pathname(img).to_s}", options
+      image_tag "file:///#{asset_pathname(img).to_s}", options
     end
 
     def wicked_pdf_javascript_src_tag(jsfile, options={})
-      javascript_include_tag "file://#{asset_pathname(jsfile).to_s}", options
+      javascript_include_tag "file:///#{asset_pathname(jsfile).to_s}", options
     end
 
     def wicked_pdf_javascript_include_tag(*sources)
