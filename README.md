@@ -156,7 +156,7 @@ If you need to just create a pdf and not display it:
     WickedPdf.new.pdf_from_string(
         render_to_string(:pdf => "pdf_file.pdf", :template => 'templates/pdf.html.erb', :layout => 'pdfs/layout_pdf'), 
         :footer => {:content => render_to_string({:template => 'templates/pdf_footer.html.erb', :layout => 'pdfs/layout_pdf'})}
-		
+        )	
     # or from your controller, using views & templates and all wicked_pdf options as normal
     pdf = render_to_string :pdf => "some_file_name"
 		
