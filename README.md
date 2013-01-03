@@ -226,6 +226,22 @@ If you do not have explicit page breaks (and therefore do not have any "page" cl
 
 You can put your default configuration, applied to all pdf's at "wicked_pdf.rb" initializer.
 
+### Rack Middleware
+
+If you would like to have WickedPdf automatically generate PDF views for all (or nearly all) pages by appending .pdf to the URL, add the following to your Rails app:
+
+    # in application.rb (Rails3) or environment.rb (Rails2)
+    require 'wicked_pdf'
+    config.middleware.use WickedPdf::Middleware
+
+If you want to turn on or off the middleware for certain urls, use the `:only` or `:except` conditions like so:
+
+    # conditions can be plain strings or regular expressions, and you can supply only one or an array
+    config.middleware.use WickedPdf::Middleware, {}, :only => '/invoice'
+    config.middleware.use WickedPdf::Middleware, {}, :except => [ %r[^/admin], '/secret', %r[^/people/\d] ]
+
+If you use the standard `render :pdf => 'some_pdf'` in your app, you will want to exclude those actions from the middleware.
+
 ### Further Reading
 
 Andreas Happe's post [Generating PDFs from Ruby on Rails](http://www.snikt.net/blog/2012/04/26/wicked-pdf/)

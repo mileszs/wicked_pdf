@@ -15,6 +15,7 @@ end
 
 require 'wicked_pdf_railtie'
 require 'wicked_pdf_tempfile'
+require 'wicked_pdf_middleware'
 
 class WickedPdf
   EXE_NAME = "wkhtmltopdf"
@@ -32,7 +33,7 @@ class WickedPdf
     string_file = WickedPdfTempfile.new("wicked_pdf.html")
     string_file.write(string)
     string_file.close
-    
+
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf")
     command = "\"#{@exe_path}\" #{'-q ' unless on_windows?}#{parse_options(options)} \"file://#{string_file.path}\" \"#{generated_pdf_file.path}\" " # -q for no errors on stdout
     print_command(command) if in_development_mode?
