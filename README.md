@@ -54,6 +54,7 @@ to config/initializers/mime_types.rb
             render :pdf                            => 'file_name',
                    :disposition	                   => 'attachment',                 # default 'inline'                   
                    :template                       => 'things/show.pdf.erb',
+                   :file                           => "#{Rails.root}/files/foo.erb"
                    :layout                         => 'pdf.html',                   # use 'pdf.html' for a pdf.html.erb file
                    :wkhtmltopdf                    => '/usr/local/bin/wkhtmltopdf', # path to binary
                    :show_as_html                   => params[:debug].present?,      # allow debuging based on url param
