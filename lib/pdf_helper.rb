@@ -55,7 +55,9 @@ module PdfHelper
     end
 
     def make_pdf(options = {})
-      html_string = render_to_string(:template => options[:template], :file => options[:file], :layout => options[:layout], :formats => options[:formats], :handlers => options[:handlers])
+      render_opts = {:template => options[:template], :layout => options[:layout], :formats => options[:formats], :handlers => options[:handlers]}
+      render_opts.merge!(:file => options[:file]) if options[:file]
+      html_string = render_to_string(render_opts)
       options = prerender_header_and_footer(options)
       w = WickedPdf.new(options[:wkhtmltopdf])
       w.pdf_from_string(html_string, options)
@@ -67,7 +69,9 @@ module PdfHelper
       options[:template]    ||= File.join(controller_path, action_name)
       options[:disposition] ||= "inline"
       if options[:show_as_html]
-        render :template => options[:template], :file => options[:file], :layout => options[:layout], :formats => options[:formats], :handlers => options[:handlers], :content_type => "text/html"
+        render_opts = {:template => options[:template], :layout => options[:layout], :formats => options[:formats], :handlers => options[:handlers], :content_type => "text/html"}
+        render_opts.merge!(:file => options[:file]) if options[:file]
+        render(render_opts)
       else
         pdf_content = make_pdf(options)
         File.open(options[:save_to_file], 'wb') {|file| file << pdf_content } if options[:save_to_file]
@@ -83,7 +87,9 @@ module PdfHelper
           @hf_tempfiles = [] if ! defined?(@hf_tempfiles)
           @hf_tempfiles.push( tf=WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
           options[hf][:html][:layout] ||=  options[:layout]
-          tf.write render_to_string(:template => options[hf][:html][:template], :file => options[hf][:html][:file], :layout => options[hf][:html][:layout], :locals => options[hf][:html][:locals], :formats => options[hf][:html][:formats], :handlers => options[hf][:html][:handlers])
+          render_opts = {:template => options[hf][:html][:template], :file => options[hf][:html][:file], :layout => options[hf][:html][:layout], :locals => options[hf][:html][:locals], :formats => options[hf][:html][:formats], :handlers => options[hf][:html][:handlers]}
+          render_opts.merge!({:file => options[hf][:html][:file]}) if options[:file]
+          tf.write render_to_string(render_opts)
           tf.flush
           options[hf][:html].delete(:template)
           options[hf][:html][:url] = "file:///#{tf.path}"
