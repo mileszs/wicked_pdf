@@ -13,17 +13,10 @@ before_script:
   - sudo apt-get install -y wkhtmltopdf
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - cd ..
-  - rails $CREATE_DUMMY_COMMAND $DUMMY_APP_NAME
-  - cd $DUMMY_APP_NAME
-  - bundle install
-  - cp -r ~/builds/*/wicked_pdf $HOME/builds/sharpyfox/$DUMMY_APP_NAME/vendor/plugins
-  - cp -r $HOME/builds/sharpyfox/$DUMMY_APP_NAME/vendor/plugins/wicked_pdf/test/fixtures $HOME/builds/sharpyfox/$DUMMY_APP_NAME/test
-env: WKHTMLTOPDF_BIN=/usr/bin/wkhtmltopdf DUMMY_APP_NAME=dummy_app CREATE_DUMMY_COMMAND=new
+env: WKHTMLTOPDF_BIN=/usr/bin/wkhtmltopdf
 script:
-  - bundle exec rake test:plugins
+  - bundle exec rake test
 matrix:
   include:
     - rvm: 1.8.7
       gemfile: gemfiles/2.3.gemfile
-      env: WKHTMLTOPDF_BIN=/usr/bin/wkhtmltopdf DUMMY_APP_NAME=dummy_app CREATE_DUMMY_COMMAND=
