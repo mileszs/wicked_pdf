@@ -1,13 +1,28 @@
-rvm:
-  - 1.8.7
+language:
+  - ruby
+bundler_args: --verbose
+rvm:  
   - 1.9.2
   - 1.9.3
-
-before_script: "sudo apt-get install -y wkhtmltopdf"
-env: WKHTMLTOPDF_BIN=/usr/bin/wkhtmltopdf
-
 gemfile:
-  - gemfiles/2.3.gemfile
   - gemfiles/3.0.gemfile
   - gemfiles/3.1.gemfile
   - gemfiles/3.2.gemfile
+before_script: 
+  - bundle list
+  - sudo apt-get install -y wkhtmltopdf
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+env: WKHTMLTOPDF_BIN=/usr/bin/wkhtmltopdf
+script:
+  - bundle exec rake dummy_generate
+  - bundle exec rake test
+matrix:
+  include:
+    - rvm: 1.8.7
+      gemfile: gemfiles/2.3.gemfile
+    - rvm: 1.9.3
+      gemfile: gemfiles/rails_edge.gemfile
+  allow_failures:
+    - rvm: 1.9.3
+      gemfile: gemfiles/rails_edge.gemfile
