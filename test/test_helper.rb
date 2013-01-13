@@ -8,4 +8,6 @@ else
 	require "rails/test_help"
 end
 
+require "wicked_pdf"
+
 Rails.backtrace_cleaner.remove_silencers!
