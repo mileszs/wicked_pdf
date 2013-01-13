@@ -25,6 +25,8 @@ task :dummy_generate do
 	end
 
 	system("rails #{prefix}test/dummy")
+	
+	FileUtils.rm_r Dir.glob('test/dummy/test/*')
 end
 
 desc 'Generate documentation for the wicked_pdf plugin.'
