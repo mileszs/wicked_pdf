@@ -1,4 +1,5 @@
-require 'test/unit'
-require 'rails'
-require 'action_controller/test_case'
-require 'wicked_pdf'
+if !defined?(Rails)
+	require 'test/unit'
+	require 'rails'
+	require 'wicked_pdf'
+end
