@@ -15,6 +15,7 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
 env: WKHTMLTOPDF_BIN=/usr/bin/wkhtmltopdf
 script:
+  - bundle exec rake dummy_generate
   - bundle exec rake test
 matrix:
   include:
