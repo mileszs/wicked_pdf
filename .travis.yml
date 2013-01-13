@@ -8,6 +8,7 @@ gemfile:
   - gemfiles/3.0.gemfile
   - gemfiles/3.1.gemfile
   - gemfiles/3.2.gemfile
+  - gemfiles/rails_edge.gemfile
 before_script: 
   - bundle list
   - sudo apt-get install -y wkhtmltopdf

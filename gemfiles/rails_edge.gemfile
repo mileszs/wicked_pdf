@@ -1,0 +1,6 @@
+source "https://rubygems.org"
+
+gem 'rdoc'
+gem 'rails', :git =>  "https://github.com/rails/rails.git"
+gem 'wicked_pdf', :path => '../'
+gemspec :path => '../'
