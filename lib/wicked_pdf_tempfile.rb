@@ -1,10 +1,11 @@
 require 'tempfile'
 
 class WickedPdfTempfile < Tempfile
-  # Replaces Tempfile's +make_tmpname+ with one that honors file extensions.
-  def make_tmpname(basename, n)
-    extension = File.extname(basename)
-    sprintf("%s_%d_%d%s", File.basename(basename, extension), $$, n.to_i, extension)
+  # ensures the Tempfile's filename always keeps its extension
+  def initialize(filename, temp_dir=nil)
+    temp_dir  ||= Dir.tmpdir
+    extension = File.extname(filename)
+    basename  = File.basename(filename, extension)
+    super([basename, extension], temp_dir)
   end
 end
-
