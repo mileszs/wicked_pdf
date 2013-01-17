@@ -13,6 +13,7 @@ rescue LoadError
   require 'active_support/core_ext/blank'
 end
 
+require 'wicked_pdf_version'
 require 'wicked_pdf_railtie'
 require 'wicked_pdf_tempfile'
 require 'wicked_pdf_middleware'
