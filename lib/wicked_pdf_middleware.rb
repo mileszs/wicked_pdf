@@ -18,7 +18,7 @@ class WickedPdf
         body = response.respond_to?(:body) ? response.body : response.join
         body = body.join if body.is_a?(Array)
 
-        body = WickedPdf.new.pdf_from_string(translate_paths(body, env))
+        body = WickedPdf.new(@options).pdf_from_string(translate_paths(body, env))
         response = [body]
 
         # Do not cache PDFs
