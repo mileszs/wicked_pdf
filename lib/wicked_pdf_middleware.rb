@@ -3,7 +3,7 @@ class WickedPdf
 
     def initialize(app, options = {}, conditions = {})
       @app        = app
-      @options    = options
+      @options    = (WickedPdf.config || {}).merge(options)
       @conditions = conditions
     end
 
@@ -18,7 +18,8 @@ class WickedPdf
         body = response.respond_to?(:body) ? response.body : response.join
         body = body.join if body.is_a?(Array)
 
-        body = WickedPdf.new(@options).pdf_from_string(translate_paths(body, env))
+        body = WickedPdf.new(@options[:wkhtmltopdf]).pdf_from_string(translate_paths(body, env), @options)
+
         response = [body]
 
         # Do not cache PDFs
