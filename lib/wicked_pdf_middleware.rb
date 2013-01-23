@@ -28,6 +28,10 @@ class WickedPdf
 
         headers["Content-Length"]         = (body.respond_to?(:bytesize) ? body.bytesize : body.size).to_s
         headers["Content-Type"]           = "application/pdf"
+        if @options.fetch(:disposition, '') == 'attachment'
+          headers["Content-Disposition"]       = 'attachment'
+          headers["Content-Transfer-Encoding"] = 'binary'
+        end
       end
 
       [status, headers, response]
