@@ -32,7 +32,7 @@ class WickedPdf
 
   def pdf_from_string(string, options={})
     temp_path = options.delete(:temp_path)
-    string_file = WickedPdfTempfile.new("wicked_pdf.html", temp_path)    
+    string_file = WickedPdfTempfile.new("wicked_pdf.html", temp_path)
     string_file.write(string)
     string_file.close
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
@@ -44,7 +44,7 @@ class WickedPdf
     generated_pdf_file.rewind
     generated_pdf_file.binmode
     pdf = generated_pdf_file.read
-    raise "PDF could not be generated!" if pdf and pdf.rstrip.length == 0
+    raise "PDF could not be generated!\n Command Error: #{err}" if pdf and pdf.rstrip.length == 0
     pdf
   rescue Exception => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
