@@ -64,10 +64,14 @@ class WickedPdf
     end
 
     def make_option(name, value, type=:string)
+      if value.is_a?(Array)
+        return value.collect { |v| make_option(name, v, type) }.join('')
+      end
       "--#{name.gsub('_', '-')} " + case type
         when :boolean then ""
         when :numeric then value.to_s
-        else "'#{value}'"
+        when :name_value then value.to_s
+        else "\"#{value}\""
       end + " "
     end
 
