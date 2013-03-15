@@ -27,9 +27,11 @@ or add this to your Gemfile:
 
     gem 'wicked_pdf'
     
-You may also need to add 
-    Mime::Type.register "application/pdf", :pdf
-to config/initializers/mime_types.rb
+You may also need to add
+```ruby
+Mime::Type.register "application/pdf", :pdf
+```
+to `config/initializers/mime_types.rb`
 
 ### Basic Usage
 
