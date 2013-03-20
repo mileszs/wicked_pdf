@@ -56,9 +56,12 @@ module WickedPdfHelper
 
     private
 
+    # borrowed from actionpack/lib/action_view/helpers/asset_url_helper.rb
+    URI_REGEXP = %r{^[-a-z]+://|^(?:cid|data):|^//}
+
     def asset_pathname(source)
       if Rails.configuration.assets.compile == false
-        if ActionController::Base.asset_host
+        if asset_path(source) =~ URI_REGEXP
           # asset_path returns an absolute URL using asset_host if asset_host is set
           asset_path(source)
         else
@@ -71,7 +74,7 @@ module WickedPdfHelper
 
     def read_asset(source)
       if Rails.configuration.assets.compile == false
-        if ActionController::Base.asset_host
+        if asset_path(source) =~ URI_REGEXP
           require 'open-uri'
           open(asset_pathname(source), 'r:UTF-8') {|f| f.read }
         else
