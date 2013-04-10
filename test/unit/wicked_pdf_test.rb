@@ -11,6 +11,9 @@ class WickedPdf
 end
 
 class WickedPdfTest < ActiveSupport::TestCase
+  def setup
+    @wp = WickedPdf.new
+  end
 
   test "should generate PDF from html document" do
     wp = WickedPdf.new
@@ -152,5 +155,28 @@ class WickedPdfTest < ActiveSupport::TestCase
     ].each do |o|
       assert_equal "--#{o.to_s.gsub('_', '-')}", wp.get_parsed_options(o => true).strip
     end
+  end
+
+  test "should extract old wkhtmltopdf version" do
+    version_info_sample = "Name:\n  wkhtmltopdf 0.9.9\n\nLicense:\n  Copyright (C) 2008,2009 Wkhtmltopdf Authors.\n\n\n\n  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n  This is free software: you are free to change and redistribute it. There is NO\n  WARRANTY, to the extent permitted by law.\n\nAuthors:\n  Written by Jakob Truelsen. Patches by Mrio Silva, Benoit Garret and Emmanuel\n  Bouthenot.\n"
+    assert_equal WickedPdf::DEFAULT_BINARY_VERSION, @wp.send(:parse_version, version_info_sample)
+  end
+
+  test "should extract new wkhtmltopdf version" do
+    version_info_sample = "Name:\n  wkhtmltopdf 0.11.2\n\nLicense:\n  Copyright (C) 2008,2009 Wkhtmltopdf Authors.\n\n\n\n  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n  This is free software: you are free to change and redistribute it. There is NO\n  WARRANTY, to the extent permitted by law.\n\nAuthors:\n  Written by Jakob Truelsen. Patches by Mrio Silva, Benoit Garret and Emmanuel\n  Bouthenot.\n"
+    assert_equal Gem::Version.new('0.11.2'), @wp.send(:parse_version, version_info_sample)
+  end
+
+  test "should extract wkhtmltopdf version with nondigit symbols" do
+    version_info_sample = "Name:\n  wkhtmltopdf 0.10.4b\n\nLicense:\n  Copyright (C) 2008,2009 Wkhtmltopdf Authors.\n\n\n\n  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n  This is free software: you are free to change and redistribute it. There is NO\n  WARRANTY, to the extent permitted by law.\n\nAuthors:\n  Written by Jakob Truelsen. Patches by Mrio Silva, Benoit Garret and Emmanuel\n  Bouthenot.\n"
+    assert_equal Gem::Version.new('0.10.4b'), @wp.send(:parse_version, version_info_sample)
+  end
+
+  test "should fallback to default version on parse error" do
+    assert_equal WickedPdf::DEFAULT_BINARY_VERSION, @wp.send(:parse_version, '')
+  end
+
+  test "should set Default version on initialize" do
+    assert_equal WickedPdf::DEFAULT_BINARY_VERSION, @wp.send(:get_binary_version)
   end
 end
