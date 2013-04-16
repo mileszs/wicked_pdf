@@ -3,7 +3,16 @@ require 'wicked_pdf_helper'
 
 if defined?(Rails)
 
-  if Rails::VERSION::MAJOR == 2
+  if Rails::VERSION::MAJOR == 4
+
+    class WickedRailtie < Rails::Railtie
+      initializer "wicked_pdf.register" do |app|
+        ActionController::Base.send :include, PdfHelper
+        ActionView::Base.send :include, WickedPdfHelper::Assets
+      end
+    end
+
+  elsif Rails::VERSION::MAJOR == 2
 
     unless ActionController::Base.instance_methods.include? "render_with_wicked_pdf"
       ActionController::Base.send :include, PdfHelper
