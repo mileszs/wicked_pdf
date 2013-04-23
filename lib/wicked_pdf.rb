@@ -37,7 +37,7 @@ class WickedPdf
     begin
       stdin, stdout, stderr = Open3.popen3(@exe_path + ' -V')
       @binary_version = parse_version(stdout.gets(nil))
-    rescue StandardError      
+    rescue StandardError
     end
   end
 
@@ -56,6 +56,9 @@ class WickedPdf
     err = Open3.popen3(command) do |stdin, stdout, stderr|
       stderr.read
     end
+    if return_file = options.delete(:return_file)
+      return generated_pdf_file
+    end
     generated_pdf_file.rewind
     generated_pdf_file.binmode
     pdf = generated_pdf_file.read
@@ -65,7 +68,7 @@ class WickedPdf
     raise "Failed to execute:\n#{command}\nError: #{e}"
   ensure
     string_file.close! if string_file
-    generated_pdf_file.close! if generated_pdf_file
+    generated_pdf_file.close! if generated_pdf_file && !return_file
   end
 
   private
@@ -88,8 +91,8 @@ class WickedPdf
     end
 
     def parse_version(version_info)
-      match_data = /wkhtmltopdf\s*(\d*\.\d*\.\d*\w*)/.match(version_info)      
-      if (match_data && (2 == match_data.length))        
+      match_data = /wkhtmltopdf\s*(\d*\.\d*\.\d*\w*)/.match(version_info)
+      if (match_data && (2 == match_data.length))
         Gem::Version.new(match_data[1])
       else
         DEFAULT_BINARY_VERSION
