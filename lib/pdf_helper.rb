@@ -63,10 +63,21 @@ module PdfHelper
       w.pdf_from_string(html_string, options)
     end
 
+    def find_and_set_template_prefix(template, current_controller_name)
+      current_controller_name ||= controller_name
+      controller_klass = "#{current_controller_name}_controller".camelize.constantize
+      if !Dir.glob(Rails.root.join("app", "views", "#{controller_klass.controller_path}/#{template}.html.*")).empty?
+        return "#{controller_klass.controller_path}/#{template}"
+      else
+        find_and_set_template_prefix(template, controller_klass.superclass.controller_name)
+      end
+    end
+
     def make_and_send_pdf(pdf_name, options={})
       options[:wkhtmltopdf] ||= nil
       options[:layout]      ||= false
       options[:template]    ||= File.join(controller_path, action_name)
+      options[:template]      = find_and_set_template_prefix(options[:template].split("/").reverse[0], options[:template].split("/").reverse[1])
       options[:disposition] ||= "inline"
       if options[:show_as_html]
         render_opts = {:template => options[:template], :layout => options[:layout], :formats => options[:formats], :handlers => options[:handlers], :content_type => "text/html"}
