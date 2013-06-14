@@ -46,6 +46,46 @@ to `config/initializers/mime_types.rb`
       end
     end
 
+### Usage Conditions - Important!
+
+The wkhtmltopdf binary is run outside of your Rails application; therefore, your normal layouts will not work. If you plan to use any CSS, Javascript, or image files, you must modify your layout so that you provide an absolute reference to these files. The best option for Rails without the asset pipeline is to use the *wicked_pdf_stylesheet_link_tag*, *wicked_pdf_image_tag*, and *wicked_pdf_javascript_include_tag* helpers or to go straight to a CDN (Content Delivery Network) for popular libraries such as jQuery.
+
+#### wicked_pdf helpers
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+        <%= wicked_pdf_javascript_include_tag "number_pages" %>
+      </head>
+      <body onload='number_pages'>
+        <div id="header">
+          <%= wicked_pdf_image_tag 'mysite.jpg' %>
+        </div>
+        <div id="content">
+          <%= yield %>
+        </div>
+      </body>
+    </html>
+
+#### CDN reference
+
+In this case, you can use that standard Rails helpers and point to the current CDN for whichever framework you are using. For jQuery, it would look somethng like this, given the current versions at the time of this writing.
+
+    <!DOCTYPE...
+    <html...
+      <head>
+        <%= javascript_include_tag "http://code.jquery.com/jquery-1.10.0.min.js" %>
+        <%= javascript_include_tag "http://code.jquery.com/ui/1.10.3/jquery-ui.min.js" %>
+
+#### Asset pipeline usage
+
+The way to handle this for the asset pipeline on Heroku is to include these files in your asset precompile list, as follows:
+
+    config.assets.precompile += ['blueprint/screen.css', 'pdf.css', 'jquery.ui.datepicker.js', 'pdf.js', ...etc...]
+
 ### Advanced Usage with all available options
 
     class ThingsController < ApplicationController
@@ -172,28 +212,6 @@ If you need to just create a pdf and not display it:
 If you need to display utf encoded characters, add this to your pdf views or layouts:
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
-### Styles
-
-You must define absolute paths to CSS files, images, and javascripts; the best option is to use the *wicked_pdf_stylesheet_link_tag*, *wicked_pdf_image_tag*, and *wicked_pdf_javascript_include_tag* helpers.
-
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-      <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
-        <%= wicked_pdf_javascript_include_tag "number_pages" %>
-      </head>
-      <body onload='number_pages'>
-        <div id="header">
-          <%= wicked_pdf_image_tag 'mysite.jpg' %>
-        </div>
-        <div id="content">
-          <%= yield %>
-        </div>
-      </body>
-    </html>
 
 ### Page Numbering
 
