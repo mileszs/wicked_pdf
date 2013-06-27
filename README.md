@@ -198,16 +198,9 @@ pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
 
 # create a pdf from string using templates, layouts and content option for header or footer
 WickedPdf.new.pdf_from_string(
-  render_to_string(
-    :pdf      => "pdf_file.pdf",
-    :template => 'templates/pdf.html.erb',
-    :layout   => 'pdfs/layout_pdf'
-  ), 
+  render_to_string('templates/pdf.html.erb', :layout => 'pdfs/layout_pdf'),
   :footer => {
-    :content => render_to_string(
-      :template => 'templates/pdf_footer.html.erb',
-      :layout   => 'pdfs/layout_pdf'
-    )
+    :content => render_to_string(:layout => 'pdfs/layout_pdf')
   }
 )
   
