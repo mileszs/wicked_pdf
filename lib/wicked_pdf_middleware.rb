@@ -58,7 +58,7 @@ class WickedPdf
         rules = [@conditions[:only]].flatten
         rules.any? do |pattern|
           if pattern.is_a?(Regexp)
-            @request.path =~ pattern
+            @request.fullpath =~ pattern
           else
             @request.path[0, pattern.length] == pattern
           end
@@ -67,7 +67,7 @@ class WickedPdf
         rules = [@conditions[:except]].flatten
         rules.map do |pattern|
           if pattern.is_a?(Regexp)
-            return false if @request.path =~ pattern
+            return false if @request.fullpath =~ pattern
           else
             return false if @request.path[0, pattern.length] == pattern
           end
