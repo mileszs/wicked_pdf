@@ -48,6 +48,7 @@ class WickedPdf
 
     temp_path = options.delete(:temp_path)
     string_file = WickedPdfTempfile.new("wicked_pdf.html", temp_path)
+    string_file.binmode
     string_file.write(string)
     string_file.close
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
