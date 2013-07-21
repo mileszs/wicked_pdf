@@ -9,6 +9,14 @@ _Wicked PDF has been verified to work on Ruby 1.8.7 and 1.9.2; Rails 2 and Rails
 ### Installation
 
 First, be sure to install [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/).
+
+One simple way to install all of the binaries (Linux, OSX, Windows) is through the gem [wkhtmltopdf-binary](https://github.com/steerio/wkhtmltopdf-binary).
+To install, simply add
+
+	gem 'wkhtmltopdf-binary'
+
+To your Gemfile.
+
 If your wkhtmltopdf executable is not on your webserver's path, configure it in an initializer:
     WickedPdf.config = {
       :exe_path => '/usr/local/bin/wkhtmltopdf'
