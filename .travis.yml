@@ -4,6 +4,7 @@ bundler_args: --verbose
 rvm:  
   - 1.9.2
   - 1.9.3
+  - 2.0.0
 gemfile:
   - gemfiles/3.0.gemfile
   - gemfiles/3.1.gemfile
@@ -25,7 +26,15 @@ matrix:
         - gem --version
       gemfile: gemfiles/2.3.gemfile
     - rvm: 1.9.3
+      gemfile: gemfiles/4.0.gemfile
+    - rvm: 1.9.3
+      gemfile: gemfiles/rails_edge.gemfile
+    - rvm: 2.0.0
+      gemfile: gemfiles/4.0.gemfile
+    - rvm: 2.0.0
       gemfile: gemfiles/rails_edge.gemfile
   allow_failures:
     - rvm: 1.9.3
+      gemfile: gemfiles/rails_edge.gemfile
+    - rvm: 2.0.0
       gemfile: gemfiles/rails_edge.gemfile

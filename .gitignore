@@ -1,3 +1,5 @@
 coverage
 *.swp
+test/dummy/log/*.log
+gemfiles/*.lock
 Gemfile.lock
