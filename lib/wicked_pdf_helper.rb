@@ -40,12 +40,12 @@ module WickedPdfHelper
     end
 
     def wicked_pdf_image_tag(img, options={})
-      image_tag "file:///#{asset_pathname(img).to_s}", options
+      image_tag wicked_pdf_asset_path(img), options
     end
 
     def wicked_pdf_javascript_src_tag(jsfile, options={})
       jsfile = WickedPdfHelper.add_extension(jsfile, 'js')
-      javascript_include_tag "file:///#{asset_pathname(jsfile).to_s}", options
+      javascript_include_tag wicked_pdf_asset_path(jsfile), options
     end
 
     def wicked_pdf_javascript_include_tag(*sources)
@@ -53,6 +53,10 @@ module WickedPdfHelper
         source = WickedPdfHelper.add_extension(source, 'js')
         "<script type='text/javascript'>#{read_asset(source)}</script>"
       }.join("\n").html_safe
+    end
+
+    def wicked_pdf_asset_path(asset)
+      "file:///#{asset_pathname(asset).to_s}"
     end
 
     private
