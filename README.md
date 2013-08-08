@@ -13,14 +13,19 @@ First, be sure to install [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/).
 One simple way to install all of the binaries (Linux, OSX, Windows) is through the gem [wkhtmltopdf-binary](https://github.com/steerio/wkhtmltopdf-binary).
 To install, simply add
 
-	gem 'wkhtmltopdf-binary'
+```ruby
+gem 'wkhtmltopdf-binary'
+```
 
 To your Gemfile.
 
 If your wkhtmltopdf executable is not on your webserver's path, configure it in an initializer:
-    WickedPdf.config = {
-      :exe_path => '/usr/local/bin/wkhtmltopdf'
-    }
+
+```ruby
+WickedPdf.config = {
+  :exe_path => '/usr/local/bin/wkhtmltopdf'
+}
+```
 Note that versions before 0.9.0 [have problems](http://code.google.com/p/wkhtmltopdf/issues/detail?id=82&q=vodnik) on some machines with reading/writing to streams.
 This plugin relies on streams to communicate with wkhtmltopdf.
 
@@ -33,7 +38,9 @@ Next:
 
 or add this to your Gemfile:
 
-    gem 'wicked_pdf'
+```ruby
+gem 'wicked_pdf'
+```
     
 You may also need to add
 ```ruby
