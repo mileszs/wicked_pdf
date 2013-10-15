@@ -288,6 +288,8 @@ If you use the standard `render :pdf => 'some_pdf'` in your app, you will want t
 
 Andreas Happe's post [Generating PDFs from Ruby on Rails](http://www.snikt.net/blog/2012/04/26/wicked-pdf/)
 
+JESii's post [WickedPDF, wkhtmltopdf, and Heroku...a tricky combination](http://www.nubyrubyrailstales.com/2013/06/wickedpdf-wkhtmltopdf-and-herokua.html)
+
 StackOverflow [questions with the tag "wicked-pdf"](http://stackoverflow.com/questions/tagged/wicked-pdf)
 
 ### Debugging
