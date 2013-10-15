@@ -29,7 +29,9 @@ WickedPdf.config = {
 Note that versions before 0.9.0 [have problems](http://code.google.com/p/wkhtmltopdf/issues/detail?id=82&q=vodnik) on some machines with reading/writing to streams.
 This plugin relies on streams to communicate with wkhtmltopdf.
 
-More information about [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) could be found [here](http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html).
+For more information about wkhtmltopdf, see the project's [homepage](http://code.google.com/p/wkhtmltopdf/) and
+[github repo](https://github.com/antialize/wkhtmltopdf). There's also some documentation for a recent, stable version 
+on the author's website, [here](http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html).
 
 Next:
 
