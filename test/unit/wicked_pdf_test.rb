@@ -1,5 +1,4 @@
 require 'test_helper'
-
 WickedPdf.config = { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf' }
 HTML_DOCUMENT = "<html><body>Hello World</body></html>"
 
@@ -178,5 +177,13 @@ class WickedPdfTest < ActiveSupport::TestCase
 
   test "should set Default version on initialize" do
     assert_equal WickedPdf::DEFAULT_BINARY_VERSION, @wp.send(:get_binary_version)
+  end
+
+  test "should output progress when creating pdfs" do
+    wp = WickedPdf.new
+    output = []
+    options = { progress: Proc.new {|o| output << o}}
+    wp.pdf_from_string HTML_DOCUMENT, options
+    assert(output.collect{|l| not l.match(/Loading/).nil?}.include?(true)) #should output something like "Loading pages (1/5)"
   end
 end

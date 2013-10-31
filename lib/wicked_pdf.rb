@@ -4,7 +4,7 @@
 require 'logger'
 require 'digest/md5'
 require 'rbconfig'
-require RbConfig::CONFIG['target_os'] == 'mingw32' && !(RUBY_VERSION =~ /1.9/) ? 'win32/open3' : 'open3'
+require 'pty' #removes support for windows
 require 'active_support/core_ext/class/attribute_accessors'
 
 begin
@@ -41,6 +41,7 @@ class WickedPdf
     end
   end
 
+
   def pdf_from_string(string, options={})
     if WickedPdf.config[:retreive_version]
       retreive_binary_version
@@ -52,18 +53,35 @@ class WickedPdf
     string_file.write(string)
     string_file.close
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
-    command = "\"#{@exe_path}\" #{'-q ' unless on_windows?}#{parse_options(options)} \"file:///#{string_file.path}\" \"#{generated_pdf_file.path}\" " # -q for no errors on stdout
+    command = "\"#{@exe_path}\" #{parse_options(options)} \"file:///#{string_file.path}\" \"#{generated_pdf_file.path}\" " # -q for no errors on stdout
     print_command(command) if in_development_mode?
-    err = Open3.popen3(command) do |stdin, stdout, stderr|
-      stderr.read
+    #use pty for command exec to enable interactive parsing of stdout of wkhtmltopdf
+    output = []
+    begin
+      PTY.spawn(command) do |stdout, stdin, pid|
+        begin
+          stdout.sync
+          stdout.each_line("\r") do |line|
+            output << line.chomp
+            options[:progress].call(line) if options[:progress]
+          end
+        rescue Errno::EIO #child process is terminated, this is expected behaviour
+        ensure
+          ::Process.wait pid
+        end
+      end
+    rescue PTY::ChildExited
+      puts "The child process exited!"
     end
+    raise "#{command} failed (exitstatus 0). Output was: #{output.join('\n')}" unless $? && $?.exitstatus == 0
+    ###
     if return_file = options.delete(:return_file)
       return generated_pdf_file
     end
     generated_pdf_file.rewind
     generated_pdf_file.binmode
     pdf = generated_pdf_file.read
-    raise "PDF could not be generated!\n Command Error: #{err}" if pdf and pdf.rstrip.length == 0
+    raise "PDF could not be generated!\n" if pdf and pdf.rstrip.length == 0
     pdf
   rescue Exception => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
@@ -71,6 +89,7 @@ class WickedPdf
     string_file.close! if string_file
     generated_pdf_file.close! if generated_pdf_file && !return_file
   end
+
 
   private
 
