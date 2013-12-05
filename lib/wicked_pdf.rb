@@ -5,7 +5,12 @@ require 'logger'
 require 'digest/md5'
 require 'rbconfig'
 require RbConfig::CONFIG['target_os'] == 'mingw32' && !(RUBY_VERSION =~ /1.9/) ? 'win32/open3' : 'open3'
-require 'active_support/core_ext/class/attribute_accessors'
+
+begin
+  require 'active_support/core_ext/module/attribute_accessors'
+rescue LoadError
+  require 'active_support/core_ext/class/attribute_accessors'
+end
 
 begin
   require 'active_support/core_ext/object/blank'
