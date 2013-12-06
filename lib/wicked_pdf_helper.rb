@@ -1,3 +1,5 @@
+require 'open-uri'
+
 module WickedPdfHelper
   def self.root_path
     String === Rails.root ? Pathname.new(Rails.root) : Rails.root
@@ -80,16 +82,7 @@ module WickedPdfHelper
     def read_asset(source)
       if Rails.configuration.assets.compile == false || source.to_s[0] == '/'
         if asset_path(source) =~ URI_REGEXP
-          require 'open-uri'
-          asset = open(asset_pathname(source), 'r:UTF-8') {|f| f.read }
-          if WickedPdf.config[:expect_gzipped_remote_assets]
-            begin
-              gz = Zlib::GzipReader.new(StringIO.new(asset))
-              asset = gz.read
-            rescue Zlib::GzipFile::Error
-            end
-          end
-          return asset
+          read_from_uri(source)
         else
           IO.read(asset_pathname(source))
         end
@@ -97,5 +90,20 @@ module WickedPdfHelper
         Rails.application.assets.find_asset(source).to_s
       end
     end
+
+    def read_from_uri(source)
+      encoding = 'UTF-8' if RUBY_VERSION > '1.8'
+      asset = open(asset_pathname(source), "r#{encoding}") {|f| f.read }
+      asset = gzip(asset) if WickedPdf.config[:expect_gzipped_remote_assets]
+      asset
+    end
+
+    def gzip(asset)
+      stringified_asset = StringIO.new(asset)
+      gzipper = Zlib::GzipReader.new(stringified_asset)
+      gzipped_asset = gzipper.read
+    rescue Zlib::GzipFile::Error
+    end
+
   end
 end
