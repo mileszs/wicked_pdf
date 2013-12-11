@@ -4,7 +4,12 @@
 require 'logger'
 require 'digest/md5'
 require 'rbconfig'
-require RbConfig::CONFIG['target_os'] == 'mingw32' && !(RUBY_VERSION =~ /1.9/) ? 'win32/open3' : 'open3'
+
+if (RbConfig::CONFIG['target_os'] =~ /mswin|mingw/) && (RUBY_VERSION < '1.9')
+  require 'win32/open3'
+else
+  require 'open3'
+end
 
 begin
   require 'active_support/core_ext/module/attribute_accessors'
@@ -89,7 +94,7 @@ class WickedPdf
     end
 
     def on_windows?
-      RbConfig::CONFIG['target_os'] == 'mingw32'
+      RbConfig::CONFIG['target_os'] =~ /mswin|mingw/
     end
 
     def print_command(cmd)
