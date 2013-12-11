@@ -18,12 +18,12 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  s.add_dependency 'rails'
-  s.add_development_dependency 'bundler', '~> 1.3'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'sqlite3'
+  spec.add_dependency 'rails'
+  spec.add_development_dependency 'bundler', '~> 1.3'
+  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'sqlite3'
 
-  s.description       = <<desc
+  spec.description       = <<desc
 Wicked PDF uses the shell utility wkhtmltopdf to serve a PDF file to a user from HTML.
 In other words, rather than dealing with a PDF generation DSL of some sort,
 you simply write an HTML view as you would normally, and let Wicked take care of the hard stuff.

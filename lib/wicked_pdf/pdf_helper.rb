@@ -1,6 +1,6 @@
 module PdfHelper
   require 'wicked_pdf'
-  require 'wicked_pdf_tempfile'
+  require 'tempfile'
 
   def self.included(base)
     # Protect from trying to augment modules that appear
