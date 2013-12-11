@@ -1,24 +1,27 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require 'wicked_pdf_version'
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'wicked_pdf/version'
 
-Gem::Specification.new do |s|
-  s.name              = "wicked_pdf"
-  s.version           = WickedPdf::VERSION
-  s.date              = Time.now.strftime('%Y-%m-%d')
-  s.summary           = "PDF generator (from HTML) gem for Ruby on Rails"
-  s.homepage          = "https://github.com/mileszs/wicked_pdf"
-  s.email             = "miles.sterrett@gmail.com"
-  s.authors           = [ "Miles Z. Sterret" ]
+Gem::Specification.new do |spec|
+  spec.name          = "wicked_pdf"
+  spec.version       = WickedPdf::VERSION
+  spec.authors       = [ 'Miles Z. Sterrett' ]
+  spec.email         = 'miles.sterrett@gmail.com'
+  spec.summary       = 'PDF generator (from HTML) gem for Ruby on Rails'
+  spec.homepage      = 'https://github.com/mileszs/wicked_pdf'
+  spec.license       = 'MIT'
+  spec.date          = Time.now.strftime('%Y-%m-%d')
 
-  s.files             = %w( README.md Rakefile MIT-LICENSE )
-  s.files            += Dir.glob("{lib,generators,test}/**/*")
-  s.test_files        = Dir.glob("test/**/*")
-  s.require_paths     = ['lib']
+  spec.files         = `git ls-files`.split($/)
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ['lib']
 
-  s.add_dependency('rails')
-  s.add_development_dependency('rake')
-  s.add_development_dependency('sqlite3')
+  s.add_dependency 'rails'
+  s.add_development_dependency 'bundler', '~> 1.3'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'sqlite3'
 
   s.description       = <<desc
 Wicked PDF uses the shell utility wkhtmltopdf to serve a PDF file to a user from HTML.
