@@ -1,5 +1,5 @@
-require 'pdf_helper'
-require 'wicked_pdf_helper'
+require 'wicked_pdf/pdf_helper'
+require 'wicked_pdf/wicked_pdf_helper'
 
 if defined?(Rails)
 

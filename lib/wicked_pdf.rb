@@ -12,7 +12,11 @@ else
   require 'pty' #no support for windows
 end
 
-require 'active_support/core_ext/class/attribute_accessors'
+begin
+  require 'active_support/core_ext/module/attribute_accessors'
+rescue LoadError
+  require 'active_support/core_ext/class/attribute_accessors'
+end
 
 begin
   require 'active_support/core_ext/object/blank'
@@ -20,10 +24,10 @@ rescue LoadError
   require 'active_support/core_ext/blank'
 end
 
-require 'wicked_pdf_version'
-require 'wicked_pdf_railtie'
-require 'wicked_pdf_tempfile'
-require 'wicked_pdf_middleware'
+require 'wicked_pdf/version'
+require 'wicked_pdf/railtie'
+require 'wicked_pdf/tempfile'
+require 'wicked_pdf/middleware'
 
 class WickedPdf
   DEFAULT_BINARY_VERSION = Gem::Version.new('0.9.9')
