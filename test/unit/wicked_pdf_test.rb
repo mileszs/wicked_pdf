@@ -179,11 +179,15 @@ class WickedPdfTest < ActiveSupport::TestCase
     assert_equal WickedPdf::DEFAULT_BINARY_VERSION, @wp.send(:get_binary_version)
   end
 
-  test "should output progress when creating pdfs" do
+  test "should output progress when creating pdfs on compatible hosts" do
     wp = WickedPdf.new
     output = []
-    options = { progress: Proc.new {|o| output << o}}
+    options = { :progress => Proc.new {|o| output << o}}
     wp.pdf_from_string HTML_DOCUMENT, options
-    assert(output.collect{|l| not l.match(/Loading/).nil?}.include?(true)) #should output something like "Loading pages (1/5)"
+    if RbConfig::CONFIG['target_os'] =~ /mswin|mingw/
+      assert_empty output
+    else
+      assert(output.collect{|l| not l.match(/Loading/).nil?}.include?(true)) #should output something like "Loading pages (1/5)"
+    end
   end
 end
