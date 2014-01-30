@@ -58,7 +58,11 @@ module WickedPdfHelper
     end
 
     def wicked_pdf_asset_path(asset)
-      "file:///#{asset_pathname(asset).to_s}"
+      if (pathname = asset_pathname(asset).to_s) =~ URI_REGEXP
+        pathname
+      else
+        "file:///#{pathname}"
+      end
     end
 
     private

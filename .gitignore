@@ -18,3 +18,4 @@ tmp
 *.swp
 test/dummy/log/*.log
 gemfiles/*.lock
+.DS_Store
