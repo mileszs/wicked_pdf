@@ -234,7 +234,8 @@ class WickedPdf
         r +=make_options(options, [ :redirect_delay,
                                     :zoom,
                                     :page_offset,
-                                    :javascript_delay], "", :numeric)
+                                    :javascript_delay,
+                                    :image_quality], "", :numeric)
         r +=make_options(options, [ :book,
                                     :default_header,
                                     :disable_javascript,
