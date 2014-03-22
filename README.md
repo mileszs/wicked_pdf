@@ -135,6 +135,7 @@ class ThingsController < ApplicationController
                :javascript_delay               => NUMBER,
                :zoom                           => FLOAT,
                :page_offset                    => NUMBER,
+               :javascript_delay               => NUMBER,
                :book                           => true,
                :default_header                 => true,
                :disable_javascript             => false,
