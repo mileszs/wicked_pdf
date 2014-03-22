@@ -133,6 +133,7 @@ class ThingsController < ApplicationController
                :post                           => ['query QUERY_PARAM'],      # could be an array or a single string in a 'name value' format
                :redirect_delay                 => NUMBER,
                :javascript_delay               => NUMBER,
+               :image_quality                  => NUMBER,
                :zoom                           => FLOAT,
                :page_offset                    => NUMBER,
                :javascript_delay               => NUMBER,
