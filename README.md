@@ -125,7 +125,7 @@ class ThingsController < ApplicationController
                :basic_auth                     => false                         # when true username & password are automatically sent from session
                :username                       => 'TEXT',
                :password                       => 'TEXT',
-               :cover                          => 'URL',
+               :cover                          => 'URL, Pathname, or raw HTML string',
                :dpi                            => 'dpi',
                :encoding                       => 'TEXT',
                :user_style_sheet               => 'URL',
