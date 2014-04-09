@@ -116,6 +116,7 @@ class WickedPdf
         parse_header_footer(:header => options.delete(:header),
                             :footer => options.delete(:footer),
                             :layout => options[:layout]),
+        parse_cover(options.delete(:cover)),
         parse_toc(options.delete(:toc)),
         parse_outline(options.delete(:outline)),
         parse_margins(options.delete(:margin)),
@@ -178,6 +179,22 @@ class WickedPdf
       r
     end
 
+    def parse_cover(argument)
+      arg = argument.to_s
+      return '' if arg.blank?
+      r = '--cover '
+      # Filesystem path or URL - hand off to wkhtmltopdf
+      if arg.include?(Rails.root.to_s) || (arg[0,4] == 'http')
+        r + arg
+      else # HTML content
+        @hf_tempfiles ||= []
+        @hf_tempfiles << tf=WickedPdfTempfile.new("wicked_cover_pdf.html")
+        tf.write arg
+        tf.flush
+        r + tf.path
+      end
+    end
+
     def parse_toc(options)
       r = '--toc ' unless options.nil?
       unless options.blank?
@@ -225,7 +242,6 @@ class WickedPdf
                                     :proxy,
                                     :username,
                                     :password,
-                                    :cover,
                                     :dpi,
                                     :encoding,
                                     :user_style_sheet])
