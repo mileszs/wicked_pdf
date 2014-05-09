@@ -61,25 +61,32 @@ class WickedPdf
     string_file.binmode
     string_file.write(string)
     string_file.close
-    generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
-    command = "\"#{@exe_path}\" #{'-q ' unless on_windows?}#{parse_options(options)} \"file:///#{string_file.path}\" \"#{generated_pdf_file.path}\" " # -q for no errors on stdout
+    output_file = options.delete(:output_file)
+    output_file ||= WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
+    command = "\"#{@exe_path}\" #{'-q ' unless on_windows?}#{parse_options(options)} \"file:///#{string_file.path}\" \"#{output_file.path}\" " # -q for no errors on stdout
     print_command(command) if in_development_mode?
     err = Open3.popen3(command) do |stdin, stdout, stderr|
       stderr.read
     end
     if return_file = options.delete(:return_file)
-      return generated_pdf_file
+      return output_file
     end
-    generated_pdf_file.rewind
-    generated_pdf_file.binmode
-    pdf = generated_pdf_file.read
+    output_file.rewind
+    output_file.binmode
+    pdf = output_file.read
     raise "PDF could not be generated!\n Command Error: #{err}" if pdf and pdf.rstrip.length == 0
     pdf
   rescue Exception => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
   ensure
-    string_file.close! if string_file
-    generated_pdf_file.close! if generated_pdf_file && !return_file
+    string_file.close if string_file
+    if output_file && !return_file
+      if output_file.is_a?(Tempfile)
+        output_file.try(:close!)
+      else
+        output_file.close
+      end
+    end
   end
 
   private
