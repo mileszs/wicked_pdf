@@ -79,8 +79,14 @@ class WickedPdf
   rescue Exception => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
   ensure
-    string_file.close! if string_file
-    output_file.close! if output_file && !return_file
+    string_file.close if string_file
+    if output_file && !return_file
+      if output_file.is_a?(Tempfile)
+        output_file.try(:close!)
+      else
+        output_file.close
+      end
+    end
   end
 
   private
