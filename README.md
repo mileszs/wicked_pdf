@@ -30,7 +30,7 @@ Note that versions before 0.9.0 [have problems](http://code.google.com/p/wkhtmlt
 This plugin relies on streams to communicate with wkhtmltopdf.
 
 For more information about wkhtmltopdf, see the project's [homepage](http://code.google.com/p/wkhtmltopdf/) and
-[github repo](https://github.com/antialize/wkhtmltopdf). There's also some documentation for a recent, stable version 
+[github repo](https://github.com/antialize/wkhtmltopdf). There's also some documentation for a recent, stable version
 on the author's website, [here](http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html).
 
 Next:
@@ -43,7 +43,7 @@ or add this to your Gemfile:
 ```ruby
 gem 'wicked_pdf'
 ```
-    
+
 You may also need to add
 ```ruby
 Mime::Type.register "application/pdf", :pdf
@@ -111,7 +111,7 @@ class ThingsController < ApplicationController
       format.html
       format.pdf do
         render :pdf                            => 'file_name',
-               :disposition	                   => 'attachment',                 # default 'inline'                   
+               :disposition	                   => 'attachment',                 # default 'inline'
                :template                       => 'things/show.pdf.erb',
                :file                           => "#{Rails.root}/files/foo.erb"
                :layout                         => 'pdf.html',                   # use 'pdf.html' for a pdf.html.erb file
@@ -215,6 +215,10 @@ If you need to just create a pdf and not display it:
 # create a pdf from a string
 pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
 
+# create a pdf file from a html file without converting it to string
+# Path must be absolute path
+pdf = WickedPdf.new.pdf_from_html_file('/your/absolute/path/here')
+
 # create a pdf from string using templates, layouts and content option for header or footer
 WickedPdf.new.pdf_from_string(
   render_to_string('templates/pdf.html.erb', :layout => 'pdfs/layout_pdf'),
@@ -222,10 +226,10 @@ WickedPdf.new.pdf_from_string(
     :content => render_to_string(:layout => 'pdfs/layout_pdf')
   }
 )
-  
+
 # or from your controller, using views & templates and all wicked_pdf options as normal
 pdf = render_to_string :pdf => "some_file_name"
-		
+
 # then save to a file
 save_path = Rails.root.join('pdfs','filename.pdf')
 File.open(save_path, 'wb') do |file|
