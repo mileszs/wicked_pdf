@@ -37,7 +37,7 @@ class WickedPdf
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path || find_wkhtmltopdf_binary_path
     raise "Location of #{EXE_NAME} unknown" if @exe_path.empty?
-    raise "Bad #{EXE_NAME}'s path" unless File.exists?(@exe_path)
+    raise "Bad #{EXE_NAME}'s path: #{@exe_path}" unless File.exists?(@exe_path)
     raise "#{EXE_NAME} is not executable" unless File.executable?(@exe_path)
 
     @binary_version = DEFAULT_BINARY_VERSION
