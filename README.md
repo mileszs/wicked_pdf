@@ -149,6 +149,7 @@ class ThingsController < ApplicationController
                :disable_smart_shrinking        => true,
                :use_xserver                    => true,
                :no_background                  => true,
+               :viewport_size                  => 'TEXT'                    # available only with use_xserver or patched QT
                :extra                          => ''                        # directly inserted into the command to wkhtmltopdf
                :margin => {:top                => SIZE,                     # default 10 (mm)
                            :bottom             => SIZE,

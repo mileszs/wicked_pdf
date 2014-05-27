@@ -244,7 +244,8 @@ class WickedPdf
                                     :password,
                                     :dpi,
                                     :encoding,
-                                    :user_style_sheet])
+                                    :user_style_sheet,
+                                    :viewport_size])
         r +=make_options(options, [ :cookie,
                                     :post], "", :name_value)
         r +=make_options(options, [ :redirect_delay,
