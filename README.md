@@ -116,7 +116,7 @@ class ThingsController < ApplicationController
                :file                           => "#{Rails.root}/files/foo.erb"
                :layout                         => 'pdf.html',                   # use 'pdf.html' for a pdf.html.erb file
                :wkhtmltopdf                    => '/usr/local/bin/wkhtmltopdf', # path to binary
-               :show_as_html                   => params[:debug].present?,      # allow debuging based on url param
+               :show_as_html                   => params[:debug].present?,      # allow debugging based on url param
                :orientation                    => 'Landscape',                  # default Portrait
                :page_size                      => 'A4, Letter, ...',            # default A4
                :save_to_file                   => Rails.root.join('pdfs', "#{filename}.pdf"),
