@@ -58,10 +58,15 @@ class WickedPdf
 
     temp_path = options.delete(:temp_path)
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
-    command = "\"#{@exe_path}\" #{'-q ' unless on_windows?}#{parse_options(options)} \"file:///#{filepath}\" \"#{generated_pdf_file.path}\" " # -q for no errors on stdout
-    print_command(command) if in_development_mode?
+    command = [@exe_path]
+    command << '-q' unless on_windows? # suppress errors on stdout
+    command += parse_options(options)
+    command << "file://#{filepath}"
+    command << generated_pdf_file.path.to_s
 
-    err = Open3.popen3(command) do |stdin, stdout, stderr|
+    print_command(command.inspect) if in_development_mode?
+
+    err = Open3.popen3(*command) do |stdin, stdout, stderr|
       stderr.read
     end
     if return_file = options.delete(:return_file)
@@ -133,40 +138,50 @@ class WickedPdf
         parse_margins(options.delete(:margin)),
         parse_others(options),
         parse_basic_auth(options)
-      ].join(' ')
+      ].flatten
     end
 
     def parse_extra(options)
-      options[:extra].nil? ? '' : options[:extra]
+      return [] if options[:extra].nil?
+      return options[:extra].split if options[:extra].respond_to?(:split)
+      return options[:extra]
     end
 
     def parse_basic_auth(options)
       if options[:basic_auth]
         user, passwd = Base64.decode64(options[:basic_auth]).split(":")
-        "--username '#{user}' --password '#{passwd}'"
+        ["--username", user, "--password", passwd]
       else
-        ""
+        []
       end
     end
 
     def make_option(name, value, type=:string)
       if value.is_a?(Array)
-        return value.collect { |v| make_option(name, v, type) }.join('')
+        return value.collect { |v| make_option(name, v, type) }
       end
-      "--#{name.gsub('_', '-')} " + case type
-        when :boolean then ""
-        when :numeric then value.to_s
-        when :name_value then value.to_s
-        else "\"#{value}\""
-      end + " "
+      if type == :boolean
+        ["--#{name.gsub('_', '-')}"]
+      else
+        ["--#{name.gsub('_', '-')}", value.to_s]
+      end
     end
 
     def make_options(options, names, prefix="", type=:string)
-      names.collect {|o| make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", options[o], type) unless options[o].blank?}.join
+      return [] if options.nil?
+      names.collect do |o| 
+        if options[o].blank?
+          []
+        else
+          make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", 
+                      options[o], 
+                      type)
+        end
+      end
     end
 
     def parse_header_footer(options)
-      r=""
+      r=[]
       [:header, :footer].collect do |hf|
         unless options[hf].blank?
           opt_hf = options[hf]
@@ -192,22 +207,22 @@ class WickedPdf
 
     def parse_cover(argument)
       arg = argument.to_s
-      return '' if arg.blank?
-      r = '--cover '
+      return [] if arg.blank?
       # Filesystem path or URL - hand off to wkhtmltopdf
       if argument.is_a?(Pathname) || (arg[0,4] == 'http')
-        r + arg
+        ['--cover', arg]
       else # HTML content
         @hf_tempfiles ||= []
         @hf_tempfiles << tf=WickedPdfTempfile.new("wicked_cover_pdf.html")
         tf.write arg
         tf.flush
-        r + tf.path
+        ['--cover', tf.path]
       end
     end
 
     def parse_toc(options)
-      r = '--toc ' unless options.nil?
+      return [] if options.nil?
+      r = ['--toc']
       unless options.blank?
         r += make_options(options, [ :font_name, :header_text], "toc")
         r +=make_options(options, [ :depth,
@@ -234,19 +249,22 @@ class WickedPdf
     end
 
     def parse_outline(options)
+      r = []
       unless options.blank?
         r = make_options(options, [:outline], "", :boolean)
         r +=make_options(options, [:outline_depth], "", :numeric)
       end
+      r
     end
 
     def parse_margins(options)
-      make_options(options, [:top, :bottom, :left, :right], "margin", :numeric) unless options.blank?
+      make_options(options, [:top, :bottom, :left, :right], "margin", :numeric)
     end
 
     def parse_others(options)
+      r = []
       unless options.blank?
-        r = make_options(options, [ :orientation,
+        r += make_options(options, [ :orientation,
                                     :page_size,
                                     :page_width,
                                     :page_height,
@@ -277,6 +295,7 @@ class WickedPdf
                                     :use_xserver,
                                     :no_background], "", :boolean)
       end
+      r
     end
 
     def find_wkhtmltopdf_binary_path

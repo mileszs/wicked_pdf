@@ -3,10 +3,12 @@ require 'test_helper'
 WickedPdf.config = { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf' }
 HTML_DOCUMENT = "<html><body>Hello World</body></html>"
 
-# Provide a public accessor to the normally-private parse_options function
+# Provide a public accessor to the normally-private parse_options function.
+# Also, smash the returned array of options into a single string for
+# convenience in testing below.
 class WickedPdf
   def get_parsed_options(opts)
-    parse_options(opts)
+    parse_options(opts).join(' ')
   end
 end
 
@@ -85,7 +87,7 @@ class WickedPdfTest < ActiveSupport::TestCase
 
     [:header, :footer].each do |hf|
       [:center, :font_name, :left, :right].each do |o|
-        assert_equal  "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} \"header_footer\"",
+        assert_equal  "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} header_footer",
                       wp.get_parsed_options(hf => {o => "header_footer"}).strip
       end
 
@@ -96,7 +98,7 @@ class WickedPdfTest < ActiveSupport::TestCase
 
       assert_equal  "--#{hf.to_s}-line",
                     wp.get_parsed_options(hf => {:line => true}).strip
-      assert_equal  "--#{hf.to_s}-html \"http://www.abc.com\"",
+      assert_equal  "--#{hf.to_s}-html http://www.abc.com",
                     wp.get_parsed_options(hf => {:html => {:url => 'http://www.abc.com'}}).strip
     end
   end
@@ -105,7 +107,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     wp = WickedPdf.new
 
     [:font_name, :header_text].each do |o|
-      assert_equal  "--toc --toc-#{o.to_s.gsub('_', '-')} \"toc\"",
+      assert_equal  "--toc --toc-#{o.to_s.gsub('_', '-')} toc",
                     wp.get_parsed_options(:toc => {o => "toc"}).strip
     end
 
@@ -152,7 +154,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     [ :orientation, :page_size, :proxy, :username, :password, :dpi,
       :encoding, :user_style_sheet
     ].each do |o|
-      assert_equal "--#{o.to_s.gsub('_', '-')} \"opts\"", wp.get_parsed_options(o => "opts").strip
+      assert_equal "--#{o.to_s.gsub('_', '-')} opts", wp.get_parsed_options(o => "opts").strip
     end
 
     [:cookie, :post].each do |o|
