@@ -38,7 +38,7 @@ class WickedPdf
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path || find_wkhtmltopdf_binary_path
     raise "Location of #{EXE_NAME} unknown" if @exe_path.empty?
-    raise "Bad #{EXE_NAME}'s path" unless File.exists?(@exe_path)
+    raise "Bad #{EXE_NAME}'s path: #{@exe_path}" unless File.exists?(@exe_path)
     raise "#{EXE_NAME} is not executable" unless File.executable?(@exe_path)
 
     @binary_version = DEFAULT_BINARY_VERSION
@@ -53,46 +53,45 @@ class WickedPdf
   end
 
 
-  def pdf_from_string(string, options={})
+  def pdf_from_html_file(filepath, options={})
     if WickedPdf.config[:retreive_version]
       retreive_binary_version
     end
 
     temp_path = options.delete(:temp_path)
-    string_file = WickedPdfTempfile.new("wicked_pdf.html", temp_path)
-    string_file.binmode
-    string_file.write(string)
-    string_file.close
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
-    
+    command = [@exe_path]
+    command << '-q' unless on_windows? # suppress errors on stdout
+    command += parse_options(options)
+    command << "file://#{filepath}"
+    command << generated_pdf_file.path.to_s
+    print_command(command.inspect) if in_development_mode?
+
     if on_windows? #fallback to default behaviour if no compatible version available (ie windows)
-      command = "\"#{@exe_path}\" #{'-q ' unless on_windows?}#{parse_options(options)} \"file:///#{string_file.path}\" \"#{generated_pdf_file.path}\" " # -q for no errors on stdout
-      print_command(command) if in_development_mode?
       err = Open3.popen3(command) do |stdin, stdout, stderr|
         stderr.read
-      end   
-    else #else capture progress with pty without buffering stdout
-     command = "\"#{@exe_path}\" #{parse_options(options)} \"file:///#{string_file.path}\" \"#{generated_pdf_file.path}\" "
-     output = []
-      begin
-        PTY.spawn(command) do |stdout, stdin, pid|
-          begin
-            stdout.sync
-            stdout.each_line("\r") do |line|
-              output << line.chomp
-              options[:progress].call(line) if options[:progress]
-            end
-          rescue Errno::EIO #child process is terminated, this is expected behaviour
-          ensure
-            ::Process.wait pid
-          end
-        end
-      rescue PTY::ChildExited
-        puts "The child process exited!"
       end
-      err = output.join('\n')
-      raise "#{command} failed (exitstatus 0). Output was: #{err}" unless $? && $?.exitstatus == 0
-    end
+    else #else capture progress with pty without buffering stdout
+     output = []
+     begin
+       PTY.spawn(command) do |stdout, stdin, pid|
+         begin
+           stdout.sync
+           stdout.each_line("\r") do |line|
+             output << line.chomp
+             options[:progress].call(line) if options[:progress]
+           end
+         rescue Errno::EIO #child process is terminated, this is expected behaviour
+         ensure
+           ::Process.wait pid
+         end
+       end
+     rescue PTY::ChildExited
+       puts "The child process exited!"
+     end
+     err = output.join('\n')
+     raise "#{command} failed (exitstatus 0). Output was: #{err}" unless $? && $?.exitstatus == 0
+
     if return_file = options.delete(:return_file)
       return generated_pdf_file
     end
@@ -104,10 +103,23 @@ class WickedPdf
   rescue Exception => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
   ensure
-    string_file.close! if string_file
     generated_pdf_file.close! if generated_pdf_file && !return_file
   end
 
+  def pdf_from_string(string, options={})
+    temp_path = options.delete(:temp_path)
+    string_file = WickedPdfTempfile.new("wicked_pdf.html", temp_path)
+    string_file.binmode
+    string_file.write(string)
+    string_file.close
+
+    pdf = pdf_from_html_file(string_file.path, options)
+    pdf
+  rescue Exception => e
+    raise "Error: #{e}"
+  ensure
+    string_file.close! if string_file
+  end
 
   private
 
@@ -143,45 +155,56 @@ class WickedPdf
         parse_header_footer(:header => options.delete(:header),
                             :footer => options.delete(:footer),
                             :layout => options[:layout]),
+        parse_cover(options.delete(:cover)),
         parse_toc(options.delete(:toc)),
         parse_outline(options.delete(:outline)),
         parse_margins(options.delete(:margin)),
         parse_others(options),
         parse_basic_auth(options)
-      ].join(' ')
+      ].flatten
     end
 
     def parse_extra(options)
-      options[:extra].nil? ? '' : options[:extra]
+      return [] if options[:extra].nil?
+      return options[:extra].split if options[:extra].respond_to?(:split)
+      return options[:extra]
     end
 
     def parse_basic_auth(options)
       if options[:basic_auth]
         user, passwd = Base64.decode64(options[:basic_auth]).split(":")
-        "--username '#{user}' --password '#{passwd}'"
+        ["--username", user, "--password", passwd]
       else
-        ""
+        []
       end
     end
 
     def make_option(name, value, type=:string)
       if value.is_a?(Array)
-        return value.collect { |v| make_option(name, v, type) }.join('')
+        return value.collect { |v| make_option(name, v, type) }
       end
-      "--#{name.gsub('_', '-')} " + case type
-        when :boolean then ""
-        when :numeric then value.to_s
-        when :name_value then value.to_s
-        else "\"#{value}\""
-      end + " "
+      if type == :boolean
+        ["--#{name.gsub('_', '-')}"]
+      else
+        ["--#{name.gsub('_', '-')}", value.to_s]
+      end
     end
 
     def make_options(options, names, prefix="", type=:string)
-      names.collect {|o| make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", options[o], type) unless options[o].blank?}.join
+      return [] if options.nil?
+      names.collect do |o|
+        if options[o].blank?
+          []
+        else
+          make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}",
+                      options[o],
+                      type)
+        end
+      end
     end
 
     def parse_header_footer(options)
-      r=""
+      r=[]
       [:header, :footer].collect do |hf|
         unless options[hf].blank?
           opt_hf = options[hf]
@@ -205,8 +228,24 @@ class WickedPdf
       r
     end
 
+    def parse_cover(argument)
+      arg = argument.to_s
+      return [] if arg.blank?
+      # Filesystem path or URL - hand off to wkhtmltopdf
+      if argument.is_a?(Pathname) || (arg[0,4] == 'http')
+        ['--cover', arg]
+      else # HTML content
+        @hf_tempfiles ||= []
+        @hf_tempfiles << tf=WickedPdfTempfile.new("wicked_cover_pdf.html")
+        tf.write arg
+        tf.flush
+        ['--cover', tf.path]
+      end
+    end
+
     def parse_toc(options)
-      r = '--toc ' unless options.nil?
+      return [] if options.nil?
+      r = ['--toc']
       unless options.blank?
         r += make_options(options, [ :font_name, :header_text], "toc")
         r +=make_options(options, [ :depth,
@@ -233,35 +272,39 @@ class WickedPdf
     end
 
     def parse_outline(options)
+      r = []
       unless options.blank?
         r = make_options(options, [:outline], "", :boolean)
         r +=make_options(options, [:outline_depth], "", :numeric)
       end
+      r
     end
 
     def parse_margins(options)
-      make_options(options, [:top, :bottom, :left, :right], "margin", :numeric) unless options.blank?
+      make_options(options, [:top, :bottom, :left, :right], "margin", :numeric)
     end
 
     def parse_others(options)
+      r = []
       unless options.blank?
-        r = make_options(options, [ :orientation,
+        r += make_options(options, [ :orientation,
                                     :page_size,
                                     :page_width,
                                     :page_height,
                                     :proxy,
                                     :username,
                                     :password,
-                                    :cover,
                                     :dpi,
                                     :encoding,
-                                    :user_style_sheet])
+                                    :user_style_sheet,
+                                    :viewport_size])
         r +=make_options(options, [ :cookie,
                                     :post], "", :name_value)
         r +=make_options(options, [ :redirect_delay,
                                     :zoom,
                                     :page_offset,
-                                    :javascript_delay], "", :numeric)
+                                    :javascript_delay,
+                                    :image_quality], "", :numeric)
         r +=make_options(options, [ :book,
                                     :default_header,
                                     :disable_javascript,
@@ -275,6 +318,7 @@ class WickedPdf
                                     :use_xserver,
                                     :no_background], "", :boolean)
       end
+      r
     end
 
     def find_wkhtmltopdf_binary_path

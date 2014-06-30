@@ -30,7 +30,7 @@ Note that versions before 0.9.0 [have problems](http://code.google.com/p/wkhtmlt
 This plugin relies on streams to communicate with wkhtmltopdf.
 
 For more information about wkhtmltopdf, see the project's [homepage](http://code.google.com/p/wkhtmltopdf/) and
-[github repo](https://github.com/antialize/wkhtmltopdf). There's also some documentation for a recent, stable version 
+[github repo](https://github.com/antialize/wkhtmltopdf). There's also some documentation for a recent, stable version
 on the author's website, [here](http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html).
 
 Next:
@@ -43,7 +43,7 @@ or add this to your Gemfile:
 ```ruby
 gem 'wicked_pdf'
 ```
-    
+
 You may also need to add
 ```ruby
 Mime::Type.register "application/pdf", :pdf
@@ -111,12 +111,12 @@ class ThingsController < ApplicationController
       format.html
       format.pdf do
         render :pdf                            => 'file_name',
-               :disposition	                   => 'attachment',                 # default 'inline'                   
+               :disposition	                   => 'attachment',                 # default 'inline'
                :template                       => 'things/show.pdf.erb',
                :file                           => "#{Rails.root}/files/foo.erb"
                :layout                         => 'pdf.html',                   # use 'pdf.html' for a pdf.html.erb file
                :wkhtmltopdf                    => '/usr/local/bin/wkhtmltopdf', # path to binary
-               :show_as_html                   => params[:debug].present?,      # allow debuging based on url param
+               :show_as_html                   => params[:debug].present?,      # allow debugging based on url param
                :orientation                    => 'Landscape',                  # default Portrait
                :page_size                      => 'A4, Letter, ...',            # default A4
                :save_to_file                   => Rails.root.join('pdfs', "#{filename}.pdf"),
@@ -125,7 +125,7 @@ class ThingsController < ApplicationController
                :basic_auth                     => false                         # when true username & password are automatically sent from session
                :username                       => 'TEXT',
                :password                       => 'TEXT',
-               :cover                          => 'URL',
+               :cover                          => 'URL, Pathname, or raw HTML string',
                :dpi                            => 'dpi',
                :encoding                       => 'TEXT',
                :user_style_sheet               => 'URL',
@@ -133,8 +133,10 @@ class ThingsController < ApplicationController
                :post                           => ['query QUERY_PARAM'],      # could be an array or a single string in a 'name value' format
                :redirect_delay                 => NUMBER,
                :javascript_delay               => NUMBER,
+               :image_quality                  => NUMBER,
                :zoom                           => FLOAT,
                :page_offset                    => NUMBER,
+               :javascript_delay               => NUMBER,
                :book                           => true,
                :default_header                 => true,
                :disable_javascript             => false,
@@ -147,6 +149,7 @@ class ThingsController < ApplicationController
                :disable_smart_shrinking        => true,
                :use_xserver                    => true,
                :no_background                  => true,
+               :viewport_size                  => 'TEXT'                    # available only with use_xserver or patched QT
                :extra                          => ''                        # directly inserted into the command to wkhtmltopdf
                :margin => {:top                => SIZE,                     # default 10 (mm)
                            :bottom             => SIZE,
@@ -213,6 +216,10 @@ If you need to just create a pdf and not display it:
 # create a pdf from a string
 pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
 
+# create a pdf file from a html file without converting it to string
+# Path must be absolute path
+pdf = WickedPdf.new.pdf_from_html_file('/your/absolute/path/here')
+
 # create a pdf from string using templates, layouts and content option for header or footer
 WickedPdf.new.pdf_from_string(
   render_to_string('templates/pdf.html.erb', :layout => 'pdfs/layout_pdf'),
@@ -220,10 +227,10 @@ WickedPdf.new.pdf_from_string(
     :content => render_to_string(:layout => 'pdfs/layout_pdf')
   }
 )
-  
+
 # or from your controller, using views & templates and all wicked_pdf options as normal
 pdf = render_to_string :pdf => "some_file_name"
-		
+
 # then save to a file
 save_path = Rails.root.join('pdfs','filename.pdf')
 File.open(save_path, 'wb') do |file|

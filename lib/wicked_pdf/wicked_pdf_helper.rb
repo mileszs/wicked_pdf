@@ -58,7 +58,11 @@ module WickedPdfHelper
     end
 
     def wicked_pdf_asset_path(asset)
-      "file:///#{asset_pathname(asset).to_s}"
+      if (pathname = asset_pathname(asset).to_s) =~ URI_REGEXP
+        pathname
+      else
+        "file:///#{pathname}"
+      end
     end
 
     private
@@ -67,10 +71,10 @@ module WickedPdfHelper
     URI_REGEXP = %r{^[-a-z]+://|^(?:cid|data):|^//}
 
     def asset_pathname(source)
-      if Rails.configuration.assets.compile == false || source.to_s[0] == '/'
-        if asset_path(source) =~ URI_REGEXP
+      if precompiled_asset?(source)
+        if (pathname = set_protocol(asset_path(source))) =~ URI_REGEXP
           # asset_path returns an absolute URL using asset_host if asset_host is set
-          asset_path(source)
+          pathname
         else
           File.join(Rails.public_path, asset_path(source).sub(/\A#{Rails.application.config.action_controller.relative_url_root}/, ''))
         end
@@ -79,9 +83,20 @@ module WickedPdfHelper
       end
     end
 
+    #will prepend a http or default_protocol to a protocol realtive URL
+    def set_protocol(source)
+      protocol = WickedPdf.config[:default_protocol] || "http"
+      source = [protocol, ":", source].join if source[0,2] == "//"
+      return source
+    end
+
+    def precompiled_asset?(source)
+      Rails.configuration.assets.compile == false || source.to_s[0] == '/'
+    end
+
     def read_asset(source)
-      if Rails.configuration.assets.compile == false || source.to_s[0] == '/'
-        if asset_path(source) =~ URI_REGEXP
+      if precompiled_asset?(source) 
+        if set_protocol(asset_path(source)) =~ URI_REGEXP
           read_from_uri(source)
         else
           IO.read(asset_pathname(source))
