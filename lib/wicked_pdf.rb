@@ -61,10 +61,11 @@ class WickedPdf
     temp_path = options.delete(:temp_path)
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
     command = [@exe_path]
-    command << '-q' unless on_windows? # suppress errors on stdout
+    #command << '-q' unless on_windows? # track progress -> activate output
     command += parse_options(options)
     command << "file://#{filepath}"
     command << generated_pdf_file.path.to_s
+
     print_command(command.inspect) if in_development_mode?
 
     if on_windows? #fallback to default behaviour if no compatible version available (ie windows)
@@ -72,26 +73,26 @@ class WickedPdf
         stderr.read
       end
     else #else capture progress with pty without buffering stdout
-     output = []
-     begin
-       PTY.spawn(command) do |stdout, stdin, pid|
-         begin
-           stdout.sync
-           stdout.each_line("\r") do |line|
-             output << line.chomp
-             options[:progress].call(line) if options[:progress]
-           end
-         rescue Errno::EIO #child process is terminated, this is expected behaviour
-         ensure
-           ::Process.wait pid
-         end
-       end
-     rescue PTY::ChildExited
-       puts "The child process exited!"
-     end
-     err = output.join('\n')
-     raise "#{command} failed (exitstatus 0). Output was: #{err}" unless $? && $?.exitstatus == 0
-
+      output = []
+      begin
+        PTY.spawn(command.join(" ")) do |stdout, stdin, pid|
+          begin
+            stdout.sync
+            stdout.each_line("\r") do |line|
+              output << line.chomp
+              options[:progress].call(line) if options[:progress]
+            end
+          rescue Errno::EIO #child process is terminated, this is expected behaviour
+          ensure
+            ::Process.wait pid
+          end
+        end
+      rescue PTY::ChildExited
+        puts "The child process exited!"
+      end
+      err = output.join('\n')
+      raise "#{command} failed (exitstatus 0). Output was: #{err}" unless $? && $?.exitstatus == 0
+    end
     if return_file = options.delete(:return_file)
       return generated_pdf_file
     end
@@ -100,10 +101,10 @@ class WickedPdf
     pdf = generated_pdf_file.read
     raise "PDF could not be generated!\n Command Error: #{err}" if pdf and pdf.rstrip.length == 0
     pdf
-  rescue Exception => e
-    raise "Failed to execute:\n#{command}\nError: #{e}"
-  ensure
-    generated_pdf_file.close! if generated_pdf_file && !return_file
+    rescue Exception => e
+      raise "Failed to execute:\n#{command}\nError: #{e}"
+    ensure
+      generated_pdf_file.close! if generated_pdf_file && !return_file
   end
 
   def pdf_from_string(string, options={})
@@ -115,10 +116,10 @@ class WickedPdf
 
     pdf = pdf_from_html_file(string_file.path, options)
     pdf
-  rescue Exception => e
-    raise "Error: #{e}"
-  ensure
-    string_file.close! if string_file
+    rescue Exception => e
+      raise "Error: #{e}"
+    ensure
+      string_file.close! if string_file
   end
 
   private
