@@ -169,12 +169,12 @@ class WickedPdf
 
     def make_options(options, names, prefix="", type=:string)
       return [] if options.nil?
-      names.collect do |o| 
+      names.collect do |o|
         if options[o].blank?
           []
         else
-          make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", 
-                      options[o], 
+          make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}",
+                      options[o],
                       type)
         end
       end
@@ -210,13 +210,13 @@ class WickedPdf
       return [] if arg.blank?
       # Filesystem path or URL - hand off to wkhtmltopdf
       if argument.is_a?(Pathname) || (arg[0,4] == 'http')
-        ['--cover', arg]
+        ['cover', arg]
       else # HTML content
         @hf_tempfiles ||= []
         @hf_tempfiles << tf=WickedPdfTempfile.new("wicked_cover_pdf.html")
         tf.write arg
         tf.flush
-        ['--cover', tf.path]
+        ['cover', tf.path]
       end
     end
 
