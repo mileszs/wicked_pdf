@@ -133,11 +133,11 @@ class WickedPdf
                             :footer => options.delete(:footer),
                             :layout => options[:layout]),
         parse_margins(options.delete(:margin)),
-        parse_cover(options.delete(:cover)),
         parse_toc(options.delete(:toc)),
         parse_outline(options.delete(:outline)),
         parse_others(options),
-        parse_basic_auth(options)
+        parse_basic_auth(options),
+        parse_cover(options.delete(:cover))
       ].flatten
     end
 
