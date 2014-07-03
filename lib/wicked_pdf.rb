@@ -133,11 +133,11 @@ class WickedPdf
                             :footer => options.delete(:footer),
                             :layout => options[:layout]),
         parse_margins(options.delete(:margin)),
-        parse_toc(options.delete(:toc)),
         parse_outline(options.delete(:outline)),
         parse_others(options),
         parse_basic_auth(options),
-        parse_cover(options.delete(:cover))
+        parse_cover(options.delete(:cover)),
+        parse_toc(options.delete(:toc))
       ].flatten
     end
 
@@ -222,10 +222,10 @@ class WickedPdf
 
     def parse_toc(options)
       return [] if options.nil?
-      r = ['--toc']
+      r = ['toc']
       unless options.blank?
         r += make_options(options, [ :font_name, :header_text], "toc")
-        r +=make_options(options, [ :depth,
+        r += make_options(options, [ :xsl_style_sheet,
                                     :header_fs,
                                     :l1_font_size,
                                     :l2_font_size,
@@ -240,7 +240,7 @@ class WickedPdf
                                     :l4_indentation,
                                     :l5_indentation,
                                     :l6_indentation,
-                                    :l7_indentation], "toc", :numeric)
+                                    :l7_indentation], "", :numeric)
         r +=make_options(options, [ :no_dots,
                                     :disable_links,
                                     :disable_back_links], "toc", :boolean)
