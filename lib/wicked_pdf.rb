@@ -59,12 +59,12 @@ class WickedPdf
     temp_path = options.delete(:temp_path)
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
     command = [@exe_path]
-    command << '-q' unless on_windows? # suppress errors on stdout
+    command << '-q' unless (on_windows? || WickedPdf.config[:debug])
     command += parse_options(options)
     command << "file://#{filepath}"
     command << generated_pdf_file.path.to_s
 
-    print_command(command.inspect) if in_development_mode?
+    print_command(command.inspect) if in_development_mode? || WickedPdf.config[:debug]
 
     err = Open3.popen3(*command) do |stdin, stdout, stderr|
       stderr.read
