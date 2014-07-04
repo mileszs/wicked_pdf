@@ -294,6 +294,7 @@ class WickedPdf
                                     :disable_smart_shrinking,
                                     :use_xserver,
                                     :no_background], "", :boolean)
+        r +=make_options(options, [ :no_stop_slow_scripts ], "", nil)
       end
       r
     end
