@@ -56,12 +56,18 @@ class WickedPdf
       retreive_binary_version
     end
 
+    if os_windows?
+      filepath = "file:///#{filepath}"
+    else
+      filepath = "file://#{filepath}"
+    end
+
     temp_path = options.delete(:temp_path)
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
     command = [@exe_path]
     command << '-q' unless on_windows? # suppress errors on stdout
     command += parse_options(options)
-    command << "file://#{filepath}"
+    command << filepath
     command << generated_pdf_file.path.to_s
 
     print_command(command.inspect) if in_development_mode?
