@@ -2,53 +2,48 @@
 
 ## A PDF generation plugin for Ruby on Rails
 
-Wicked PDF uses the shell utility [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) to serve a PDF file to a user from HTML.  In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, then let Wicked take care of the hard stuff.
+Wicked PDF uses the shell utility [wkhtmltopdf](http://wkhtmltopdf.org) to serve a PDF file to a user from HTML.  In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, then let Wicked PDF take care of the hard stuff.
 
-_Wicked PDF has been verified to work on Ruby 1.8.7 and 1.9.2; Rails 2 and Rails 3_
+_Wicked PDF has been verified to work on Ruby versions 1.8.7 through 2.1; Rails 2 through 4.1_
 
 ### Installation
 
-First, be sure to install [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/).
+Add this to your Gemfile and run `bundle install`:
 
-One simple way to install all of the binaries (Linux, OSX, Windows) is through the gem [wkhtmltopdf-binary](https://github.com/steerio/wkhtmltopdf-binary).
-To install, simply add
+```ruby
+gem 'wicked_pdf'
+```
+
+Then create the initializer with
+
+    rails generate wicked_pdf
+
+You may also need to add
+```ruby
+Mime::Type.register "application/pdf", :pdf
+```
+to `config/initializers/mime_types.rb` in older versions of Rails.
+
+Because `wicked_pdf` is a wrapper for  [wkhtmltopdf](http://wkhtmltopdf.org/), you'll need to install that, too.
+
+The simplest way to install all of the binaries (Linux, OSX, Windows) is through the gem [wkhtmltopdf-binary](https://github.com/steerio/wkhtmltopdf-binary).
+To install that, add a second gem
 
 ```ruby
 gem 'wkhtmltopdf-binary'
 ```
 
-To your Gemfile.
+To your Gemfile and run `bundle install`.
 
-If your wkhtmltopdf executable is not on your webserver's path, configure it in an initializer:
+If your wkhtmltopdf executable is not on your webserver's path, you can configure it in an initializer:
 
 ```ruby
 WickedPdf.config = {
   :exe_path => '/usr/local/bin/wkhtmltopdf'
 }
 ```
-Note that versions before 0.9.0 [have problems](http://code.google.com/p/wkhtmltopdf/issues/detail?id=82&q=vodnik) on some machines with reading/writing to streams.
-This plugin relies on streams to communicate with wkhtmltopdf.
 
-For more information about wkhtmltopdf, see the project's [homepage](http://code.google.com/p/wkhtmltopdf/) and
-[github repo](https://github.com/antialize/wkhtmltopdf). There's also some documentation for a recent, stable version
-on the author's website, [here](http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html).
-
-Next:
-
-    script/plugin install git://github.com/mileszs/wicked_pdf.git
-    script/generate wicked_pdf
-
-or add this to your Gemfile:
-
-```ruby
-gem 'wicked_pdf'
-```
-
-You may also need to add
-```ruby
-Mime::Type.register "application/pdf", :pdf
-```
-to `config/initializers/mime_types.rb`
+For more information about `wkhtmltopdf`, see the project's [homepage](http://wkhtmltopdf.org/).
 
 ### Basic Usage
 ```ruby
