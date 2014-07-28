@@ -59,12 +59,12 @@ class WickedPdf
     temp_path = options.delete(:temp_path)
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
     command = [@exe_path]
-    command << '-q' unless on_windows? # suppress errors on stdout
+    command << '-q' unless (on_windows? || WickedPdf.config[:debug])
     command += parse_options(options)
     command << "file://#{filepath}"
     command << generated_pdf_file.path.to_s
 
-    print_command(command.inspect) if in_development_mode?
+    print_command(command.inspect) if in_development_mode? || WickedPdf.config[:debug]
 
     err = Open3.popen3(*command) do |stdin, stdout, stderr|
       stderr.read
@@ -132,12 +132,12 @@ class WickedPdf
         parse_header_footer(:header => options.delete(:header),
                             :footer => options.delete(:footer),
                             :layout => options[:layout]),
-        parse_cover(options.delete(:cover)),
-        parse_toc(options.delete(:toc)),
-        parse_outline(options.delete(:outline)),
         parse_margins(options.delete(:margin)),
+        parse_outline(options.delete(:outline)),
         parse_others(options),
-        parse_basic_auth(options)
+        parse_basic_auth(options),
+        parse_cover(options.delete(:cover)),
+        parse_toc(options.delete(:toc))
       ].flatten
     end
 
@@ -169,12 +169,12 @@ class WickedPdf
 
     def make_options(options, names, prefix="", type=:string)
       return [] if options.nil?
-      names.collect do |o| 
+      names.collect do |o|
         if options[o].blank?
           []
         else
-          make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", 
-                      options[o], 
+          make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}",
+                      options[o],
                       type)
         end
       end
@@ -210,22 +210,22 @@ class WickedPdf
       return [] if arg.blank?
       # Filesystem path or URL - hand off to wkhtmltopdf
       if argument.is_a?(Pathname) || (arg[0,4] == 'http')
-        ['--cover', arg]
+        ['cover', arg]
       else # HTML content
         @hf_tempfiles ||= []
         @hf_tempfiles << tf=WickedPdfTempfile.new("wicked_cover_pdf.html")
         tf.write arg
         tf.flush
-        ['--cover', tf.path]
+        ['cover', tf.path]
       end
     end
 
     def parse_toc(options)
       return [] if options.nil?
-      r = ['--toc']
+      r = ['toc']
       unless options.blank?
         r += make_options(options, [ :font_name, :header_text], "toc")
-        r +=make_options(options, [ :depth,
+        r += make_options(options, [ :xsl_style_sheet,
                                     :header_fs,
                                     :l1_font_size,
                                     :l2_font_size,
@@ -240,7 +240,7 @@ class WickedPdf
                                     :l4_indentation,
                                     :l5_indentation,
                                     :l6_indentation,
-                                    :l7_indentation], "toc", :numeric)
+                                    :l7_indentation], "", :numeric)
         r +=make_options(options, [ :no_dots,
                                     :disable_links,
                                     :disable_back_links], "toc", :boolean)
