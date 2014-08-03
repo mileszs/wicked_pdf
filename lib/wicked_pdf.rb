@@ -40,22 +40,10 @@ class WickedPdf
     raise "Bad #{EXE_NAME}'s path: #{@exe_path}" unless File.exists?(@exe_path)
     raise "#{EXE_NAME} is not executable" unless File.executable?(@exe_path)
 
-    @binary_version = DEFAULT_BINARY_VERSION
-  end
-
-  def retreive_binary_version
-    begin
-      stdin, stdout, stderr = Open3.popen3(@exe_path + ' -V')
-      @binary_version = parse_version(stdout.gets(nil))
-    rescue StandardError
-    end
+    retreive_binary_version
   end
 
   def pdf_from_html_file(filepath, options={})
-    if WickedPdf.config[:retreive_version]
-      retreive_binary_version
-    end
-
     temp_path = options.delete(:temp_path)
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
     command = [@exe_path]
@@ -117,6 +105,14 @@ class WickedPdf
       p "*"*15 + cmd + "*"*15
     end
 
+    def retreive_binary_version
+      begin
+        stdin, stdout, stderr = Open3.popen3(@exe_path + ' -V')
+        @binary_version = parse_version(stdout.gets(nil))
+      rescue StandardError
+      end
+    end
+
     def parse_version(version_info)
       match_data = /wkhtmltopdf\s*(\d*\.\d*\.\d*\w*)/.match(version_info)
       if (match_data && (2 == match_data.length))
@@ -167,6 +163,14 @@ class WickedPdf
       end
     end
 
+    def valid_option(name)
+      if get_binary_version == DEFAULT_BINARY_VERSION
+        "--#{name}"
+      else
+        name
+      end
+    end
+
     def make_options(options, names, prefix="", type=:string)
       return [] if options.nil?
       names.collect do |o| 
@@ -210,19 +214,19 @@ class WickedPdf
       return [] if arg.blank?
       # Filesystem path or URL - hand off to wkhtmltopdf
       if argument.is_a?(Pathname) || (arg[0,4] == 'http')
-        ['--cover', arg]
+        [valid_option('cover'), arg]
       else # HTML content
         @hf_tempfiles ||= []
         @hf_tempfiles << tf=WickedPdfTempfile.new("wicked_cover_pdf.html")
         tf.write arg
         tf.flush
-        ['--cover', tf.path]
+        [valid_option('cover'), tf.path]
       end
     end
 
     def parse_toc(options)
       return [] if options.nil?
-      r = ['--toc']
+      r = [valid_option('toc')]
       unless options.blank?
         r += make_options(options, [ :font_name, :header_text], "toc")
         r +=make_options(options, [ :depth,
