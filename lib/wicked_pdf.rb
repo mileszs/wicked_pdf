@@ -30,6 +30,7 @@ require 'wicked_pdf/middleware'
 
 class WickedPdf
   DEFAULT_BINARY_VERSION = Gem::Version.new('0.9.9')
+  BINARY_VERSION_WITHOUT_DASHES = Gem::Version.new('0.12.0')
   EXE_NAME = "wkhtmltopdf"
   @@config = {}
   cattr_accessor :config
@@ -164,7 +165,7 @@ class WickedPdf
     end
 
     def valid_option(name)
-      if get_binary_version == DEFAULT_BINARY_VERSION
+      if get_binary_version < BINARY_VERSION_WITHOUT_DASHES
         "--#{name}"
       else
         name
