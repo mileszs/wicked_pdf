@@ -10,6 +10,14 @@ class WickedPdf
   def get_parsed_options(opts)
     parse_options(opts).join(' ')
   end
+
+  def get_valid_option(name)
+    valid_option(name)
+  end
+
+  def set_binary_version_to(version)
+    @binary_version = version
+  end
 end
 
 class WickedPdfTest < ActiveSupport::TestCase
@@ -105,9 +113,10 @@ class WickedPdfTest < ActiveSupport::TestCase
 
   test "should parse toc options" do
     wp = WickedPdf.new
+    toc_option = wp.get_valid_option('toc')
 
     [:font_name, :header_text].each do |o|
-      assert_equal  "--toc --toc-#{o.to_s.gsub('_', '-')} toc",
+      assert_equal  "#{toc_option} --toc-#{o.to_s.gsub('_', '-')} toc",
                     wp.get_parsed_options(:toc => {o => "toc"}).strip
     end
 
@@ -115,12 +124,12 @@ class WickedPdfTest < ActiveSupport::TestCase
       :l5_font_size, :l6_font_size, :l7_font_size, :l1_indentation, :l2_indentation,
       :l3_indentation, :l4_indentation, :l5_indentation, :l6_indentation, :l7_indentation
     ].each do |o|
-      assert_equal  "--toc --toc-#{o.to_s.gsub('_', '-')} 5",
+      assert_equal  "#{toc_option} --toc-#{o.to_s.gsub('_', '-')} 5",
                     wp.get_parsed_options(:toc => {o => 5}).strip
     end
 
     [:no_dots, :disable_links, :disable_back_links].each do |o|
-      assert_equal  "--toc --toc-#{o.to_s.gsub('_', '-')}",
+      assert_equal  "#{toc_option} --toc-#{o.to_s.gsub('_', '-')}",
                     wp.get_parsed_options(:toc => {o => true}).strip
     end
   end
@@ -142,10 +151,12 @@ class WickedPdfTest < ActiveSupport::TestCase
 
   test "should parse cover" do
     wp = WickedPdf.new
+    cover_option = wp.get_valid_option('cover')
+
     pathname = Rails.root.join('app','views','pdf','file.html')
-    assert_equal '--cover http://example.org', wp.get_parsed_options(:cover => 'http://example.org').strip, 'URL'
-    assert_equal "--cover #{pathname.to_s}", wp.get_parsed_options(:cover => pathname).strip, 'Pathname'
-    assert_match /--cover .+wicked_cover_pdf.+\.html/, wp.get_parsed_options(:cover => '<html><body>HELLO</body></html>').strip, 'HTML'
+    assert_equal "#{cover_option} http://example.org", wp.get_parsed_options(:cover => 'http://example.org').strip, 'URL'
+    assert_equal "#{cover_option} #{pathname.to_s}", wp.get_parsed_options(:cover => pathname).strip, 'Pathname'
+    assert_match /#{cover_option} .+wicked_cover_pdf.+\.html/, wp.get_parsed_options(:cover => '<html><body>HELLO</body></html>').strip, 'HTML'
   end
 
   test "should parse other options" do
@@ -195,7 +206,23 @@ class WickedPdfTest < ActiveSupport::TestCase
     assert_equal WickedPdf::DEFAULT_BINARY_VERSION, @wp.send(:parse_version, '')
   end
 
-  test "should set Default version on initialize" do
-    assert_equal WickedPdf::DEFAULT_BINARY_VERSION, @wp.send(:get_binary_version)
+  test "should set version on initialize" do
+    assert_not_equal @wp.send(:get_binary_version), ""
+  end
+
+  test "should use double dash options for Default version" do
+    @wp.set_binary_version_to(WickedPdf::DEFAULT_BINARY_VERSION)
+
+    ['toc', 'cover'].each do |name|
+      assert_equal @wp.get_valid_option(name), "--#{name}"
+    end
+  end
+
+  test "should not use double dash options for non Default version" do
+    @wp.set_binary_version_to(Gem::Version.new('0.10.4b'))
+
+    ['toc', 'cover'].each do |name|
+      assert_equal @wp.get_valid_option(name), "#{name}"
+    end
   end
 end
