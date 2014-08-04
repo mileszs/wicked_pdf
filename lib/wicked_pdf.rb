@@ -49,7 +49,7 @@ class WickedPdf
     command = [@exe_path]
     command << '-q' unless on_windows? # suppress errors on stdout
     command += parse_options(options)
-    command << "file://#{filepath}"
+    command << "file:///#{filepath}"
     command << generated_pdf_file.path.to_s
 
     print_command(command.inspect) if in_development_mode?

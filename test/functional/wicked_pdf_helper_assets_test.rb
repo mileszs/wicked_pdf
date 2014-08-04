@@ -22,7 +22,7 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
       path = wicked_pdf_asset_path('application.css')
 
       assert path.include?("/assets/stylesheets/application.css")
-      assert path.include?("file://")
+      assert path.include?("file:///")
     end
   end
 
