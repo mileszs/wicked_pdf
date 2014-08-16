@@ -235,6 +235,7 @@ class WickedPdf
         r += make_options(options, [ :font_name, :header_text], "toc")
         r +=make_options(options, [ :depth,
                                     :header_fs,
+                                    :text_size_shrink,
                                     :l1_font_size,
                                     :l2_font_size,
                                     :l3_font_size,
@@ -242,6 +243,7 @@ class WickedPdf
                                     :l5_font_size,
                                     :l6_font_size,
                                     :l7_font_size,
+                                    :level_indentation,
                                     :l1_indentation,
                                     :l2_indentation,
                                     :l3_indentation,
@@ -252,6 +254,8 @@ class WickedPdf
         r +=make_options(options, [ :no_dots,
                                     :disable_links,
                                     :disable_back_links], "toc", :boolean)
+        r += make_options(options, [:disable_dotted_lines,
+                                    :disable_toc_links], nil, :boolean)
       end
       return r
     end
