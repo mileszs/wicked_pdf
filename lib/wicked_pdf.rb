@@ -66,7 +66,7 @@ class WickedPdf
     pdf = generated_pdf_file.read
     raise "PDF could not be generated!\n Command Error: #{err}" if pdf and pdf.rstrip.length == 0
     pdf
-  rescue Exception => e
+  rescue => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
   ensure
     generated_pdf_file.close! if generated_pdf_file && !return_file
@@ -81,7 +81,7 @@ class WickedPdf
 
     pdf = pdf_from_html_file(string_file.path, options)
     pdf
-  rescue Exception => e
+  rescue => e
     raise "Error: #{e}"
   ensure
     string_file.close! if string_file
@@ -316,7 +316,7 @@ class WickedPdf
       exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
       exe_path ||= begin
         (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
-      rescue Exception => e
+      rescue
         nil
       end
       exe_path ||= possible_locations.map{|l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }
