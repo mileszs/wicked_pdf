@@ -157,7 +157,10 @@ class WickedPdf
       if value.is_a?(Array)
         return value.collect { |v| make_option(name, v, type) }
       end
-      if type == :boolean
+      if type == :name_value
+        parts = value.to_s.split(' ')
+        ["--#{name.gsub('_', '-')}", *parts]
+      elsif type == :boolean
         ["--#{name.gsub('_', '-')}"]
       else
         ["--#{name.gsub('_', '-')}", value.to_s]
