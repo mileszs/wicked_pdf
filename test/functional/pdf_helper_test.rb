@@ -2,7 +2,7 @@ require 'test_helper'
 
 module ActionController
   class Base
-    def render_to_string opts={}
+    def render_to_string(opts = {})
       opts.to_s
     end
   end
@@ -14,7 +14,7 @@ class PdfHelperTest < ActionController::TestCase
   end
 
   def teardown
-    @ac=nil
+    @ac = nil
   end
 
   if Rails::VERSION::MAJOR == 2

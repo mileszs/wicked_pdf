@@ -116,7 +116,7 @@ class WickedPdf
 
   def parse_version(version_info)
     match_data = /wkhtmltopdf\s*(\d*\.\d*\.\d*\w*)/.match(version_info)
-    if (match_data && (2 == match_data.length))
+    if match_data && (2 == match_data.length)
       Gem::Version.new(match_data[1])
     else
       DEFAULT_BINARY_VERSION
