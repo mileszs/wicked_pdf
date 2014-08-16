@@ -83,7 +83,7 @@ module WickedPdfHelper
       end
     end
 
-    #will prepend a http or default_protocol to a protocol realtive URL
+    # will prepend a http or default_protocol to a protocol realtive URL
     def set_protocol(source)
       protocol = WickedPdf.config[:default_protocol] || "http"
       source = [protocol, ":", source].join if source[0,2] == "//"

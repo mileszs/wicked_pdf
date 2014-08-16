@@ -89,237 +89,237 @@ class WickedPdf
 
   private
 
-    def in_development_mode?
-      return Rails.env == 'development' if defined?(Rails)
-      RAILS_ENV == 'development' if defined?(RAILS_ENV)
-    end
+  def in_development_mode?
+    return Rails.env == 'development' if defined?(Rails)
+    RAILS_ENV == 'development' if defined?(RAILS_ENV)
+  end
 
-    def get_binary_version
-      @binary_version
-    end
+  def get_binary_version
+    @binary_version
+  end
 
-    def on_windows?
-      RbConfig::CONFIG['target_os'] =~ /mswin|mingw/
-    end
+  def on_windows?
+    RbConfig::CONFIG['target_os'] =~ /mswin|mingw/
+  end
 
-    def print_command(cmd)
-      p "*"*15 + cmd + "*"*15
-    end
+  def print_command(cmd)
+    p "*"*15 + cmd + "*"*15
+  end
 
-    def retreive_binary_version
-      begin
-        stdin, stdout, stderr = Open3.popen3(@exe_path + ' -V')
-        @binary_version = parse_version(stdout.gets(nil))
-      rescue StandardError
-      end
+  def retreive_binary_version
+    begin
+      stdin, stdout, stderr = Open3.popen3(@exe_path + ' -V')
+      @binary_version = parse_version(stdout.gets(nil))
+    rescue StandardError
     end
+  end
 
-    def parse_version(version_info)
-      match_data = /wkhtmltopdf\s*(\d*\.\d*\.\d*\w*)/.match(version_info)
-      if (match_data && (2 == match_data.length))
-        Gem::Version.new(match_data[1])
-      else
-        DEFAULT_BINARY_VERSION
-      end
+  def parse_version(version_info)
+    match_data = /wkhtmltopdf\s*(\d*\.\d*\.\d*\w*)/.match(version_info)
+    if (match_data && (2 == match_data.length))
+      Gem::Version.new(match_data[1])
+    else
+      DEFAULT_BINARY_VERSION
     end
+  end
 
-    def parse_options(options)
-      [
-        parse_extra(options),
-        parse_header_footer(:header => options.delete(:header),
-                            :footer => options.delete(:footer),
-                            :layout => options[:layout]),
-        parse_margins(options.delete(:margin)),
-        parse_cover(options.delete(:cover)),
-        parse_toc(options.delete(:toc)),
-        parse_outline(options.delete(:outline)),
-        parse_others(options),
-        parse_basic_auth(options)
-      ].flatten
+  def parse_options(options)
+    [
+      parse_extra(options),
+      parse_header_footer(:header => options.delete(:header),
+                          :footer => options.delete(:footer),
+                          :layout => options[:layout]),
+      parse_margins(options.delete(:margin)),
+      parse_cover(options.delete(:cover)),
+      parse_toc(options.delete(:toc)),
+      parse_outline(options.delete(:outline)),
+      parse_others(options),
+      parse_basic_auth(options)
+    ].flatten
+  end
+
+  def parse_extra(options)
+    return [] if options[:extra].nil?
+    return options[:extra].split if options[:extra].respond_to?(:split)
+    return options[:extra]
+  end
+
+  def parse_basic_auth(options)
+    if options[:basic_auth]
+      user, passwd = Base64.decode64(options[:basic_auth]).split(":")
+      ["--username", user, "--password", passwd]
+    else
+      []
     end
+  end
 
-    def parse_extra(options)
-      return [] if options[:extra].nil?
-      return options[:extra].split if options[:extra].respond_to?(:split)
-      return options[:extra]
+  def make_option(name, value, type=:string)
+    if value.is_a?(Array)
+      return value.collect { |v| make_option(name, v, type) }
     end
+    if type == :name_value
+      parts = value.to_s.split(' ')
+      ["--#{name.gsub('_', '-')}", *parts]
+    elsif type == :boolean
+      ["--#{name.gsub('_', '-')}"]
+    else
+      ["--#{name.gsub('_', '-')}", value.to_s]
+    end
+  end
 
-    def parse_basic_auth(options)
-      if options[:basic_auth]
-        user, passwd = Base64.decode64(options[:basic_auth]).split(":")
-        ["--username", user, "--password", passwd]
-      else
+  def valid_option(name)
+    if get_binary_version < BINARY_VERSION_WITHOUT_DASHES
+      "--#{name}"
+    else
+      name
+    end
+  end
+
+  def make_options(options, names, prefix="", type=:string)
+    return [] if options.nil?
+    names.collect do |o| 
+      if options[o].blank?
         []
-      end
-    end
-
-    def make_option(name, value, type=:string)
-      if value.is_a?(Array)
-        return value.collect { |v| make_option(name, v, type) }
-      end
-      if type == :name_value
-        parts = value.to_s.split(' ')
-        ["--#{name.gsub('_', '-')}", *parts]
-      elsif type == :boolean
-        ["--#{name.gsub('_', '-')}"]
       else
-        ["--#{name.gsub('_', '-')}", value.to_s]
+        make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", 
+                    options[o], 
+                    type)
       end
     end
+  end
 
-    def valid_option(name)
-      if get_binary_version < BINARY_VERSION_WITHOUT_DASHES
-        "--#{name}"
-      else
-        name
-      end
-    end
-
-    def make_options(options, names, prefix="", type=:string)
-      return [] if options.nil?
-      names.collect do |o| 
-        if options[o].blank?
-          []
-        else
-          make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", 
-                      options[o], 
-                      type)
+  def parse_header_footer(options)
+    r=[]
+    [:header, :footer].collect do |hf|
+      unless options[hf].blank?
+        opt_hf = options[hf]
+        r += make_options(opt_hf, [:center, :font_name, :left, :right], "#{hf.to_s}")
+        r += make_options(opt_hf, [:font_size, :spacing], "#{hf.to_s}", :numeric)
+        r += make_options(opt_hf, [:line], "#{hf.to_s}", :boolean)
+        if options[hf] && options[hf][:content]
+          @hf_tempfiles = [] if ! defined?(@hf_tempfiles)
+          @hf_tempfiles.push( tf=WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
+          tf.write options[hf][:content]
+          tf.flush
+          options[hf].delete(:content)
+          options[hf][:html] = {}
+          options[hf][:html][:url] = "file:///#{tf.path}"
+        end
+        unless opt_hf[:html].blank?
+          r += make_option("#{hf.to_s}-html", opt_hf[:html][:url]) unless opt_hf[:html][:url].blank?
         end
       end
-    end
+    end unless options.blank?
+    r
+  end
 
-    def parse_header_footer(options)
-      r=[]
-      [:header, :footer].collect do |hf|
-        unless options[hf].blank?
-          opt_hf = options[hf]
-          r += make_options(opt_hf, [:center, :font_name, :left, :right], "#{hf.to_s}")
-          r += make_options(opt_hf, [:font_size, :spacing], "#{hf.to_s}", :numeric)
-          r += make_options(opt_hf, [:line], "#{hf.to_s}", :boolean)
-          if options[hf] && options[hf][:content]
-            @hf_tempfiles = [] if ! defined?(@hf_tempfiles)
-            @hf_tempfiles.push( tf=WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
-            tf.write options[hf][:content]
-            tf.flush
-            options[hf].delete(:content)
-            options[hf][:html] = {}
-            options[hf][:html][:url] = "file:///#{tf.path}"
-          end
-          unless opt_hf[:html].blank?
-            r += make_option("#{hf.to_s}-html", opt_hf[:html][:url]) unless opt_hf[:html][:url].blank?
-          end
-        end
-      end unless options.blank?
-      r
+  def parse_cover(argument)
+    arg = argument.to_s
+    return [] if arg.blank?
+    # Filesystem path or URL - hand off to wkhtmltopdf
+    if argument.is_a?(Pathname) || (arg[0,4] == 'http')
+      [valid_option('cover'), arg]
+    else # HTML content
+      @hf_tempfiles ||= []
+      @hf_tempfiles << tf=WickedPdfTempfile.new("wicked_cover_pdf.html")
+      tf.write arg
+      tf.flush
+      [valid_option('cover'), tf.path]
     end
+  end
 
-    def parse_cover(argument)
-      arg = argument.to_s
-      return [] if arg.blank?
-      # Filesystem path or URL - hand off to wkhtmltopdf
-      if argument.is_a?(Pathname) || (arg[0,4] == 'http')
-        [valid_option('cover'), arg]
-      else # HTML content
-        @hf_tempfiles ||= []
-        @hf_tempfiles << tf=WickedPdfTempfile.new("wicked_cover_pdf.html")
-        tf.write arg
-        tf.flush
-        [valid_option('cover'), tf.path]
-      end
+  def parse_toc(options)
+    return [] if options.nil?
+    r = [valid_option('toc')]
+    unless options.blank?
+      r += make_options(options, [ :font_name, :header_text], "toc")
+      r +=make_options(options, [ :depth,
+                                  :header_fs,
+                                  :text_size_shrink,
+                                  :l1_font_size,
+                                  :l2_font_size,
+                                  :l3_font_size,
+                                  :l4_font_size,
+                                  :l5_font_size,
+                                  :l6_font_size,
+                                  :l7_font_size,
+                                  :level_indentation,
+                                  :l1_indentation,
+                                  :l2_indentation,
+                                  :l3_indentation,
+                                  :l4_indentation,
+                                  :l5_indentation,
+                                  :l6_indentation,
+                                  :l7_indentation], "toc", :numeric)
+      r +=make_options(options, [ :no_dots,
+                                  :disable_links,
+                                  :disable_back_links], "toc", :boolean)
+      r += make_options(options, [:disable_dotted_lines,
+                                  :disable_toc_links], nil, :boolean)
     end
+    return r
+  end
 
-    def parse_toc(options)
-      return [] if options.nil?
-      r = [valid_option('toc')]
-      unless options.blank?
-        r += make_options(options, [ :font_name, :header_text], "toc")
-        r +=make_options(options, [ :depth,
-                                    :header_fs,
-                                    :text_size_shrink,
-                                    :l1_font_size,
-                                    :l2_font_size,
-                                    :l3_font_size,
-                                    :l4_font_size,
-                                    :l5_font_size,
-                                    :l6_font_size,
-                                    :l7_font_size,
-                                    :level_indentation,
-                                    :l1_indentation,
-                                    :l2_indentation,
-                                    :l3_indentation,
-                                    :l4_indentation,
-                                    :l5_indentation,
-                                    :l6_indentation,
-                                    :l7_indentation], "toc", :numeric)
-        r +=make_options(options, [ :no_dots,
-                                    :disable_links,
-                                    :disable_back_links], "toc", :boolean)
-        r += make_options(options, [:disable_dotted_lines,
-                                    :disable_toc_links], nil, :boolean)
-      end
-      return r
+  def parse_outline(options)
+    r = []
+    unless options.blank?
+      r = make_options(options, [:outline], "", :boolean)
+      r +=make_options(options, [:outline_depth], "", :numeric)
     end
+    r
+  end
 
-    def parse_outline(options)
-      r = []
-      unless options.blank?
-        r = make_options(options, [:outline], "", :boolean)
-        r +=make_options(options, [:outline_depth], "", :numeric)
-      end
-      r
-    end
+  def parse_margins(options)
+    make_options(options, [:top, :bottom, :left, :right], "margin", :numeric)
+  end
 
-    def parse_margins(options)
-      make_options(options, [:top, :bottom, :left, :right], "margin", :numeric)
+  def parse_others(options)
+    r = []
+    unless options.blank?
+      r += make_options(options, [ :orientation,
+                                  :page_size,
+                                  :page_width,
+                                  :page_height,
+                                  :proxy,
+                                  :username,
+                                  :password,
+                                  :dpi,
+                                  :encoding,
+                                  :user_style_sheet,
+                                  :viewport_size])
+      r +=make_options(options, [ :cookie,
+                                  :post], "", :name_value)
+      r +=make_options(options, [ :redirect_delay,
+                                  :zoom,
+                                  :page_offset,
+                                  :javascript_delay,
+                                  :image_quality], "", :numeric)
+      r +=make_options(options, [ :book,
+                                  :default_header,
+                                  :disable_javascript,
+                                  :grayscale,
+                                  :lowquality,
+                                  :enable_plugins,
+                                  :disable_internal_links,
+                                  :disable_external_links,
+                                  :print_media_type,
+                                  :disable_smart_shrinking,
+                                  :use_xserver,
+                                  :no_background], "", :boolean)
+      r +=make_options(options, [ :no_stop_slow_scripts ], "", nil)
     end
+    r
+  end
 
-    def parse_others(options)
-      r = []
-      unless options.blank?
-        r += make_options(options, [ :orientation,
-                                    :page_size,
-                                    :page_width,
-                                    :page_height,
-                                    :proxy,
-                                    :username,
-                                    :password,
-                                    :dpi,
-                                    :encoding,
-                                    :user_style_sheet,
-                                    :viewport_size])
-        r +=make_options(options, [ :cookie,
-                                    :post], "", :name_value)
-        r +=make_options(options, [ :redirect_delay,
-                                    :zoom,
-                                    :page_offset,
-                                    :javascript_delay,
-                                    :image_quality], "", :numeric)
-        r +=make_options(options, [ :book,
-                                    :default_header,
-                                    :disable_javascript,
-                                    :grayscale,
-                                    :lowquality,
-                                    :enable_plugins,
-                                    :disable_internal_links,
-                                    :disable_external_links,
-                                    :print_media_type,
-                                    :disable_smart_shrinking,
-                                    :use_xserver,
-                                    :no_background], "", :boolean)
-        r +=make_options(options, [ :no_stop_slow_scripts ], "", nil)
-      end
-      r
+  def find_wkhtmltopdf_binary_path
+    possible_locations = (ENV['PATH'].split(':')+%w[/usr/bin /usr/local/bin ~/bin]).uniq
+    exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
+    exe_path ||= begin
+      (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
+    rescue
+      nil
     end
-
-    def find_wkhtmltopdf_binary_path
-      possible_locations = (ENV['PATH'].split(':')+%w[/usr/bin /usr/local/bin ~/bin]).uniq
-      exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
-      exe_path ||= begin
-        (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
-      rescue
-        nil
-      end
-      exe_path ||= possible_locations.map{|l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }
-      exe_path || ''
-    end
+    exe_path ||= possible_locations.map{|l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }
+    exe_path || ''
+  end
 end
