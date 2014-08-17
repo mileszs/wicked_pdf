@@ -96,18 +96,18 @@ class WickedPdfTest < ActiveSupport::TestCase
     [:header, :footer].each do |hf|
       [:center, :font_name, :left, :right].each do |o|
         assert_equal "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} header_footer",
-                     wp.get_parsed_options(hf => {o => "header_footer"}).strip
+                     wp.get_parsed_options(hf => { o => "header_footer" }).strip
       end
 
       [:font_size, :spacing].each do |o|
         assert_equal "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} 12",
-                     wp.get_parsed_options(hf => {o => "12"}).strip
+                     wp.get_parsed_options(hf => { o => "12" }).strip
       end
 
       assert_equal "--#{hf.to_s}-line",
-                   wp.get_parsed_options(hf => {:line => true}).strip
+                   wp.get_parsed_options(hf => { :line => true }).strip
       assert_equal "--#{hf.to_s}-html http://www.abc.com",
-                   wp.get_parsed_options(hf => {:html => {:url => 'http://www.abc.com'}}).strip
+                   wp.get_parsed_options(hf => { :html => { :url => 'http://www.abc.com' } }).strip
     end
   end
 
@@ -117,7 +117,7 @@ class WickedPdfTest < ActiveSupport::TestCase
 
     [:font_name, :header_text].each do |o|
       assert_equal "#{toc_option} --toc-#{o.to_s.gsub('_', '-')} toc",
-                   wp.get_parsed_options(:toc => {o => "toc"}).strip
+                   wp.get_parsed_options(:toc => { o => "toc" }).strip
     end
 
     [:depth, :header_fs, :l1_font_size, :l2_font_size, :l3_font_size, :l4_font_size,
@@ -125,27 +125,27 @@ class WickedPdfTest < ActiveSupport::TestCase
       :l3_indentation, :l4_indentation, :l5_indentation, :l6_indentation, :l7_indentation
     ].each do |o|
       assert_equal "#{toc_option} --toc-#{o.to_s.gsub('_', '-')} 5",
-                   wp.get_parsed_options(:toc => {o => 5}).strip
+                   wp.get_parsed_options(:toc => { o => 5 }).strip
     end
 
     [:no_dots, :disable_links, :disable_back_links].each do |o|
       assert_equal "#{toc_option} --toc-#{o.to_s.gsub('_', '-')}",
-                   wp.get_parsed_options(:toc => {o => true}).strip
+                   wp.get_parsed_options(:toc => { o => true }).strip
     end
   end
 
   test "should parse outline options" do
     wp = WickedPdf.new
 
-    assert_equal "--outline", wp.get_parsed_options(:outline => {:outline => true}).strip
-    assert_equal "--outline-depth 5", wp.get_parsed_options(:outline => {:outline_depth => 5}).strip
+    assert_equal "--outline", wp.get_parsed_options(:outline => { :outline => true }).strip
+    assert_equal "--outline-depth 5", wp.get_parsed_options(:outline => { :outline_depth => 5 }).strip
   end
 
   test "should parse margins options" do
     wp = WickedPdf.new
 
     [:top, :bottom, :left, :right].each do |o|
-      assert_equal "--margin-#{o.to_s} 12", wp.get_parsed_options(:margin => {o => "12"}).strip
+      assert_equal "--margin-#{o.to_s} 12", wp.get_parsed_options(:margin => { o => "12" }).strip
     end
   end
 
