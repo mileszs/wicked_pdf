@@ -42,7 +42,7 @@ module PdfHelper
   end
 
   def set_basic_auth(options = {})
-    options[:basic_auth] ||= WickedPdf.config.fetch(:basic_auth){ false }
+    options[:basic_auth] ||= WickedPdf.config.fetch(:basic_auth) { false }
     if options[:basic_auth] && request.env["HTTP_AUTHORIZATION"]
       request.env["HTTP_AUTHORIZATION"].split(" ").last
     end
@@ -76,7 +76,7 @@ module PdfHelper
       render(render_opts)
     else
       pdf_content = make_pdf(options)
-      File.open(options[:save_to_file], 'wb') {|file| file << pdf_content } if options[:save_to_file]
+      File.open(options[:save_to_file], 'wb') { |file| file << pdf_content } if options[:save_to_file]
       send_data(pdf_content, :filename => pdf_name + '.pdf', :type => 'application/pdf', :disposition => options[:disposition]) unless options[:save_only]
     end
   end

@@ -317,7 +317,7 @@ class WickedPdf
     rescue
       nil
     end
-    exe_path ||= possible_locations.map{|l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }
+    exe_path ||= possible_locations.map { |l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }
     exe_path || ''
   end
 end

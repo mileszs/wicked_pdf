@@ -29,7 +29,7 @@ module WickedPdfHelper
   end
 
   def wicked_pdf_javascript_include_tag(*sources)
-    js_text = sources.collect{ |source| wicked_pdf_javascript_src_tag(source, {}) }.join("\n")
+    js_text = sources.collect { |source| wicked_pdf_javascript_src_tag(source, {}) }.join("\n")
     js_text.respond_to?(:html_safe) ? js_text.html_safe : js_text
   end
 
@@ -108,7 +108,7 @@ module WickedPdfHelper
 
     def read_from_uri(source)
       encoding = ':UTF-8' if RUBY_VERSION > '1.8'
-      asset = open(asset_pathname(source), "r#{encoding}") {|f| f.read }
+      asset = open(asset_pathname(source), "r#{encoding}") { |f| f.read }
       asset = gzip(asset) if WickedPdf.config[:expect_gzipped_remote_assets]
       asset
     end
