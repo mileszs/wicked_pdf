@@ -86,7 +86,7 @@ module PdfHelper
   def prerender_header_and_footer(options)
     [:header, :footer].each do |hf|
       if options[hf] && options[hf][:html] && options[hf][:html][:template]
-        @hf_tempfiles = [] if ! defined?(@hf_tempfiles)
+        @hf_tempfiles = [] unless defined?(@hf_tempfiles)
         @hf_tempfiles.push( tf=WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
         options[hf][:html][:layout] ||=  options[:layout]
         render_opts = {:template => options[hf][:html][:template], :layout => options[hf][:html][:layout], :formats => options[hf][:html][:formats], :handlers => options[hf][:html][:handlers]}

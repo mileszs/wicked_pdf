@@ -197,7 +197,7 @@ class WickedPdf
         r += make_options(opt_hf, [:font_size, :spacing], "#{hf.to_s}", :numeric)
         r += make_options(opt_hf, [:line], "#{hf.to_s}", :boolean)
         if options[hf] && options[hf][:content]
-          @hf_tempfiles = [] if ! defined?(@hf_tempfiles)
+          @hf_tempfiles = [] unless defined?(@hf_tempfiles)
           @hf_tempfiles.push( tf=WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
           tf.write options[hf][:content]
           tf.flush
