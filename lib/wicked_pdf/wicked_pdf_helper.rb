@@ -95,7 +95,7 @@ module WickedPdfHelper
     end
 
     def read_asset(source)
-      if precompiled_asset?(source) 
+      if precompiled_asset?(source)
         if set_protocol(asset_path(source)) =~ URI_REGEXP
           read_from_uri(source)
         else

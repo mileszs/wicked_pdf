@@ -175,12 +175,12 @@ class WickedPdf
 
   def make_options(options, names, prefix = "", type = :string)
     return [] if options.nil?
-    names.collect do |o| 
+    names.collect do |o|
       if options[o].blank?
         []
       else
-        make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}", 
-                    options[o], 
+        make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}",
+                    options[o],
                     type)
       end
     end
