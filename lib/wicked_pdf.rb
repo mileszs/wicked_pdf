@@ -215,7 +215,7 @@ class WickedPdf
     arg = argument.to_s
     return [] if arg.blank?
     # Filesystem path or URL - hand off to wkhtmltopdf
-    if argument.is_a?(Pathname) || (arg[0,4] == 'http')
+    if argument.is_a?(Pathname) || (arg[0, 4] == 'http')
       [valid_option('cover'), arg]
     else # HTML content
       @hf_tempfiles ||= []

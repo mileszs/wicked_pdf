@@ -153,7 +153,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     wp = WickedPdf.new
     cover_option = wp.get_valid_option('cover')
 
-    pathname = Rails.root.join('app','views','pdf','file.html')
+    pathname = Rails.root.join('app', 'views', 'pdf', 'file.html')
     assert_equal "#{cover_option} http://example.org", wp.get_parsed_options(:cover => 'http://example.org').strip, 'URL'
     assert_equal "#{cover_option} #{pathname.to_s}", wp.get_parsed_options(:cover => pathname).strip, 'Pathname'
     assert_match /#{cover_option} .+wicked_cover_pdf.+\.html/, wp.get_parsed_options(:cover => '<html><body>HELLO</body></html>').strip, 'HTML'

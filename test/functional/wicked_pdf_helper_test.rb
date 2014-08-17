@@ -9,12 +9,12 @@ class WickedPdfHelperTest < ActionView::TestCase
     end
 
     test 'wicked_pdf_image_tag should return the same as image_tag when passed a full path' do
-      assert_equal image_tag("file:///#{Rails.root.join('public','images','pdf')}"),
+      assert_equal image_tag("file:///#{Rails.root.join('public', 'images', 'pdf')}"),
                    wicked_pdf_image_tag('pdf')
     end
 
     test 'wicked_pdf_javascript_src_tag should return the same as javascript_src_tag when passed a full path' do
-      assert_equal javascript_src_tag("file:///#{Rails.root.join('public','javascripts','pdf')}", {}),
+      assert_equal javascript_src_tag("file:///#{Rails.root.join('public', 'javascripts', 'pdf')}", {}),
                    wicked_pdf_javascript_src_tag('pdf')
     end
 
