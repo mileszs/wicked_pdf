@@ -37,9 +37,9 @@ class WickedPdf
 
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path || find_wkhtmltopdf_binary_path
-    raise "Location of #{EXE_NAME} unknown" if @exe_path.empty?
-    raise "Bad #{EXE_NAME}'s path: #{@exe_path}" unless File.exist?(@exe_path)
-    raise "#{EXE_NAME} is not executable" unless File.executable?(@exe_path)
+    fail "Location of #{EXE_NAME} unknown" if @exe_path.empty?
+    fail "Bad #{EXE_NAME}'s path: #{@exe_path}" unless File.exist?(@exe_path)
+    fail "#{EXE_NAME} is not executable" unless File.executable?(@exe_path)
 
     retreive_binary_version
   end
@@ -64,7 +64,7 @@ class WickedPdf
     generated_pdf_file.rewind
     generated_pdf_file.binmode
     pdf = generated_pdf_file.read
-    raise "PDF could not be generated!\n Command Error: #{err}" if pdf && pdf.rstrip.length == 0
+    fail "PDF could not be generated!\n Command Error: #{err}" if pdf && pdf.rstrip.length == 0
     pdf
   rescue => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
