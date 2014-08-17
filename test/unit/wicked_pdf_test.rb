@@ -213,7 +213,7 @@ class WickedPdfTest < ActiveSupport::TestCase
   test 'should not use double dash options for version without dashes' do
     @wp.set_binary_version_to(WickedPdf::BINARY_VERSION_WITHOUT_DASHES)
 
-    ['toc', 'cover'].each do |name|
+    %w(toc cover).each do |name|
       assert_equal @wp.get_valid_option(name), name
     end
   end
@@ -221,7 +221,7 @@ class WickedPdfTest < ActiveSupport::TestCase
   test 'should use double dash options for version with dashes' do
     @wp.set_binary_version_to(Gem::Version.new('0.11.0'))
 
-    ['toc', 'cover'].each do |name|
+    %w(toc cover).each do |name|
       assert_equal @wp.get_valid_option(name), "--#{name}"
     end
   end
