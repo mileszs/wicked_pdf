@@ -196,7 +196,7 @@ class WickedPdf
         r += make_options(opt_hf, [:line], "#{hf.to_s}", :boolean)
         if options[hf] && options[hf][:content]
           @hf_tempfiles = [] unless defined?(@hf_tempfiles)
-          @hf_tempfiles.push( tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
+          @hf_tempfiles.push(tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html"))
           tf.write options[hf][:content]
           tf.flush
           options[hf].delete(:content)
@@ -230,8 +230,8 @@ class WickedPdf
     return [] if options.nil?
     r = [valid_option('toc')]
     unless options.blank?
-      r += make_options(options, [ :font_name, :header_text], "toc")
-      r += make_options(options, [ :depth,
+      r += make_options(options, [:font_name, :header_text], "toc")
+      r += make_options(options, [:depth,
                                   :header_fs,
                                   :text_size_shrink,
                                   :l1_font_size,
@@ -249,7 +249,7 @@ class WickedPdf
                                   :l5_indentation,
                                   :l6_indentation,
                                   :l7_indentation], "toc", :numeric)
-      r += make_options(options, [ :no_dots,
+      r += make_options(options, [:no_dots,
                                   :disable_links,
                                   :disable_back_links], "toc", :boolean)
       r += make_options(options, [:disable_dotted_lines,
@@ -274,7 +274,7 @@ class WickedPdf
   def parse_others(options)
     r = []
     unless options.blank?
-      r += make_options(options, [ :orientation,
+      r += make_options(options, [:orientation,
                                   :page_size,
                                   :page_width,
                                   :page_height,
@@ -285,14 +285,14 @@ class WickedPdf
                                   :encoding,
                                   :user_style_sheet,
                                   :viewport_size])
-      r += make_options(options, [ :cookie,
+      r += make_options(options, [:cookie,
                                   :post], "", :name_value)
-      r += make_options(options, [ :redirect_delay,
+      r += make_options(options, [:redirect_delay,
                                   :zoom,
                                   :page_offset,
                                   :javascript_delay,
                                   :image_quality], "", :numeric)
-      r += make_options(options, [ :book,
+      r += make_options(options, [:book,
                                   :default_header,
                                   :disable_javascript,
                                   :grayscale,
@@ -304,7 +304,7 @@ class WickedPdf
                                   :disable_smart_shrinking,
                                   :use_xserver,
                                   :no_background], "", :boolean)
-      r += make_options(options, [ :no_stop_slow_scripts ], "", nil)
+      r += make_options(options, [:no_stop_slow_scripts], "", nil)
     end
     r
   end

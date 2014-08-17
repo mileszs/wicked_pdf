@@ -120,7 +120,7 @@ class WickedPdfTest < ActiveSupport::TestCase
                    wp.get_parsed_options(:toc => {o => "toc"}).strip
     end
 
-    [ :depth, :header_fs, :l1_font_size, :l2_font_size, :l3_font_size, :l4_font_size,
+    [:depth, :header_fs, :l1_font_size, :l2_font_size, :l3_font_size, :l4_font_size,
       :l5_font_size, :l6_font_size, :l7_font_size, :l1_indentation, :l2_indentation,
       :l3_indentation, :l4_indentation, :l5_indentation, :l6_indentation, :l7_indentation
     ].each do |o|
@@ -162,7 +162,7 @@ class WickedPdfTest < ActiveSupport::TestCase
   test "should parse other options" do
     wp = WickedPdf.new
 
-    [ :orientation, :page_size, :proxy, :username, :password, :dpi,
+    [:orientation, :page_size, :proxy, :username, :password, :dpi,
       :encoding, :user_style_sheet
     ].each do |o|
       assert_equal "--#{o.to_s.gsub('_', '-')} opts", wp.get_parsed_options(o => "opts").strip
@@ -179,7 +179,7 @@ class WickedPdfTest < ActiveSupport::TestCase
       assert_equal "--#{o.to_s.gsub('_', '-')} 5", wp.get_parsed_options(o => 5).strip
     end
 
-    [ :book, :default_header, :disable_javascript, :grayscale, :lowquality,
+    [:book, :default_header, :disable_javascript, :grayscale, :lowquality,
       :enable_plugins, :disable_internal_links, :disable_external_links,
       :print_media_type, :disable_smart_shrinking, :use_xserver, :no_background
     ].each do |o|
