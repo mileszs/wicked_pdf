@@ -171,7 +171,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     [:cookie, :post].each do |o|
       assert_equal "--#{o.to_s.gsub('_', '-')} name value", wp.get_parsed_options(o => "name value").strip
 
-      nv_formatter = Proc.new{|number| "--#{o.to_s.gsub('_', '-')} par#{number} val#{number}" }
+      nv_formatter = proc { |number| "--#{o.to_s.gsub('_', '-')} par#{number} val#{number}" }
       assert_equal "#{nv_formatter.call(1)} #{nv_formatter.call(2)}", wp.get_parsed_options(o => ['par1 val1', 'par2 val2']).strip
     end
 
