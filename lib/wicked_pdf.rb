@@ -139,7 +139,7 @@ class WickedPdf
   def parse_extra(options)
     return [] if options[:extra].nil?
     return options[:extra].split if options[:extra].respond_to?(:split)
-    return options[:extra]
+    options[:extra]
   end
 
   def parse_basic_auth(options)
@@ -255,7 +255,7 @@ class WickedPdf
       r += make_options(options, [:disable_dotted_lines,
                                   :disable_toc_links], nil, :boolean)
     end
-    return r
+    r
   end
 
   def parse_outline(options)

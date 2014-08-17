@@ -87,7 +87,7 @@ module WickedPdfHelper
     def set_protocol(source)
       protocol = WickedPdf.config[:default_protocol] || "http"
       source = [protocol, ":", source].join if source[0,2] == "//"
-      return source
+      source
     end
 
     def precompiled_asset?(source)
