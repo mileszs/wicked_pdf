@@ -23,7 +23,7 @@ task :setup_and_run_tests do
   Rake::Task[:test].invoke
 end
 
-desc "Generate dummy application for test cases"
+desc 'Generate dummy application for test cases'
 task :dummy_generate do
   Rake::Task[:dummy_remove].invoke
   puts 'Creating dummy application to run tests'

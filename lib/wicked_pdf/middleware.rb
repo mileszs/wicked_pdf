@@ -26,11 +26,11 @@ class WickedPdf
         headers.delete('ETag')
         headers.delete('Cache-Control')
 
-        headers["Content-Length"]         = (body.respond_to?(:bytesize) ? body.bytesize : body.size).to_s
-        headers["Content-Type"]           = "application/pdf"
+        headers['Content-Length']         = (body.respond_to?(:bytesize) ? body.bytesize : body.size).to_s
+        headers['Content-Type']           = 'application/pdf'
         if @options.fetch(:disposition, '') == 'attachment'
-          headers["Content-Disposition"]       = 'attachment'
-          headers["Content-Transfer-Encoding"] = 'binary'
+          headers['Content-Disposition']       = 'attachment'
+          headers['Content-Transfer-Encoding'] = 'binary'
         end
       end
 
@@ -83,7 +83,7 @@ class WickedPdf
       @render_pdf = true
       %w(PATH_INFO REQUEST_URI).each { |e| env[e] = env[e].sub(%r{\.pdf\b}, '') }
       env['HTTP_ACCEPT'] = concat(env['HTTP_ACCEPT'], Rack::Mime.mime_type('.html'))
-      env["Rack-Middleware-WickedPdf"] = "true"
+      env['Rack-Middleware-WickedPdf'] = 'true'
     end
 
     def concat(accepts, type)

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 WickedPdf.config = { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf' }
-HTML_DOCUMENT = "<html><body>Hello World</body></html>"
+HTML_DOCUMENT = '<html><body>Hello World</body></html>'
 
 # Provide a public accessor to the normally-private parse_options function.
 # Also, smash the returned array of options into a single string for
@@ -25,45 +25,45 @@ class WickedPdfTest < ActiveSupport::TestCase
     @wp = WickedPdf.new
   end
 
-  test "should generate PDF from html document" do
+  test 'should generate PDF from html document' do
     wp = WickedPdf.new
     pdf = wp.pdf_from_string HTML_DOCUMENT
-    assert pdf.start_with?("%PDF-1.4")
-    assert pdf.rstrip.end_with?("%%EOF")
+    assert pdf.start_with?('%PDF-1.4')
+    assert pdf.rstrip.end_with?('%%EOF')
     assert pdf.length > 100
   end
 
-  test "should generate PDF from html document with long lines" do
+  test 'should generate PDF from html document with long lines' do
     wp = WickedPdf.new
-    document_with_long_line_file = File.new("test/fixtures/document_with_long_line.html", "r")
+    document_with_long_line_file = File.new('test/fixtures/document_with_long_line.html', 'r')
     pdf = wp.pdf_from_string(document_with_long_line_file.read)
-    assert pdf.start_with?("%PDF-1.4")
-    assert pdf.rstrip.end_with?("%%EOF")
+    assert pdf.start_with?('%PDF-1.4')
+    assert pdf.rstrip.end_with?('%%EOF')
     assert pdf.length > 100
   end
 
-  test "should generate PDF from html existing HTML file without converting it to string" do
+  test 'should generate PDF from html existing HTML file without converting it to string' do
     wp = WickedPdf.new
-    filepath = File.join(Dir.pwd, "test/fixtures/document_with_long_line.html")
+    filepath = File.join(Dir.pwd, 'test/fixtures/document_with_long_line.html')
     pdf = wp.pdf_from_html_file(filepath)
-    assert pdf.start_with?("%PDF-1.4")
-    assert pdf.rstrip.end_with?("%%EOF")
+    assert pdf.start_with?('%PDF-1.4')
+    assert pdf.rstrip.end_with?('%%EOF')
     assert pdf.length > 100
   end
 
-  test "should raise exception when no path to wkhtmltopdf" do
+  test 'should raise exception when no path to wkhtmltopdf' do
     assert_raise RuntimeError do
-      WickedPdf.new " "
+      WickedPdf.new ' '
     end
   end
 
-  test "should raise exception when wkhtmltopdf path is wrong" do
+  test 'should raise exception when wkhtmltopdf path is wrong' do
     assert_raise RuntimeError do
-      WickedPdf.new "/i/do/not/exist/notwkhtmltopdf"
+      WickedPdf.new '/i/do/not/exist/notwkhtmltopdf'
     end
   end
 
-  test "should raise exception when wkhtmltopdf is not executable" do
+  test 'should raise exception when wkhtmltopdf is not executable' do
     begin
       tmp = Tempfile.new('wkhtmltopdf')
       fp = tmp.path
@@ -76,7 +76,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     end
   end
 
-  test "should raise exception when pdf generation fails" do
+  test 'should raise exception when pdf generation fails' do
     begin
       tmp = Tempfile.new('wkhtmltopdf')
       fp = tmp.path
@@ -90,18 +90,18 @@ class WickedPdfTest < ActiveSupport::TestCase
     end
   end
 
-  test "should parse header and footer options" do
+  test 'should parse header and footer options' do
     wp = WickedPdf.new
 
     [:header, :footer].each do |hf|
       [:center, :font_name, :left, :right].each do |o|
         assert_equal "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} header_footer",
-                     wp.get_parsed_options(hf => { o => "header_footer" }).strip
+                     wp.get_parsed_options(hf => { o => 'header_footer' }).strip
       end
 
       [:font_size, :spacing].each do |o|
         assert_equal "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} 12",
-                     wp.get_parsed_options(hf => { o => "12" }).strip
+                     wp.get_parsed_options(hf => { o => '12' }).strip
       end
 
       assert_equal "--#{hf.to_s}-line",
@@ -111,13 +111,13 @@ class WickedPdfTest < ActiveSupport::TestCase
     end
   end
 
-  test "should parse toc options" do
+  test 'should parse toc options' do
     wp = WickedPdf.new
     toc_option = wp.get_valid_option('toc')
 
     [:font_name, :header_text].each do |o|
       assert_equal "#{toc_option} --toc-#{o.to_s.gsub('_', '-')} toc",
-                   wp.get_parsed_options(:toc => { o => "toc" }).strip
+                   wp.get_parsed_options(:toc => { o => 'toc' }).strip
     end
 
     [:depth, :header_fs, :l1_font_size, :l2_font_size, :l3_font_size, :l4_font_size,
@@ -134,22 +134,22 @@ class WickedPdfTest < ActiveSupport::TestCase
     end
   end
 
-  test "should parse outline options" do
+  test 'should parse outline options' do
     wp = WickedPdf.new
 
-    assert_equal "--outline", wp.get_parsed_options(:outline => { :outline => true }).strip
-    assert_equal "--outline-depth 5", wp.get_parsed_options(:outline => { :outline_depth => 5 }).strip
+    assert_equal '--outline', wp.get_parsed_options(:outline => { :outline => true }).strip
+    assert_equal '--outline-depth 5', wp.get_parsed_options(:outline => { :outline_depth => 5 }).strip
   end
 
-  test "should parse margins options" do
+  test 'should parse margins options' do
     wp = WickedPdf.new
 
     [:top, :bottom, :left, :right].each do |o|
-      assert_equal "--margin-#{o.to_s} 12", wp.get_parsed_options(:margin => { o => "12" }).strip
+      assert_equal "--margin-#{o.to_s} 12", wp.get_parsed_options(:margin => { o => '12' }).strip
     end
   end
 
-  test "should parse cover" do
+  test 'should parse cover' do
     wp = WickedPdf.new
     cover_option = wp.get_valid_option('cover')
 
@@ -159,17 +159,17 @@ class WickedPdfTest < ActiveSupport::TestCase
     assert_match /#{cover_option} .+wicked_cover_pdf.+\.html/, wp.get_parsed_options(:cover => '<html><body>HELLO</body></html>').strip, 'HTML'
   end
 
-  test "should parse other options" do
+  test 'should parse other options' do
     wp = WickedPdf.new
 
     [:orientation, :page_size, :proxy, :username, :password, :dpi,
       :encoding, :user_style_sheet
     ].each do |o|
-      assert_equal "--#{o.to_s.gsub('_', '-')} opts", wp.get_parsed_options(o => "opts").strip
+      assert_equal "--#{o.to_s.gsub('_', '-')} opts", wp.get_parsed_options(o => 'opts').strip
     end
 
     [:cookie, :post].each do |o|
-      assert_equal "--#{o.to_s.gsub('_', '-')} name value", wp.get_parsed_options(o => "name value").strip
+      assert_equal "--#{o.to_s.gsub('_', '-')} name value", wp.get_parsed_options(o => 'name value').strip
 
       nv_formatter = proc { |number| "--#{o.to_s.gsub('_', '-')} par#{number} val#{number}" }
       assert_equal "#{nv_formatter.call(1)} #{nv_formatter.call(2)}", wp.get_parsed_options(o => ['par1 val1', 'par2 val2']).strip
@@ -187,30 +187,30 @@ class WickedPdfTest < ActiveSupport::TestCase
     end
   end
 
-  test "should extract old wkhtmltopdf version" do
+  test 'should extract old wkhtmltopdf version' do
     version_info_sample = "Name:\n  wkhtmltopdf 0.9.9\n\nLicense:\n  Copyright (C) 2008,2009 Wkhtmltopdf Authors.\n\n\n\n  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n  This is free software: you are free to change and redistribute it. There is NO\n  WARRANTY, to the extent permitted by law.\n\nAuthors:\n  Written by Jakob Truelsen. Patches by Mrio Silva, Benoit Garret and Emmanuel\n  Bouthenot.\n"
     assert_equal WickedPdf::DEFAULT_BINARY_VERSION, @wp.send(:parse_version, version_info_sample)
   end
 
-  test "should extract new wkhtmltopdf version" do
+  test 'should extract new wkhtmltopdf version' do
     version_info_sample = "Name:\n  wkhtmltopdf 0.11.0 rc2\n\nLicense:\n  Copyright (C) 2010 wkhtmltopdf/wkhtmltoimage Authors.\n\n\n\n  License LGPLv3+: GNU Lesser General Public License version 3 or later\n  <http://gnu.org/licenses/lgpl.html>. This is free software: you are free to\n  change and redistribute it. There is NO WARRANTY, to the extent permitted by\n  law.\n\nAuthors:\n  Written by Jan Habermann, Christian Sciberras and Jakob Truelsen. Patches by\n  Mehdi Abbad, Lyes Amazouz, Pascal Bach, Emmanuel Bouthenot, Benoit Garret and\n  Mario Silva."
     assert_equal Gem::Version.new('0.11.0'), @wp.send(:parse_version, version_info_sample)
   end
 
-  test "should extract wkhtmltopdf version with nondigit symbols" do
+  test 'should extract wkhtmltopdf version with nondigit symbols' do
     version_info_sample = "Name:\n  wkhtmltopdf 0.10.4b\n\nLicense:\n  Copyright (C) 2008,2009 Wkhtmltopdf Authors.\n\n\n\n  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n  This is free software: you are free to change and redistribute it. There is NO\n  WARRANTY, to the extent permitted by law.\n\nAuthors:\n  Written by Jakob Truelsen. Patches by Mrio Silva, Benoit Garret and Emmanuel\n  Bouthenot.\n"
     assert_equal Gem::Version.new('0.10.4b'), @wp.send(:parse_version, version_info_sample)
   end
 
-  test "should fallback to default version on parse error" do
+  test 'should fallback to default version on parse error' do
     assert_equal WickedPdf::DEFAULT_BINARY_VERSION, @wp.send(:parse_version, '')
   end
 
-  test "should set version on initialize" do
-    assert_not_equal @wp.send(:get_binary_version), ""
+  test 'should set version on initialize' do
+    assert_not_equal @wp.send(:get_binary_version), ''
   end
 
-  test "should not use double dash options for version without dashes" do
+  test 'should not use double dash options for version without dashes' do
     @wp.set_binary_version_to(WickedPdf::BINARY_VERSION_WITHOUT_DASHES)
 
     ['toc', 'cover'].each do |name|
@@ -218,7 +218,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     end
   end
 
-  test "should use double dash options for version with dashes" do
+  test 'should use double dash options for version with dashes' do
     @wp.set_binary_version_to(Gem::Version.new('0.11.0'))
 
     ['toc', 'cover'].each do |name|

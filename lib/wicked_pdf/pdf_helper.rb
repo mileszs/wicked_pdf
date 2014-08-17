@@ -43,8 +43,8 @@ module PdfHelper
 
   def set_basic_auth(options = {})
     options[:basic_auth] ||= WickedPdf.config.fetch(:basic_auth) { false }
-    if options[:basic_auth] && request.env["HTTP_AUTHORIZATION"]
-      request.env["HTTP_AUTHORIZATION"].split(" ").last
+    if options[:basic_auth] && request.env['HTTP_AUTHORIZATION']
+      request.env['HTTP_AUTHORIZATION'].split(' ').last
     end
   end
 
@@ -68,9 +68,9 @@ module PdfHelper
     options[:wkhtmltopdf] ||= nil
     options[:layout]      ||= false
     options[:template]    ||= File.join(controller_path, action_name)
-    options[:disposition] ||= "inline"
+    options[:disposition] ||= 'inline'
     if options[:show_as_html]
-      render_opts = { :template => options[:template], :layout => options[:layout], :formats => options[:formats], :handlers => options[:handlers], :content_type => "text/html" }
+      render_opts = { :template => options[:template], :layout => options[:layout], :formats => options[:formats], :handlers => options[:handlers], :content_type => 'text/html' }
       render_opts.merge!(:locals => options[:locals]) if options[:locals]
       render_opts.merge!(:file => options[:file]) if options[:file]
       render(render_opts)

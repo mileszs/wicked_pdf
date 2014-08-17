@@ -31,7 +31,7 @@ require 'wicked_pdf/middleware'
 class WickedPdf
   DEFAULT_BINARY_VERSION = Gem::Version.new('0.9.9')
   BINARY_VERSION_WITHOUT_DASHES = Gem::Version.new('0.12.0')
-  EXE_NAME = "wkhtmltopdf"
+  EXE_NAME = 'wkhtmltopdf'
   @@config = {}
   cattr_accessor :config
 
@@ -46,7 +46,7 @@ class WickedPdf
 
   def pdf_from_html_file(filepath, options = {})
     temp_path = options.delete(:temp_path)
-    generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", temp_path)
+    generated_pdf_file = WickedPdfTempfile.new('wicked_pdf_generated_file.pdf', temp_path)
     command = [@exe_path]
     command << '-q' unless on_windows? # suppress errors on stdout
     command += parse_options(options)
@@ -74,7 +74,7 @@ class WickedPdf
 
   def pdf_from_string(string, options = {})
     temp_path = options.delete(:temp_path)
-    string_file = WickedPdfTempfile.new("wicked_pdf.html", temp_path)
+    string_file = WickedPdfTempfile.new('wicked_pdf.html', temp_path)
     string_file.binmode
     string_file.write(string)
     string_file.close
@@ -103,7 +103,7 @@ class WickedPdf
   end
 
   def print_command(cmd)
-    p "*" * 15 + cmd + "*" * 15
+    p '*' * 15 + cmd + '*' * 15
   end
 
   def retreive_binary_version
@@ -144,8 +144,8 @@ class WickedPdf
 
   def parse_basic_auth(options)
     if options[:basic_auth]
-      user, passwd = Base64.decode64(options[:basic_auth]).split(":")
-      ["--username", user, "--password", passwd]
+      user, passwd = Base64.decode64(options[:basic_auth]).split(':')
+      ['--username', user, '--password', passwd]
     else
       []
     end
@@ -173,13 +173,13 @@ class WickedPdf
     end
   end
 
-  def make_options(options, names, prefix = "", type = :string)
+  def make_options(options, names, prefix = '', type = :string)
     return [] if options.nil?
     names.collect do |o|
       if options[o].blank?
         []
       else
-        make_option("#{prefix.blank? ? "" : prefix + "-"}#{o.to_s}",
+        make_option("#{prefix.blank? ? '' : prefix + '-'}#{o.to_s}",
                     options[o],
                     type)
       end
@@ -219,7 +219,7 @@ class WickedPdf
       [valid_option('cover'), arg]
     else # HTML content
       @hf_tempfiles ||= []
-      @hf_tempfiles << tf = WickedPdfTempfile.new("wicked_cover_pdf.html")
+      @hf_tempfiles << tf = WickedPdfTempfile.new('wicked_cover_pdf.html')
       tf.write arg
       tf.flush
       [valid_option('cover'), tf.path]
@@ -230,7 +230,7 @@ class WickedPdf
     return [] if options.nil?
     r = [valid_option('toc')]
     unless options.blank?
-      r += make_options(options, [:font_name, :header_text], "toc")
+      r += make_options(options, [:font_name, :header_text], 'toc')
       r += make_options(options, [:depth,
                                   :header_fs,
                                   :text_size_shrink,
@@ -248,10 +248,10 @@ class WickedPdf
                                   :l4_indentation,
                                   :l5_indentation,
                                   :l6_indentation,
-                                  :l7_indentation], "toc", :numeric)
+                                  :l7_indentation], 'toc', :numeric)
       r += make_options(options, [:no_dots,
                                   :disable_links,
-                                  :disable_back_links], "toc", :boolean)
+                                  :disable_back_links], 'toc', :boolean)
       r += make_options(options, [:disable_dotted_lines,
                                   :disable_toc_links], nil, :boolean)
     end
@@ -261,14 +261,14 @@ class WickedPdf
   def parse_outline(options)
     r = []
     unless options.blank?
-      r = make_options(options, [:outline], "", :boolean)
-      r += make_options(options, [:outline_depth], "", :numeric)
+      r = make_options(options, [:outline], '', :boolean)
+      r += make_options(options, [:outline_depth], '', :numeric)
     end
     r
   end
 
   def parse_margins(options)
-    make_options(options, [:top, :bottom, :left, :right], "margin", :numeric)
+    make_options(options, [:top, :bottom, :left, :right], 'margin', :numeric)
   end
 
   def parse_others(options)
@@ -286,12 +286,12 @@ class WickedPdf
                                   :user_style_sheet,
                                   :viewport_size])
       r += make_options(options, [:cookie,
-                                  :post], "", :name_value)
+                                  :post], '', :name_value)
       r += make_options(options, [:redirect_delay,
                                   :zoom,
                                   :page_offset,
                                   :javascript_delay,
-                                  :image_quality], "", :numeric)
+                                  :image_quality], '', :numeric)
       r += make_options(options, [:book,
                                   :default_header,
                                   :disable_javascript,
@@ -303,8 +303,8 @@ class WickedPdf
                                   :print_media_type,
                                   :disable_smart_shrinking,
                                   :use_xserver,
-                                  :no_background], "", :boolean)
-      r += make_options(options, [:no_stop_slow_scripts], "", nil)
+                                  :no_background], '', :boolean)
+      r += make_options(options, [:no_stop_slow_scripts], '', nil)
     end
     r
   end

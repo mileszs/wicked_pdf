@@ -6,7 +6,7 @@ if defined?(Rails)
   if Rails::VERSION::MAJOR == 4
 
     class WickedRailtie < Rails::Railtie
-      initializer "wicked_pdf.register" do |app|
+      initializer 'wicked_pdf.register' do |app|
         ActionController::Base.send :include, PdfHelper
         ActionView::Base.send :include, WickedPdfHelper::Assets
       end
@@ -14,17 +14,17 @@ if defined?(Rails)
 
   elsif Rails::VERSION::MAJOR == 2
 
-    unless ActionController::Base.instance_methods.include? "render_with_wicked_pdf"
+    unless ActionController::Base.instance_methods.include? 'render_with_wicked_pdf'
       ActionController::Base.send :include, PdfHelper
     end
-    unless ActionView::Base.instance_methods.include? "wicked_pdf_stylesheet_link_tag"
+    unless ActionView::Base.instance_methods.include? 'wicked_pdf_stylesheet_link_tag'
       ActionView::Base.send :include, WickedPdfHelper
     end
 
   else
 
     class WickedRailtie < Rails::Railtie
-      initializer "wicked_pdf.register" do |app|
+      initializer 'wicked_pdf.register' do |app|
         ActionController::Base.send :include, PdfHelper
         if Rails::VERSION::MINOR > 0 && Rails.configuration.assets.enabled
           ActionView::Base.send :include, WickedPdfHelper::Assets
