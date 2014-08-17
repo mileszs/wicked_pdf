@@ -312,7 +312,7 @@ class WickedPdf
   end
 
   def find_wkhtmltopdf_binary_path
-    possible_locations = (ENV['PATH'].split(':')+%w[/usr/bin /usr/local/bin ~/bin]).uniq
+    possible_locations = (ENV['PATH'].split(':') + %w(/usr/bin /usr/local/bin ~/bin)).uniq
     exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
     exe_path ||= begin
       (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
