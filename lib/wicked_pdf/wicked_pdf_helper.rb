@@ -18,11 +18,11 @@ module WickedPdfHelper
     css_text.respond_to?(:html_safe) ? css_text.html_safe : css_text
   end
 
-  def wicked_pdf_image_tag(img, options={})
+  def wicked_pdf_image_tag(img, options = {})
     image_tag "file:///#{WickedPdfHelper.root_path.join('public', 'images', img)}", options
   end
 
-  def wicked_pdf_javascript_src_tag(jsfile, options={})
+  def wicked_pdf_javascript_src_tag(jsfile, options = {})
     jsfile = WickedPdfHelper.add_extension(jsfile, 'js')
     src = "file:///#{WickedPdfHelper.root_path.join('public', 'javascripts', jsfile)}"
     content_tag("script", "", { "type" => Mime::JS, "src" => path_to_javascript(src) }.merge(options))
@@ -41,11 +41,11 @@ module WickedPdfHelper
       }.join("\n").html_safe
     end
 
-    def wicked_pdf_image_tag(img, options={})
+    def wicked_pdf_image_tag(img, options = {})
       image_tag wicked_pdf_asset_path(img), options
     end
 
-    def wicked_pdf_javascript_src_tag(jsfile, options={})
+    def wicked_pdf_javascript_src_tag(jsfile, options = {})
       jsfile = WickedPdfHelper.add_extension(jsfile, 'js')
       javascript_include_tag wicked_pdf_asset_path(jsfile), options
     end

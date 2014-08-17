@@ -38,10 +38,10 @@ module PdfHelper
   private
 
   def log_pdf_creation
-    logger.info '*'*15 + 'WICKED' + '*'*15 unless logger.nil?
+    logger.info '*' * 15 + 'WICKED' + '*' * 15 unless logger.nil?
   end
 
-  def set_basic_auth(options={})
+  def set_basic_auth(options = {})
     options[:basic_auth] ||= WickedPdf.config.fetch(:basic_auth){ false }
     if options[:basic_auth] && request.env["HTTP_AUTHORIZATION"]
       request.env["HTTP_AUTHORIZATION"].split(" ").last
@@ -64,7 +64,7 @@ module PdfHelper
     w.pdf_from_string(html_string, options)
   end
 
-  def make_and_send_pdf(pdf_name, options={})
+  def make_and_send_pdf(pdf_name, options = {})
     options[:wkhtmltopdf] ||= nil
     options[:layout]      ||= false
     options[:template]    ||= File.join(controller_path, action_name)
@@ -87,7 +87,7 @@ module PdfHelper
     [:header, :footer].each do |hf|
       if options[hf] && options[hf][:html] && options[hf][:html][:template]
         @hf_tempfiles = [] unless defined?(@hf_tempfiles)
-        @hf_tempfiles.push( tf=WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
+        @hf_tempfiles.push( tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html") )
         options[hf][:html][:layout] ||=  options[:layout]
         render_opts = {:template => options[hf][:html][:template], :layout => options[hf][:html][:layout], :formats => options[hf][:html][:formats], :handlers => options[hf][:html][:handlers]}
         render_opts.merge!(:locals => options[hf][:html][:locals]) if options[hf][:html][:locals]
