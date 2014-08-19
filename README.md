@@ -198,7 +198,8 @@ class ThingsController < ApplicationController
                            :disable_dotted_lines => true,
                            :disable_links      => true,
                            :disable_toc_links  => true,
-                           :disable_back_links => true},
+                           :disable_back_links => true,
+                           :xsl_style_sheet    => 'file.xsl'}, # optional XSLT stylesheet to use for styling table of contents
                :outline => {:outline           => true,
                             :outline_depth     => LEVEL}
       end
