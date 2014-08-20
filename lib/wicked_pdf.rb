@@ -231,6 +231,7 @@ class WickedPdf
     r = [valid_option('toc')]
     unless options.blank?
       r += make_options(options, [:font_name, :header_text], 'toc')
+      r += make_options(options, [:xsl_style_sheet])
       r += make_options(options, [:depth,
                                   :header_fs,
                                   :text_size_shrink,
