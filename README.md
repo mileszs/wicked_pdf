@@ -144,8 +144,10 @@ class ThingsController < ApplicationController
                :disable_smart_shrinking        => true,
                :use_xserver                    => true,
                :no_background                  => true,
-               :viewport_size                  => 'TEXT'                    # available only with use_xserver or patched QT
-               :extra                          => ''                        # directly inserted into the command to wkhtmltopdf
+               :viewport_size                  => 'TEXT',                    # available only with use_xserver or patched QT
+               :extra                          => '',                        # directly inserted into the command to wkhtmltopdf
+               :outline => {:outline           => true,
+                            :outline_depth     => LEVEL},
                :margin => {:top                => SIZE,                     # default 10 (mm)
                            :bottom             => SIZE,
                            :left               => SIZE,
@@ -199,9 +201,7 @@ class ThingsController < ApplicationController
                            :disable_links      => true,
                            :disable_toc_links  => true,
                            :disable_back_links => true,
-                           :xsl_style_sheet    => 'file.xsl'}, # optional XSLT stylesheet to use for styling table of contents
-               :outline => {:outline           => true,
-                            :outline_depth     => LEVEL}
+                           :xsl_style_sheet    => 'file.xsl'} # optional XSLT stylesheet to use for styling table of contents
       end
     end
   end

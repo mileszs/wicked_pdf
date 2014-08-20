@@ -124,13 +124,13 @@ class WickedPdf
   def parse_options(options)
     [
       parse_extra(options),
+      parse_outline(options.delete(:outline)),
       parse_header_footer(:header => options.delete(:header),
                           :footer => options.delete(:footer),
                           :layout => options[:layout]),
       parse_margins(options.delete(:margin)),
       parse_cover(options.delete(:cover)),
       parse_toc(options.delete(:toc)),
-      parse_outline(options.delete(:outline)),
       parse_others(options),
       parse_basic_auth(options)
     ].flatten
