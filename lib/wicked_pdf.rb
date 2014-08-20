@@ -124,13 +124,13 @@ class WickedPdf
   def parse_options(options)
     [
       parse_extra(options),
+      parse_global(options),
+      parse_outline(options.delete(:outline)),
+      parse_cover(options.delete(:cover)),
+      parse_toc(options.delete(:toc)),
       parse_header_footer(:header => options.delete(:header),
                           :footer => options.delete(:footer),
                           :layout => options[:layout]),
-      parse_margins(options.delete(:margin)),
-      parse_cover(options.delete(:cover)),
-      parse_toc(options.delete(:toc)),
-      parse_outline(options.delete(:outline)),
       parse_others(options),
       parse_basic_auth(options)
     ].flatten
@@ -272,17 +272,31 @@ class WickedPdf
     make_options(options, [:top, :bottom, :left, :right], 'margin', :numeric)
   end
 
-  def parse_others(options)
+  def parse_global(options)
     r = []
     unless options.blank?
       r += make_options(options, [:orientation,
+                                  :dpi,
                                   :page_size,
                                   :page_width,
-                                  :page_height,
-                                  :proxy,
+                                  :title])
+      r += make_options(options, [:lowquality,
+                                  :grayscale,
+                                  :no_pdf_compression], '', :boolean)
+      r += make_options(options, [:image_dpi,
+                                  :image_quality,
+                                  :page_height], '', :numeric)
+      r += parse_margins(options.delete(:margin))
+    end
+    r
+  end
+
+  def parse_others(options)
+    r = []
+    unless options.blank?
+      r += make_options(options, [:proxy,
                                   :username,
                                   :password,
-                                  :dpi,
                                   :encoding,
                                   :user_style_sheet,
                                   :viewport_size])
@@ -291,13 +305,10 @@ class WickedPdf
       r += make_options(options, [:redirect_delay,
                                   :zoom,
                                   :page_offset,
-                                  :javascript_delay,
-                                  :image_quality], '', :numeric)
+                                  :javascript_delay], '', :numeric)
       r += make_options(options, [:book,
                                   :default_header,
                                   :disable_javascript,
-                                  :grayscale,
-                                  :lowquality,
                                   :enable_plugins,
                                   :disable_internal_links,
                                   :disable_external_links,

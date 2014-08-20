@@ -114,12 +114,15 @@ class ThingsController < ApplicationController
                :show_as_html                   => params[:debug].present?,      # allow debugging based on url param
                :orientation                    => 'Landscape',                  # default Portrait
                :page_size                      => 'A4, Letter, ...',            # default A4
+               :page_height                    => NUMBER,
+               :page_width                     => NUMBER,
                :save_to_file                   => Rails.root.join('pdfs', "#{filename}.pdf"),
                :save_only                      => false,                        # depends on :save_to_file being set first
                :proxy                          => 'TEXT',
                :basic_auth                     => false                         # when true username & password are automatically sent from session
                :username                       => 'TEXT',
                :password                       => 'TEXT',
+               :title                          => 'Alternate Title',            # otherwise first page title is used
                :cover                          => 'URL, Pathname, or raw HTML string',
                :dpi                            => 'dpi',
                :encoding                       => 'TEXT',
@@ -129,6 +132,7 @@ class ThingsController < ApplicationController
                :redirect_delay                 => NUMBER,
                :javascript_delay               => NUMBER,
                :image_quality                  => NUMBER,
+               :no_pdf_compression             => true,
                :zoom                           => FLOAT,
                :page_offset                    => NUMBER,
                :javascript_delay               => NUMBER,
