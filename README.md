@@ -64,11 +64,10 @@ The wkhtmltopdf binary is run outside of your Rails application; therefore, your
 
 #### wicked_pdf helpers
 ```html
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!doctype html>
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset='utf-8' />
     <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
     <%= wicked_pdf_javascript_include_tag "number_pages" %>
   </head>
@@ -86,8 +85,8 @@ The wkhtmltopdf binary is run outside of your Rails application; therefore, your
 
 In this case, you can use that standard Rails helpers and point to the current CDN for whichever framework you are using. For jQuery, it would look somethng like this, given the current versions at the time of this writing.
 ```html
-    <!DOCTYPE...
-    <html...
+    <!doctype html>
+    <html>
       <head>
         <%= javascript_include_tag "http://code.jquery.com/jquery-1.10.0.min.js" %>
         <%= javascript_include_tag "http://code.jquery.com/ui/1.10.3/jquery-ui.min.js" %>
