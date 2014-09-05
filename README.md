@@ -243,7 +243,7 @@ end
 ```
 If you need to display utf encoded characters, add this to your pdf views or layouts:
 ```html
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 ```
 ### Page Numbering
 
