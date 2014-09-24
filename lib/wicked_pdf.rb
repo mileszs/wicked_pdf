@@ -45,6 +45,8 @@ class WickedPdf
   end
 
   def pdf_from_html_file(filepath, options = {})
+    # merge in global config options
+    options.merge!(WickedPdf.config) {|key, option, config| option}
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", options[:temp_path])
     command = [@exe_path]
     command << '-q' unless on_windows? # suppress errors on stdout
@@ -72,6 +74,8 @@ class WickedPdf
   end
 
   def pdf_from_string(string, options = {})
+    # merge in global config options
+    options.merge!(WickedPdf.config) {|key, option, config| option}
     string_file = WickedPdfTempfile.new("wicked_pdf.html", options[:temp_path])
     string_file.binmode
     string_file.write(string)
