@@ -35,13 +35,16 @@ gem 'wkhtmltopdf-binary'
 
 To your Gemfile and run `bundle install`.
 
-If your wkhtmltopdf executable is not on your webserver's path, you can configure it in an initializer:
+Then configure it to look in the initializer:
 
 ```ruby
 WickedPdf.config = {
-  :exe_path => '/usr/local/bin/wkhtmltopdf'
+  # wkhtmltopdf script will automatically determine the correct verson of the binary to use: It Just Works TM
+  exe_path: "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/wkhtmltopdf"
 }
 ```
+
+
 
 For more information about `wkhtmltopdf`, see the project's [homepage](http://wkhtmltopdf.org/).
 
