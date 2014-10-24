@@ -35,7 +35,7 @@ gem 'wkhtmltopdf-binary'
 
 To your Gemfile and run `bundle install`.
 
-Then configure it to look in the initializer:
+Then configure the wicked_pdf initializer to look in the wkhtmltopdf-binary path:
 
 ```ruby
 WickedPdf.config = {
