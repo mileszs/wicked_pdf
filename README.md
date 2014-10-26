@@ -231,7 +231,7 @@ WickedPdf.new.pdf_from_string(
 )
 
 # or from your controller, using views & templates and all wicked_pdf options as normal
-pdf = render_to_string :pdf => "some_file_name"
+pdf = render_to_string :template => "templates/pdf.html.erb", :pdf => "some_file_name", encoding: "UTF-8"
 
 # then save to a file
 save_path = Rails.root.join('pdfs','filename.pdf')
