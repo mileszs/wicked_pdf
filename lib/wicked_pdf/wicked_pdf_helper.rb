@@ -34,11 +34,17 @@ module WickedPdfHelper
   end
 
   module Assets
+    ASSET_URL_REGEX = /url\(['"](.+)['"]\)(.+)/
+
     def wicked_pdf_stylesheet_link_tag(*sources)
-      sources.collect { |source|
+      stylesheet_contents = sources.collect do |source|
         source = WickedPdfHelper.add_extension(source, 'css')
         "<style type='text/css'>#{read_asset(source)}</style>"
-      }.join("\n").html_safe
+      end.join('\n')
+
+      stylesheet_contents.gsub(ASSET_URL_REGEX) do
+        "url(#{wicked_pdf_asset_path($1)})#{$2}"
+      end.html_safe
     end
 
     def wicked_pdf_image_tag(img, options = {})
@@ -84,7 +90,7 @@ module WickedPdfHelper
     end
 
     # will prepend a http or default_protocol to a protocol relative URL
-    # or when no protcol is set. 
+    # or when no protcol is set.
     def set_protocol(source)
       protocol = WickedPdf.config[:default_protocol] || 'http'
       if source[0, 2] == '//'
