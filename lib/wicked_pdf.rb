@@ -48,7 +48,8 @@ class WickedPdf
     # merge in global config options
     options.merge!(WickedPdf.config) {|key, option, config| option}
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", options[:temp_path])
-    command = [@exe_path]
+    env = {'TZ' => Time.zone.name}
+    command = [env, @exe_path]
     command << '-q' unless on_windows? # suppress errors on stdout
     command += parse_options(options)
     command << "file:///#{filepath}"
