@@ -52,7 +52,7 @@ class ThingsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render :pdf => "file_name"
+        render :pdf => "file_name"   # Excluding ".pdf" extension.
       end
     end
   end
