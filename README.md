@@ -313,6 +313,11 @@ However, the wicked_pdf_* helpers will use file:/// paths for assets when using 
 ```html
     <%= params[:debug].present? ? image_tag('foo') : wicked_pdf_image_tag('foo') %>
 ```
+
+#### Gotchas
+
+If one image from your HTML cannot be found (relative or wrong path for ie), others images with right paths **may not** be displayed in the output PDF as well (it seems to be an issue with wkhtmltopdf).
+
 ### Inspiration
 
 You may have noticed: this plugin is heavily inspired by the PrinceXML plugin [princely](http://github.com/mbleigh/princely/tree/master).  PrinceXML's cost was prohibitive for me. So, with a little help from some friends (thanks [jqr](http://github.com/jqr)), I tracked down wkhtmltopdf, and here we are.
