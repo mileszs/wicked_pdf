@@ -95,7 +95,7 @@ module WickedPdfHelper
       protocol = WickedPdf.config[:default_protocol] || 'http'
       if source[0, 2] == '//'
         source = [protocol, ':', source].join
-      elsif !source[0, 7].include?('://')
+      elsif !source[0, 8].include?('://')
         source = [protocol, '://', source].join
       end
       source
