@@ -4,7 +4,9 @@ bundler_args: --verbose
 rvm:  
   - 1.9.2
   - 1.9.3
-  - 2.0.0
+  - 2.0
+  - 2.1
+  - 2.2
 gemfile:
   - gemfiles/3.0.gemfile
   - gemfiles/3.1.gemfile
