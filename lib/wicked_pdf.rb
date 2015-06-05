@@ -45,13 +45,33 @@ class WickedPdf
   end
 
   def pdf_from_html_file(filepath, options = {})
+    pdf_from_url("file:///#{filepath}", options)
+  end
+
+  def pdf_from_string(string, options = {})
+    # merge in global config options
+    options.merge!(WickedPdf.config) {|key, option, config| option}
+    string_file = WickedPdfTempfile.new("wicked_pdf.html", options[:temp_path])
+    string_file.binmode
+    string_file.write(string)
+    string_file.close
+
+    pdf = pdf_from_html_file(string_file.path, options)
+    pdf
+  rescue => e
+    raise "Error: #{e}"
+  ensure
+    string_file.close! if string_file
+  end
+
+  def pdf_from_url(url, options = {})
     # merge in global config options
     options.merge!(WickedPdf.config) {|key, option, config| option}
     generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", options[:temp_path])
     command = [@exe_path]
     command << '-q' unless on_windows? # suppress errors on stdout
     command += parse_options(options)
-    command << "file:///#{filepath}"
+    command << url
     command << generated_pdf_file.path.to_s
 
     print_command(command.inspect) if in_development_mode?
@@ -71,22 +91,6 @@ class WickedPdf
     raise "Failed to execute:\n#{command}\nError: #{e}"
   ensure
     generated_pdf_file.close! if generated_pdf_file && !return_file
-  end
-
-  def pdf_from_string(string, options = {})
-    # merge in global config options
-    options.merge!(WickedPdf.config) {|key, option, config| option}
-    string_file = WickedPdfTempfile.new("wicked_pdf.html", options[:temp_path])
-    string_file.binmode
-    string_file.write(string)
-    string_file.close
-
-    pdf = pdf_from_html_file(string_file.path, options)
-    pdf
-  rescue => e
-    raise "Error: #{e}"
-  ensure
-    string_file.close! if string_file
   end
 
   private

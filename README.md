@@ -222,6 +222,9 @@ pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
 # Path must be absolute path
 pdf = WickedPdf.new.pdf_from_html_file('/your/absolute/path/here')
 
+# create a pdf from a URL
+pdf = WickedPdf.new.pdf_from_url('https://github.com/mileszs/wicked_pdf')
+
 # create a pdf from string using templates, layouts and content option for header or footer
 WickedPdf.new.pdf_from_string(
   render_to_string('templates/pdf.html.erb', layout: 'pdfs/layout_pdf'),
