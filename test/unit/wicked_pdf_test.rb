@@ -225,4 +225,10 @@ class WickedPdfTest < ActiveSupport::TestCase
       assert_equal @wp.get_valid_option(name), "--#{name}"
     end
   end
+
+  test '-- options should not be given after object' do
+    options = {header: {center: 3}, cover: 'http://example.org', disable_javascript: true}
+    cover_option = @wp.get_valid_option('cover')
+    assert_equal @wp.get_parsed_options(options), "--disable-javascript --header-center 3 #{cover_option} http://example.org"
+  end
 end
