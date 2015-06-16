@@ -6,7 +6,7 @@ module WickedPdfHelper
   end
 
   def self.add_extension(filename, extension)
-    (File.extname(filename.to_s)[1..-1] == extension) ? filename : "#{filename}.#{extension}"
+    (filename.split(".").include?(extension) ? filename : "#{filename}.#{extension}")
   end
 
   def wicked_pdf_stylesheet_link_tag(*sources)
