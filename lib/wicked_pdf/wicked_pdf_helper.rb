@@ -40,7 +40,7 @@ module WickedPdfHelper
       stylesheet_contents = sources.collect do |source|
         source = WickedPdfHelper.add_extension(source, 'css')
         "<style type='text/css'>#{read_asset(source)}</style>"
-      end.join('\n')
+      end.join("\n")
 
       stylesheet_contents.gsub(ASSET_URL_REGEX) do
         "url(#{wicked_pdf_asset_path($1)})#{$2}"
