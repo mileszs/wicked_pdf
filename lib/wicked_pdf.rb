@@ -49,6 +49,7 @@ class WickedPdf
   end
 
   def pdf_from_string(string, options = {})
+    options = options.dup
     # merge in global config options
     options.merge!(WickedPdf.config) {|key, option, config| option}
     string_file = WickedPdfTempfile.new("wicked_pdf.html", options[:temp_path])
