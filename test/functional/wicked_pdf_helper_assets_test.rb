@@ -1,7 +1,5 @@
 require 'test_helper'
 require 'action_view/test_case'
-require 'mocha/test_unit'
-require 'mocha/integration/test_unit'
 
 class WickedPdfHelperAssetsTest < ActionView::TestCase
 
