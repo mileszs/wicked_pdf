@@ -3,5 +3,6 @@ source "https://rubygems.org"
 gem 'rdoc'
 gem 'rails', '~> 3.1.0'
 gem 'sqlite3'
+gem 'i18n', '~> 0.6.0'
 gem 'wicked_pdf', path: '../'
 gemspec path: '../'
