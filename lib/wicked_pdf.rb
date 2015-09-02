@@ -206,7 +206,6 @@ class WickedPdf
           @hf_tempfiles.push(tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html"))
           tf.write options[hf][:content]
           tf.flush
-          options[hf].delete(:content)
           options[hf][:html] = {}
           options[hf][:html][:url] = "file:///#{tf.path}"
         end
