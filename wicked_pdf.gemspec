@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'mocha'
+  spec.add_development_dependency 'test-unit'
 
   spec.description       = <<desc
 Wicked PDF uses the shell utility wkhtmltopdf to serve a PDF file to a user from HTML.
