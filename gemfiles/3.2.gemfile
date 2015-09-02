@@ -2,5 +2,6 @@ source "https://rubygems.org"
 
 gem 'rdoc'
 gem 'rails', '~> 3.2.0'
+gem 'i18n', '~> 0.6.0'
 gem 'wicked_pdf', path: '../'
 gemspec path: '../'
