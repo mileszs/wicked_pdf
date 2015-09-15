@@ -34,7 +34,7 @@ module WickedPdfHelper
   end
 
   module Assets
-    ASSET_URL_REGEX = /url\(['"]?([^'"]+)['"]?\)(.+)/
+    ASSET_URL_REGEX = /url\(['"]?([^'"]+?)['"]?\)/
 
     def wicked_pdf_stylesheet_link_tag(*sources)
       stylesheet_contents = sources.collect do |source|
@@ -43,7 +43,7 @@ module WickedPdfHelper
       end.join("\n")
 
       stylesheet_contents.gsub(ASSET_URL_REGEX) do
-        "url(#{wicked_pdf_asset_path($1)})#{$2}"
+        "url(#{wicked_pdf_asset_path(Regexp.last_match[1])})"
       end.html_safe
     end
 
