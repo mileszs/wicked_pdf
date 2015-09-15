@@ -105,12 +105,12 @@ class ThingsController < ApplicationController
       format.html
       format.pdf do
         render pdf:                            'file_name',
-               disposition:	                   'attachment',                 # default 'inline'
+               disposition:                    'attachment',                 # default 'inline'
                template:                       'things/show.pdf.erb',
                file:                           "#{Rails.root}/files/foo.erb"
                layout:                         'pdf.html',                   # use 'pdf.html' for a pdf.html.erb file
                wkhtmltopdf:                    '/usr/local/bin/wkhtmltopdf', # path to binary
-               show_as_html:                   params[:debug].present?,      # allow debugging based on url param
+               show_as_html:                   params.key?('debug'),         # allow debugging based on url param
                orientation:                    'Landscape',                  # default Portrait
                page_size:                      'A4, Letter, ...',            # default A4
                page_height:                    NUMBER,
@@ -308,13 +308,13 @@ StackOverflow [questions with the tag "wicked-pdf"](http://stackoverflow.com/que
 
 Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster.
 
-First of all you must configure the render parameter "show_as_html: params[:debug]" and then just use it like normally but adding "debug=1" as a param:
+First of all you must configure the render parameter `show_as_html: params.key?('debug')` and then just use it like you normally would but add "debug" as a GET param in the URL:
 
-http://localhost:3001/CONTROLLER/X.pdf?debug=1
+http://localhost:3001/CONTROLLER/X.pdf?debug
 
 However, the wicked_pdf_* helpers will use file:/// paths for assets when using :show_as_html, and your browser's cross-domain safety feature will kick in, and not render them. To get around this, you can load your assets like so in your templates:
 ```html
-    <%= params[:debug].present? ? image_tag('foo') : wicked_pdf_image_tag('foo') %>
+    <%= params.key?('debug') ? image_tag('foo') : wicked_pdf_image_tag('foo') %>
 ```
 
 #### Gotchas
