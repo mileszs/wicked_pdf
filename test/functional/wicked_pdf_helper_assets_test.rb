@@ -35,6 +35,15 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
       assert path.include?('/assets/stylesheets/application.css')
       assert path.include?('file:///')
     end
-  end
 
+    test 'WickedPdfHelper::Assets::ASSET_URL_REGEX should match various URL data type formats' do
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url(\'/asset/stylesheets/application.css\');'
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url("/asset/stylesheets/application.css");'
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url(/asset/stylesheets/application.css);'
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url(\'http://assets.domain.com/dummy.png\');'
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url("http://assets.domain.com/dummy.png");'
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url(http://assets.domain.com/dummy.png);'
+      assert_no_match WickedPdfHelper::Assets::ASSET_URL_REGEX, '.url { \'http://assets.domain.com/dummy.png\' }'
+    end
+  end
 end
