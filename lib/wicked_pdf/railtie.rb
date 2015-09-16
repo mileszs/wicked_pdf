@@ -3,12 +3,16 @@ require 'wicked_pdf/wicked_pdf_helper'
 
 if defined?(Rails)
 
-  if Rails::VERSION::MAJOR == 4
+  if Rails::VERSION::MAJOR == 3
 
     class WickedRailtie < Rails::Railtie
       initializer 'wicked_pdf.register' do |app|
         ActionController::Base.send :include, PdfHelper
-        ActionView::Base.send :include, WickedPdfHelper::Assets
+        if Rails::VERSION::MINOR > 0 && Rails.configuration.assets.enabled
+          ActionView::Base.send :include, WickedPdfHelper::Assets
+        else
+          ActionView::Base.send :include, WickedPdfHelper
+        end
       end
     end
 
@@ -26,11 +30,7 @@ if defined?(Rails)
     class WickedRailtie < Rails::Railtie
       initializer 'wicked_pdf.register' do |app|
         ActionController::Base.send :include, PdfHelper
-        if Rails::VERSION::MINOR > 0 && Rails.configuration.assets.enabled
-          ActionView::Base.send :include, WickedPdfHelper::Assets
-        else
-          ActionView::Base.send :include, WickedPdfHelper
-        end
+        ActionView::Base.send :include, WickedPdfHelper::Assets
       end
     end
 

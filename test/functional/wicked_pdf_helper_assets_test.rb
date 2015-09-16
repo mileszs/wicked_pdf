@@ -5,7 +5,7 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
 
   include WickedPdfHelper::Assets
 
-  if Rails::VERSION::MAJOR == 4
+  if Rails::VERSION::MAJOR > 3 || (Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0)
     test 'wicked_pdf_asset_path should return a url when assets are served by an asset server' do
       expects(:asset_pathname => 'http://assets.domain.com/dummy.png')
       assert_equal 'http://assets.domain.com/dummy.png', wicked_pdf_asset_path('dummy.png')
@@ -35,6 +35,22 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
       assert path.include?('/assets/stylesheets/application.css')
       assert path.include?('file:///')
     end
-  end
 
+    test 'WickedPdfHelper::Assets::ASSET_URL_REGEX should match various URL data type formats' do
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url(\'/asset/stylesheets/application.css\');'
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url("/asset/stylesheets/application.css");'
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url(/asset/stylesheets/application.css);'
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url(\'http://assets.domain.com/dummy.png\');'
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url("http://assets.domain.com/dummy.png");'
+      assert_match WickedPdfHelper::Assets::ASSET_URL_REGEX, 'url(http://assets.domain.com/dummy.png);'
+      assert_no_match WickedPdfHelper::Assets::ASSET_URL_REGEX, '.url { \'http://assets.domain.com/dummy.png\' }'
+    end
+
+    test 'set_protocol should properly set the protocol when the asset is precompiled' do
+      assert_equal 'http://assets.domain.com/dummy.png', set_protocol('//assets.domain.com/dummy.png')
+      assert_equal '/assets.domain.com/dummy.png', set_protocol('/assets.domain.com/dummy.png')
+      assert_equal 'http://assets.domain.com/dummy.png', set_protocol('http://assets.domain.com/dummy.png')
+      assert_equal 'https://assets.domain.com/dummy.png', set_protocol('https://assets.domain.com/dummy.png')
+    end
+  end
 end
