@@ -32,9 +32,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Issues with `url()` references and embedded `data:base64` assests in stylesheets rendered with `wicked_pdf_stylesheet_link_tag`
 - Asset helpers no longer add a file extension if it already is specified with one
 
-[Unreleased]: https://github.com/mileszs/wicked_pdf/compare/24303d0...HEAD
-[1.0.0]: https://github.com/mileszs/wicked_pdf/compare/968ae69...24303d0
-[0.11.0]: https://github.com/mileszs/wicked_pdf/compare/076f043...968ae69
-[0.10.2]: https://github.com/mileszs/wicked_pdf/compare/a920bc9...076f043
-[0.10.1]: https://github.com/mileszs/wicked_pdf/compare/df67c30...a920bc9
-[0.10.0]: https://github.com/mileszs/wicked_pdf/compare/9daecee...df67c30
+# Compare Releases
+- [1.0.0...Unreleased](https://github.com/mileszs/wicked_pdf/compare/24303d0...HEAD)
+- [0.11.0...1.0.0](https://github.com/mileszs/wicked_pdf/compare/968ae69...24303d0)
+- [0.10.2...0.11.0](https://github.com/mileszs/wicked_pdf/compare/076f043...968ae69)
+- [0.10.1...0.10.2](https://github.com/mileszs/wicked_pdf/compare/a920bc9...076f043)
+- [0.10.0...0.10.1](https://github.com/mileszs/wicked_pdf/compare/df67c30...a920bc9)
+- [0.9.10...0.10.0](https://github.com/mileszs/wicked_pdf/compare/9daecee...df67c30)
