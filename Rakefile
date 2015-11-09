@@ -3,9 +3,10 @@ require 'rake/testtask'
 require 'rdoc/task'
 require 'rails/version'
 require 'bundler/gem_tasks'
+require 'rubocop/rake_task'
 
 desc 'Default: run unit tests.'
-task :default => :setup_and_run_tests
+task :default => [:setup_and_run_tests, :rubocop]
 
 desc 'Test the wicked_pdf plugin.'
 Rake::TestTask.new(:test) do |t|
@@ -13,6 +14,11 @@ Rake::TestTask.new(:test) do |t|
   t.libs << 'test'
   t.pattern = 'test/**/*_test.rb'
   t.verbose = true
+end
+
+desc 'Run RuboCop'
+task :rubocop do
+  RuboCop::RakeTask.new
 end
 
 desc 'Setup and run all tests'
