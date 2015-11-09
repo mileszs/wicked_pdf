@@ -50,9 +50,8 @@ class WickedPdf
 
   def pdf_from_string(string, options = {})
     options = options.dup
-    # merge in global config options
-    options.merge!(WickedPdf.config) {|key, option, config| option}
-    string_file = WickedPdfTempfile.new("wicked_pdf.html", options[:temp_path])
+    options.merge!(WickedPdf.config) { |_key, option, _config| option }
+    string_file = WickedPdfTempfile.new('wicked_pdf.html', options[:temp_path])
     string_file.binmode
     string_file.write(string)
     string_file.close
@@ -67,8 +66,8 @@ class WickedPdf
 
   def pdf_from_url(url, options = {})
     # merge in global config options
-    options.merge!(WickedPdf.config) {|key, option, config| option}
-    generated_pdf_file = WickedPdfTempfile.new("wicked_pdf_generated_file.pdf", options[:temp_path])
+    options.merge!(WickedPdf.config) { |_key, option, _config| option }
+    generated_pdf_file = WickedPdfTempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
     command = [@exe_path]
     command << '-q' unless on_windows? # suppress errors on stdout
     command += parse_options(options)
@@ -77,10 +76,11 @@ class WickedPdf
 
     print_command(command.inspect) if in_development_mode?
 
-    err = Open3.popen3(*command) do |stdin, stdout, stderr|
+    err = Open3.popen3(*command) do |_stdin, _stdout, stderr|
       stderr.read
     end
-    if return_file = options.delete(:return_file)
+    if options[:return_file]
+      return_file = options.delete(:return_file)
       return generated_pdf_file
     end
     generated_pdf_file.rewind
@@ -114,7 +114,7 @@ class WickedPdf
   end
 
   def retreive_binary_version
-    stdin, stdout, stderr = Open3.popen3(@exe_path + ' -V')
+    _stdin, stdout, _stderr = Open3.popen3(@exe_path + ' -V')
     @binary_version = parse_version(stdout.gets(nil))
   rescue StandardError
   end
@@ -186,7 +186,7 @@ class WickedPdf
       if options[o].blank?
         []
       else
-        make_option("#{prefix.blank? ? '' : prefix + '-'}#{o.to_s}",
+        make_option("#{prefix.blank? ? '' : prefix + '-'}#{o}",
                     options[o],
                     type)
       end
@@ -196,22 +196,21 @@ class WickedPdf
   def parse_header_footer(options)
     r = []
     [:header, :footer].collect do |hf|
-      unless options[hf].blank?
-        opt_hf = options[hf]
-        r += make_options(opt_hf, [:center, :font_name, :left, :right], "#{hf.to_s}")
-        r += make_options(opt_hf, [:font_size, :spacing], "#{hf.to_s}", :numeric)
-        r += make_options(opt_hf, [:line], "#{hf.to_s}", :boolean)
-        if options[hf] && options[hf][:content]
-          @hf_tempfiles = [] unless defined?(@hf_tempfiles)
-          @hf_tempfiles.push(tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html"))
-          tf.write options[hf][:content]
-          tf.flush
-          options[hf][:html] = {}
-          options[hf][:html][:url] = "file:///#{tf.path}"
-        end
-        unless opt_hf[:html].blank?
-          r += make_option("#{hf.to_s}-html", opt_hf[:html][:url]) unless opt_hf[:html][:url].blank?
-        end
+      next if options[hf].blank?
+      opt_hf = options[hf]
+      r += make_options(opt_hf, [:center, :font_name, :left, :right], "#{hf}")
+      r += make_options(opt_hf, [:font_size, :spacing], "#{hf}", :numeric)
+      r += make_options(opt_hf, [:line], "#{hf}", :boolean)
+      if options[hf] && options[hf][:content]
+        @hf_tempfiles = [] unless defined?(@hf_tempfiles)
+        @hf_tempfiles.push(tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html"))
+        tf.write options[hf][:content]
+        tf.flush
+        options[hf][:html] = {}
+        options[hf][:html][:url] = "file:///#{tf.path}"
+      end
+      unless opt_hf[:html].blank?
+        r += make_option("#{hf}-html", opt_hf[:html][:url]) unless opt_hf[:html][:url].blank?
       end
     end unless options.blank?
     r

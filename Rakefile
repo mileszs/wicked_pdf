@@ -27,12 +27,7 @@ desc 'Generate dummy application for test cases'
 task :dummy_generate do
   Rake::Task[:dummy_remove].invoke
   puts 'Creating dummy application to run tests'
-
-  prefix = ''
-  if Rails::VERSION::MAJOR != 2
-    prefix = 'new '
-  end
-
+  prefix = (Rails::VERSION::MAJOR == 2) ? '' : 'new '
   system("rails #{prefix}test/dummy")
   FileUtils.rm_r Dir.glob('test/dummy/test/*')
 end

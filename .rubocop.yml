@@ -1,0 +1,9 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'test/dummy/**/*'
+
+# I'd like wicked_pdf to keep Ruby 1.8 compatibility for now
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets

@@ -6,15 +6,15 @@ module WickedPdfHelper
   end
 
   def self.add_extension(filename, extension)
-    (filename.to_s.split(".").include?(extension) ? filename : "#{filename}.#{extension}")
+    filename.to_s.split('.').include?(extension) ? filename : "#{filename}.#{extension}"
   end
 
   def wicked_pdf_stylesheet_link_tag(*sources)
     css_dir = WickedPdfHelper.root_path.join('public', 'stylesheets')
-    css_text = sources.collect { |source|
+    css_text = sources.collect do |source|
       source = WickedPdfHelper.add_extension(source, 'css')
       "<style type='text/css'>#{File.read(css_dir.join(source))}</style>"
-    }.join("\n")
+    end.join("\n")
     css_text.respond_to?(:html_safe) ? css_text.html_safe : css_text
   end
 
@@ -61,10 +61,10 @@ module WickedPdfHelper
     end
 
     def wicked_pdf_javascript_include_tag(*sources)
-      sources.collect { |source|
+      sources.collect do |source|
         source = WickedPdfHelper.add_extension(source, 'js')
         "<script type='text/javascript'>#{read_asset(source)}</script>"
-      }.join("\n").html_safe
+      end.join("\n").html_safe
     end
 
     def wicked_pdf_asset_path(asset)
@@ -131,9 +131,8 @@ module WickedPdfHelper
     def gzip(asset)
       stringified_asset = StringIO.new(asset)
       gzipper = Zlib::GzipReader.new(stringified_asset)
-      gzipped_asset = gzipper.read
+      gzipper.read
     rescue Zlib::GzipFile::Error
     end
-
   end
 end

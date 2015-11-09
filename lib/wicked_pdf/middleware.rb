@@ -1,6 +1,5 @@
 class WickedPdf
   class Middleware
-
     def initialize(app, options = {}, conditions = {})
       @app        = app
       @options    = (WickedPdf.config || {}).merge(options)
@@ -89,6 +88,5 @@ class WickedPdf
     def concat(accepts, type)
       (accepts || '').split(',').unshift(type).compact.join(',')
     end
-
   end
 end

@@ -95,18 +95,18 @@ class WickedPdfTest < ActiveSupport::TestCase
 
     [:header, :footer].each do |hf|
       [:center, :font_name, :left, :right].each do |o|
-        assert_equal "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} header_footer",
+        assert_equal "--#{hf}-#{o.to_s.gsub('_', '-')} header_footer",
                      wp.get_parsed_options(hf => { o => 'header_footer' }).strip
       end
 
       [:font_size, :spacing].each do |o|
-        assert_equal "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} 12",
+        assert_equal "--#{hf}-#{o.to_s.gsub('_', '-')} 12",
                      wp.get_parsed_options(hf => { o => '12' }).strip
       end
 
-      assert_equal "--#{hf.to_s}-line",
+      assert_equal "--#{hf}-line",
                    wp.get_parsed_options(hf => { :line => true }).strip
-      assert_equal "--#{hf.to_s}-html http://www.abc.com",
+      assert_equal "--#{hf}-html http://www.abc.com",
                    wp.get_parsed_options(hf => { :html => { :url => 'http://www.abc.com' } }).strip
     end
   end
@@ -120,7 +120,8 @@ class WickedPdfTest < ActiveSupport::TestCase
                    wp.get_parsed_options(:toc => { o => 'toc' }).strip
     end
 
-    [:depth, :header_fs, :l1_font_size, :l2_font_size, :l3_font_size, :l4_font_size,
+    [
+      :depth, :header_fs, :l1_font_size, :l2_font_size, :l3_font_size, :l4_font_size,
       :l5_font_size, :l6_font_size, :l7_font_size, :l1_indentation, :l2_indentation,
       :l3_indentation, :l4_indentation, :l5_indentation, :l6_indentation, :l7_indentation
     ].each do |o|
@@ -145,7 +146,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     wp = WickedPdf.new
 
     [:top, :bottom, :left, :right].each do |o|
-      assert_equal "--margin-#{o.to_s} 12", wp.get_parsed_options(:margin => { o => '12' }).strip
+      assert_equal "--margin-#{o} 12", wp.get_parsed_options(:margin => { o => '12' }).strip
     end
   end
 
@@ -155,14 +156,15 @@ class WickedPdfTest < ActiveSupport::TestCase
 
     pathname = Rails.root.join('app', 'views', 'pdf', 'file.html')
     assert_equal "#{cover_option} http://example.org", wp.get_parsed_options(:cover => 'http://example.org').strip, 'URL'
-    assert_equal "#{cover_option} #{pathname.to_s}", wp.get_parsed_options(:cover => pathname).strip, 'Pathname'
+    assert_equal "#{cover_option} #{pathname}", wp.get_parsed_options(:cover => pathname).strip, 'Pathname'
     assert_match /#{cover_option} .+wicked_cover_pdf.+\.html/, wp.get_parsed_options(:cover => '<html><body>HELLO</body></html>').strip, 'HTML'
   end
 
   test 'should parse other options' do
     wp = WickedPdf.new
 
-    [:orientation, :page_size, :proxy, :username, :password, :dpi,
+    [
+      :orientation, :page_size, :proxy, :username, :password, :dpi,
       :encoding, :user_style_sheet
     ].each do |o|
       assert_equal "--#{o.to_s.gsub('_', '-')} opts", wp.get_parsed_options(o => 'opts').strip
@@ -179,7 +181,8 @@ class WickedPdfTest < ActiveSupport::TestCase
       assert_equal "--#{o.to_s.gsub('_', '-')} 5", wp.get_parsed_options(o => 5).strip
     end
 
-    [:book, :default_header, :disable_javascript, :grayscale, :lowquality,
+    [
+      :book, :default_header, :disable_javascript, :grayscale, :lowquality,
       :enable_plugins, :disable_internal_links, :disable_external_links,
       :print_media_type, :disable_smart_shrinking, :use_xserver, :no_background
     ].each do |o|

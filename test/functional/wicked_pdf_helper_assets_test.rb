@@ -2,7 +2,6 @@ require 'test_helper'
 require 'action_view/test_case'
 
 class WickedPdfHelperAssetsTest < ActionView::TestCase
-
   include WickedPdfHelper::Assets
 
   if Rails::VERSION::MAJOR > 3 || (Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0)
