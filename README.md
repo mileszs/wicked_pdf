@@ -145,6 +145,7 @@ class ThingsController < ApplicationController
                print_media_type:               true,
                disable_smart_shrinking:        true,
                use_xserver:                    true,
+               background:                     false,                     # backround needs to be true to enable background colors to render
                no_background:                  true,
                viewport_size:                  'TEXT',                    # available only with use_xserver or patched QT
                extra:                          '',                        # directly inserted into the command to wkhtmltopdf
