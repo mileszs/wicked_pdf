@@ -21,7 +21,10 @@ module WickedPdfHelper
         if Regexp.last_match[1].starts_with?('data:')
           "url(#{Regexp.last_match[1]})"
         else
-          "url(#{wicked_pdf_asset_path(Regexp.last_match[1])})"
+          asset = Regexp.last_match[1]
+          if asset_exists?(asset)
+            "url(#{wicked_pdf_asset_path(asset)})"
+          end
         end
       end.html_safe
     end
@@ -88,7 +91,7 @@ module WickedPdfHelper
       if precompiled_asset?(source)
         if set_protocol(asset_path(source)) =~ URI_REGEXP
           read_from_uri(source)
-        else
+        elsif asset_exists?(source)
           IO.read(asset_pathname(source))
         end
       else
@@ -108,6 +111,10 @@ module WickedPdfHelper
       gzipper = Zlib::GzipReader.new(stringified_asset)
       gzipper.read
     rescue Zlib::GzipFile::Error
+    end
+
+    def asset_exists?(source)
+      Rails.application.assets.find_asset(source).present?
     end
   end
 end
