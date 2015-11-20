@@ -33,7 +33,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Asset helpers no longer add a file extension if it already is specified with one
 
 # Compare Releases
-- [1.0.0...Unreleased](https://github.com/mileszs/wicked_pdf/compare/24303d0...HEAD)
+- [1.0.0...Unreleased](https://github.com/mileszs/wicked_pdf/compare/f0b49fa...HEAD)
+- [1.0.0...1.0.1](https://github.com/mileszs/wicked_pdf/compare/24303d0...f0b49fa)
 - [0.11.0...1.0.0](https://github.com/mileszs/wicked_pdf/compare/968ae69...24303d0)
 - [0.10.2...0.11.0](https://github.com/mileszs/wicked_pdf/compare/076f043...968ae69)
 - [0.10.1...0.10.2](https://github.com/mileszs/wicked_pdf/compare/a920bc9...076f043)
