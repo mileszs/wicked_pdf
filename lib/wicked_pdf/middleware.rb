@@ -1,13 +1,13 @@
 class WickedPdf
   class Middleware
     def initialize(app, options = {}, conditions = {})
-      @app        = app
-      @options    = (WickedPdf.config || {}).merge(options)
+      @app = app
+      @options = (WickedPdf.config || {}).merge(options)
       @conditions = conditions
     end
 
     def call(env)
-      @request    = Rack::Request.new(env)
+      @request = Rack::Request.new(env)
       @render_pdf = false
 
       set_request_to_render_as_pdf(env) if render_as_pdf?
@@ -25,10 +25,10 @@ class WickedPdf
         headers.delete('ETag')
         headers.delete('Cache-Control')
 
-        headers['Content-Length']         = (body.respond_to?(:bytesize) ? body.bytesize : body.size).to_s
-        headers['Content-Type']           = 'application/pdf'
+        headers['Content-Length'] = (body.respond_to?(:bytesize) ? body.bytesize : body.size).to_s
+        headers['Content-Type'] = 'application/pdf'
         if @options.fetch(:disposition, '') == 'attachment'
-          headers['Content-Disposition']       = 'attachment'
+          headers['Content-Disposition'] = 'attachment'
           headers['Content-Transfer-Encoding'] = 'binary'
         end
       end

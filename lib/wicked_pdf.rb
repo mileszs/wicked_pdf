@@ -164,11 +164,11 @@ class WickedPdf
     end
     if type == :name_value
       parts = value.to_s.split(' ')
-      ["--#{name.gsub('_', '-')}", *parts]
+      ["--#{name.tr('_', '-')}", *parts]
     elsif type == :boolean
-      ["--#{name.gsub('_', '-')}"]
+      ["--#{name.tr('_', '-')}"]
     else
-      ["--#{name.gsub('_', '-')}", value.to_s]
+      ["--#{name.tr('_', '-')}", value.to_s]
     end
   end
 

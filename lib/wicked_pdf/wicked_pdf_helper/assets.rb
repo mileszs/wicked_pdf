@@ -22,9 +22,7 @@ module WickedPdfHelper
           "url(#{Regexp.last_match[1]})"
         else
           asset = Regexp.last_match[1]
-          if asset_exists?(asset)
-            "url(#{wicked_pdf_asset_path(asset)})"
-          end
+          "url(#{wicked_pdf_asset_path(asset)})" if asset_exists?(asset)
         end
       end.html_safe
     end
