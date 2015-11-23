@@ -53,7 +53,12 @@ module PdfHelper
   end
 
   def make_pdf(options = {})
-    render_opts = { :template => options[:template], :layout => options[:layout], :formats => options[:formats], :handlers => options[:handlers] }
+    render_opts = {
+      :template => options[:template],
+      :layout => options[:layout],
+      :formats => options[:formats],
+      :handlers => options[:handlers]
+    }
     render_opts.merge!(:locals => options[:locals]) if options[:locals]
     render_opts.merge!(:file => options[:file]) if options[:file]
     html_string = render_to_string(render_opts)
@@ -68,7 +73,13 @@ module PdfHelper
     options[:template] ||= File.join(controller_path, action_name)
     options[:disposition] ||= 'inline'
     if options[:show_as_html]
-      render_opts = { :template => options[:template], :layout => options[:layout], :formats => options[:formats], :handlers => options[:handlers], :content_type => 'text/html' }
+      render_opts = {
+        :template => options[:template],
+        :layout => options[:layout],
+        :formats => options[:formats],
+        :handlers => options[:handlers],
+        :content_type => 'text/html'
+      }
       render_opts.merge!(:locals => options[:locals]) if options[:locals]
       render_opts.merge!(:file => options[:file]) if options[:file]
       render(render_opts)
@@ -87,7 +98,12 @@ module PdfHelper
       @hf_tempfiles = [] unless defined?(@hf_tempfiles)
       @hf_tempfiles.push(tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html"))
       options[hf][:html][:layout] ||= options[:layout]
-      render_opts = { :template => options[hf][:html][:template], :layout => options[hf][:html][:layout], :formats => options[hf][:html][:formats], :handlers => options[hf][:html][:handlers] }
+      render_opts = {
+        :template => options[hf][:html][:template],
+        :layout => options[hf][:html][:layout],
+        :formats => options[hf][:html][:formats],
+        :handlers => options[hf][:html][:handlers]
+      }
       render_opts.merge!(:locals => options[hf][:html][:locals]) if options[hf][:html][:locals]
       render_opts.merge!(:file => options[hf][:html][:file]) if options[:file]
       tf.write render_to_string(render_opts)
