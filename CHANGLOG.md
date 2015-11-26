@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [master] - Unpublished
+### Changed
+- The default dpi is now 72. Previously the default would be whatever your `wkhtmltopdf` version specified as the default. This change [speeds up generation of documents that contain `border-radius` dramatically](https://github.com/wkhtmltopdf/wkhtmltopdf/issues/1510)
+
 ## [1.0.0] - 2015-11-03
 ### Changed
 - Accepted that `WickedPDF` cannot guarantee backwards compatibility with older versions of `wkthmltopdf`, and decided to publish a new version with the MAJOR number incremented, signaling that this may have breaking changes for some people, but providing a path forward for progress. This release number also signals that this is a mature (and relatively stable) project, and should be deemed ready for production (since it has been used in production since ~2009, and downloaded over a *million* times on [RubyGems.org](https://rubygems.org/gems/wicked_pdf)).
