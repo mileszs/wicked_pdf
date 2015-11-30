@@ -35,6 +35,8 @@ gem 'wkhtmltopdf-binary'
 
 To your Gemfile and run `bundle install`.
 
+This wrapper may trail in versions, at the moment it wraps the 0.9 version of `wkhtmltopdf` while there is 0.12 version available. Some of the advanced options listed below is not available with 0.9.
+
 If your wkhtmltopdf executable is not on your webserver's path, you can configure it in an initializer:
 
 ```ruby
