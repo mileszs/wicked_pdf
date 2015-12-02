@@ -72,7 +72,6 @@ module PdfHelper
     options[:layout] ||= false
     options[:template] ||= File.join(controller_path, action_name)
     options[:disposition] ||= 'inline'
-    options[:dpi] ||= '72'
     if options[:show_as_html]
       render_opts = {
         :template => options[:template],
