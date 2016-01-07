@@ -18,28 +18,74 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
     end
 
     test 'wicked_pdf_asset_path should return a url when assets are served by an asset server using HTTPS' do
-      expects(:asset_path => 'https://assets.domain.com/dummy.png', 'precompiled_asset?' => true)
+      Rails.configuration.assets.expects(:compile => false)
+      expects(:asset_path => 'https://assets.domain.com/dummy.png')
       assert_equal 'https://assets.domain.com/dummy.png', wicked_pdf_asset_path('dummy.png')
     end
 
     test 'wicked_pdf_asset_path should return a url with a protocol when assets are served by an asset server with relative urls' do
+      Rails.configuration.assets.expects(:compile => false)
       expects(:asset_path => '//assets.domain.com/dummy.png')
-      expects('precompiled_asset?' => true)
       assert_equal 'http://assets.domain.com/dummy.png', wicked_pdf_asset_path('dummy.png')
     end
 
     test 'wicked_pdf_asset_path should return a url with a protocol when assets are served by an asset server with no protocol set' do
+      Rails.configuration.assets.expects(:compile => false)
       expects(:asset_path => 'assets.domain.com/dummy.png')
-      expects('precompiled_asset?' => true)
       assert_equal 'http://assets.domain.com/dummy.png', wicked_pdf_asset_path('dummy.png')
     end
 
-    test 'wicked_pdf_asset_path should return a path when assets are precompiled' do
-      expects('precompiled_asset?' => false)
+    test 'wicked_pdf_asset_path should return a path' do
+      Rails.configuration.assets.expects(:compile => true)
       path = wicked_pdf_asset_path('application.css')
 
-      assert path.include?('/assets/stylesheets/application.css')
+      assert path.include?('/app/assets/stylesheets/application.css')
       assert path.include?('file:///')
+
+      Rails.configuration.assets.expects(:compile => false)
+      expects(:asset_path => '/assets/application-6fba03f13d6ff1553477dba03475c4b9b02542e9fb8913bd63c258f4de5b48d9.css')
+      path = wicked_pdf_asset_path('application.css')
+
+      assert path.include?('/public/assets/application-6fba03f13d6ff1553477dba03475c4b9b02542e9fb8913bd63c258f4de5b48d9.css')
+      assert path.include?('file:///')
+    end
+
+    # This assets does not exists so probably it doesn't matter what is
+    # returned, but lets ensure that returned value is the same when assets
+    # are precompiled and when they are not
+    test 'wicked_pdf_asset_path should return a path when asset does not exist' do
+      Rails.configuration.assets.expects(:compile => true)
+      path = wicked_pdf_asset_path('missing.png')
+
+      assert path.include?('/public/missing.png')
+      assert path.include?('file:///')
+
+      Rails.configuration.assets.expects(:compile => false)
+      expects(:asset_path => '/missing.png')
+      path = wicked_pdf_asset_path('missing.png')
+
+      assert path.include?('/public/missing.png')
+      assert path.include?('file:///')
+    end
+
+    test 'wicked_pdf_asset_path should return a url when asset is url' do
+      Rails.configuration.assets.expects(:compile => true)
+      expects(:asset_path => 'http://example.com/rails.png')
+      assert_equal 'http://example.com/rails.png', wicked_pdf_asset_path('http://example.com/rails.png')
+
+      Rails.configuration.assets.expects(:compile => false)
+      expects(:asset_path => 'http://example.com/rails.png')
+      assert_equal 'http://example.com/rails.png', wicked_pdf_asset_path('http://example.com/rails.png')
+    end
+
+    test 'wicked_pdf_asset_path should return a url when asset is url without protocol' do
+      Rails.configuration.assets.expects(:compile => true)
+      expects(:asset_path => '//example.com/rails.png')
+      assert_equal 'http://example.com/rails.png', wicked_pdf_asset_path('//example.com/rails.png')
+
+      Rails.configuration.assets.expects(:compile => false)
+      expects(:asset_path => '//example.com/rails.png')
+      assert_equal 'http://example.com/rails.png', wicked_pdf_asset_path('//example.com/rails.png')
     end
 
     test 'WickedPdfHelper::Assets::ASSET_URL_REGEX should match various URL data type formats' do

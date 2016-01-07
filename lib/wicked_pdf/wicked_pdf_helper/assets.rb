@@ -21,8 +21,7 @@ module WickedPdfHelper
         if Regexp.last_match[1].starts_with?('data:')
           "url(#{Regexp.last_match[1]})"
         else
-          asset = Regexp.last_match[1]
-          "url(#{wicked_pdf_asset_path(asset)})" if asset_exists?(asset)
+          "url(#{wicked_pdf_asset_path(Regexp.last_match[1])})"
         end
       end.html_safe
     end
@@ -57,15 +56,17 @@ module WickedPdfHelper
     URI_REGEXP = %r{^[-a-z]+://|^(?:cid|data):|^//}
 
     def asset_pathname(source)
-      if precompiled_asset?(source)
-        if (pathname = set_protocol(asset_path(source))) =~ URI_REGEXP
+      if precompiled_or_absolute_asset?(source)
+        asset = asset_path(source)
+        if (pathname = set_protocol(asset)) =~ URI_REGEXP
           # asset_path returns an absolute URL using asset_host if asset_host is set
           pathname
         else
-          File.join(Rails.public_path, asset_path(source).sub(/\A#{Rails.application.config.action_controller.relative_url_root}/, ''))
+          File.join(Rails.public_path, asset.sub(/\A#{Rails.application.config.action_controller.relative_url_root}/, ''))
         end
       else
-        Rails.application.assets.find_asset(source).pathname
+        asset = Rails.application.assets.find_asset(source)
+        asset ? asset.pathname : File.join(Rails.public_path, source)
       end
     end
 
@@ -81,25 +82,27 @@ module WickedPdfHelper
       source
     end
 
-    def precompiled_asset?(source)
-      Rails.configuration.assets.compile == false || source.to_s[0] == '/'
+    def precompiled_or_absolute_asset?(source)
+      Rails.configuration.assets.compile == false ||
+        source.to_s[0] == '/' ||
+        source.to_s.match(/\Ahttps?\:\/\//)
     end
 
     def read_asset(source)
-      if precompiled_asset?(source)
-        if set_protocol(asset_path(source)) =~ URI_REGEXP
-          read_from_uri(source)
-        elsif asset_exists?(source)
-          IO.read(asset_pathname(source))
+      if precompiled_or_absolute_asset?(source)
+        if (pathname = asset_pathname(source)) =~ URI_REGEXP
+          read_from_uri(pathname)
+        elsif File.file?(pathname)
+          IO.read(pathname)
         end
       else
         Rails.application.assets.find_asset(source).to_s
       end
     end
 
-    def read_from_uri(source)
+    def read_from_uri(uri)
       encoding = ':UTF-8' if RUBY_VERSION > '1.8'
-      asset = open(asset_pathname(source), "r#{encoding}") { |f| f.read }
+      asset = open(uri, "r#{encoding}") { |f| f.read }
       asset = gzip(asset) if WickedPdf.config[:expect_gzipped_remote_assets]
       asset
     end
@@ -109,10 +112,6 @@ module WickedPdfHelper
       gzipper = Zlib::GzipReader.new(stringified_asset)
       gzipper.read
     rescue Zlib::GzipFile::Error
-    end
-
-    def asset_exists?(source)
-      Rails.application.assets.find_asset(source).present?
     end
   end
 end
