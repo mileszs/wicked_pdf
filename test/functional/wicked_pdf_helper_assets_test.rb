@@ -6,9 +6,6 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
 
   if Rails::VERSION::MAJOR > 3 || (Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0)
     test 'wicked_pdf_asset_base64 returns a base64 encoded asset' do
-      source = File.new('test/fixtures/wicked.css', 'r')
-      destination = Rails.root.join('app', 'assets', 'stylesheets', 'wicked.css')
-      File.open(destination, 'w') { |f| f.write(source) }
       assert_match /data:text\/css;base64,.+/, wicked_pdf_asset_base64('wicked.css')
     end
 

@@ -16,3 +16,9 @@ end
 require 'wicked_pdf'
 
 Rails.backtrace_cleaner.remove_silencers!
+
+if (assets_dir = Rails.root.join('app/assets')) && File.directory?(assets_dir)
+  destination = assets_dir.join('stylesheets/wicked.css')
+  source = File.read('test/fixtures/wicked.css')
+  File.open(destination, 'w') { |f| f.write(source) }
+end
