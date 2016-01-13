@@ -38,7 +38,7 @@ module PdfHelper
   private
 
   def log_pdf_creation
-    logger.info '*' * 15 + 'WICKED' + '*' * 15 unless logger.nil?
+    logger.info '*' * 15 + 'WICKED' + '*' * 15 if logger && logger.respond_to?(:info)
   end
 
   def set_basic_auth(options = {})
