@@ -166,7 +166,11 @@ class WickedPdf
       parts = value.to_s.split(' ')
       ["--#{name.tr('_', '-')}", *parts]
     elsif type == :boolean
-      ["--#{name.tr('_', '-')}"]
+      if value
+        ["--#{name.tr('_', '-')}"]
+      else
+        []
+      end
     else
       ["--#{name.tr('_', '-')}", value.to_s]
     end
@@ -321,7 +325,7 @@ class WickedPdf
                                   :disable_smart_shrinking,
                                   :use_xserver,
                                   :no_background], '', :boolean)
-      r += make_options(options, [:no_stop_slow_scripts], '', nil)
+      r += make_options(options, [:no_stop_slow_scripts], '', :boolean)
     end
     r
   end
