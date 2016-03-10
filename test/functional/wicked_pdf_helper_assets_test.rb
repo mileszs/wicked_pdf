@@ -95,11 +95,11 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
       assert_no_match WickedPdfHelper::Assets::ASSET_URL_REGEX, '.url { \'http://assets.domain.com/dummy.png\' }'
     end
 
-    test 'set_protocol should properly set the protocol when the asset is precompiled' do
-      assert_equal 'http://assets.domain.com/dummy.png', set_protocol('//assets.domain.com/dummy.png')
-      assert_equal '/assets.domain.com/dummy.png', set_protocol('/assets.domain.com/dummy.png')
-      assert_equal 'http://assets.domain.com/dummy.png', set_protocol('http://assets.domain.com/dummy.png')
-      assert_equal 'https://assets.domain.com/dummy.png', set_protocol('https://assets.domain.com/dummy.png')
+    test 'prepend_protocol should properly set the protocol when the asset is precompiled' do
+      assert_equal 'http://assets.domain.com/dummy.png', prepend_protocol('//assets.domain.com/dummy.png')
+      assert_equal '/assets.domain.com/dummy.png', prepend_protocol('/assets.domain.com/dummy.png')
+      assert_equal 'http://assets.domain.com/dummy.png', prepend_protocol('http://assets.domain.com/dummy.png')
+      assert_equal 'https://assets.domain.com/dummy.png', prepend_protocol('https://assets.domain.com/dummy.png')
     end
   end
 end

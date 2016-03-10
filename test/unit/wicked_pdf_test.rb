@@ -7,16 +7,13 @@ HTML_DOCUMENT = '<html><body>Hello World</body></html>'.freeze
 # Also, smash the returned array of options into a single string for
 # convenience in testing below.
 class WickedPdf
+  attr_accessor :binary_version
   def get_parsed_options(opts)
     parse_options(opts).join(' ')
   end
 
   def get_valid_option(name)
     valid_option(name)
-  end
-
-  def set_binary_version_to(version)
-    @binary_version = version
   end
 end
 
@@ -210,11 +207,11 @@ class WickedPdfTest < ActiveSupport::TestCase
   end
 
   test 'should set version on initialize' do
-    assert_not_equal @wp.send(:get_binary_version), ''
+    assert_not_equal @wp.send(:binary_version), ''
   end
 
   test 'should not use double dash options for version without dashes' do
-    @wp.set_binary_version_to(WickedPdf::BINARY_VERSION_WITHOUT_DASHES)
+    @wp.binary_version = WickedPdf::BINARY_VERSION_WITHOUT_DASHES
 
     %w(toc cover).each do |name|
       assert_equal @wp.get_valid_option(name), name
@@ -222,7 +219,7 @@ class WickedPdfTest < ActiveSupport::TestCase
   end
 
   test 'should use double dash options for version with dashes' do
-    @wp.set_binary_version_to(Gem::Version.new('0.11.0'))
+    @wp.binary_version = Gem::Version.new('0.11.0')
 
     %w(toc cover).each do |name|
       assert_equal @wp.get_valid_option(name), "--#{name}"
