@@ -36,6 +36,7 @@ task :dummy_generate do
   puts 'Creating dummy application to run tests'
   prefix = (Rails::VERSION::MAJOR == 2) ? '' : 'new '
   system("rails #{prefix}test/dummy")
+  system("touch #{prefix}test/dummy/db/schema.rb")
   FileUtils.rm_r Dir.glob('test/dummy/test/*')
 end
 
