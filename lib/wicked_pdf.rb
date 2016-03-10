@@ -31,7 +31,7 @@ require 'wicked_pdf/middleware'
 class WickedPdf
   DEFAULT_BINARY_VERSION = Gem::Version.new('0.9.9')
   BINARY_VERSION_WITHOUT_DASHES = Gem::Version.new('0.12.0')
-  EXE_NAME = 'wkhtmltopdf'
+  EXE_NAME = 'wkhtmltopdf'.freeze
   @@config = {}
   cattr_accessor :config
 
@@ -86,7 +86,7 @@ class WickedPdf
     generated_pdf_file.rewind
     generated_pdf_file.binmode
     pdf = generated_pdf_file.read
-    fail "PDF could not be generated!\n Command Error: #{err}" if pdf && pdf.rstrip.length == 0
+    fail "PDF could not be generated!\n Command Error: #{err}" if pdf && pdf.rstrip.empty?
     pdf
   rescue => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
@@ -198,9 +198,9 @@ class WickedPdf
     [:header, :footer].collect do |hf|
       next if options[hf].blank?
       opt_hf = options[hf]
-      r += make_options(opt_hf, [:center, :font_name, :left, :right], "#{hf}")
-      r += make_options(opt_hf, [:font_size, :spacing], "#{hf}", :numeric)
-      r += make_options(opt_hf, [:line], "#{hf}", :boolean)
+      r += make_options(opt_hf, [:center, :font_name, :left, :right], hf.to_s)
+      r += make_options(opt_hf, [:font_size, :spacing], hf.to_s, :numeric)
+      r += make_options(opt_hf, [:line], hf.to_s, :boolean)
       if options[hf] && options[hf][:content]
         @hf_tempfiles = [] unless defined?(@hf_tempfiles)
         @hf_tempfiles.push(tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html"))

@@ -1,5 +1,4 @@
 module PdfHelper
-  require 'wicked_pdf'
   require 'tempfile'
 
   def self.included(base)
@@ -59,8 +58,8 @@ module PdfHelper
       :formats => options[:formats],
       :handlers => options[:handlers]
     }
-    render_opts.merge!(:locals => options[:locals]) if options[:locals]
-    render_opts.merge!(:file => options[:file]) if options[:file]
+    render_opts[:locals] = options[:locals] if options[:locals]
+    render_opts[:file] = options[:file] if options[:file]
     html_string = render_to_string(render_opts)
     options = prerender_header_and_footer(options)
     w = WickedPdf.new(options[:wkhtmltopdf])
@@ -80,8 +79,8 @@ module PdfHelper
         :handlers => options[:handlers],
         :content_type => 'text/html'
       }
-      render_opts.merge!(:locals => options[:locals]) if options[:locals]
-      render_opts.merge!(:file => options[:file]) if options[:file]
+      render_opts[:locals] = options[:locals] if options[:locals]
+      render_opts[:file] = options[:file] if options[:file]
       render(render_opts)
     else
       pdf_content = make_pdf(options)
@@ -104,8 +103,8 @@ module PdfHelper
         :formats => options[hf][:html][:formats],
         :handlers => options[hf][:html][:handlers]
       }
-      render_opts.merge!(:locals => options[hf][:html][:locals]) if options[hf][:html][:locals]
-      render_opts.merge!(:file => options[hf][:html][:file]) if options[:file]
+      render_opts[:locals] = options[hf][:html][:locals] if options[hf][:html][:locals]
+      render_opts[:file] = options[hf][:html][:file] if options[:file]
       tf.write render_to_string(render_opts)
       tf.flush
       options[hf][:html][:url] = "file:///#{tf.path}"

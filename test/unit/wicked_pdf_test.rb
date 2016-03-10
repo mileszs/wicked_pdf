@@ -1,7 +1,7 @@
 require 'test_helper'
 
 WickedPdf.config = { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf' }
-HTML_DOCUMENT = '<html><body>Hello World</body></html>'
+HTML_DOCUMENT = '<html><body>Hello World</body></html>'.freeze
 
 # Provide a public accessor to the normally-private parse_options function.
 # Also, smash the returned array of options into a single string for
@@ -157,7 +157,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     pathname = Rails.root.join('app', 'views', 'pdf', 'file.html')
     assert_equal "#{cover_option} http://example.org", wp.get_parsed_options(:cover => 'http://example.org').strip, 'URL'
     assert_equal "#{cover_option} #{pathname}", wp.get_parsed_options(:cover => pathname).strip, 'Pathname'
-    assert_match /#{cover_option} .+wicked_cover_pdf.+\.html/, wp.get_parsed_options(:cover => '<html><body>HELLO</body></html>').strip, 'HTML'
+    assert_match(/#{cover_option} .+wicked_cover_pdf.+\.html/, wp.get_parsed_options(:cover => '<html><body>HELLO</body></html>').strip, 'HTML')
   end
 
   test 'should parse other options' do
