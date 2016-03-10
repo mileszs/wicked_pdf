@@ -67,8 +67,8 @@ class WickedPdf
         rules.map do |pattern|
           if pattern.is_a?(Regexp)
             return false if @request.fullpath =~ pattern
-          else
-            return false if @request.path[0, pattern.length] == pattern
+          elsif @request.path[0, pattern.length] == pattern
+            return false
           end
         end
 
