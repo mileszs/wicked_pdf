@@ -198,9 +198,9 @@ class WickedPdf
     [:header, :footer].collect do |hf|
       next if options[hf].blank?
       opt_hf = options[hf]
-      r += make_options(opt_hf, [:center, :font_name, :left, :right].to_s)
-      r += make_options(opt_hf, [:font_size, :spacing].to_s, :numeric)
-      r += make_options(opt_hf, [:line].to_s, :boolean)
+      r += make_options(opt_hf, [:center, :font_name, :left, :right], hf.to_s)
+      r += make_options(opt_hf, [:font_size, :spacing], hf.to_s, :numeric)
+      r += make_options(opt_hf, [:line], hf.to_s, :boolean)
       if options[hf] && options[hf][:content]
         @hf_tempfiles = [] unless defined?(@hf_tempfiles)
         @hf_tempfiles.push(tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html"))
