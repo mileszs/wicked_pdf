@@ -1,5 +1,4 @@
 module PdfHelper
-  require 'wicked_pdf'
   require 'tempfile'
 
   def self.included(base)
