@@ -79,7 +79,7 @@ module PdfHelper
         :handlers => options[:handlers],
         :content_type => 'text/html'
       }
-      rrender_opts[:locals] = options[:locals] if options[:locals]
+      render_opts[:locals] = options[:locals] if options[:locals]
       render_opts[:file] = options[:file] if options[:file]
       render(render_opts)
     else

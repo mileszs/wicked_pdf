@@ -34,6 +34,7 @@ class WickedPdf
   EXE_NAME = 'wkhtmltopdf'.freeze
   @@config = {}
   cattr_accessor :config
+  attr_accessor :binary_version
 
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path || find_wkhtmltopdf_binary_path
@@ -86,7 +87,7 @@ class WickedPdf
     generated_pdf_file.rewind
     generated_pdf_file.binmode
     pdf = generated_pdf_file.read
-    raise "PDF could not be generated!\n Command Error: #{err}" if pdf.empty?
+    fail "PDF could not be generated!\n Command Error: #{err}" if pdf && pdf.rstrip.empty?
     pdf
   rescue => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
@@ -101,10 +102,6 @@ class WickedPdf
     RAILS_ENV == 'development' if defined?(RAILS_ENV)
   end
 
-  def get_binary_version
-    @binary_version
-  end
-
   def on_windows?
     RbConfig::CONFIG['target_os'] =~ /mswin|mingw/
   end
@@ -117,6 +114,7 @@ class WickedPdf
     _stdin, stdout, _stderr = Open3.popen3(@exe_path + ' -V')
     @binary_version = parse_version(stdout.gets(nil))
   rescue StandardError
+    DEFAULT_BINARY_VERSION
   end
 
   def parse_version(version_info)
@@ -173,7 +171,7 @@ class WickedPdf
   end
 
   def valid_option(name)
-    if get_binary_version < BINARY_VERSION_WITHOUT_DASHES
+    if binary_version < BINARY_VERSION_WITHOUT_DASHES
       "--#{name}"
     else
       name
