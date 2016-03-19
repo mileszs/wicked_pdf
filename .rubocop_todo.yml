@@ -5,13 +5,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 2
-Lint/AmbiguousRegexpLiteral:
-  Enabled: false
-
-# Offense count: 2
-Lint/HandleExceptions:
-  Enabled: false
 
 # Offense count: 9
 Metrics/AbcSize:
@@ -44,7 +37,7 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 12
 
-# Offense count: 5
+# Offense count: 2
 Style/AccessorMethodName:
   Enabled: false
 

@@ -58,7 +58,8 @@ module WickedPdfHelper
     def asset_pathname(source)
       if precompiled_or_absolute_asset?(source)
         asset = asset_path(source)
-        if (pathname = set_protocol(asset)) =~ URI_REGEXP
+        pathname = prepend_protocol(asset)
+        if pathname =~ URI_REGEXP
           # asset_path returns an absolute URL using asset_host if asset_host is set
           pathname
         else
@@ -72,7 +73,7 @@ module WickedPdfHelper
 
     # will prepend a http or default_protocol to a protocol relative URL
     # or when no protcol is set.
-    def set_protocol(source)
+    def prepend_protocol(source)
       protocol = WickedPdf.config[:default_protocol] || 'http'
       if source[0, 2] == '//'
         source = [protocol, ':', source].join
@@ -90,7 +91,8 @@ module WickedPdfHelper
 
     def read_asset(source)
       if precompiled_or_absolute_asset?(source)
-        if (pathname = asset_pathname(source)) =~ URI_REGEXP
+        pathname = asset_pathname(source)
+        if pathname =~ URI_REGEXP
           read_from_uri(pathname)
         elsif File.file?(pathname)
           IO.read(pathname)
@@ -112,6 +114,7 @@ module WickedPdfHelper
       gzipper = Zlib::GzipReader.new(stringified_asset)
       gzipper.read
     rescue Zlib::GzipFile::Error
+      nil
     end
   end
 end
