@@ -1,7 +1,7 @@
 require 'test_helper'
 
 WickedPdf.config = { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf' }
-HTML_DOCUMENT = '<html><body>Hello World</body></html>'
+HTML_DOCUMENT = '<html><body>Hello World</body></html>'.freeze
 
 # Provide a public accessor to the normally-private parse_options function.
 # Also, smash the returned array of options into a single string for

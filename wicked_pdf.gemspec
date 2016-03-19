@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'mocha'
   spec.add_development_dependency 'test-unit'
 
-  spec.description       = <<desc
+  spec.description = <<desc
 Wicked PDF uses the shell utility wkhtmltopdf to serve a PDF file to a user from HTML.
 In other words, rather than dealing with a PDF generation DSL of some sort,
 you simply write an HTML view as you would normally, and let Wicked take care of the hard stuff.
