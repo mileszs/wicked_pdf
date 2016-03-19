@@ -41,7 +41,7 @@ class WickedPdf
     fail "Bad #{EXE_NAME}'s path: #{@exe_path}" unless File.exist?(@exe_path)
     fail "#{EXE_NAME} is not executable" unless File.executable?(@exe_path)
 
-    retreive_binary_version
+    retrieve_binary_version
   end
 
   def pdf_from_html_file(filepath, options = {})
@@ -113,7 +113,7 @@ class WickedPdf
     p '*' * 15 + cmd + '*' * 15
   end
 
-  def retreive_binary_version
+  def retrieve_binary_version
     _stdin, stdout, _stderr = Open3.popen3(@exe_path + ' -V')
     @binary_version = parse_version(stdout.gets(nil))
   rescue StandardError
