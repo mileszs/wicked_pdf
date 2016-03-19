@@ -6,7 +6,7 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
 
   if Rails::VERSION::MAJOR > 3 || (Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0)
     test 'wicked_pdf_asset_base64 returns a base64 encoded asset' do
-      assert_match /data:text\/css;base64,.+/, wicked_pdf_asset_base64('wicked.css')
+      assert_match %r(data:text\/css;base64,.+), wicked_pdf_asset_base64('wicked.css')
     end
 
     test 'wicked_pdf_asset_path should return a url when assets are served by an asset server' do

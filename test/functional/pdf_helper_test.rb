@@ -21,7 +21,7 @@ class PdfHelperTest < ActionController::TestCase
     test 'should prerender header and footer :template options' do
       options = @ac.send(:prerender_header_and_footer,
                          :header => { :html => { :template => 'hf.html.erb' } })
-      assert_match /^file:\/\/\/.*wicked_header_pdf.*\.html/, options[:header][:html][:url]
+      assert_match %r(^file:\/\/\/.*wicked_header_pdf.*\.html), options[:header][:html][:url]
     end
   end
 end
