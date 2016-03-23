@@ -220,7 +220,7 @@ class WickedPdfTest < ActiveSupport::TestCase
   end
 
   test 'options are shellescaped' do
-    options = { :header => { left: "That's crazy" } }
+    options = { :header => { :left => "That's crazy" } }
     assert_equal "--header-left That\\'s\\ crazy", @wp.get_parsed_options(options)
   end
 end

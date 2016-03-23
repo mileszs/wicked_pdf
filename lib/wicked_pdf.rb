@@ -162,7 +162,7 @@ class WickedPdf
       return value.collect { |v| make_option(name, v, type) }
     end
     if type == :name_value
-      parts = value.to_s.split(' ').map {|part| part.shellescape }
+      parts = value.to_s.split(' ').map { |part| part.shellescape }
       ["--#{name.tr('_', '-')}", *parts]
     elsif type == :boolean
       ["--#{name.tr('_', '-')}"]
