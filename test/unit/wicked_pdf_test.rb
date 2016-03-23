@@ -218,4 +218,9 @@ class WickedPdfTest < ActiveSupport::TestCase
     cover_option = @wp.get_valid_option('cover')
     assert_equal @wp.get_parsed_options(options), "--disable-javascript --header-center 3 #{cover_option} http://example.org"
   end
+
+  test 'options are shellescaped' do
+    options = { :header => { left: "That's crazy" } }
+    assert_equal "--header-left That\\'s\\ crazy", @wp.get_parsed_options(options)
+  end
 end
