@@ -2,9 +2,37 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [master] - Unpublished
+## [1.0.5] - 2016-03-28
+### Changed
+- Numerous RuboCop style violation fixes, spelling errors, and test-setup issues from [indyrb.org](http://indyrb.org/) hack night. Thank you all for your contributions!
+
+### Fixed
+- Shellescape options. A stray quote in `header` or `footer` would cause PDF to fail to generate, and this should close down many potential attack vectors if you allow user-supplied values to be passed into `wicked_pdf` render options.
+
+## [1.0.4] - 2016-01-26
+### Changed
+- Check that logger responds to info before calling it. It was possible to have a `logger` method defined as a controller helper that would override `Rails.logger`.
+
+### Fixed
+- [Issue with Sprockets 3.0](https://github.com/mileszs/wicked_pdf/issues/476) where an asset referenced in a stylesheet not existing would raise an exception `read_asset` on nil.
+
+## [1.0.3] - 2015-12-02
+### Changed
+- Revert default DPI. Some installs of `wkhtmltopdf` would experience major slowdowns or crashes with it set to 72. It is suggested that a DPI of 75 may be better, but I'm holding off on making it a default without more information.
+
+## [1.0.2] - 2015-11-30
 ### Changed
 - The default dpi is now 72. Previously the default would be whatever your `wkhtmltopdf` version specified as the default. This change [speeds up generation of documents that contain `border-radius` dramatically](https://github.com/wkhtmltopdf/wkhtmltopdf/issues/1510)
+
+## [1.0.1] - 2015-11-19
+### Changed
+- Made minor RuboCop style tweaks.
+
+### Added
+- Added default [RuboCop](https://github.com/bbatsov/rubocop) config and run after test suite.
+
+### Fixed
+- Issue with `nil.basename` from asset helpers.
 
 ## [1.0.0] - 2015-11-03
 ### Changed
@@ -37,10 +65,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Asset helpers no longer add a file extension if it already is specified with one
 
 # Compare Releases
-- [1.0.0...Unreleased](https://github.com/mileszs/wicked_pdf/compare/f0b49fa...HEAD)
-- [1.0.0...1.0.1](https://github.com/mileszs/wicked_pdf/compare/24303d0...f0b49fa)
-- [0.11.0...1.0.0](https://github.com/mileszs/wicked_pdf/compare/968ae69...24303d0)
-- [0.10.2...0.11.0](https://github.com/mileszs/wicked_pdf/compare/076f043...968ae69)
-- [0.10.1...0.10.2](https://github.com/mileszs/wicked_pdf/compare/a920bc9...076f043)
-- [0.10.0...0.10.1](https://github.com/mileszs/wicked_pdf/compare/df67c30...a920bc9)
-- [0.9.10...0.10.0](https://github.com/mileszs/wicked_pdf/compare/9daecee...df67c30)
+- [1.0.5...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.0.5...HEAD)
+- [1.0.4...1.0.5](https://github.com/mileszs/wicked_pdf/compare/1.0.4...1.0.5)
+- [1.0.3...1.0.4](https://github.com/mileszs/wicked_pdf/compare/1.0.3...1.0.4)
+- [1.0.2...1.0.3](https://github.com/mileszs/wicked_pdf/compare/1.0.2...1.0.3)
+- [1.0.1...1.0.2](https://github.com/mileszs/wicked_pdf/compare/1.0.1...1.0.2)
+- [1.0.0...1.0.1](https://github.com/mileszs/wicked_pdf/compare/1.0.0...1.0.1)
+- [0.11.0...1.0.0](https://github.com/mileszs/wicked_pdf/compare/0.11.0...1.0.0)
+- [0.10.2...0.11.0](https://github.com/mileszs/wicked_pdf/compare/0.10.2...0.11.0)
+- [0.10.1...0.10.2](https://github.com/mileszs/wicked_pdf/compare/0.10.1...0.10.2)
+- [0.10.0...0.10.1](https://github.com/mileszs/wicked_pdf/compare/0.10.0...0.10.1)
+- [0.9.10...0.10.0](https://github.com/mileszs/wicked_pdf/compare/0.9.10...0.10.0)
