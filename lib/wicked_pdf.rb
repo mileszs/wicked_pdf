@@ -4,7 +4,6 @@
 require 'logger'
 require 'digest/md5'
 require 'rbconfig'
-require 'shellwords'
 
 if (RbConfig::CONFIG['target_os'] =~ /mswin|mingw/) && (RUBY_VERSION < '1.9')
   require 'win32/open3'
@@ -162,12 +161,12 @@ class WickedPdf
       return value.collect { |v| make_option(name, v, type) }
     end
     if type == :name_value
-      parts = value.to_s.split(' ').map { |part| part.shellescape }
+      parts = value.to_s.split(' ')
       ["--#{name.tr('_', '-')}", *parts]
     elsif type == :boolean
       ["--#{name.tr('_', '-')}"]
     else
-      ["--#{name.tr('_', '-')}", value.to_s.shellescape]
+      ["--#{name.tr('_', '-')}", value.to_s]
     end
   end
 
