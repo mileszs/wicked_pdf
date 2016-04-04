@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.6] - 2016-04-04
+### Changed
+- Revert shellescaping of options. The fix was causing more issues than it solved (like "[page] of [topage]" being escaped, and thus not parsed by `wkhtmltopdf`). See #514 for details.
+
 ## [1.0.5] - 2016-03-28
 ### Changed
 - Numerous RuboCop style violation fixes, spelling errors, and test-setup issues from [indyrb.org](http://indyrb.org/) hack night. Thank you all for your contributions!
@@ -65,7 +69,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Asset helpers no longer add a file extension if it already is specified with one
 
 # Compare Releases
-- [1.0.5...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.0.5...HEAD)
+- [1.0.6...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.0.6...HEAD)
+- [1.0.5...1.0.6](https://github.com/mileszs/wicked_pdf/compare/1.0.5...1.0.6)
 - [1.0.4...1.0.5](https://github.com/mileszs/wicked_pdf/compare/1.0.4...1.0.5)
 - [1.0.3...1.0.4](https://github.com/mileszs/wicked_pdf/compare/1.0.3...1.0.4)
 - [1.0.2...1.0.3](https://github.com/mileszs/wicked_pdf/compare/1.0.2...1.0.3)
