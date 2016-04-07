@@ -132,6 +132,7 @@ class ThingsController < ApplicationController
                post:                           ['query QUERY_PARAM'],      # could be an array or a single string in a 'name value' format
                redirect_delay:                 NUMBER,
                javascript_delay:               NUMBER,
+               window_status:                  'TEXT',                     # wait to render until some JS sets window.status to the given string
                image_quality:                  NUMBER,
                no_pdf_compression:             true,
                zoom:                           FLOAT,
