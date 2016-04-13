@@ -17,6 +17,15 @@ if defined?(Rails)
       end
     end
 
+  elsif Rails::VERSION::MAJOR == 5
+
+    unless ActionView::Base.ancestors.include?(PdfHelper)
+      ActionController::Base.send :prepend, PdfHelper
+    end
+    unless ActionView::Base.instance_methods.include? 'wicked_pdf_stylesheet_link_tag'
+      ActionView::Base.send :include, WickedPdfHelper
+    end
+
   elsif Rails::VERSION::MAJOR == 2
 
     unless ActionController::Base.instance_methods.include? 'render_with_wicked_pdf'
