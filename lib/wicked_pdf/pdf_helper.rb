@@ -19,7 +19,7 @@ module PdfHelper
     return if base != ActionController::Base
 
     base.class_eval do
-      after_filter :clean_temp_files
+      after_action :clean_temp_files
 
       alias_method :render_without_wicked_pdf, :render
       alias_method :render_to_string_without_wicked_pdf, :render_to_string
