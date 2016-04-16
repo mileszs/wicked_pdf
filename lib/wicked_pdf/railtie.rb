@@ -17,13 +17,12 @@ if defined?(Rails)
       end
     end
 
-  elsif Rails::VERSION::MAJOR == 5
-
-    unless ActionView::Base.ancestors.include?(PdfHelper)
-      ActionController::Base.send :prepend, PdfHelper
-    end
-    unless ActionView::Base.instance_methods.include? 'wicked_pdf_stylesheet_link_tag'
-      ActionView::Base.send :include, WickedPdfHelper
+  elsif Rails::VERSION::MAJOR >= 5
+    class WickedRailtie < Rails::Railtie
+      initializer 'wicked_pdf.register' do |_app|
+        ActionController::Base.send :prepend, PdfHelper
+        ActionView::Base.send :include, WickedPdfHelper::Assets
+      end
     end
 
   elsif Rails::VERSION::MAJOR == 2
