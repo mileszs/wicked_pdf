@@ -250,6 +250,18 @@ If you need to display utf encoded characters, add this to your pdf views or lay
 ```html
 <meta charset="utf-8" />
 ```
+
+### Page Breaks
+
+You can control page breaks with CSS.
+
+Add a few styles like this to your stylesheet or page:
+```css
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+```
+
 ### Page Numbering
 
 A bit of javascript can help you number your pages. Create a template or header/footer file with this:
