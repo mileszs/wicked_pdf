@@ -2,6 +2,7 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'wicked_pdf/version'
+require 'English'
 
 Gem::Specification.new do |spec|
   spec.name          = 'wicked_pdf'
@@ -18,7 +19,7 @@ In other words, rather than dealing with a PDF generation DSL of some sort,
 you simply write an HTML view as you would normally, and let Wicked take care of the hard stuff.
 desc
 
-  spec.files         = `git ls-files`.split($/)
+  spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']

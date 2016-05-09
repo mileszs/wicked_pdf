@@ -17,7 +17,7 @@ end
 
 desc 'Run RuboCop'
 task :rubocop do
-  return unless RUBY_VERSION > '1.9.2'
+  next unless RUBY_VERSION > '1.9.2'
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new
 end
