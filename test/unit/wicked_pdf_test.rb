@@ -143,7 +143,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     pathname = Rails.root.join('app', 'views', 'pdf', 'file.html')
     assert_equal "#{cover_option} http://example.org", @wp.get_parsed_options(:cover => 'http://example.org').strip, 'URL'
     assert_equal "#{cover_option} #{pathname}", @wp.get_parsed_options(:cover => pathname).strip, 'Pathname'
-    assert_match %r(#{cover_option} .+wicked_cover_pdf.+\.html), @wp.get_parsed_options(:cover => '<html><body>HELLO</body></html>').strip, 'HTML'
+    assert_match %r{#{cover_option} .+wicked_cover_pdf.+\.html}, @wp.get_parsed_options(:cover => '<html><body>HELLO</body></html>').strip, 'HTML'
   end
 
   test 'should parse other options' do
