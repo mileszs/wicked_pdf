@@ -108,9 +108,9 @@ class ThingsController < ApplicationController
       format.pdf do
         render pdf:                            'file_name',
                disposition:                    'attachment',                 # default 'inline'
-               template:                       'things/show.pdf.erb',
+               template:                       'things/show',
                file:                           "#{Rails.root}/files/foo.erb"
-               layout:                         'pdf.html',                   # use 'pdf.html' for a pdf.html.erb file
+               layout:                         'pdf',                        # for a pdf.html.erb file
                wkhtmltopdf:                    '/usr/local/bin/wkhtmltopdf', # path to binary
                show_as_html:                   params.key?('debug'),         # allow debugging based on url param
                orientation:                    'Landscape',                  # default Portrait
@@ -158,8 +158,8 @@ class ThingsController < ApplicationController
                             bottom:            SIZE,
                             left:              SIZE,
                             right:             SIZE },
-               header:  {   html: {            template: 'users/header.pdf.erb',  # use :template OR :url
-                                               layout:   'pdf_plain.html',        # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
+               header:  {   html: {            template: 'users/header',          # use :template OR :url
+                                               layout:   'pdf_plain',             # optional, use 'pdf_plain' for a pdf_plain.html.pdf.erb file, defaults to main layout
                                                url:      'www.example.com',
                                                locals:   { foo: @bar }},
                             center:            'TEXT',
@@ -170,8 +170,8 @@ class ThingsController < ApplicationController
                             spacing:           REAL,
                             line:              true,
                             content:           'HTML CONTENT ALREADY RENDERED'}, # optionally you can pass plain html already rendered (useful if using pdf_from_string)
-               footer:  {   html: {   template:'shared/footer.pdf.erb', # use :template OR :url
-                                      layout:  'pdf_plain.html',        # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
+               footer:  {   html: {   template:'shared/footer',         # use :template OR :url
+                                      layout:  'pdf_plain.html',        # optional, use 'pdf_plain' for a pdf_plain.html.pdf.erb file, defaults to main layout
                                       url:     'www.example.com',
                                       locals:  { foo: @bar }},
                             center:            'TEXT',
@@ -231,14 +231,14 @@ pdf = WickedPdf.new.pdf_from_url('https://github.com/mileszs/wicked_pdf')
 
 # create a pdf from string using templates, layouts and content option for header or footer
 pdf = WickedPdf.new.pdf_from_string(
-  render_to_string('templates/pdf.html.erb', layout: 'pdfs/layout_pdf'),
+  render_to_string('templates/pdf', layout: 'pdfs/layout_pdf'),
   footer: {
     content: render_to_string(layout: 'pdfs/layout_pdf')
   }
 )
 
 # or from your controller, using views & templates and all wicked_pdf options as normal
-pdf = render_to_string pdf: "some_file_name", template: "templates/pdf.html.erb", encoding: "UTF-8"
+pdf = render_to_string pdf: "some_file_name", template: "templates/pdf", encoding: "UTF-8"
 
 # then save to a file
 save_path = Rails.root.join('pdfs','filename.pdf')
