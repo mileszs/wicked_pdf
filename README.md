@@ -83,6 +83,29 @@ The wkhtmltopdf binary is run outside of your Rails application; therefore, your
   </body>
 </html>
 ```
+
+Using wicked_pdf_helpers with asset pipeline raises `Asset names passed to helpers should not include the "/assets/" prefix.` error. To work around this, you can use `asset_data_base64` with the normal Rails helpers.
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <%= stylesheet_link_tag asset_data_base_64("pdf") %>
+    <%= javascript_include_tag asset_data_base_64("number_pages") %>
+
+  </head>
+  <body onload='number_pages'>
+    <div id="header">
+      <%= image_tag asset_data_base_64('mysite.jpg') %>
+    </div>
+    <div id="content">
+      <%= yield %>
+    </div>
+  </body>
+</html>
+```
+
 #### CDN reference
 
 In this case, you can use that standard Rails helpers and point to the current CDN for whichever framework you are using. For jQuery, it would look somethng like this, given the current versions at the time of this writing.
