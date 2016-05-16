@@ -215,6 +215,19 @@ end
 ```
 By default, it will render without a layout (layout: false) and the template for the current controller and action.
 
+#### wkhtmltopdf Binary Options
+
+Some of the options above are being passed to `wkhtmltopdf` binary. They can be used to control the options used in Webkit rendering before generating the PDF.
+
+Examples of those options are:
+
+```ruby
+print_media_type: true        # Passes `--print-media-type`
+no_background: true           # Passes `--no-background`
+```
+
+You can see the complete list of options under "Global Options" in wkhtmltopdf usage [docs](http://wkhtmltopdf.org/usage/wkhtmltopdf.txt).
+
 ### Super Advanced Usage ###
 
 If you need to just create a pdf and not display it:
