@@ -33,12 +33,8 @@ matrix:
         - gem update --system 1.8.25
         - gem --version
       gemfile: gemfiles/2.3.gemfile
-    - rvm: 1.9.3
-      gemfile: gemfiles/rails_edge.gemfile
     - rvm: 2.0.0
       gemfile: gemfiles/4.0.gemfile
-    - rvm: 2.0.0
-      gemfile: gemfiles/rails_edge.gemfile
     - rvm: 2.2.0
       gemfile: gemfiles/4.1.gemfile
     - rvm: 2.2.0
@@ -56,10 +52,6 @@ matrix:
       gemfile: gemfiles/3.2.gemfile
     - rvm: 1.9.3
       gemfile: gemfiles/4.0.gemfile
-    - rvm: 1.9.3
-      gemfile: gemfiles/rails_edge.gemfile
-    - rvm: 2.0.0
-      gemfile: gemfiles/rails_edge.gemfile
     - rvm: 2.2.0
       gemfile: gemfiles/rails_edge.gemfile
     - rvm: ruby-head
