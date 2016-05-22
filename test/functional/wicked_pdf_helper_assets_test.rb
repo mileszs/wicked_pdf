@@ -9,6 +9,32 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
       assert_match %r{data:text\/css;base64,.+}, wicked_pdf_asset_base64('wicked.css')
     end
 
+    test 'wicked_pdf_stylesheet_link_tag should inline the stylesheets passed in' do
+      Rails.configuration.assets.expects(:compile => true)
+      assert_equal "<style type='text/css'>/* Wicked styles */\n\n</style>",
+                   wicked_pdf_stylesheet_link_tag('wicked')
+    end
+
+    test 'wicked_pdf_image_tag should return the same as image_tag when passed a full path' do
+      Rails.configuration.assets.expects(:compile => true)
+      assert_equal image_tag("file:///#{Rails.root.join('public', 'pdf')}"),
+                   wicked_pdf_image_tag('pdf')
+    end
+
+    if Rails::VERSION::MAJOR > 3
+      test 'wicked_pdf_javascript_include_tag should inline the javascripts passed in' do
+        Rails.configuration.assets.expects(:compile => true)
+        assert_equal "<script type='text/javascript'>// Wicked js\n</script>",
+                     wicked_pdf_javascript_include_tag('wicked')
+      end
+    else
+      test 'wicked_pdf_javascript_include_tag should inline the javascripts passed in' do
+        Rails.configuration.assets.expects(:compile => true)
+        assert_equal "<script type='text/javascript'>// Wicked js\n;\n</script>",
+                     wicked_pdf_javascript_include_tag('wicked')
+      end
+    end
+
     test 'wicked_pdf_asset_path should return a url when assets are served by an asset server' do
       expects(:asset_pathname => 'http://assets.domain.com/dummy.png')
       assert_equal 'http://assets.domain.com/dummy.png', wicked_pdf_asset_path('dummy.png')
