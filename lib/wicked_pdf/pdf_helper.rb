@@ -1,6 +1,4 @@
 module PdfHelper
-  require 'tempfile'
-
   def self.included(base)
     # Protect from trying to augment modules that appear
     # as the result of adding other gems.
