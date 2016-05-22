@@ -17,11 +17,9 @@ class PdfHelperTest < ActionController::TestCase
     @ac = nil
   end
 
-  if Rails::VERSION::MAJOR == 2
-    test 'should prerender header and footer :template options' do
-      options = @ac.send(:prerender_header_and_footer,
-                         :header => { :html => { :template => 'hf.html.erb' } })
-      assert_match %r{^file:\/\/\/.*wicked_header_pdf.*\.html}, options[:header][:html][:url]
-    end
+  test 'should prerender header and footer :template options' do
+    options = @ac.send(:prerender_header_and_footer,
+                       :header => { :html => { :template => 'hf.html.erb' } })
+    assert_match %r{^file:\/\/\/.*wicked_header_pdf.*\.html}, options[:header][:html][:url]
   end
 end
