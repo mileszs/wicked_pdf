@@ -39,7 +39,7 @@ matrix:
       gemfile: gemfiles/4.1.gemfile
     - rvm: 2.2.0
       gemfile: gemfiles/4.2.gemfile
-    - rvm: 2.2.0
+    - rvm: 2.2.2
       gemfile: gemfiles/rails_edge.gemfile
     - rvm: 2.3.0
       gemfile: gemfiles/rails_edge.gemfile
@@ -52,6 +52,4 @@ matrix:
       gemfile: gemfiles/3.2.gemfile
     - rvm: 1.9.3
       gemfile: gemfiles/4.0.gemfile
-    - rvm: 2.2.0
-      gemfile: gemfiles/rails_edge.gemfile
     - rvm: ruby-head
