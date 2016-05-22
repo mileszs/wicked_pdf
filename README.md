@@ -62,7 +62,7 @@ end
 ```
 ### Usage Conditions - Important!
 
-The wkhtmltopdf binary is run outside of your Rails application; therefore, your normal layouts will not work. If you plan to use any CSS, Javascript, or image files, you must modify your layout so that you provide an absolute reference to these files. The best option for Rails without the asset pipeline is to use the `wicked_pdf_stylesheet_link_tag`, `wicked_pdf_image_tag`, and `wicked_pdf_javascript_include_tag` helpers or to go straight to a CDN (Content Delivery Network) for popular libraries such as jQuery.
+The wkhtmltopdf binary is run outside of your Rails application; therefore, your normal layouts will not work. If you plan to use any CSS, JavaScript, or image files, you must modify your layout so that you provide an absolute reference to these files. The best option for Rails without the asset pipeline is to use the `wicked_pdf_stylesheet_link_tag`, `wicked_pdf_image_tag`, and `wicked_pdf_javascript_include_tag` helpers or to go straight to a CDN (Content Delivery Network) for popular libraries such as jQuery.
 
 #### wicked_pdf helpers
 ```html
