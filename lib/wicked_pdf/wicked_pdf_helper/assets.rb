@@ -5,9 +5,7 @@ module WickedPdfHelper
     ASSET_URL_REGEX = /url\(['"]?([^'"]+?)['"]?\)/
 
     def wicked_pdf_asset_base64(path)
-      asset = Rails.application.assets.find_asset(path)
-      throw "Could not find asset '#{path}'" if asset.nil?
-      base64 = Base64.encode64(asset.to_s).gsub(/\s+/, '')
+      base64 = Base64.encode64(read_asset(path).to_s).gsub(/\s+/, '')
       "data:#{asset.content_type};base64,#{Rack::Utils.escape(base64)}"
     end
 
@@ -38,7 +36,7 @@ module WickedPdfHelper
     def wicked_pdf_javascript_include_tag(*sources)
       sources.collect do |source|
         source = WickedPdfHelper.add_extension(source, 'js')
-        "<script type='text/javascript'>#{read_asset(source)}</script>"
+        "<script type='text/javascript' src='#{wicked_pdf_asset_base64(source)}'></script>"
       end.join("\n").html_safe
     end
 
@@ -98,7 +96,7 @@ module WickedPdfHelper
           IO.read(pathname)
         end
       else
-        Rails.application.assets.find_asset(source).to_s
+        Rails.application.assets.find_asset(source).to_s or throw "Could not find asset '#{source}'"
       end
     end
 
