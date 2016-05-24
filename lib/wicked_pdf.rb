@@ -113,7 +113,7 @@ class WickedPdf
   def retrieve_binary_version
     _stdin, stdout, _stderr = Open3.popen3(@exe_path + ' -V')
     @binary_version = parse_version(stdout.gets(nil))
-  rescue StandardError
+  rescue
     DEFAULT_BINARY_VERSION
   end
 
