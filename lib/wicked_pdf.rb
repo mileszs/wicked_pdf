@@ -59,8 +59,6 @@ class WickedPdf
 
     pdf = pdf_from_html_file(string_file.path, options)
     pdf
-  rescue => e
-    raise "Error: #{e}"
   ensure
     string_file.close! if string_file
   end
