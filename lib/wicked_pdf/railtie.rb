@@ -5,7 +5,25 @@ require 'wicked_pdf/wicked_pdf_helper/assets'
 class WickedPdf
   if defined?(Rails)
 
-    if Rails::VERSION::MAJOR == 3
+    if Rails::VERSION::MAJOR >= 5
+
+      class WickedRailtie < Rails::Railtie
+        initializer 'wicked_pdf.register' do |_app|
+          ActionController::Base.send :prepend, PdfHelper
+          ActionView::Base.send :include, WickedPdfHelper::Assets
+        end
+      end
+
+    elsif Rails::VERSION::MAJOR == 4
+
+      class WickedRailtie < Rails::Railtie
+        initializer 'wicked_pdf.register' do |_app|
+          ActionController::Base.send :include, PdfHelper
+          ActionView::Base.send :include, WickedPdfHelper::Assets
+        end
+      end
+
+    elsif Rails::VERSION::MAJOR == 3
 
       class WickedRailtie < Rails::Railtie
         initializer 'wicked_pdf.register' do |_app|
@@ -25,15 +43,6 @@ class WickedPdf
       end
       unless ActionView::Base.instance_methods.include? 'wicked_pdf_stylesheet_link_tag'
         ActionView::Base.send :include, WickedPdfHelper
-      end
-
-    else
-
-      class WickedRailtie < Rails::Railtie
-        initializer 'wicked_pdf.register' do |_app|
-          ActionController::Base.send :include, PdfHelper
-          ActionView::Base.send :include, WickedPdfHelper::Assets
-        end
       end
 
     end
