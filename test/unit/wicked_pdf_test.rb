@@ -61,7 +61,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     begin
       tmp = Tempfile.new('wkhtmltopdf')
       fp = tmp.path
-      File.chmod 0000, fp
+      File.chmod 0o000, fp
       assert_raise RuntimeError do
         WickedPdf.new fp
       end
@@ -74,7 +74,7 @@ class WickedPdfTest < ActiveSupport::TestCase
     begin
       tmp = Tempfile.new('wkhtmltopdf')
       fp = tmp.path
-      File.chmod 0777, fp
+      File.chmod 0o777, fp
       wp = WickedPdf.new fp
       assert_raise RuntimeError do
         wp.pdf_from_string HTML_DOCUMENT
