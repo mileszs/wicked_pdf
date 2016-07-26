@@ -34,7 +34,7 @@ desc 'Generate dummy application for test cases'
 task :dummy_generate do
   Rake::Task[:dummy_remove].invoke
   puts 'Creating dummy application to run tests'
-  command = (Rails::VERSION::MAJOR == 2) ? '' : 'new'
+  command = Rails::VERSION::MAJOR == 2 ? '' : 'new'
   system("rails #{command} test/dummy")
   system('touch test/dummy/db/schema.rb')
   FileUtils.rm_r Dir.glob('test/dummy/test/*')
