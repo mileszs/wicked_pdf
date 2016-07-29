@@ -6,7 +6,7 @@ class WickedPdf
       ASSET_URL_REGEX = /url\(['"]?([^'"]+?)['"]?\)/
 
       def wicked_pdf_asset_base64(path)
-        asset = Rails.application.assets.find_asset(path)
+        asset = find_asset(path)
         raise "Could not find asset '#{path}'" if asset.nil?
         base64 = Base64.encode64(asset.to_s).gsub(/\s+/, '')
         "data:#{asset.content_type};base64,#{Rack::Utils.escape(base64)}"
@@ -67,8 +67,16 @@ class WickedPdf
             File.join(Rails.public_path, asset.sub(/\A#{Rails.application.config.action_controller.relative_url_root}/, ''))
           end
         else
-          asset = Rails.application.assets.find_asset(source)
+          asset = find_asset(source)
           asset ? asset.pathname : File.join(Rails.public_path, source)
+        end
+      end
+
+      def find_asset(path)
+        if Rails.application.assets.respond_to?(:find_asset)
+          Rails.application.assets.find_asset(path)
+        else
+          Sprockets::Railtie.build_environment(Rails.application).find_asset(path)
         end
       end
 
@@ -99,7 +107,7 @@ class WickedPdf
             IO.read(pathname)
           end
         else
-          Rails.application.assets.find_asset(source).to_s
+          find_asset(source).to_s
         end
       end
 
