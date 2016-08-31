@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.0] - 2016-09-30
+### Added
+- Support Rails 5.x and Sprockets 3.x
+- Support `window_status: 'somestring'` option, to instruct wkhtmltopdf to wait until the browser `window.status` is equal to the supplied string. This can be useful to force rendering to wait [as explained quite well here](https://spin.atomicobject.com/2015/08/29/ember-app-done-loading/)
+- Support `no_stop_slow_scripts: true` to let slow running scripts delay rendering
+
+### Changed
+- [Improved error handling](https://github.com/mileszs/wicked_pdf/pull/543)
+- [Namespace helper classes under WickedPdf namespace](https://github.com/mileszs/wicked_pdf/pull/538)
+- [Changes to asset finding to support Rails 5](https://github.com/mileszs/wicked_pdf/pull/561)
+
 ## [1.0.6] - 2016-04-04
 ### Changed
 - Revert shellescaping of options. The fix was causing more issues than it solved (like "[page] of [topage]" being escaped, and thus not parsed by `wkhtmltopdf`). See #514 for details.
@@ -69,7 +80,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Asset helpers no longer add a file extension if it already is specified with one
 
 # Compare Releases
-- [1.0.6...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.0.6...HEAD)
+- [1.1.0...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.1.0...HEAD)
+- [1.0.6...1.1.0](https://github.com/mileszs/wicked_pdf/compare/1.0.6...1.1.0)
 - [1.0.5...1.0.6](https://github.com/mileszs/wicked_pdf/compare/1.0.5...1.0.6)
 - [1.0.4...1.0.5](https://github.com/mileszs/wicked_pdf/compare/1.0.4...1.0.5)
 - [1.0.3...1.0.4](https://github.com/mileszs/wicked_pdf/compare/1.0.3...1.0.4)

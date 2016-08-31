@@ -1,3 +1,3 @@
 class WickedPdf
-  VERSION = '1.0.6'.freeze
+  VERSION = '1.1.0'.freeze
 end
