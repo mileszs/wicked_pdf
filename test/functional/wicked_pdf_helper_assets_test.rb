@@ -21,18 +21,10 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
                    wicked_pdf_image_tag('pdf')
     end
 
-    if Rails::VERSION::MAJOR > 3
-      test 'wicked_pdf_javascript_include_tag should inline the javascripts passed in' do
-        Rails.configuration.assets.expects(:compile => true)
-        assert_equal "<script type='text/javascript'>// Wicked js\n</script>",
-                     wicked_pdf_javascript_include_tag('wicked')
-      end
-    else
-      test 'wicked_pdf_javascript_include_tag should inline the javascripts passed in' do
-        Rails.configuration.assets.expects(:compile => true)
-        assert_equal "<script type='text/javascript'>// Wicked js\n;\n</script>",
-                     wicked_pdf_javascript_include_tag('wicked')
-      end
+    test 'wicked_pdf_javascript_include_tag should inline the javascripts passed in' do
+      Rails.configuration.assets.expects(:compile => true)
+      assert_equal "<script type='text/javascript'>// Wicked js\n;\n</script>",
+                   wicked_pdf_javascript_include_tag('wicked')
     end
 
     test 'wicked_pdf_asset_path should return a url when assets are served by an asset server' do
