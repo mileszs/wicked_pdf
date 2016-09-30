@@ -105,7 +105,7 @@ class WickedPdf
   end
 
   def print_command(cmd)
-    p '*' * 15 + cmd + '*' * 15
+    Rails.logger.debug '*' * 15 + cmd + '*' * 15
   end
 
   def retrieve_binary_version
