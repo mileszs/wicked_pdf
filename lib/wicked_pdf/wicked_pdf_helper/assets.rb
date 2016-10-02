@@ -58,7 +58,7 @@ class WickedPdf
 
       def asset_pathname(source)
         if precompiled_or_absolute_asset?(source)
-          asset = asset_path(source)
+          asset = ActionController::Base.helpers.asset_path(source)
           pathname = prepend_protocol(asset)
           if pathname =~ URI_REGEXP
             # asset_path returns an absolute URL using asset_host if asset_host is set
