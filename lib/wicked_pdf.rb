@@ -1,5 +1,5 @@
 # wkhtml2pdf Ruby interface
-# http://code.google.com/p/wkhtmltopdf/
+# http://wkhtmltopdf.org/
 
 require 'logger'
 require 'digest/md5'
