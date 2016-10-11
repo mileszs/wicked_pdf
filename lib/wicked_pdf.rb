@@ -54,6 +54,7 @@ class WickedPdf
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
     string_file = WickedPdfTempfile.new('wicked_pdf.html', options[:temp_path])
     string_file.binmode
+    string_file.write("\uFEFF")
     string_file.write(string)
     string_file.close
 
