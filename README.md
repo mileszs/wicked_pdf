@@ -142,6 +142,7 @@ class ThingsController < ApplicationController
                page_width:                     NUMBER,
                save_to_file:                   Rails.root.join('pdfs', "#{filename}.pdf"),
                save_only:                      false,                        # depends on :save_to_file being set first
+               default_protocol:               'http',
                proxy:                          'TEXT',
                basic_auth:                     false                         # when true username & password are automatically sent from session
                username:                       'TEXT',
