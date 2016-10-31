@@ -54,7 +54,7 @@ class ThingsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "file_name"   # Excluding ".pdf" extension.
+        wicked_pdf
       end
     end
   end
@@ -129,119 +129,120 @@ class ThingsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf:                            'file_name',
-               disposition:                    'attachment',                 # default 'inline'
-               template:                       'things/show',
-               file:                           "#{Rails.root}/files/foo.erb"
-               layout:                         'pdf',                        # for a pdf.html.erb file
-               wkhtmltopdf:                    '/usr/local/bin/wkhtmltopdf', # path to binary
-               show_as_html:                   params.key?('debug'),         # allow debugging based on url param
-               orientation:                    'Landscape',                  # default Portrait
-               page_size:                      'A4, Letter, ...',            # default A4
-               page_height:                    NUMBER,
-               page_width:                     NUMBER,
-               save_to_file:                   Rails.root.join('pdfs', "#{filename}.pdf"),
-               save_only:                      false,                        # depends on :save_to_file being set first
-               default_protocol:               'http',
-               proxy:                          'TEXT',
-               basic_auth:                     false                         # when true username & password are automatically sent from session
-               username:                       'TEXT',
-               password:                       'TEXT',
-               title:                          'Alternate Title',            # otherwise first page title is used
-               cover:                          'URL, Pathname, or raw HTML string',
-               dpi:                            'dpi',
-               encoding:                       'TEXT',
-               user_style_sheet:               'URL',
-               cookie:                         ['_session_id SESSION_ID'], # could be an array or a single string in a 'name value' format
-               post:                           ['query QUERY_PARAM'],      # could be an array or a single string in a 'name value' format
-               redirect_delay:                 NUMBER,
-               javascript_delay:               NUMBER,
-               window_status:                  'TEXT',                     # wait to render until some JS sets window.status to the given string
-               image_quality:                  NUMBER,
-               no_pdf_compression:             true,
-               zoom:                           FLOAT,
-               page_offset:                    NUMBER,
-               book:                           true,
-               default_header:                 true,
-               disable_javascript:             false,
-               grayscale:                      true,
-               lowquality:                     true,
-               enable_plugins:                 true,
-               disable_internal_links:         true,
-               disable_external_links:         true,
-               print_media_type:               true,
-               disable_smart_shrinking:        true,
-               use_xserver:                    true,
-               background:                     false,                     # backround needs to be true to enable background colors to render
-               no_background:                  true,
-               viewport_size:                  'TEXT',                    # available only with use_xserver or patched QT
-               extra:                          '',                        # directly inserted into the command to wkhtmltopdf
-               outline: {   outline:           true,
-                            outline_depth:     LEVEL },
-               margin:  {   top:               SIZE,                     # default 10 (mm)
-                            bottom:            SIZE,
-                            left:              SIZE,
-                            right:             SIZE },
-               header:  {   html: {            template: 'users/header',          # use :template OR :url
-                                               layout:   'pdf_plain',             # optional, use 'pdf_plain' for a pdf_plain.html.pdf.erb file, defaults to main layout
-                                               url:      'www.example.com',
-                                               locals:   { foo: @bar }},
-                            center:            'TEXT',
-                            font_name:         'NAME',
-                            font_size:         SIZE,
-                            left:              'TEXT',
-                            right:             'TEXT',
-                            spacing:           REAL,
-                            line:              true,
-                            content:           'HTML CONTENT ALREADY RENDERED'}, # optionally you can pass plain html already rendered (useful if using pdf_from_string)
-               footer:  {   html: {   template:'shared/footer',         # use :template OR :url
-                                      layout:  'pdf_plain.html',        # optional, use 'pdf_plain' for a pdf_plain.html.pdf.erb file, defaults to main layout
-                                      url:     'www.example.com',
-                                      locals:  { foo: @bar }},
-                            center:            'TEXT',
-                            font_name:         'NAME',
-                            font_size:         SIZE,
-                            left:              'TEXT',
-                            right:             'TEXT',
-                            spacing:           REAL,
-                            line:              true,
-                            content:           'HTML CONTENT ALREADY RENDERED'}, # optionally you can pass plain html already rendered (useful if using pdf_from_string)
-               toc:     {   font_name:         "NAME",
-                            depth:             LEVEL,
-                            header_text:       "TEXT",
-                            header_fs:         SIZE,
-                            text_size_shrink:  0.8,
-                            l1_font_size:      SIZE,
-                            l2_font_size:      SIZE,
-                            l3_font_size:      SIZE,
-                            l4_font_size:      SIZE,
-                            l5_font_size:      SIZE,
-                            l6_font_size:      SIZE,
-                            l7_font_size:      SIZE,
-                            level_indentation: NUM,
-                            l1_indentation:    NUM,
-                            l2_indentation:    NUM,
-                            l3_indentation:    NUM,
-                            l4_indentation:    NUM,
-                            l5_indentation:    NUM,
-                            l6_indentation:    NUM,
-                            l7_indentation:    NUM,
-                            no_dots:           true,
-                            disable_dotted_lines:  true,
-                            disable_links:     true,
-                            disable_toc_links: true,
-                            disable_back_links:true,
-                            xsl_style_sheet:   'file.xsl'} # optional XSLT stylesheet to use for styling table of contents
+        wicked_pdf filename:                           'file_name',                  # defaults to `action_name`
+                   disposition:                        'attachment',                 # default 'inline'
+                   template:                           'things/show',
+                   file:                               "#{Rails.root}/files/foo.erb"
+                   layout:                             'pdf',                        # for a pdf.html.erb file
+                   wkhtmltopdf:                        '/usr/local/bin/wkhtmltopdf', # path to binary
+                   show_as_html:                       params.key?('debug'),         # allow debugging based on url param
+                   orientation:                        'Landscape',                  # default Portrait
+                   page_size:                          'A4, Letter, ...',            # default A4
+                   page_height:                        NUMBER,
+                   page_width:                         NUMBER,
+                   save_to_file:                       Rails.root.join('pdfs', "#{filename}.pdf"),
+                   save_only:                          false,                        # depends on :save_to_file being set first
+                   default_protocol:                   'http',
+                   proxy:                              'TEXT',
+                   basic_auth:                         false                         # when true username & password are automatically sent from session
+                   username:                           'TEXT',
+                   password:                           'TEXT',
+                   title:                              'Alternate Title',            # otherwise first page title is used
+                   cover:                              'URL, Pathname, or raw HTML string',
+                   dpi:                                'dpi',
+                   encoding:                           'TEXT',
+                   user_style_sheet:                   'URL',
+                   cookie:                             ['_session_id SESSION_ID'], # could be an array or a single string in a 'name value' format
+                   post:                               ['query QUERY_PARAM'],      # could be an array or a single string in a 'name value' format
+                   redirect_delay:                     NUMBER,
+                   javascript_delay:                   NUMBER,
+                   window_status:                      'TEXT',                     # wait to render until some JS sets window.status to the given string
+                   image_quality:                      NUMBER,
+                   no_pdf_compression:                 true,
+                   zoom:                               FLOAT,
+                   page_offset:                        NUMBER,
+                   book:                               true,
+                   default_header:                     true,
+                   disable_javascript:                 false,
+                   grayscale:                          true,
+                   lowquality:                         true,
+                   enable_plugins:                     true,
+                   disable_internal_links:             true,
+                   disable_external_links:             true,
+                   print_media_type:                   true,
+                   disable_smart_shrinking:            true,
+                   use_xserver:                        true,
+                   background:                         false,                     # background needs to be true to enable background colors to render
+                   no_background:                      true,
+                   viewport_size:                      'TEXT',                    # available only with use_xserver or patched QT
+                   extra:                              '',                        # directly inserted into the command to wkhtmltopdf
+                   outline: {   outline:               true,
+                                outline_depth:         LEVEL },
+                   margin:  {   top:                   SIZE,                      # default 10 (mm)
+                                bottom:                SIZE,
+                                left:                  SIZE,
+                                right:                 SIZE },
+                   header:  {   html: {                template: 'users/header',  # use :template OR :url
+                                                       layout:   'pdf_plain',     # optional, use 'pdf_plain' for a pdf_plain.html.pdf.erb file, defaults to main layout
+                                                       url:      'www.example.com',
+                                                       locals:   { foo: @bar }},
+                                center:                'TEXT',
+                                font_name:             'NAME',
+                                font_size:             SIZE,
+                                left:                  'TEXT',
+                                right:                 'TEXT',
+                                spacing:               REAL,
+                                line:                  true,
+                                content:               'HTML CONTENT ALREADY RENDERED'}, # optionally you can pass plain html already rendered (useful if using pdf_from_string)
+                   footer:  {   html: {                template:'shared/footer',         # use :template OR :url
+                                                       layout:  'pdf_plain.html',        # optional, use 'pdf_plain' for a pdf_plain.html.pdf.erb file, defaults to main layout
+                                                       url:     'www.example.com',
+                                                       locals:  { foo: @bar }},
+                                center:                'TEXT',
+                                font_name:             'NAME',
+                                font_size:             SIZE,
+                                left:                  'TEXT',
+                                right:                 'TEXT',
+                                spacing:               REAL,
+                                line:                  true,
+                                content:               'HTML CONTENT ALREADY RENDERED'},
+                   toc:     {   font_name:             "NAME",
+                                depth:                 LEVEL,
+                                header_text:           "TEXT",
+                                header_fs:             SIZE,
+                                text_size_shrink:      0.8,
+                                l1_font_size:          SIZE,
+                                l2_font_size:          SIZE,
+                                l3_font_size:          SIZE,
+                                l4_font_size:          SIZE,
+                                l5_font_size:          SIZE,
+                                l6_font_size:          SIZE,
+                                l7_font_size:          SIZE,
+                                level_indentation:     NUM,
+                                l1_indentation:        NUM,
+                                l2_indentation:        NUM,
+                                l3_indentation:        NUM,
+                                l4_indentation:        NUM,
+                                l5_indentation:        NUM,
+                                l6_indentation:        NUM,
+                                l7_indentation:        NUM,
+                                no_dots:               true,
+                                disable_dotted_lines:  true,
+                                disable_links:         true,
+                                disable_toc_links:     true,
+                                disable_back_links:    true,
+                                xsl_style_sheet:       'file.xslt'} # optional XSLT stylesheet to use for styling table of contents
       end
     end
   end
 end
 ```
-By default, it will render without a layout (layout: false) and the template for the current controller and action.
+
+By default, it will render the pdf template for the current controller and action without a layout (layout: false).
 
 #### wkhtmltopdf Binary Options
 
-Some of the options above are being passed to `wkhtmltopdf` binary. They can be used to control the options used in Webkit rendering before generating the PDF.
+Some of the options above are being passed through to Rails' `render`, but most are converted and passed to the `wkhtmltopdf` binary to control the options used in Webkit rendering before generating the PDF.
 
 Examples of those options are:
 
@@ -275,7 +276,7 @@ pdf = WickedPdf.new.pdf_from_string(
 )
 
 # or from your controller, using views & templates and all wicked_pdf options as normal
-pdf = render_to_string pdf: "some_file_name", template: "templates/pdf", encoding: "UTF-8"
+pdf = wicked_pdf(template: "templates/pdf", encoding: "UTF-8").join
 
 # then save to a file
 save_path = Rails.root.join('pdfs','filename.pdf')
@@ -283,7 +284,7 @@ File.open(save_path, 'wb') do |file|
   file << pdf
 end
 ```
-If you need to display utf encoded characters, add this to your pdf views or layouts:
+If you need to display UTF encoded characters, add this to your pdf views or layouts:
 ```html
 <meta charset="utf-8" />
 ```
@@ -327,7 +328,7 @@ Anything with a class listed in "var x" above will be auto-filled at render time
 
 If you do not have explicit page breaks (and therefore do not have any "page" class), you can also use wkhtmltopdf's built in page number generation by setting one of the headers to "[page]":
 ```ruby
-render pdf: 'filename', header: { right: '[page] of [topage]' }
+wicked_pdf header: { right: '[page] of [topage]' }
 ```
 ### Configuration
 
@@ -347,7 +348,7 @@ If you want to turn on or off the middleware for certain urls, use the `:only` o
 config.middleware.use WickedPdf::Middleware, {}, only: '/invoice'
 config.middleware.use WickedPdf::Middleware, {}, except: [ %r[^/admin], '/secret', %r[^/people/\d] ]
 ```
-If you use the standard `render pdf: 'some_pdf'` in your app, you will want to exclude those actions from the middleware.
+If you use the standard `wicked_pdf` controller helper in your app, you will want to exclude those actions from the middleware.
 
 ### Further Reading
 
@@ -365,7 +366,7 @@ StackOverflow [questions with the tag "wicked-pdf"](http://stackoverflow.com/que
 
 Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster.
 
-First of all you must configure the render parameter `show_as_html: params.key?('debug')` and then just use it like you normally would but add "debug" as a GET param in the URL:
+First of all you must configure the option `show_as_html: params.key?(:debug)` and then just use it like you normally would, but add "debug" as a GET param in the URL:
 
 http://localhost:3001/CONTROLLER/X.pdf?debug
 
@@ -374,13 +375,9 @@ However, the wicked_pdf_* helpers will use file:/// paths for assets when using 
     <%= params.key?('debug') ? image_tag('foo') : wicked_pdf_image_tag('foo') %>
 ```
 
-#### Gotchas
-
-If one image from your HTML cannot be found (relative or wrong path for ie), others images with right paths **may not** be displayed in the output PDF as well (it seems to be an issue with wkhtmltopdf).
-
 ### Inspiration
 
-You may have noticed: this plugin is heavily inspired by the PrinceXML plugin [princely](http://github.com/mbleigh/princely/tree/master).  PrinceXML's cost was prohibitive for me. So, with a little help from some friends (thanks [jqr](http://github.com/jqr)), I tracked down wkhtmltopdf, and here we are.
+This gem is heavily inspired by the [princely gem](http://github.com/mbleigh/princely/).  PrinceXML's cost was prohibitive for me. So, with a little help from some friends (thanks [jqr](http://github.com/jqr)), I tracked down `wkhtmltopdf`, and here we are.
 
 ### Contributing
 
@@ -392,6 +389,6 @@ You may have noticed: this plugin is heavily inspired by the PrinceXML plugin [p
 6. Push to the branch (`git push origin my-new-feature`)
 7. Create new Pull Request
 
-### Awesome Peoples
+### Awesome People
 
 Also, thanks to [unixmonkey](https://github.com/Unixmonkey), [galdomedia](http://github.com/galdomedia), [jcrisp](http://github.com/jcrisp), [lleirborras](http://github.com/lleirborras), [tiennou](http://github.com/tiennou), and everyone else for all their hard work and patience with my delays in merging in their enhancements.

@@ -33,11 +33,16 @@ class WickedPdf
       end
     end
 
+    def wicked_pdf(options = {})
+      log_pdf_creation
+      options[:basic_auth] = set_basic_auth(options)
+      make_and_send_pdf((WickedPdf.config || {}).merge(options))
+    end
+
     def render_with_wicked_pdf(options = nil, *args, &block)
       if options.is_a?(Hash) && options.key?(:pdf)
-        log_pdf_creation
-        options[:basic_auth] = set_basic_auth(options)
-        make_and_send_pdf(options.delete(:pdf), (WickedPdf.config || {}).merge(options))
+        wicked_deprecate_render
+        wicked_pdf(options)
       else
         render_without_wicked_pdf(options, *args, &block)
       end
@@ -46,6 +51,7 @@ class WickedPdf
     def render_to_string_with_wicked_pdf(options = nil, *args, &block)
       if options.is_a?(Hash) && options.key?(:pdf)
         log_pdf_creation
+        wicked_deprecate_render_to_string
         options[:basic_auth] = set_basic_auth(options)
         options.delete :pdf
         make_pdf((WickedPdf.config || {}).merge(options))
@@ -55,6 +61,34 @@ class WickedPdf
     end
 
     private
+
+    def wicked_deprecate_render
+      wicked_deprecate "[wicked_pdf]: `\e[033mrender pdf: 'my_pdf'\e[0m` is deprecated and will be removed in wicked_pdf 2.0. Use `\e[032mwicked_pdf filename: 'my_pdf'\e[0m` instead, or omit the `:filename` to use the controller's `action_name` by default."
+    end
+
+    def wicked_deprecate_render_to_string
+      wicked_deprecate "[wicked_pdf]: `\e[033mrender_to_string pdf: 'my_pdf'\e[0m` is deprecated and will be removed in wicked_pdf 2.0. Use `\e[032mhtml = wicked_pdf(filename: 'my_pdf').join\e[0m` instead."
+    end
+
+    def wicked_deprecate(message)
+      require 'active_support/deprecation'
+      ActiveSupport::Deprecation.warn message
+    rescue LoadError
+      puts message
+    end
+
+    def wicked_filename(options)
+      if options[:filename].present?
+        options[:filename]
+      elsif options[:pdf].present?
+        wicked_deprecate_render
+        options[:pdf]
+      elsif defined?(:action_name)
+        action_name
+      else
+        'pdf'
+      end
+    end
 
     def log_pdf_creation
       logger.info '*' * 15 + 'WICKED' + '*' * 15 if logger && logger.respond_to?(:info)
@@ -86,7 +120,7 @@ class WickedPdf
       w.pdf_from_string(html_string, options)
     end
 
-    def make_and_send_pdf(pdf_name, options = {})
+    def make_and_send_pdf(options = {})
       options[:wkhtmltopdf] ||= nil
       options[:layout] ||= false
       options[:template] ||= File.join(controller_path, action_name)
@@ -104,6 +138,7 @@ class WickedPdf
         render(render_opts)
       else
         pdf_content = make_pdf(options)
+        pdf_name = wicked_filename(options)
         File.open(options[:save_to_file], 'wb') { |file| file << pdf_content } if options[:save_to_file]
         send_data(pdf_content, :filename => pdf_name + '.pdf', :type => 'application/pdf', :disposition => options[:disposition]) unless options[:save_only]
       end
