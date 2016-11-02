@@ -106,6 +106,13 @@ Using wicked_pdf_helpers with asset pipeline raises `Asset names passed to helpe
 </html>
 ```
 
+### Asset Pipeline usage
+
+It's best to serve asset files from the Asset Pipeline. The correct way to handle this is to include these assets in your ```config/initializers/assets.rb```.
+```ruby
+    Rails.application.config.assets.precompile += %w( pdf/style.scss pdf/bootstrap.min.css )
+```
+
 #### CDN reference
 
 In this case, you can use that standard Rails helpers and point to the current CDN for whichever framework you are using. For jQuery, it would look somethng like this, given the current versions at the time of this writing.
@@ -116,12 +123,6 @@ In this case, you can use that standard Rails helpers and point to the current C
         <%= javascript_include_tag "http://code.jquery.com/jquery-1.10.0.min.js" %>
         <%= javascript_include_tag "http://code.jquery.com/ui/1.10.3/jquery-ui.min.js" %>
 ```
-#### Asset pipeline usage
-
-The way to handle this for the asset pipeline on Heroku is to include these files in your asset precompile list, as follows:
-
-    config.assets.precompile += ['blueprint/screen.css', 'pdf.css', 'jquery.ui.datepicker.js', 'pdf.js', ...etc...]
-
 ### Advanced Usage with all available options
 ```ruby
 class ThingsController < ApplicationController
