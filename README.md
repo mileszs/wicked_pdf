@@ -270,7 +270,18 @@ pdf = WickedPdf.new.pdf_from_url('https://github.com/mileszs/wicked_pdf')
 pdf = WickedPdf.new.pdf_from_string(
   render_to_string('templates/pdf', layout: 'pdfs/layout_pdf'),
   footer: {
-    content: render_to_string(layout: 'pdfs/layout_pdf')
+    content: render_to_string(
+  		'templates/footer',
+  		layout: 'pdfs/layout_pdf'
+  	)
+  }
+)
+
+# It is possible to use footer/header templates without a layout, in that case you need to provide a valid HTML document
+pdf = WickedPdf.new.pdf_from_string(
+  render_to_string('templates/full_pdf_template'),
+  header: {
+    content: render_to_string('templates/full_header_template')
   }
 )
 
