@@ -268,11 +268,11 @@ pdf = WickedPdf.new.pdf_from_url('https://github.com/mileszs/wicked_pdf')
 
 # create a pdf from string using templates, layouts and content option for header or footer
 pdf = WickedPdf.new.pdf_from_string(
-  render_to_string('templates/pdf', layout: 'pdfs/layout_pdf'),
+  render_to_string('templates/pdf', layout: 'pdfs/layout_pdf.html'),
   footer: {
     content: render_to_string(
   		'templates/footer',
-  		layout: 'pdfs/layout_pdf'
+  		layout: 'pdfs/layout_pdf.html'
   	)
   }
 )
