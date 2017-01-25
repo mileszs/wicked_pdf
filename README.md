@@ -142,6 +142,7 @@ class ThingsController < ApplicationController
                page_width:                     NUMBER,
                save_to_file:                   Rails.root.join('pdfs', "#{filename}.pdf"),
                save_only:                      false,                        # depends on :save_to_file being set first
+               default_protocol:               'http',
                proxy:                          'TEXT',
                basic_auth:                     false                         # when true username & password are automatically sent from session
                username:                       'TEXT',
@@ -267,9 +268,20 @@ pdf = WickedPdf.new.pdf_from_url('https://github.com/mileszs/wicked_pdf')
 
 # create a pdf from string using templates, layouts and content option for header or footer
 pdf = WickedPdf.new.pdf_from_string(
-  render_to_string('templates/pdf', layout: 'pdfs/layout_pdf'),
+  render_to_string('templates/pdf', layout: 'pdfs/layout_pdf.html'),
   footer: {
-    content: render_to_string(layout: 'pdfs/layout_pdf')
+    content: render_to_string(
+  		'templates/footer',
+  		layout: 'pdfs/layout_pdf.html'
+  	)
+  }
+)
+
+# It is possible to use footer/header templates without a layout, in that case you need to provide a valid HTML document
+pdf = WickedPdf.new.pdf_from_string(
+  render_to_string('templates/full_pdf_template'),
+  header: {
+    content: render_to_string('templates/full_header_template')
   }
 )
 
