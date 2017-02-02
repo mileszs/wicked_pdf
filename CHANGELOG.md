@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.1.0] - 2016-09-30
+## [1.1.0] - 2016-08-30
 ### Added
 - Support Rails 5.x and Sprockets 3.x
 - Support `window_status: 'somestring'` option, to instruct wkhtmltopdf to wait until the browser `window.status` is equal to the supplied string. This can be useful to force rendering to wait [as explained quite well here](https://spin.atomicobject.com/2015/08/29/ember-app-done-loading/)
