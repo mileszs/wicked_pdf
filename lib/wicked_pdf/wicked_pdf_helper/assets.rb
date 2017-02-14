@@ -68,7 +68,12 @@ class WickedPdf
           end
         else
           asset = find_asset(source)
-          asset ? asset.filename : File.join(Rails.public_path, source)
+          if asset
+            # older versions need pathname, Sprockets 4 supports only filename
+            asset.respond_to?(:filename) ? asset.filename : asset.pathname
+          else
+            File.join(Rails.public_path, source)
+          end
         end
       end
 
