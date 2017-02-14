@@ -68,7 +68,7 @@ class WickedPdf
           end
         else
           asset = find_asset(source)
-          asset ? asset.pathname : File.join(Rails.public_path, source)
+          asset ? asset.filename : File.join(Rails.public_path, source)
         end
       end
 
