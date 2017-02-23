@@ -67,8 +67,15 @@ class WickedPdf
     # merge in global config options
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
     generated_pdf_file = WickedPdfTempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
-    command = [@exe_path]
-    command << '-q' unless on_windows? # suppress errors on stdout
+
+    if WickedPdf.config[:phantomjs_exe_path]
+      command = [WickedPdf.config[:phantomjs_exe_path]]
+      spec = Gem::Specification.find_by_name('wicked_pdf')
+      command << File.join(spec.gem_dir, 'lib', 'wicked_pdf', 'rasterize.js')
+    else
+      command = [@exe_path]
+      command << '-q' unless on_windows? # suppress errors on stdout
+    end
     command += parse_options(options)
     command << url
     command << generated_pdf_file.path.to_s
