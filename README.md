@@ -133,7 +133,7 @@ class ThingsController < ApplicationController
                disposition:                    'attachment',                 # default 'inline'
                template:                       'things/show',
                file:                           "#{Rails.root}/files/foo.erb"
-               layout:                         'pdf',                        # for a pdf.html.erb file
+               layout:                         'pdf',                        # for a pdf.pdf.erb file
                wkhtmltopdf:                    '/usr/local/bin/wkhtmltopdf', # path to binary
                show_as_html:                   params.key?('debug'),         # allow debugging based on url param
                orientation:                    'Landscape',                  # default Portrait
