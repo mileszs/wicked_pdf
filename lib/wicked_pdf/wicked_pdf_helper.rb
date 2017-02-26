@@ -24,7 +24,7 @@ class WickedPdf
     def wicked_pdf_javascript_src_tag(jsfile, options = {})
       jsfile = WickedPdfHelper.add_extension(jsfile, 'js')
       src = "file:///#{WickedPdfHelper.root_path.join('public', 'javascripts', jsfile)}"
-      content_tag('script', '', { 'type' => Mime::JS, 'src' => path_to_javascript(src) }.merge(options))
+      content_tag('script', '', { 'type' => Mime[:js], 'src' => path_to_javascript(src) }.merge(options))
     end
 
     def wicked_pdf_javascript_include_tag(*sources)
