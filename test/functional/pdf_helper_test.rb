@@ -14,11 +14,9 @@ module ActionControllerMock
       [:base]
     end
 
-    def render_to_string
-    end
+    def render_to_string; end
 
-    def self.after_action(_)
-    end
+    def self.after_action(_); end
   end
 end
 
