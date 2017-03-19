@@ -8,7 +8,11 @@ class WickedPdf
       base.class_eval do
         alias_method_chain :render, :wicked_pdf
         alias_method_chain :render_to_string, :wicked_pdf
-        after_filter :clean_temp_files
+        if respond_to?(:after_action?)
+          after_action :clean_temp_files
+        else
+          after_filter :clean_temp_files
+        end
       end
     end
 
