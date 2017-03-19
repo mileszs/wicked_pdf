@@ -29,6 +29,8 @@ desc
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rubocop' if RUBY_VERSION >= '2.0.0'
   spec.add_development_dependency 'sqlite3'
+  # Transitive dependency of mocha, newer versions require Ruby 1.9
+  spec.add_development_dependency 'rdoc', '= 4.2.2' # dependency of mocha, newer versions require Ruby 1.9
   spec.add_development_dependency 'mocha'
   spec.add_development_dependency 'test-unit'
 end
