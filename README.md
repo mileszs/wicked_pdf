@@ -24,16 +24,7 @@ Mime::Type.register "application/pdf", :pdf
 ```
 to `config/initializers/mime_types.rb` in older versions of Rails.
 
-Because `wicked_pdf` is a wrapper for  [wkhtmltopdf](http://wkhtmltopdf.org/), you'll need to install that, too.
-
-The simplest way to install all of the binaries (Linux, OSX, Windows) is through the gem [wkhtmltopdf-binary](https://github.com/steerio/wkhtmltopdf-binary).
-To install that, add a second gem
-
-```ruby
-gem 'wkhtmltopdf-binary'
-```
-
-To your Gemfile and run `bundle install`.
+Because `wicked_pdf` is a wrapper for [wkhtmltopdf](http://wkhtmltopdf.org/), you'll need to download and install the appropriate package from their [download page](http://wkhtmltopdf.org/downloads.html#stable).
 
 This wrapper may trail in versions, at the moment it wraps the 0.9 version of `wkhtmltopdf` while there is 0.12 version available. Some of the advanced options listed below are not available with 0.9.
 
