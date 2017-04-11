@@ -26,7 +26,7 @@ to `config/initializers/mime_types.rb` in older versions of Rails.
 
 Because `wicked_pdf` is a wrapper for  [wkhtmltopdf](http://wkhtmltopdf.org/), you'll need to install that, too.
 
-The simplest way to install all of the binaries (Linux, OSX, Windows) is through the gem [wkhtmltopdf-binary](https://github.com/steerio/wkhtmltopdf-binary).
+The simplest way to install all of the binaries (Linux, OSX, Windows) is through the gem [wkhtmltopdf-binary](https://github.com/zakird/wkhtmltopdf_binary_gem).
 To install that, add a second gem
 
 ```ruby
