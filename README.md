@@ -1,4 +1,4 @@
-# Wicked PDF [![Build Status](https://secure.travis-ci.org/mileszs/wicked_pdf.svg)](http://travis-ci.org/mileszs/wicked_pdf) [![Gem Version](https://badge.fury.io/rb/wicked_pdf.svg)](http://badge.fury.io/rb/wicked_pdf)
+# Wicked PDF [![Build Status](https://secure.travis-ci.org/mileszs/wicked_pdf.svg)](http://travis-ci.org/mileszs/wicked_pdf) [![Gem Version](https://badge.fury.io/rb/wicked_pdf.svg)](http://badge.fury.io/rb/wicked_pdf) [![Code Climate](https://codeclimate.com/github/mileszs/wicked_pdf/badges/gpa.svg)](https://codeclimate.com/github/mileszs/wicked_pdf)
 
 ## A PDF generation plugin for Ruby on Rails
 
