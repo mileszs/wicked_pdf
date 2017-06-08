@@ -41,7 +41,7 @@ If your wkhtmltopdf executable is not on your webserver's path, you can configur
 
 ```ruby
 WickedPdf.config = {
-  exe_path: '/usr/local/bin/wkhtmltopdf'
+  exe_path: '#{ENV['GEM_HOME']}/bin/wkhtmltopdf'
 }
 ```
 
