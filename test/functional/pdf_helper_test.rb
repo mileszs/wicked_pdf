@@ -5,6 +5,8 @@ module ActionController
     def render_to_string(opts = {})
       opts.to_s
     end
+
+    def self.alias_method_chain(_, _); end
   end
 end
 
@@ -81,6 +83,14 @@ class PdfHelperTest < ActionController::TestCase
         ActionController.send(:remove_const, :Base)
         ActionController.const_set(:Base, OriginalBase)
       end
+    end
+  end
+
+  test 'should call after_action instead of after_filter when able' do
+    ActionController::Base.expects(:after_filter).with(:clean_temp_files).never
+    ActionController::Base.expects(:after_action).with(:clean_temp_files).once
+    ActionController::Base.class_eval do
+      include ::WickedPdf::PdfHelper
     end
   end
 end
