@@ -131,6 +131,11 @@ class WickedPdfTest < ActiveSupport::TestCase
     assert_equal '--outline-depth 5', @wp.get_parsed_options(:outline => { :outline_depth => 5 }).strip
   end
 
+  test 'should parse no_images option' do
+    assert_equal '--no-images', @wp.get_parsed_options(:no_images => true ).strip
+    assert_equal '--images', @wp.get_parsed_options(:images => true ).strip
+  end
+
   test 'should parse margins options' do
     [:top, :bottom, :left, :right].each do |o|
       assert_equal "--margin-#{o} 12", @wp.get_parsed_options(:margin => { o => '12' }).strip
