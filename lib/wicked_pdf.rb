@@ -324,6 +324,8 @@ class WickedPdf
                                   :disable_smart_shrinking,
                                   :use_xserver,
                                   :no_background,
+                                  :images,
+                                  :no_images,
                                   :no_stop_slow_scripts], '', :boolean)
     end
     r
