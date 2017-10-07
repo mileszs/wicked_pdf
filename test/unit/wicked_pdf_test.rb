@@ -7,7 +7,10 @@ HTML_DOCUMENT = '<html><body>Hello World</body></html>'.freeze
 # Also, smash the returned array of options into a single string for
 # convenience in testing below.
 class WickedPdf
+  undef :binary_version
+  undef :binary_version=
   attr_accessor :binary_version
+
   def get_parsed_options(opts)
     parse_options(opts).join(' ')
   end
