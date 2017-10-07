@@ -196,11 +196,11 @@ class WickedPdf
   def parse_header_footer(options)
     r = []
     unless options.blank?
-      %i[header footer].collect do |hf|
+      [:header, :footer].collect do |hf|
         next if options[hf].blank?
         opt_hf = options[hf]
-        r += make_options(opt_hf, %i[center font_name left right], hf.to_s)
-        r += make_options(opt_hf, %i[font_size spacing], hf.to_s, :numeric)
+        r += make_options(opt_hf, [:center, :font_name, :left, :right], hf.to_s)
+        r += make_options(opt_hf, [:font_size, :spacing], hf.to_s, :numeric)
         r += make_options(opt_hf, [:line], hf.to_s, :boolean)
         if options[hf] && options[hf][:content]
           @hf_tempfiles = [] unless defined?(@hf_tempfiles)
@@ -237,31 +237,31 @@ class WickedPdf
     return [] if options.nil?
     r = [valid_option('toc')]
     unless options.blank?
-      r += make_options(options, %i[font_name header_text], 'toc')
+      r += make_options(options, [:font_name, :header_text], 'toc')
       r += make_options(options, [:xsl_style_sheet])
-      r += make_options(options, %i[depth
-                                    header_fs
-                                    text_size_shrink
-                                    l1_font_size
-                                    l2_font_size
-                                    l3_font_size
-                                    l4_font_size
-                                    l5_font_size
-                                    l6_font_size
-                                    l7_font_size
-                                    level_indentation
-                                    l1_indentation
-                                    l2_indentation
-                                    l3_indentation
-                                    l4_indentation
-                                    l5_indentation
-                                    l6_indentation
-                                    l7_indentation], 'toc', :numeric)
-      r += make_options(options, %i[no_dots
-                                    disable_links
-                                    disable_back_links], 'toc', :boolean)
-      r += make_options(options, %i[disable_dotted_lines
-                                    disable_toc_links], nil, :boolean)
+      r += make_options(options, [:depth,
+                                  :header_fs,
+                                  :text_size_shrink,
+                                  :l1_font_size,
+                                  :l2_font_size,
+                                  :l3_font_size,
+                                  :l4_font_size,
+                                  :l5_font_size,
+                                  :l6_font_size,
+                                  :l7_font_size,
+                                  :level_indentation,
+                                  :l1_indentation,
+                                  :l2_indentation,
+                                  :l3_indentation,
+                                  :l4_indentation,
+                                  :l5_indentation,
+                                  :l6_indentation,
+                                  :l7_indentation], 'toc', :numeric)
+      r += make_options(options, [:no_dots,
+                                  :disable_links,
+                                  :disable_back_links], 'toc', :boolean)
+      r += make_options(options, [:disable_dotted_lines,
+                                  :disable_toc_links], nil, :boolean)
     end
     r
   end
@@ -276,23 +276,23 @@ class WickedPdf
   end
 
   def parse_margins(options)
-    make_options(options, %i[top bottom left right], 'margin', :numeric)
+    make_options(options, [:top, :bottom, :left, :right], 'margin', :numeric)
   end
 
   def parse_global(options)
     r = []
     unless options.blank?
-      r += make_options(options, %i[orientation
-                                    dpi
-                                    page_size
-                                    page_width
-                                    title])
-      r += make_options(options, %i[lowquality
-                                    grayscale
-                                    no_pdf_compression], '', :boolean)
-      r += make_options(options, %i[image_dpi
-                                    image_quality
-                                    page_height], '', :numeric)
+      r += make_options(options, [:orientation,
+                                  :dpi,
+                                  :page_size,
+                                  :page_width,
+                                  :title])
+      r += make_options(options, [:lowquality,
+                                  :grayscale,
+                                  :no_pdf_compression], '', :boolean)
+      r += make_options(options, [:image_dpi,
+                                  :image_quality,
+                                  :page_height], '', :numeric)
       r += parse_margins(options.delete(:margin))
     end
     r
@@ -301,32 +301,32 @@ class WickedPdf
   def parse_others(options)
     r = []
     unless options.blank?
-      r += make_options(options, %i[proxy
-                                    username
-                                    password
-                                    encoding
-                                    user_style_sheet
-                                    viewport_size
-                                    window_status])
-      r += make_options(options, %i[cookie
-                                    post], '', :name_value)
-      r += make_options(options, %i[redirect_delay
-                                    zoom
-                                    page_offset
-                                    javascript_delay], '', :numeric)
-      r += make_options(options, %i[book
-                                    default_header
-                                    disable_javascript
-                                    enable_plugins
-                                    disable_internal_links
-                                    disable_external_links
-                                    print_media_type
-                                    disable_smart_shrinking
-                                    use_xserver
-                                    no_background
-                                    images
-                                    no_images
-                                    no_stop_slow_scripts], '', :boolean)
+      r += make_options(options, [:proxy,
+                                  :username,
+                                  :password,
+                                  :encoding,
+                                  :user_style_sheet,
+                                  :viewport_size,
+                                  :window_status])
+      r += make_options(options, [:cookie,
+                                  :post], '', :name_value)
+      r += make_options(options, [:redirect_delay,
+                                  :zoom,
+                                  :page_offset,
+                                  :javascript_delay], '', :numeric)
+      r += make_options(options, [:book,
+                                  :default_header,
+                                  :disable_javascript,
+                                  :enable_plugins,
+                                  :disable_internal_links,
+                                  :disable_external_links,
+                                  :print_media_type,
+                                  :disable_smart_shrinking,
+                                  :use_xserver,
+                                  :no_background,
+                                  :images,
+                                  :no_images,
+                                  :no_stop_slow_scripts], '', :boolean)
     end
     r
   end

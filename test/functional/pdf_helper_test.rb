@@ -76,7 +76,7 @@ class PdfHelperTest < ActionController::TestCase
 
         # test that calling render does not trigger infinite loop
         ac = ActionController::Base.new
-        assert_equal %i[base patched], ac.render(:cats)
+        assert_equal [:base, :patched], ac.render(:cats)
       rescue SystemStackError
         assert_equal true, false # force spec failure
       ensure
