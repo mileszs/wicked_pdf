@@ -41,7 +41,7 @@ Metrics/PerceivedComplexity:
   Max: 12
 
 # Offense count: 2
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
 
 # Offense count: 1
