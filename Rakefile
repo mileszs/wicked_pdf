@@ -5,7 +5,7 @@ require 'rails/version'
 require 'bundler/gem_tasks'
 
 desc 'Default: run unit tests.'
-task :default => [:setup_and_run_tests, :rubocop]
+task :default => %i[setup_and_run_tests rubocop]
 
 desc 'Test the wicked_pdf plugin.'
 Rake::TestTask.new(:test) do |t|

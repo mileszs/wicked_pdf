@@ -115,7 +115,7 @@ class WickedPdf
     # Given an options hash, prerenders content for the header and footer sections
     # to temp files and return a new options hash including the URLs to these files.
     def prerender_header_and_footer(options)
-      [:header, :footer].each do |hf|
+      %i[header footer].each do |hf|
         next unless options[hf] && options[hf][:html] && options[hf][:html][:template]
         @hf_tempfiles = [] unless defined?(@hf_tempfiles)
         @hf_tempfiles.push(tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html"))

@@ -80,7 +80,7 @@ class WickedPdf
 
     def set_request_to_render_as_pdf(env)
       @render_pdf = true
-      %w(PATH_INFO REQUEST_URI).each { |e| env[e] = env[e].sub(%r{\.pdf\b}, '') }
+      %w[PATH_INFO REQUEST_URI].each { |e| env[e] = env[e].sub(%r{\.pdf\b}, '') }
       env['HTTP_ACCEPT'] = concat(env['HTTP_ACCEPT'], Rack::Mime.mime_type('.html'))
       env['Rack-Middleware-WickedPdf'] = 'true'
     end

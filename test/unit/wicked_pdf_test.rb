@@ -85,13 +85,13 @@ class WickedPdfTest < ActiveSupport::TestCase
   end
 
   test 'should parse header and footer options' do
-    [:header, :footer].each do |hf|
-      [:center, :font_name, :left, :right].each do |o|
+    %i[header footer].each do |hf|
+      %i[center font_name left right].each do |o|
         assert_equal "--#{hf}-#{o.to_s.tr('_', '-')} header_footer",
                      @wp.get_parsed_options(hf => { o => 'header_footer' }).strip
       end
 
-      [:font_size, :spacing].each do |o|
+      %i[font_size spacing].each do |o|
         assert_equal "--#{hf}-#{o.to_s.tr('_', '-')} 12",
                      @wp.get_parsed_options(hf => { o => '12' }).strip
       end
@@ -106,21 +106,21 @@ class WickedPdfTest < ActiveSupport::TestCase
   test 'should parse toc options' do
     toc_option = @wp.get_valid_option('toc')
 
-    [:font_name, :header_text].each do |o|
+    %i[font_name header_text].each do |o|
       assert_equal "#{toc_option} --toc-#{o.to_s.tr('_', '-')} toc",
                    @wp.get_parsed_options(:toc => { o => 'toc' }).strip
     end
 
-    [
-      :depth, :header_fs, :l1_font_size, :l2_font_size, :l3_font_size, :l4_font_size,
-      :l5_font_size, :l6_font_size, :l7_font_size, :l1_indentation, :l2_indentation,
-      :l3_indentation, :l4_indentation, :l5_indentation, :l6_indentation, :l7_indentation
+    %i[
+      depth header_fs l1_font_size l2_font_size l3_font_size l4_font_size
+      l5_font_size l6_font_size l7_font_size l1_indentation l2_indentation
+      l3_indentation l4_indentation l5_indentation l6_indentation l7_indentation
     ].each do |o|
       assert_equal "#{toc_option} --toc-#{o.to_s.tr('_', '-')} 5",
                    @wp.get_parsed_options(:toc => { o => 5 }).strip
     end
 
-    [:no_dots, :disable_links, :disable_back_links].each do |o|
+    %i[no_dots disable_links disable_back_links].each do |o|
       assert_equal "#{toc_option} --toc-#{o.to_s.tr('_', '-')}",
                    @wp.get_parsed_options(:toc => { o => true }).strip
     end
@@ -132,12 +132,12 @@ class WickedPdfTest < ActiveSupport::TestCase
   end
 
   test 'should parse no_images option' do
-    assert_equal '--no-images', @wp.get_parsed_options(:no_images => true ).strip
-    assert_equal '--images', @wp.get_parsed_options(:images => true ).strip
+    assert_equal '--no-images', @wp.get_parsed_options(:no_images => true).strip
+    assert_equal '--images', @wp.get_parsed_options(:images => true).strip
   end
 
   test 'should parse margins options' do
-    [:top, :bottom, :left, :right].each do |o|
+    %i[top bottom left right].each do |o|
       assert_equal "--margin-#{o} 12", @wp.get_parsed_options(:margin => { o => '12' }).strip
     end
   end
@@ -152,28 +152,28 @@ class WickedPdfTest < ActiveSupport::TestCase
   end
 
   test 'should parse other options' do
-    [
-      :orientation, :page_size, :proxy, :username, :password, :dpi,
-      :encoding, :user_style_sheet
+    %i[
+      orientation page_size proxy username password dpi
+      encoding user_style_sheet
     ].each do |o|
       assert_equal "--#{o.to_s.tr('_', '-')} opts", @wp.get_parsed_options(o => 'opts').strip
     end
 
-    [:cookie, :post].each do |o|
+    %i[cookie post].each do |o|
       assert_equal "--#{o.to_s.tr('_', '-')} name value", @wp.get_parsed_options(o => 'name value').strip
 
       nv_formatter = proc { |number| "--#{o.to_s.tr('_', '-')} par#{number} val#{number}" }
       assert_equal "#{nv_formatter.call(1)} #{nv_formatter.call(2)}", @wp.get_parsed_options(o => ['par1 val1', 'par2 val2']).strip
     end
 
-    [:redirect_delay, :zoom, :page_offset].each do |o|
+    %i[redirect_delay zoom page_offset].each do |o|
       assert_equal "--#{o.to_s.tr('_', '-')} 5", @wp.get_parsed_options(o => 5).strip
     end
 
-    [
-      :book, :default_header, :disable_javascript, :grayscale, :lowquality,
-      :enable_plugins, :disable_internal_links, :disable_external_links,
-      :print_media_type, :disable_smart_shrinking, :use_xserver, :no_background
+    %i[
+      book default_header disable_javascript grayscale lowquality
+      enable_plugins disable_internal_links disable_external_links
+      print_media_type disable_smart_shrinking use_xserver no_background
     ].each do |o|
       assert_equal "--#{o.to_s.tr('_', '-')}", @wp.get_parsed_options(o => true).strip
     end
@@ -205,7 +205,7 @@ class WickedPdfTest < ActiveSupport::TestCase
   test 'should not use double dash options for version without dashes' do
     @wp.binary_version = WickedPdf::BINARY_VERSION_WITHOUT_DASHES
 
-    %w(toc cover).each do |name|
+    %w[toc cover].each do |name|
       assert_equal @wp.get_valid_option(name), name
     end
   end
@@ -213,7 +213,7 @@ class WickedPdfTest < ActiveSupport::TestCase
   test 'should use double dash options for version with dashes' do
     @wp.binary_version = Gem::Version.new('0.11.0')
 
-    %w(toc cover).each do |name|
+    %w[toc cover].each do |name|
       assert_equal @wp.get_valid_option(name), "--#{name}"
     end
   end
