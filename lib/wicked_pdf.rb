@@ -87,7 +87,7 @@ class WickedPdf
     pdf = generated_pdf_file.read
     raise "PDF could not be generated!\n Command Error: #{err}" if pdf && pdf.rstrip.empty?
     pdf
-  rescue => e
+  rescue StandardError => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
   ensure
     generated_pdf_file.close! if generated_pdf_file && !return_file
@@ -111,13 +111,13 @@ class WickedPdf
   def retrieve_binary_version
     _stdin, stdout, _stderr = Open3.popen3(@exe_path + ' -V')
     @binary_version = parse_version(stdout.gets(nil))
-  rescue
+  rescue StandardError
     DEFAULT_BINARY_VERSION
   end
 
   def parse_version(version_info)
     match_data = /wkhtmltopdf\s*(\d*\.\d*\.\d*\w*)/.match(version_info)
-    if match_data && (2 == match_data.length)
+    if match_data && (match_data.length == 2)
       Gem::Version.new(match_data[1])
     else
       DEFAULT_BINARY_VERSION
@@ -332,13 +332,13 @@ class WickedPdf
   end
 
   def find_wkhtmltopdf_binary_path
-    possible_locations = (ENV['PATH'].split(':') + %w(/usr/bin /usr/local/bin)).uniq
-    possible_locations += %w(~/bin) if ENV.key?('HOME')
+    possible_locations = (ENV['PATH'].split(':') + %w[/usr/bin /usr/local/bin]).uniq
+    possible_locations += %w[~/bin] if ENV.key?('HOME')
     exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
     exe_path ||= begin
       detected_path = (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
       detected_path.present? && detected_path
-    rescue
+    rescue StandardError
       nil
     end
     exe_path ||= possible_locations.map { |l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }

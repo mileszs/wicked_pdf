@@ -6,7 +6,7 @@ module ActionController
       opts.to_s
     end
 
-    def self.alias_method_chain(_, _); end
+    def self.alias_method_chain(_target, _feature); end
   end
 end
 
