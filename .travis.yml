@@ -5,6 +5,7 @@ before_install:
   - gem update bundler
 bundler_args: --verbose
 sudo: required
+group: deprecated-2017Q4
 rvm:
   - 1.9.2
   - 1.9.3
