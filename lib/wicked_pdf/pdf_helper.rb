@@ -6,8 +6,42 @@ class WickedPdf
       return if base != ActionController::Base
 
       base.class_eval do
-        alias_method_chain :render, :wicked_pdf
-        alias_method_chain :render_to_string, :wicked_pdf
+        target = :render
+        feature = :wicked_pdf
+
+        with_method = "#{target}_with_#{feature}"
+        without_method = "#{target}_without_#{feature}"
+
+        alias_method without_method, target
+        alias_method target, with_method
+
+        case
+          when public_method_defined?(without_method)
+            public target
+          when protected_method_defined?(without_method)
+            protected target
+          when private_method_defined?(without_method)
+            private target
+        end
+
+        target = :render_to_string
+        feature = :wicked_pdf
+
+        with_method = "#{target}_with_#{feature}"
+        without_method = "#{target}_without_#{feature}"
+
+        alias_method without_method, target
+        alias_method target, with_method
+
+        case
+        when public_method_defined?(without_method)
+          public target
+        when protected_method_defined?(without_method)
+          protected target
+        when private_method_defined?(without_method)
+          private target
+        end
+
         if respond_to?(:after_action)
           after_action :clean_temp_files
         else

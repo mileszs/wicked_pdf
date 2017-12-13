@@ -5,8 +5,6 @@ module ActionController
     def render_to_string(opts = {})
       opts.to_s
     end
-
-    def self.alias_method_chain(_target, _feature); end
   end
 end
 
