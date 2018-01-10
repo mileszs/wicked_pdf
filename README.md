@@ -110,7 +110,7 @@ Using wicked_pdf_helpers with asset pipeline raises `Asset names passed to helpe
 
 #### Asset pipeline usage
 
-It is best to precompile assets used in PDF views. This will help avoid issues when it comes to deploying, as Rails serves asset files differently between development and production (`config.assets.comple = false`), which can make it look like your PDFs work in development, but fail to load assets in production.
+It is best to precompile assets used in PDF views. This will help avoid issues when it comes to deploying, as Rails serves asset files differently between development and production (`config.assets.compile = false`), which can make it look like your PDFs work in development, but fail to load assets in production.
 
     config.assets.precompile += ['blueprint/screen.css', 'pdf.css', 'jquery.ui.datepicker.js', 'pdf.js', ...etc...]
 
