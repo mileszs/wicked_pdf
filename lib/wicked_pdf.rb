@@ -5,10 +5,14 @@ require 'logger'
 require 'digest/md5'
 require 'rbconfig'
 
-if (RbConfig::CONFIG['target_os'] =~ /mswin|mingw/) && (RUBY_VERSION < '1.9')
-  require 'win32/open3'
+if ENV['WICKED_POPEN'] == 'ruby'
+  if (RbConfig::CONFIG['target_os'] =~ /mswin|mingw/) && (RUBY_VERSION < '1.9')
+    require 'win32/open3'
+  else
+    require 'open3'
+  end
 else
-  require 'open3'
+  require 'posix/spawn'
 end
 
 begin
@@ -75,8 +79,13 @@ class WickedPdf
 
     print_command(command.inspect) if in_development_mode?
 
-    err = Open3.popen3(*command) do |_stdin, _stdout, stderr|
-      stderr.read
+    err = if ENV['WICKED_POPEN'] == 'ruby'
+      Open3.popen3(*command) do |_stdin, _stdout, stderr|
+        stderr.read
+      end
+    else
+      child = POSIX::Spawn::Child.new(*command)
+      child.err
     end
     if options[:return_file]
       return_file = options.delete(:return_file)
@@ -110,7 +119,20 @@ class WickedPdf
   end
 
   def retrieve_binary_version
-    _stdin, stdout, _stderr = Open3.popen3(@exe_path + ' -V')
+    command = [
+      @exe_path,
+      '-V'
+    ]
+
+    stdout = if ENV['WICKED_POPEN'] == 'ruby'
+      Open3.popen3(*command) do |_stdin, stdout, _stderr|
+        stdout.read
+      end
+    else
+      child = POSIX::Spawn::Child.new(*command)
+      child.out
+    end
+
     @binary_version = parse_version(stdout.gets(nil))
   rescue StandardError
     DEFAULT_BINARY_VERSION

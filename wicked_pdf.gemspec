@@ -27,6 +27,7 @@ DESC
   spec.requirements << 'wkhtmltopdf'
 
   spec.add_dependency 'activesupport'
+  spec.add_dependency 'posix-spawn', '~> 0.3.11'
 
   spec.add_development_dependency 'rails'
   spec.add_development_dependency 'bundler', '~> 1.3'
