@@ -27,6 +27,21 @@ class WickedPdf
         end.html_safe
       end
 
+      def wicked_pdf_stylesheet_pack_tag(*sources)
+        return unless defined?(Webpacker)
+
+        if Webpacker.dev_server.running?
+          stylesheet_pack_tag(*sources)
+        else
+          css_text = sources.collect do |source|
+            source = WickedPdfHelper.add_extension(source, 'css')
+            source_path = asset_pack_path(source)
+            wicked_pdf_stylesheet_link_tag(root_url[0...-1] + source_path)
+          end.join("\n")
+          css_text.respond_to?(:html_safe) ? css_text.html_safe : css_text
+        end
+      end
+
       def wicked_pdf_image_tag(img, options = {})
         image_tag wicked_pdf_asset_path(img), options
       end
