@@ -363,6 +363,19 @@ config.middleware.use WickedPdf::Middleware, {}, except: [ %r[^/admin], '/secret
 ```
 If you use the standard `render pdf: 'some_pdf'` in your app, you will want to exclude those actions from the middleware.
 
+
+### Include in an email as an attachment
+
+To include a rendered pdf file in an email you can do the following:
+
+```ruby
+attachments['attachment.pdf'] = WickedPdf.new.pdf_from_string(
+  render_to_string('link_to_view.pdf.erb', layout: 'pdf')
+)
+```
+
+This will render the pdf to a string an include it in the email. This is very slow so make sure you schedule your email delivery in a job.
+
 ### Further Reading
 
 Mike Ackerman's post [How To Create PDFs in Rails](https://www.viget.com/articles/how-to-create-pdfs-in-rails)
