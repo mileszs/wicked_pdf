@@ -85,7 +85,6 @@ The wkhtmltopdf binary is run outside of your Rails application; therefore, your
   </body>
 </html>
 ```
-
 Using wicked_pdf_helpers with asset pipeline raises `Asset names passed to helpers should not include the "/assets/" prefix.` error. To work around this, you can use `wicked_pdf_asset_base64` with the normal Rails helpers, but be aware that this will base64 encode your content and inline it in the page. This is very quick for small assets, but large ones can take a long time.
 
 ```html
@@ -107,6 +106,13 @@ Using wicked_pdf_helpers with asset pipeline raises `Asset names passed to helpe
   </body>
 </html>
 ```
+
+#### Webpacker usage
+
+wicked_pdf supports webpack stylesheets and javascript assets.
+
+Use `wicked_pdf_stylesheet_pack_tag` for stylesheets
+Use `wicked_pdf_javascript_pack_tag` for javascripts
 
 #### Asset pipeline usage
 
