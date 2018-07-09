@@ -179,6 +179,7 @@ class ThingsController < ApplicationController
                no_background:                  true,
                viewport_size:                  'TEXT',                    # available only with use_xserver or patched QT
                extra:                          '',                        # directly inserted into the command to wkhtmltopdf
+               raise_on_all_errors:            nil,                       # raise error for any stderr output.  Such as missing media, image assets 
                outline: {   outline:           true,
                             outline_depth:     LEVEL },
                margin:  {   top:               SIZE,                     # default 10 (mm)
