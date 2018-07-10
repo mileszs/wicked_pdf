@@ -24,7 +24,7 @@ Metrics/ModuleLength:
 
 # Offense count: 5
 Metrics/CyclomaticComplexity:
-  Max: 9
+  Max: 11
 
 # Offense count: 92
 # Configuration parameters: AllowURI, URISchemes.
