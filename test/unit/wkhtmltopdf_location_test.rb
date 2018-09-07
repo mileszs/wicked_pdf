@@ -1,4 +1,6 @@
-
+require 'test_helper'
+require 'rubygems/test_case'
+require 'rubygems/commands/list_command'
 
 class WkhtmltopdfLocationTest < ActiveSupport::TestCase
   setup do
@@ -8,6 +10,14 @@ class WkhtmltopdfLocationTest < ActiveSupport::TestCase
 
   teardown do
     WickedPdf.config = @saved_config
+  end
+
+  class BinaryGemsTest < Gem::TestCase
+    def test_should_locate_binary_from_wkhtmltopdf_binary_edge
+      puts Gem::Commands::ListCommand.new name: /wkhtmltopdf/
+      spec = quick_gem('wkhtmltopdf-binary-edge', '0.12.0')
+      util_remove_gem(spec)
+    end
   end
 
   test 'should correctly locate wkhtmltopdf without bundler' do
