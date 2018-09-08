@@ -55,24 +55,17 @@ class WkhtmltopdfLocationTest < ActiveSupport::TestCase
   # temporary location and will automatically be removed afterwards.
   class BundledExecutableTest < Gem::TestCase
     def test_should_locate_binary_from_wkhtmltopdf_binary_edge
-      spec = executable_gem 'wkhtmltopdf-binary-edge', '0.12.1'
+      executable_gem 'wkhtmltopdf-binary-edge', '0.12.1'
 
       wicked_pdf = WickedPdf.new
       assert_equal '0.12.1', wicked_pdf.binary_version.to_s
     end
 
-    def test_should_locate_binary_from_wkhtmltopdf_heroku
-      spec = executable_gem 'wkhtmltopdf-heroku', '0.12.2'
+    def test_should_locate_binary_from_wkhtmltopdf_binary
+      executable_gem 'wkhtmltopdf-heroku', '0.12.2'
 
       wicked_pdf = WickedPdf.new
       assert_equal '0.12.2', wicked_pdf.binary_version.to_s
-    end
-
-    def test_should_locate_binary_from_wkhtmltopdf_binary_the_legend
-      spec = executable_gem 'wkhtmltopdf-heroku', '0.12.3'
-
-      wicked_pdf = WickedPdf.new
-      assert_equal '0.12.3', wicked_pdf.binary_version.to_s
     end
 
     private

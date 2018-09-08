@@ -337,6 +337,10 @@ class WickedPdf
     config_path = config[:exe_path]
     return config_path if config_path.present?
 
+    # environment variable also means business.
+    env_path = ENV['WKHTMLTOPDF_BIN']
+    return env_path if env_path.present?
+
     # find the first installed gem that has a `wkhtmltopdf` executable.
     gem_with_executable = Gem::Specification._all.find { |s| s.executables.include? EXE_NAME }
     return Gem.bin_path(gem_with_executable.name, EXE_NAME) if gem_with_executable.present?
