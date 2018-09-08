@@ -333,16 +333,33 @@ class WickedPdf
   end
 
   def find_wkhtmltopdf_binary_path
-    possible_locations = (ENV['PATH'].split(':') + %w[/usr/bin /usr/local/bin]).uniq
-    possible_locations += %w[~/bin] if ENV.key?('HOME')
-    exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
-    exe_path ||= begin
-      detected_path = (defined?(Bundler) ? Bundler.which('wkhtmltopdf') : `which wkhtmltopdf`).chomp
-      detected_path.present? && detected_path
-    rescue StandardError
-      nil
+    # if the path is set in configuration, it should always be used.
+    config_path = config[:exe_path]
+    return config_path if config_path.present?
+
+    # find the first installed gem that has a `wkhtmltopdf` executable.
+    gem_with_executable = Gem::Specification._all.find { |s| s.executables.include? EXE_NAME }
+    return Gem.bin_path(gem_with_executable.name, EXE_NAME) if gem_with_executable.present?
+
+    # `Bundler.which` traverses PATH in search for the executable.
+    if defined?(Bundler)
+      which_bundler = Bundler.which(EXE_NAME)
+      return which_bundler if which_bundler.present?
     end
-    exe_path ||= possible_locations.map { |l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }
-    exe_path || ''
+
+    # Search a few directories we know are often used.
+    dirs = %w[/usr/bin /usr/local/bin]
+    dirs << "${ENV['HOME']/bin}" if ENV['HOME']
+    dirs.each do |dir|
+      executable_path = File.expand_path(EXE_NAME, dir)
+      return executable_path if File.file?(executable_path) && File.executable?(executable_path)
+    end
+
+    # Lets's ask the OS.
+    which_system = `which #{EXE_NAME}`.chomp
+    return which_system if which_system.present?
+
+    # empty string if we couldn't find it.
+    ''
   end
 end

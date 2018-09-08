@@ -35,8 +35,4 @@ DESC
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'mocha', '= 1.3'
   spec.add_development_dependency 'test-unit'
-
-  # we automatically use wkhtmltopdf binary gems when present
-  spec.add_development_dependency 'wkhtmltopdf-binary-edge', '~> 0.12.0'
-  spec.add_development_dependency 'wkhtmltopdf-heroku', '~> 2.12.0'
 end
