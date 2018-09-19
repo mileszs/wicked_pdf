@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'pdf/inspector'
 
 WickedPdf.config = { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf' }
 HTML_DOCUMENT = '<html><body>Hello World</body></html>'.freeze
@@ -30,6 +31,9 @@ class WickedPdfTest < ActiveSupport::TestCase
     assert pdf.start_with?('%PDF-1.4')
     assert pdf.rstrip.end_with?('%%EOF')
     assert pdf.length > 100
+
+    page_analysis = PDF::Inspector::Page.analyze(pdf)
+    assert_equal 1, page_analysis.pages.size
   end
 
   test 'should generate PDF from html document with long lines' do
@@ -46,6 +50,37 @@ class WickedPdfTest < ActiveSupport::TestCase
     assert pdf.start_with?('%PDF-1.4')
     assert pdf.rstrip.end_with?('%%EOF')
     assert pdf.length > 100
+
+    page_analysis = PDF::Inspector::Page.analyze(pdf)
+    assert_equal 2, page_analysis.pages.size
+  end
+
+  test 'should generate PDF from multiple html document strings' do
+    pdf = @wp.pdf_from_multiple_strings [HTML_DOCUMENT, HTML_DOCUMENT]
+    assert pdf.start_with?('%PDF-1.4')
+    assert pdf.rstrip.end_with?('%%EOF')
+    assert pdf.length > 100
+
+    page_analysis = PDF::Inspector::Page.analyze(pdf)
+    assert_equal 2, page_analysis.pages.size
+  end
+
+  test 'should generate PDF from multiple existing HTML files without converting it to string' do
+    filepath1 = File.join(Dir.pwd, 'test/fixtures/document_with_long_line.html')
+    filepath2 = File.join(Dir.pwd, 'test/fixtures/document_with_short_line.html')
+    pdf = @wp.pdf_from_multiple_html_files([filepath1, filepath2])
+
+    assert pdf.start_with?('%PDF-1.4')
+    assert pdf.rstrip.end_with?('%%EOF')
+    assert pdf.length > 100
+
+    text_analysis = PDF::Inspector::Text.analyze(pdf)
+    strings = text_analysis.strings.join.tr("\t", ' ')
+    assert strings.include?('Lorem ipsum')
+    assert strings.include?('An HTML file with a short line.')
+
+    page_analysis = PDF::Inspector::Page.analyze(pdf)
+    assert_equal 3, page_analysis.pages.size
   end
 
   test 'should raise exception when no path to wkhtmltopdf' do

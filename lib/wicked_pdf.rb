@@ -63,14 +63,37 @@ class WickedPdf
     string_file.close! if string_file
   end
 
-  def pdf_from_url(url, options = {})
+  def pdf_from_multiple_strings(strings, options = {})
+    strings = Array(strings)
+    options = options.dup
+    options.merge!(WickedPdf.config) { |_key, option, _config| option }
+    string_files = strings.map do |string|
+      string_file = WickedPdfTempfile.new('wicked_pdf.html', options[:temp_path])
+      string_file.binmode
+      string_file.write(string)
+      string_file.close
+      string_file
+    end
+
+    string_file_paths = string_files.map(&:path)
+    pdf = pdf_from_multiple_html_files(string_file_paths, options)
+    pdf
+  end
+
+  def pdf_from_multiple_html_files(filepaths, options = {})
+    urls = filepaths.map { |filepath| "file:///#{filepath}" }
+    pdf_from_url(urls, options)
+  end
+
+  def pdf_from_url(urls, options = {})
+    urls = Array(urls)
     # merge in global config options
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
     generated_pdf_file = WickedPdfTempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
     command = [@exe_path]
     command << '-q' unless on_windows? # suppress errors on stdout
     command += parse_options(options)
-    command << url
+    urls.each { |url| command << url }
     command << generated_pdf_file.path.to_s
 
     print_command(command.inspect) if in_development_mode?
