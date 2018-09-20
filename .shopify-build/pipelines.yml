@@ -1,0 +1,16 @@
+containers:
+  default:
+    docker: circleci/ruby:2.4.4
+  production:
+    application: shopify/wicked_pdf
+    environment: production
+
+pipelines:
+  shopify-cloud:
+    steps:
+      - label: Tests
+        timeout: 5m
+        run:
+          - bundle install --path=vendor/bundle
+          - bundle exec rake
+          - bundle exec rake test
