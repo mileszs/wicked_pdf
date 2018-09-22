@@ -19,10 +19,13 @@ gemfile:
   - gemfiles/3.2.gemfile
 before_script:
   - bundle list
-  - sudo apt-get install -y wkhtmltopdf
+  - sudo apt-get install -y xfonts-base xfonts-75dpi
+  - wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.trusty_amd64.deb
+  - sudo dpkg -i wkhtmltox_0.12.5-1.trusty_amd64.deb
+  - sudo apt-get install -f
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-env: WKHTMLTOPDF_BIN=/usr/bin/wkhtmltopdf
+env: WKHTMLTOPDF_BIN=/usr/local/bin/wkhtmltopdf
 script:
   - bundle exec rake
 matrix:
