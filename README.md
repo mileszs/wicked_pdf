@@ -179,7 +179,7 @@ class ThingsController < ApplicationController
                no_background:                  true,
                viewport_size:                  'TEXT',                    # available only with use_xserver or patched QT
                extra:                          '',                        # directly inserted into the command to wkhtmltopdf
-               raise_on_all_errors:            nil,                       # raise error for any stderr output.  Such as missing media, image assets 
+               raise_on_all_errors:            nil,                       # raise error for any stderr output.  Such as missing media, image assets
                outline: {   outline:           true,
                             outline_depth:     LEVEL },
                margin:  {   top:               SIZE,                     # default 10 (mm)
@@ -375,7 +375,7 @@ attachments['attachment.pdf'] = WickedPdf.new.pdf_from_string(
 )
 ```
 
-This will render the pdf to a string an include it in the email. This is very slow so make sure you schedule your email delivery in a job.
+This will render the pdf to a string and include it in the email. This is very slow so make sure you schedule your email delivery in a job.
 
 ### Further Reading
 
