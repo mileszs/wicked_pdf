@@ -356,7 +356,7 @@ If you would like to have WickedPdf automatically generate PDF views for all (or
 require 'wicked_pdf'
 config.middleware.use WickedPdf::Middleware
 ```
-If you want to turn on or off the middleware for certain urls, use the `:only` or `:except` conditions like so:
+If you want to turn on or off the middleware for certain URLs, use the `:only` or `:except` conditions like so:
 ```ruby
 # conditions can be plain strings or regular expressions, and you can supply only one or an array
 config.middleware.use WickedPdf::Middleware, {}, only: '/invoice'
