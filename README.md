@@ -404,7 +404,7 @@ However, the wicked_pdf_* helpers will use file:/// paths for assets when using 
 
 #### Gotchas
 
-If one image from your HTML cannot be found (relative or wrong path for ie), others images with right paths **may not** be displayed in the output PDF as well (it seems to be an issue with wkhtmltopdf).
+If one image from your HTML cannot be found (relative or wrong path for example), others images with right paths **may not** be displayed in the output PDF as well (it seems to be an issue with wkhtmltopdf).
 
 wkhtmltopdf may render at different resolutions on different platforms. For example, Linux prints at 75 dpi (native for WebKit) while on Windows it's at the desktop's DPI (which is normally 96 dpi). [Use `:zoom => 0.78125`](https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2184) (75/96) to match Linux rendering to Windows.
 
