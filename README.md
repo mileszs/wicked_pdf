@@ -304,7 +304,7 @@ If you need to display utf encoded characters, add this to your pdf views or lay
 ```
 If you need to return a PDF in a controller with Rails in API mode:
 ```ruby
-# teamplate in `app/views/controller_name/action_name.html.erb` e layout in `app/views/layouts/pdf.html.erb`
+# teamplate in `app/views/controller_name/action_name.html.erb` and layout in `app/views/layouts/pdf.html.erb`
 pdf_html = ActionController::Base.new.render_to_string(template: 'controller_name/action_name', layout: 'pdf')
 pdf = WickedPdf.new.pdf_from_string(pdf_html)
 send_data pdf, filename: 'file.pdf'
