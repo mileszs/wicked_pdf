@@ -302,7 +302,13 @@ If you need to display utf encoded characters, add this to your pdf views or lay
 ```html
 <meta charset="utf-8" />
 ```
-
+If you need to return a PDF in a controller with Rails in API mode:
+```ruby
+# partial in app/views/controller_name/_action_name.pdf.erb
+pdf_html = ActionController::Base.new.render_to_string(partial: 'controller_name/action_name')
+pdf = WickedPdf.new.pdf_from_string(pdf_html)
+send_data pdf, filename: 'file.pdf'
+```
 ### Page Breaks
 
 You can control page breaks with CSS.
