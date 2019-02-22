@@ -1,25 +1,13 @@
 language:
   - ruby
+git:
+  depth: 1
+  quiet: true
 before_install:
   - sudo apt-get update -qq
-  - gem update bundler
+  - gem install bundler -v '< 2'
 bundler_args: --verbose
 sudo: required
-rvm:
-  - 1.9.2
-  - 1.9.3
-  - 2.0
-  - 2.1
-  - 2.2
-  - 2.3.0
-  - 2.4.5
-  - 2.5.3
-  - 2.6.1
-  - ruby-head
-gemfile:
-  - gemfiles/3.0.gemfile
-  - gemfiles/3.1.gemfile
-  - gemfiles/3.2.gemfile
 before_script:
   - bundle list
   - sudo apt-get install -y wkhtmltopdf
@@ -36,32 +24,41 @@ matrix:
         - gem update --system 1.8.25
         - gem --version
       gemfile: gemfiles/2.3.gemfile
-    - rvm: 2.0.0
-      gemfile: gemfiles/4.0.gemfile
-    - rvm: 2.2.0
-      gemfile: gemfiles/4.1.gemfile
-    - rvm: 2.2.0
-      gemfile: gemfiles/4.2.gemfile
-    - rvm: 2.3.0
-      gemfile: gemfiles/5.0.gemfile
-    - rvm: 2.4.5
-      gemfile: gemfiles/5.0.gemfile
-    - rvm: 2.5.3
-      gemfile: gemfiles/5.0.gemfile
-    - rvm: 2.6.1
-      gemfile: gemfiles/5.0.gemfile
-  allow_failures:
     - rvm: 1.9.2
       gemfile: gemfiles/3.0.gemfile
-    - rvm: 1.9.2
-      gemfile: gemfiles/3.1.gemfile
-    - rvm: 1.9.2
-      gemfile: gemfiles/3.2.gemfile
     - rvm: 1.9.3
+      gemfile: gemfiles/3.1.gemfile
+    - rvm: 2.0
+      gemfile: gemfiles/3.2.gemfile
+    - rvm: 2.0
       gemfile: gemfiles/4.0.gemfile
-    - rvm: 2.2.2
+    - rvm: 2.1
+      gemfile: gemfiles/4.1.gemfile
+    - rvm: 2.2
+      gemfile: gemfiles/4.2.gemfile
+    - rvm: 2.3
+      gemfile: gemfiles/5.0.gemfile
+      before_install:
+        # https://github.com/danmayer/coverband/issues/162
+        - "find /home/travis/.rvm/rubies -wholename '*default/bundler-*.gemspec' -delete"
+        - rvm @global do gem uninstall bundler -a -x -I || true
+        - gem install bundler -v '< 2'
+    - rvm: 2.4
+      gemfile: gemfiles/5.1.gemfile
+    - rvm: 2.5
+      gemfile: gemfiles/5.2.gemfile
+    - rvm: 2.6
+      gemfile: gemfiles/5.2.gemfile
+    - rvm: ruby-head
+      gemfile: gemfiles/5.2.gemfile
+      before_install:
+        - gem install bundler -v '~> 2'
+    - rvm: ruby-head
       gemfile: gemfiles/rails_edge.gemfile
-    - rvm: 2.3.0
+      before_install:
+        - gem install bundler -v '~> 2'
+  allow_failures:
+    - rvm: 2.6
       gemfile: gemfiles/rails_edge.gemfile
     - rvm: 2.5.3
       gemfile: gemfiles/3.0.gemfile

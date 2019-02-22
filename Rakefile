@@ -34,9 +34,13 @@ desc 'Generate dummy application for test cases'
 task :dummy_generate do
   Rake::Task[:dummy_remove].invoke
   puts 'Creating dummy application to run tests'
-  command = Rails::VERSION::MAJOR == 2 ? '' : 'new'
-  system("rails #{command} test/dummy")
+  if Rails::VERSION::MAJOR > 2
+    system('rails new test/dummy --database=sqlite3')
+  else
+    system('rails test/dummy')
+  end
   system('touch test/dummy/db/schema.rb')
+  FileUtils.cp 'test/fixtures/database.yml', 'test/dummy/config/'
   FileUtils.rm_r Dir.glob('test/dummy/test/*')
 end
 
@@ -45,7 +49,7 @@ task :dummy_remove do
   FileUtils.rm_r Dir.glob('test/dummy/*')
 end
 
-desc 'Generate documentation for the wicked_pdf plugin.'
+desc 'Generate documentation for the wicked_pdf gem.'
 RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'WickedPdf'
