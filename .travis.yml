@@ -49,6 +49,8 @@ matrix:
       gemfile: gemfiles/5.2.gemfile
     - rvm: 2.6
       gemfile: gemfiles/5.2.gemfile
+    - rvm: 2.6
+      gemfile: gemfiles/rails_edge.gemfile
     - rvm: ruby-head
       gemfile: gemfiles/5.2.gemfile
       before_install:
