@@ -175,11 +175,11 @@ class ThingsController < ApplicationController
                print_media_type:               true,
                disable_smart_shrinking:        true,
                use_xserver:                    true,
-               background:                     false,                     # backround needs to be true to enable background colors to render
+               background:                     false,                     # background needs to be true to enable background colors to render
                no_background:                  true,
                viewport_size:                  'TEXT',                    # available only with use_xserver or patched QT
                extra:                          '',                        # directly inserted into the command to wkhtmltopdf
-               raise_on_all_errors:            nil,                       # raise error for any stderr output.  Such as missing media, image assets 
+               raise_on_all_errors:            nil,                       # raise error for any stderr output.  Such as missing media, image assets
                outline: {   outline:           true,
                             outline_depth:     LEVEL },
                margin:  {   top:               SIZE,                     # default 10 (mm)
@@ -302,7 +302,12 @@ If you need to display utf encoded characters, add this to your pdf views or lay
 ```html
 <meta charset="utf-8" />
 ```
-
+If you need to return a PDF in a controller with Rails in API mode:
+```ruby
+pdf_html = ActionController::Base.new.render_to_string(template: 'controller_name/action_name', layout: 'pdf')
+pdf = WickedPdf.new.pdf_from_string(pdf_html)
+send_data pdf, filename: 'file.pdf'
+```
 ### Page Breaks
 
 You can control page breaks with CSS.
@@ -356,7 +361,7 @@ If you would like to have WickedPdf automatically generate PDF views for all (or
 require 'wicked_pdf'
 config.middleware.use WickedPdf::Middleware
 ```
-If you want to turn on or off the middleware for certain urls, use the `:only` or `:except` conditions like so:
+If you want to turn on or off the middleware for certain URLs, use the `:only` or `:except` conditions like so:
 ```ruby
 # conditions can be plain strings or regular expressions, and you can supply only one or an array
 config.middleware.use WickedPdf::Middleware, {}, only: '/invoice'
@@ -375,7 +380,7 @@ attachments['attachment.pdf'] = WickedPdf.new.pdf_from_string(
 )
 ```
 
-This will render the pdf to a string an include it in the email. This is very slow so make sure you schedule your email delivery in a job.
+This will render the pdf to a string and include it in the email. This is very slow so make sure you schedule your email delivery in a job.
 
 ### Further Reading
 
@@ -404,7 +409,7 @@ However, the wicked_pdf_* helpers will use file:/// paths for assets when using 
 
 #### Gotchas
 
-If one image from your HTML cannot be found (relative or wrong path for ie), others images with right paths **may not** be displayed in the output PDF as well (it seems to be an issue with wkhtmltopdf).
+If one image from your HTML cannot be found (relative or wrong path for example), others images with right paths **may not** be displayed in the output PDF as well (it seems to be an issue with wkhtmltopdf).
 
 wkhtmltopdf may render at different resolutions on different platforms. For example, Linux prints at 75 dpi (native for WebKit) while on Windows it's at the desktop's DPI (which is normally 96 dpi). [Use `:zoom => 0.78125`](https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2184) (75/96) to match Linux rendering to Windows.
 
