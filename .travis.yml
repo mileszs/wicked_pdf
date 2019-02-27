@@ -47,6 +47,8 @@ matrix:
       gemfile: gemfiles/5.1.gemfile
     - rvm: 2.5
       gemfile: gemfiles/5.2.gemfile
+    - rvm: 2.5
+      gemfile: gemfiles/rails_edge.gemfile
     - rvm: 2.6
       gemfile: gemfiles/5.2.gemfile
     - rvm: 2.6
@@ -60,6 +62,8 @@ matrix:
       before_install:
         - gem install bundler -v '~> 2'
   allow_failures:
+    - rvm: 2.5
+      gemfile: gemfiles/rails_edge.gemfile
     - rvm: 2.6
       gemfile: gemfiles/rails_edge.gemfile
     - rvm: 2.5.3
