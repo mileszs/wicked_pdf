@@ -79,7 +79,8 @@ class WickedPdf
         :template => options[:template],
         :layout => options[:layout],
         :formats => options[:formats],
-        :handlers => options[:handlers]
+        :handlers => options[:handlers],
+        :assigns => options[:assigns]
       }
       render_opts[:locals] = options[:locals] if options[:locals]
       render_opts[:file] = options[:file] if options[:file]
@@ -100,6 +101,7 @@ class WickedPdf
           :layout => options[:layout],
           :formats => options[:formats],
           :handlers => options[:handlers],
+          :assigns => options[:assigns],
           :content_type => 'text/html'
         }
         render_opts[:locals] = options[:locals] if options[:locals]
@@ -124,7 +126,8 @@ class WickedPdf
           :template => options[hf][:html][:template],
           :layout => options[hf][:html][:layout],
           :formats => options[hf][:html][:formats],
-          :handlers => options[hf][:html][:handlers]
+          :handlers => options[hf][:html][:handlers],
+          :assigns => options[hf][:html][:assigns]
         }
         render_opts[:locals] = options[hf][:html][:locals] if options[hf][:html][:locals]
         render_opts[:file] = options[hf][:html][:file] if options[:file]
