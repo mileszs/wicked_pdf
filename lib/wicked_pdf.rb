@@ -9,8 +9,6 @@ if (RbConfig::CONFIG['target_os'] =~ /mswin|mingw/) && (RUBY_VERSION < '1.9')
   require 'win32/open3'
 else
   require 'open3'
-  require 'pty' # no support for windows
-  require 'English'
 end
 
 begin
@@ -29,6 +27,7 @@ require 'wicked_pdf/version'
 require 'wicked_pdf/railtie'
 require 'wicked_pdf/tempfile'
 require 'wicked_pdf/middleware'
+require 'wicked_pdf/progress'
 
 class WickedPdf
   DEFAULT_BINARY_VERSION = Gem::Version.new('0.9.9')
@@ -37,6 +36,8 @@ class WickedPdf
   @@config = {}
   cattr_accessor :config
   attr_accessor :binary_version
+
+  include Progress
 
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path || find_wkhtmltopdf_binary_path
@@ -104,32 +105,6 @@ class WickedPdf
   def in_development_mode?
     return Rails.env == 'development' if defined?(Rails.env)
     RAILS_ENV == 'development' if defined?(RAILS_ENV)
-  end
-
-  def track_progress?(options)
-    options[:progress] && !on_windows?
-  end
-
-  def invoke_with_progress(command, options)
-    output = []
-    begin
-      PTY.spawn(command.join(' ')) do |stdout, _stdin, pid|
-        begin
-          stdout.sync
-          stdout.each_line("\r") do |line|
-            output << line.chomp
-            options[:progress].call(line) if options[:progress]
-          end
-        rescue Errno::EIO # child process is terminated, this is expected behaviour
-        ensure
-          ::Process.wait pid
-        end
-      end
-    rescue PTY::ChildExited
-      puts 'The child process exited!'
-    end
-    err = output.join('\n')
-    raise "#{command} failed (exitstatus 0). Output was: #{err}" unless $CHILD_STATUS && $CHILD_STATUS.exitstatus.zero?
   end
 
   def on_windows?
