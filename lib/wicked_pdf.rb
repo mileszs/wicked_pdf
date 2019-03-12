@@ -9,7 +9,8 @@ if (RbConfig::CONFIG['target_os'] =~ /mswin|mingw/) && (RUBY_VERSION < '1.9')
   require 'win32/open3'
 else
   require 'open3'
-  require 'pty' #no support for windows
+  require 'pty' # no support for windows
+  require 'English'
 end
 
 begin
@@ -112,23 +113,23 @@ class WickedPdf
   def invoke_with_progress(command, options)
     output = []
     begin
-      PTY.spawn(command.join(" ")) do |stdout, stdin, pid|
+      PTY.spawn(command.join(' ')) do |stdout, _stdin, pid|
         begin
           stdout.sync
           stdout.each_line("\r") do |line|
             output << line.chomp
             options[:progress].call(line) if options[:progress]
           end
-        rescue Errno::EIO #child process is terminated, this is expected behaviour
+        rescue Errno::EIO # child process is terminated, this is expected behaviour
         ensure
           ::Process.wait pid
         end
       end
     rescue PTY::ChildExited
-      puts "The child process exited!"
+      puts 'The child process exited!'
     end
     err = output.join('\n')
-    raise "#{command} failed (exitstatus 0). Output was: #{err}" unless $? && $?.exitstatus == 0
+    raise "#{command} failed (exitstatus 0). Output was: #{err}" unless $CHILD_STATUS && $CHILD_STATUS.exitstatus.zero?
   end
 
   def on_windows?

@@ -226,15 +226,15 @@ class WickedPdfTest < ActiveSupport::TestCase
     assert_equal @wp.get_parsed_options(options), "--disable-javascript --header-center 3 #{cover_option} http://example.org"
   end
 
-  test "should output progress when creating pdfs on compatible hosts" do
+  test 'should output progress when creating pdfs on compatible hosts' do
     wp = WickedPdf.new
     output = []
-    options = { :progress => Proc.new {|o| output << o}}
+    options = { :progress => proc { |o| output << o } }
     wp.pdf_from_string HTML_DOCUMENT, options
     if RbConfig::CONFIG['target_os'] =~ /mswin|mingw/
       assert_empty output
     else
-      assert(output.collect{|l| not l.match(/Loading/).nil?}.include?(true)) #should output something like "Loading pages (1/5)"
+      assert(output.collect { |l| !l.match(/Loading/).nil? }.include?(true)) # should output something like "Loading pages (1/5)"
     end
   end
 end
