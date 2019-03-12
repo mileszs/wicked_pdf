@@ -297,6 +297,22 @@ save_path = Rails.root.join('pdfs','filename.pdf')
 File.open(save_path, 'wb') do |file|
   file << pdf
 end
+
+# you can also track progress on your PDF generation, such as when using it from within a Resque job
+class PdfJob
+  def perform
+    blk = proc { |output|
+      match = output.match(/\[.+\] Page (?<current_page>\d+) of (?<total_pages>\d+)/)
+      if match
+        current_page = match[:current_page].to_i
+        total_pages = match[:total_pages].to_i
+        message = "Generated #{current_page} of #{total_pages} pages"
+        at current_page, total_pages, message
+      end
+    }
+    WickedPdf.new.pdf_from_string(html, progress: blk)
+  end
+end
 ```
 If you need to display utf encoded characters, add this to your pdf views or layouts:
 ```html
