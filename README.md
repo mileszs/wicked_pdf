@@ -235,7 +235,8 @@ class ThingsController < ApplicationController
                             disable_links:     true,
                             disable_toc_links: true,
                             disable_back_links:true,
-                            xsl_style_sheet:   'file.xsl'} # optional XSLT stylesheet to use for styling table of contents
+                            xsl_style_sheet:   'file.xsl'}, # optional XSLT stylesheet to use for styling table of contents
+               progress: proc { |output| puts output } # proc called when console output changes
       end
     end
   end
