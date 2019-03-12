@@ -1,0 +1,9 @@
+source 'https://rubygems.org'
+
+gem 'rdoc'
+gem 'rails', '~> 5.2'
+gem 'sqlite3', '~> 1.3.6'
+gem 'bootsnap' # required to run `rake test` in Rails 5.2
+gem 'mocha', '= 1.3' # newer versions blow up
+
+gemspec path: '../'

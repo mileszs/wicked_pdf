@@ -1,14 +1,13 @@
 class WickedPdf
   class Middleware
-
     def initialize(app, options = {}, conditions = {})
-      @app        = app
-      @options    = (WickedPdf.config || {}).merge(options)
+      @app = app
+      @options = (WickedPdf.config || {}).merge(options)
       @conditions = conditions
     end
 
     def call(env)
-      @request    = Rack::Request.new(env)
+      @request = Rack::Request.new(env)
       @render_pdf = false
 
       set_request_to_render_as_pdf(env) if render_as_pdf?
@@ -26,11 +25,11 @@ class WickedPdf
         headers.delete('ETag')
         headers.delete('Cache-Control')
 
-        headers["Content-Length"]         = (body.respond_to?(:bytesize) ? body.bytesize : body.size).to_s
-        headers["Content-Type"]           = "application/pdf"
+        headers['Content-Length'] = (body.respond_to?(:bytesize) ? body.bytesize : body.size).to_s
+        headers['Content-Type'] = 'application/pdf'
         if @options.fetch(:disposition, '') == 'attachment'
-          headers["Content-Disposition"]       = 'attachment'
-          headers["Content-Transfer-Encoding"] = 'binary'
+          headers['Content-Disposition'] = 'attachment'
+          headers['Content-Transfer-Encoding'] = 'binary'
         end
       end
 
@@ -68,8 +67,8 @@ class WickedPdf
         rules.map do |pattern|
           if pattern.is_a?(Regexp)
             return false if @request.fullpath =~ pattern
-          else
-            return false if @request.path[0, pattern.length] == pattern
+          elsif @request.path[0, pattern.length] == pattern
+            return false
           end
         end
 
@@ -81,15 +80,13 @@ class WickedPdf
 
     def set_request_to_render_as_pdf(env)
       @render_pdf = true
-      path = @request.path.sub(%r{\.pdf$}, '')
-      %w[PATH_INFO REQUEST_URI].each { |e| env[e] = path }
+      %w[PATH_INFO REQUEST_URI].each { |e| env[e] = env[e].sub(%r{\.pdf\b}, '') }
       env['HTTP_ACCEPT'] = concat(env['HTTP_ACCEPT'], Rack::Mime.mime_type('.html'))
-      env["Rack-Middleware-WickedPdf"] = "true"
+      env['Rack-Middleware-WickedPdf'] = 'true'
     end
 
     def concat(accepts, type)
       (accepts || '').split(',').unshift(type).compact.join(',')
     end
-
   end
 end

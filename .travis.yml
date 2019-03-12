@@ -1,40 +1,65 @@
 language:
   - ruby
+git:
+  depth: 1
+  quiet: true
+before_install:
+  - sudo apt-get update -qq
+  - gem install bundler -v '< 2'
 bundler_args: --verbose
-rvm:  
-  - 1.9.2
-  - 1.9.3
-  - 2.0.0
-gemfile:
-  - gemfiles/3.0.gemfile
-  - gemfiles/3.1.gemfile
-  - gemfiles/3.2.gemfile
-before_script: 
+sudo: required
+before_script:
   - bundle list
   - sudo apt-get install -y wkhtmltopdf
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 env: WKHTMLTOPDF_BIN=/usr/bin/wkhtmltopdf
 script:
-  - bundle exec rake dummy_generate
-  - bundle exec rake test
+  - bundle exec rake
 matrix:
   include:
     - rvm: 1.8.7
       before_install:
+        - sudo apt-get update -qq
         - gem update --system 1.8.25
         - gem --version
       gemfile: gemfiles/2.3.gemfile
+    - rvm: 1.9.2
+      gemfile: gemfiles/3.0.gemfile
     - rvm: 1.9.3
+      gemfile: gemfiles/3.1.gemfile
+    - rvm: 2.0
+      gemfile: gemfiles/3.2.gemfile
+    - rvm: 2.0
       gemfile: gemfiles/4.0.gemfile
-    - rvm: 1.9.3
+    - rvm: 2.1
+      gemfile: gemfiles/4.1.gemfile
+    - rvm: 2.2
+      gemfile: gemfiles/4.2.gemfile
+    - rvm: 2.3
+      gemfile: gemfiles/5.0.gemfile
+      before_install:
+        # https://github.com/danmayer/coverband/issues/162
+        - "find /home/travis/.rvm/rubies -wholename '*default/bundler-*.gemspec' -delete"
+        - rvm @global do gem uninstall bundler -a -x -I || true
+        - gem install bundler -v '< 2'
+    - rvm: 2.4
+      gemfile: gemfiles/5.1.gemfile
+    - rvm: 2.5
+      gemfile: gemfiles/5.2.gemfile
+    - rvm: 2.6
+      gemfile: gemfiles/5.2.gemfile
+    - rvm: ruby-head
+      gemfile: gemfiles/5.2.gemfile
+      before_install:
+        - gem install bundler -v '~> 2'
+    - rvm: ruby-head
       gemfile: gemfiles/rails_edge.gemfile
-    - rvm: 2.0.0
-      gemfile: gemfiles/4.0.gemfile
-    - rvm: 2.0.0
-      gemfile: gemfiles/rails_edge.gemfile
+      before_install:
+        - gem install bundler -v '~> 2'
   allow_failures:
-    - rvm: 1.9.3
+    - rvm: 2.6
       gemfile: gemfiles/rails_edge.gemfile
-    - rvm: 2.0.0
-      gemfile: gemfiles/rails_edge.gemfile
+    - rvm: 2.5.3
+      gemfile: gemfiles/3.0.gemfile
+    - rvm: ruby-head
