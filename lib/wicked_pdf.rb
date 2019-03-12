@@ -69,15 +69,18 @@ class WickedPdf
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
     generated_pdf_file = WickedPdfTempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
     command = [@exe_path]
-    #command << '-q' unless on_windows? # track progress -> activate output
     command += parse_options(options)
     command << url
     command << generated_pdf_file.path.to_s
 
     print_command(command.inspect) if in_development_mode?
 
-    err = Open3.popen3(*command) do |_stdin, _stdout, stderr|
-      stderr.read
+    if track_progress?(options)
+      invoke_with_progress(command, options)
+    else
+      err = Open3.popen3(*command) do |_stdin, _stdout, stderr|
+        stderr.read
+      end
     end
     if options[:return_file]
       return_file = options.delete(:return_file)
@@ -100,6 +103,32 @@ class WickedPdf
   def in_development_mode?
     return Rails.env == 'development' if defined?(Rails.env)
     RAILS_ENV == 'development' if defined?(RAILS_ENV)
+  end
+
+  def track_progress?(options)
+    options[:progress] && !on_windows?
+  end
+
+  def invoke_with_progress(command, options)
+    output = []
+    begin
+      PTY.spawn(command.join(" ")) do |stdout, stdin, pid|
+        begin
+          stdout.sync
+          stdout.each_line("\r") do |line|
+            output << line.chomp
+            options[:progress].call(line) if options[:progress]
+          end
+        rescue Errno::EIO #child process is terminated, this is expected behaviour
+        ensure
+          ::Process.wait pid
+        end
+      end
+    rescue PTY::ChildExited
+      puts "The child process exited!"
+    end
+    err = output.join('\n')
+    raise "#{command} failed (exitstatus 0). Output was: #{err}" unless $? && $?.exitstatus == 0
   end
 
   def on_windows?
