@@ -1,10 +1,10 @@
-# Wicked PDF [![Build Status](https://secure.travis-ci.org/mileszs/wicked_pdf.svg)](http://travis-ci.org/mileszs/wicked_pdf) [![Gem Version](https://badge.fury.io/rb/wicked_pdf.svg)](http://badge.fury.io/rb/wicked_pdf) [![Code Climate](https://codeclimate.com/github/mileszs/wicked_pdf/badges/gpa.svg)](https://codeclimate.com/github/mileszs/wicked_pdf)
+# Wicked PDF [![Gem Version](https://badge.fury.io/rb/wicked_pdf.svg)](http://badge.fury.io/rb/wicked_pdf) [![Build Status](https://secure.travis-ci.org/mileszs/wicked_pdf.svg)](http://travis-ci.org/mileszs/wicked_pdf) [![Code Climate](https://codeclimate.com/github/mileszs/wicked_pdf/badges/gpa.svg)](https://codeclimate.com/github/mileszs/wicked_pdf) [![Open Source Helpers](https://www.codetriage.com/mileszs/wicked_pdf/badges/users.svg)](https://www.codetriage.com/mileszs/wicked_pdf)
 
 ## A PDF generation plugin for Ruby on Rails
 
 Wicked PDF uses the shell utility [wkhtmltopdf](http://wkhtmltopdf.org) to serve a PDF file to a user from HTML.  In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, then let Wicked PDF take care of the hard stuff.
 
-_Wicked PDF has been verified to work on Ruby versions 1.8.7 through 2.3; Rails 2 through 5.0_
+_Wicked PDF has been verified to work on Ruby versions 1.8.7 through 2.6; Rails 2 through 5.2_
 
 ### Installation
 
