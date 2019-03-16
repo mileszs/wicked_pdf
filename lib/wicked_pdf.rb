@@ -27,6 +27,7 @@ require 'wicked_pdf/version'
 require 'wicked_pdf/railtie'
 require 'wicked_pdf/tempfile'
 require 'wicked_pdf/middleware'
+require 'wicked_pdf/progress'
 
 class WickedPdf
   DEFAULT_BINARY_VERSION = Gem::Version.new('0.9.9')
@@ -35,6 +36,8 @@ class WickedPdf
   @@config = {}
   cattr_accessor :config
   attr_accessor :binary_version
+
+  include Progress
 
   def initialize(wkhtmltopdf_binary_path = nil)
     @exe_path = wkhtmltopdf_binary_path || find_wkhtmltopdf_binary_path
@@ -68,15 +71,18 @@ class WickedPdf
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
     generated_pdf_file = WickedPdfTempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
     command = [@exe_path]
-    command << '-q' unless on_windows? # suppress errors on stdout
     command += parse_options(options)
     command << url
     command << generated_pdf_file.path.to_s
 
     print_command(command.inspect) if in_development_mode?
 
-    err = Open3.popen3(*command) do |_stdin, _stdout, stderr|
-      stderr.read
+    if track_progress?(options)
+      invoke_with_progress(command, options)
+    else
+      err = Open3.popen3(*command) do |_stdin, _stdout, stderr|
+        stderr.read
+      end
     end
     if options[:return_file]
       return_file = options.delete(:return_file)

@@ -1,5 +1,4 @@
 require 'test_helper'
-
 WickedPdf.config = { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf' }
 HTML_DOCUMENT = '<html><body>Hello World</body></html>'.freeze
 
@@ -225,5 +224,17 @@ class WickedPdfTest < ActiveSupport::TestCase
     options = { :header => { :center => 3 }, :cover => 'http://example.org', :disable_javascript => true }
     cover_option = @wp.get_valid_option('cover')
     assert_equal @wp.get_parsed_options(options), "--disable-javascript --header-center 3 #{cover_option} http://example.org"
+  end
+
+  test 'should output progress when creating pdfs on compatible hosts' do
+    wp = WickedPdf.new
+    output = []
+    options = { :progress => proc { |o| output << o } }
+    wp.pdf_from_string HTML_DOCUMENT, options
+    if RbConfig::CONFIG['target_os'] =~ /mswin|mingw/
+      assert_empty output
+    else
+      assert(output.collect { |l| !l.match(/Loading/).nil? }.include?(true)) # should output something like "Loading pages (1/5)"
+    end
   end
 end
