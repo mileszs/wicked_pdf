@@ -5,7 +5,6 @@ git:
   quiet: true
 before_install:
   - sudo apt-get update -qq
-  - gem install bundler -v '< 2'
 bundler_args: --verbose
 sudo: required
 before_script:
@@ -51,8 +50,14 @@ matrix:
       gemfile: gemfiles/rails_edge.gemfile
     - rvm: 2.6
       gemfile: gemfiles/5.2.gemfile
+      before_install:
+        - gem update --system
+        - gem install bundler
     - rvm: 2.6
       gemfile: gemfiles/rails_edge.gemfile
+      before_install:
+        - gem update --system
+        - gem install bundler
     - rvm: ruby-head
       gemfile: gemfiles/5.2.gemfile
       before_install:
