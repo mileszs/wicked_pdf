@@ -1,4 +1,5 @@
-
+require 'test_helper'
+require 'rubygems/test_case'
 
 class WkhtmltopdfLocationTest < ActiveSupport::TestCase
   setup do
@@ -45,6 +46,45 @@ class WkhtmltopdfLocationTest < ActiveSupport::TestCase
       assert_nothing_raised do
         WickedPdf.new
       end
+    end
+  end
+
+  # These tests involve rubygems and their presence on a host.
+  # By inheriting from Gem::TestCase, all interaction with the actual
+  # rubygems is mocked. For these tests, gems will be created in a
+  # temporary location and will automatically be removed afterwards.
+  class BundledExecutableTest < Gem::TestCase
+    def test_should_locate_binary_from_wkhtmltopdf_binary_edge
+      executable_gem 'wkhtmltopdf-binary-edge', '0.12.1'
+
+      wicked_pdf = WickedPdf.new
+      assert_equal '0.12.1', wicked_pdf.binary_version.to_s
+    end
+
+    def test_should_locate_binary_from_wkhtmltopdf_binary
+      executable_gem 'wkhtmltopdf-heroku', '0.12.2'
+
+      wicked_pdf = WickedPdf.new
+      assert_equal '0.12.2', wicked_pdf.binary_version.to_s
+    end
+
+    private
+
+    # Create and install a mock rubygem with a stub wkhtmltopdf executable.
+    #   example: executable_gem 'wkhtmltopdf-binary', '0.12.5'
+    # The executable version will be equal to the rubygem version.
+    def executable_gem(name, version)
+      spec = quick_gem(name, version) do |s|
+        s.executables = ['wkhtmltopdf']
+        s.files = ['bin/wkhtmltopdf']
+      end
+
+      write_file File.join('gems', spec.full_name, 'bin', 'wkhtmltopdf') do |file|
+        file.puts "#!/bin/sh\necho 'wkhtmltopdf #{version}'"
+        file.chmod(0700)
+      end
+
+      spec
     end
   end
 end

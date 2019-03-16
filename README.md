@@ -26,8 +26,20 @@ to `config/initializers/mime_types.rb` in older versions of Rails.
 
 Because `wicked_pdf` is a wrapper for  [wkhtmltopdf](http://wkhtmltopdf.org/), you'll need to install that, too.
 
-The simplest way to install all of the binaries on most Linux or OSX systems is through the gem [wkhtmltopdf-binary](https://github.com/zakird/wkhtmltopdf_binary_gem). Builds for other systems are available [here](https://wkhtmltopdf.org/downloads.html)
-To install that gem, add this:
+The simplest way to install all of the binaries on most Linux or OSX systems is through using one of the wkhtmltopdf-binary family of gems. Wicked PDF will detect and use the provided binary automatically.
+
+These gems are tested and known to work out of the box:
+
+* [wkhtmltopdf-binary](https://github.com/zakird/wkhtmltopdf_binary_gem)
+* [wkhtmltopdf-binary-edge](https://github.com/pallymore/wkhtmltopdf-binary-edge)
+
+[wkhtmltopdf-heroku](https://github.com/rposborne/wkhtmltopdf-heroku) is not detected via this mechanism, but it will correctly configure WickedPDF itself.
+
+You can also install any of the Unix-based [downloads provided by wkhtmltopdf](https://github.com/rposborne/wkhtmltopdf-heroku). All of these will be correctly identified as well, with no further configuration needed. If you are using Windows, you'll have to configure its location in the WickedPDF initializer or the environment variable `WKHTMLTOPDF_BIN`.
+
+*Example: use a binary rubygem*
+
+To install, add this:
 
 ```ruby
 gem 'wkhtmltopdf-binary'
@@ -39,7 +51,7 @@ This gem currently installs version 0.12.x of `wkhtmltopdf`. Some of the options
 
 You can see what flags are supported for the current version in [wkhtmltopdf's auto-generated manual](https://wkhtmltopdf.org/usage/wkhtmltopdf.txt)
 
-If your wkhtmltopdf executable is not on your webserver's path, you can configure it in an initializer:
+If your wkhtmltopdf executable cannot automatically be detected, you can configure it in an initializer:
 
 ```ruby
 WickedPdf.config = {

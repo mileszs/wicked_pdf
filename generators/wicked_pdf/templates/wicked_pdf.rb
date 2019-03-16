@@ -9,13 +9,16 @@
 # https://github.com/mileszs/wicked_pdf/blob/master/README.md
 
 WickedPdf.config = {
-  # Path to the wkhtmltopdf executable: This usually isn't needed if using
-  # one of the wkhtmltopdf-binary family of gems.
-  # exe_path: '/usr/local/bin/wkhtmltopdf',
-  #   or
-  # exe_path: Gem.bin_path('wkhtmltopdf-binary', 'wkhtmltopdf')
+  # Path to the wkhtmltopdf executable.
+  # WickedPDF will automatically find the correct binary,
+  # based on presence of one of the wkhtmltopdf-binary family
+  # of gems, known locations in the filesystem, or by querying
+  # the OS. What you configure here overrules everything.
+  #
+  # exe_path: '/opt/wkhtmltopdf/bin/wkhtmltopdf'
 
   # Layout file to be used for all PDFs
   # (but can be overridden in `render :pdf` calls)
+  #
   # layout: 'pdf.html',
 }
