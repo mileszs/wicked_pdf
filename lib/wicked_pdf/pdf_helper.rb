@@ -82,6 +82,7 @@ class WickedPdf
         :handlers => options[:handlers],
         :assigns => options[:assigns]
       }
+      render_opts[:inline] = options[:inline] if options[:inline]
       render_opts[:locals] = options[:locals] if options[:locals]
       render_opts[:file] = options[:file] if options[:file]
       html_string = render_to_string(render_opts)
@@ -104,6 +105,7 @@ class WickedPdf
           :assigns => options[:assigns],
           :content_type => 'text/html'
         }
+        render_opts[:inline] = options[:inline] if options[:inline]
         render_opts[:locals] = options[:locals] if options[:locals]
         render_opts[:file] = options[:file] if options[:file]
         render(render_opts)

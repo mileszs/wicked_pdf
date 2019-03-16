@@ -135,7 +135,8 @@ class ThingsController < ApplicationController
         render pdf:                            'file_name',
                disposition:                    'attachment',                 # default 'inline'
                template:                       'things/show',
-               file:                           "#{Rails.root}/files/foo.erb"
+               file:                           "#{Rails.root}/files/foo.erb",
+               inline:                         '<!doctype html><html><head></head><body>INLINE HTML</body></html>',
                layout:                         'pdf',                        # for a pdf.pdf.erb file
                wkhtmltopdf:                    '/usr/local/bin/wkhtmltopdf', # path to binary
                show_as_html:                   params.key?('debug'),         # allow debugging based on url param
