@@ -2,6 +2,40 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0] - 2019-03-16
+### Added
+- [Add `raise_on_all_errors: true` option to raise on any error that prints to STDOUT during PDF generation](https://github.com/mileszs/wicked_pdf/pull/751)
+- [Add ability to use the `assigns` option to `render` to assign instance variables to a PDF template](https://github.com/mileszs/wicked_pdf/pull/801)
+- [Add ability to track console progress](https://github.com/mileszs/wicked_pdf/pull/804) with `progress: -> (output) { puts output }`. This is useful to add reporting hooks to show your frontend what page number is being generated.
+
+### Changed
+- [Fix conflict with other gems that hook into `render`](https://github.com/mileszs/wicked_pdf/pull/574) and avoid using `alias_method_chain` where possible
+- [Fix issue using the shell to locate `wkhtmltopdf` in a Bundler environment](https://github.com/mileszs/wicked_pdf/pull/728)
+- [Fix `wkhtmltopdf` path detection when HOME environment variable is unset](https://github.com/mileszs/wicked_pdf/pull/568)
+- [Fix error when the `Rails` constant is defined but not actually using Rails](https://github.com/mileszs/wicked_pdf/pull/613)
+- [Fix compatibility issue with Sprockets 4](https://github.com/mileszs/wicked_pdf/pull/615)
+- [Fix compatibility issue with `Mime::JS` in Rails 5.1+](https://github.com/mileszs/wicked_pdf/pull/627)
+- [Fix deprecation warning by using `after_action` instead of `after_filter` when available](https://github.com/mileszs/wicked_pdf/pull/663)
+- [Provide Rails `base_path` to `find_asset` calls for Sprockets file lookup](https://github.com/mileszs/wicked_pdf/pull/688)
+- Logger changes:
+    - [Use `Rails.logger.debug` instead of `p`](https://github.com/mileszs/wicked_pdf/pull/575)
+    - [Change logger message to prepend `[wicked_pdf]` instead of nonstandard `****************WICKED****************`](https://github.com/mileszs/wicked_pdf/pull/589)
+- Documentation changes:
+    - [Update link to wkhtmltopdf homepage](https://github.com/mileszs/wicked_pdf/pull/582)
+    - [Update link to `wkhtmltopdf_binary_gem`](https://github.com/mileszs/wicked_pdf/commit/59e6c5fca3985f2fa2f345089596250df5da2682)
+    - [Update documentation for usage with the Asset Pipeline](https://github.com/mileszs/wicked_pdf/commit/690d00157706699a71b7dcd71834759f4d84702f)
+    - [Document `default_protocol` option](https://github.com/mileszs/wicked_pdf/pull/585)
+    - [Document `image` and `no_image` options](https://github.com/mileszs/wicked_pdf/pull/689)
+    - [Document issue with DPI/scaling on various platforms](https://github.com/mileszs/wicked_pdf/pull/715)
+    - [Document creating and attaching a PDF in a mailer](https://github.com/mileszs/wicked_pdf/pull/746)
+    - [Document dependency on `wkhtmltopdf` with RubyGems](https://github.com/mileszs/wicked_pdf/pull/656)
+    - [Add example using WickedPDF with Rails in an API-only configuration](https://github.com/mileszs/wicked_pdf/pull/796)
+    - [Add example for rending a template as a header/footer](https://github.com/mileszs/wicked_pdf/pull/603)
+    - [Add GitHub issue template](https://github.com/mileszs/wicked_pdf/pull/805)
+    - [Add CodeClimate Badge](https://github.com/mileszs/wicked_pdf/pull/646)
+- RuboCop cleanup
+- Updates to Travis CI pipeline to support newer versions of Ruby & Rails
+
 ## [1.1.0] - 2016-08-30
 ### Added
 - Support Rails 5.x and Sprockets 3.x
@@ -80,7 +114,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Asset helpers no longer add a file extension if it already is specified with one
 
 # Compare Releases
-- [1.1.0...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.1.0...HEAD)
+- [1.2.0...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.2.0...HEAD)
+- [1.1.0...1.2.0](https://github.com/mileszs/wicked_pdf/compare/1.1.0...1.2.0)
 - [1.0.6...1.1.0](https://github.com/mileszs/wicked_pdf/compare/1.0.6...1.1.0)
 - [1.0.5...1.0.6](https://github.com/mileszs/wicked_pdf/compare/1.0.5...1.0.6)
 - [1.0.4...1.0.5](https://github.com/mileszs/wicked_pdf/compare/1.0.4...1.0.5)
