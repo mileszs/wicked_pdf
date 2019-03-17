@@ -7,8 +7,8 @@ require 'English'
 Gem::Specification.new do |spec|
   spec.name          = 'wicked_pdf'
   spec.version       = WickedPdf::VERSION
-  spec.authors       = ['Miles Z. Sterrett']
-  spec.email         = 'miles.sterrett@gmail.com'
+  spec.authors       = ['Miles Z. Sterrett', 'David Jones']
+  spec.email         = ['miles.sterrett@gmail.com', 'unixmonkey1@gmail.com']
   spec.summary       = 'PDF generator (from HTML) gem for Ruby on Rails'
   spec.homepage      = 'https://github.com/mileszs/wicked_pdf'
   spec.license       = 'MIT'
