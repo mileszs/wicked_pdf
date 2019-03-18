@@ -36,7 +36,8 @@ class WickedPdf
 
     def render_with_wicked_pdf(options = nil, *args, &block)
       if options.is_a?(Hash) && options.key?(:pdf)
-        WickedPdf::Renderer.new(self).render(options)
+        @_pdf_renderer = WickedPdf::Renderer.new(self)
+        @_pdf_renderer.render(options)
       elsif respond_to?(:render_without_wicked_pdf)
         # support alias_method_chain (module included)
         render_without_wicked_pdf(options, *args, &block)
@@ -48,7 +49,8 @@ class WickedPdf
 
     def render_to_string_with_wicked_pdf(options = nil, *args, &block)
       if options.is_a?(Hash) && options.key?(:pdf)
-        WickedPdf::Renderer.new(self).render_to_string(options)
+        @_pdf_renderer = WickedPdf::Renderer.new(self)
+        @_pdf_renderer.render_to_string(options)
       elsif respond_to?(:render_to_string_without_wicked_pdf)
         # support alias_method_chain (module included)
         render_to_string_without_wicked_pdf(options, *args, &block)
@@ -59,7 +61,12 @@ class WickedPdf
     end
 
     def prerender_header_and_footer(options)
-      WickedPdf::Renderer.new(self).prerender_header_and_footer(options)
+      @_pdf_renderer ||= WickedPdf::Renderer.new(self)
+      @_pdf_renderer.prerender_header_and_footer(options)
+    end
+
+    def clean_temp_files
+      @_pdf_renderer.clean_temp_files if @_pdf_renderer
     end
   end
 end
