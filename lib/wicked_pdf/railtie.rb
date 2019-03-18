@@ -1,4 +1,5 @@
 require 'wicked_pdf/pdf_helper'
+require 'wicked_pdf/renderer'
 require 'wicked_pdf/wicked_pdf_helper'
 require 'wicked_pdf/wicked_pdf_helper/assets'
 
