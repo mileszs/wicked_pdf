@@ -5,20 +5,16 @@ require 'wicked_pdf/wicked_pdf_helper/assets'
 class WickedPdf
   if defined?(Rails.env)
 
-    if Rails::VERSION::MAJOR >= 5
+    if Rails::VERSION::MAJOR >= 4
 
       class WickedRailtie < Rails::Railtie
         initializer 'wicked_pdf.register' do |_app|
-          ActionController::Base.send :prepend, PdfHelper
-          ActionView::Base.send :include, WickedPdfHelper::Assets
-        end
-      end
-
-    elsif Rails::VERSION::MAJOR == 4
-
-      class WickedRailtie < Rails::Railtie
-        initializer 'wicked_pdf.register' do |_app|
-          ActionController::Base.send :include, PdfHelper
+          if ActionController::Base.respond_to?(:prepend) &&
+             Object.method(:new).respond_to?(:super_method)
+            ActionController::Base.send :prepend, PdfHelper
+          else
+            ActionController::Base.send :include, PdfHelper
+          end
           ActionView::Base.send :include, WickedPdfHelper::Assets
         end
       end
