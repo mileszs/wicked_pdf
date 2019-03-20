@@ -17,6 +17,8 @@ require 'mocha/mini_test' if defined?(Minitest)
 
 require 'wicked_pdf'
 
+WickedPdf.config = { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf' }
+
 Rails.backtrace_cleaner.remove_silencers!
 
 if (assets_dir = Rails.root.join('app/assets')) && File.directory?(assets_dir)

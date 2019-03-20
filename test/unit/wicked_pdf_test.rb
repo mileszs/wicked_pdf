@@ -1,6 +1,4 @@
 require 'test_helper'
-WickedPdf.config = { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf' }
-HTML_DOCUMENT = '<html><body>Hello World</body></html>'.freeze
 
 # Provide a public accessor to the normally-private parse_options function.
 # Also, smash the returned array of options into a single string for
@@ -20,6 +18,8 @@ class WickedPdf
 end
 
 class WickedPdfTest < ActiveSupport::TestCase
+  HTML_DOCUMENT = '<html><body>Hello World</body></html>'.freeze
+
   def setup
     @wp = WickedPdf.new
   end
