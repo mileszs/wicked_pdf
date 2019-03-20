@@ -2,7 +2,7 @@ class WickedPdf
   class Renderer
     attr_reader :controller
 
-    delegate :request, :send_data, :to => :controller
+    delegate :request, :send_data, :controller_path, :action_name, :to => :controller
 
     def initialize(controller)
       @controller = controller

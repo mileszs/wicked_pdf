@@ -13,6 +13,8 @@ else
   require 'mocha/test_unit'
 end
 
+require 'mocha/mini_test' if defined?(Minitest)
+
 require 'wicked_pdf'
 
 Rails.backtrace_cleaner.remove_silencers!
