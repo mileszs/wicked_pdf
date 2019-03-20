@@ -42,10 +42,6 @@ class WickedPdf
     @binary = Binary.new(wkhtmltopdf_binary_path, DEFAULT_BINARY_VERSION)
   end
 
-  def binary_version
-    @binary.version
-  end
-
   def pdf_from_html_file(filepath, options = {})
     pdf_from_url("file:///#{filepath}", options)
   end
@@ -99,6 +95,10 @@ class WickedPdf
   end
 
   private
+
+  def binary_version
+    @binary.version
+  end
 
   def in_development_mode?
     return Rails.env == 'development' if defined?(Rails.env)
