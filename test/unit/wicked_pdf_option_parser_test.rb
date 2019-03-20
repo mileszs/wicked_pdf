@@ -1,5 +1,4 @@
 require 'test_helper'
-WickedPdf.config = { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf' }
 
 class WickedPdfOptionParserTest < ActiveSupport::TestCase
   test 'should parse header and footer options' do
