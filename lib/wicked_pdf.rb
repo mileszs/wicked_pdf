@@ -26,26 +26,24 @@ end
 require 'wicked_pdf/version'
 require 'wicked_pdf/railtie'
 require 'wicked_pdf/tempfile'
+require 'wicked_pdf/binary'
 require 'wicked_pdf/middleware'
 require 'wicked_pdf/progress'
 
 class WickedPdf
   DEFAULT_BINARY_VERSION = Gem::Version.new('0.9.9')
   BINARY_VERSION_WITHOUT_DASHES = Gem::Version.new('0.12.0')
-  EXE_NAME = 'wkhtmltopdf'.freeze
   @@config = {}
   cattr_accessor :config
-  attr_accessor :binary_version
 
   include Progress
 
   def initialize(wkhtmltopdf_binary_path = nil)
-    @exe_path = wkhtmltopdf_binary_path || find_wkhtmltopdf_binary_path
-    raise "Location of #{EXE_NAME} unknown" if @exe_path.empty?
-    raise "Bad #{EXE_NAME}'s path: #{@exe_path}" unless File.exist?(@exe_path)
-    raise "#{EXE_NAME} is not executable" unless File.executable?(@exe_path)
+    @binary = Binary.new(wkhtmltopdf_binary_path, DEFAULT_BINARY_VERSION)
+  end
 
-    retrieve_binary_version
+  def binary_version
+    @binary.version
   end
 
   def pdf_from_html_file(filepath, options = {})
@@ -70,7 +68,7 @@ class WickedPdf
     # merge in global config options
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
     generated_pdf_file = WickedPdfTempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
-    command = [@exe_path]
+    command = [@binary.path]
     command += parse_options(options)
     command << url
     command << generated_pdf_file.path.to_s
@@ -113,22 +111,6 @@ class WickedPdf
 
   def print_command(cmd)
     Rails.logger.debug '[wicked_pdf]: ' + cmd
-  end
-
-  def retrieve_binary_version
-    _stdin, stdout, _stderr = Open3.popen3(@exe_path + ' -V')
-    @binary_version = parse_version(stdout.gets(nil))
-  rescue StandardError
-    DEFAULT_BINARY_VERSION
-  end
-
-  def parse_version(version_info)
-    match_data = /wkhtmltopdf\s*(\d*\.\d*\.\d*\w*)/.match(version_info)
-    if match_data && (match_data.length == 2)
-      Gem::Version.new(match_data[1])
-    else
-      DEFAULT_BINARY_VERSION
-    end
   end
 
   def parse_options(options)
@@ -336,19 +318,5 @@ class WickedPdf
                                   :no_stop_slow_scripts], '', :boolean)
     end
     r
-  end
-
-  def find_wkhtmltopdf_binary_path
-    possible_locations = (ENV['PATH'].split(':') + %w[/usr/bin /usr/local/bin]).uniq
-    possible_locations += %w[~/bin] if ENV.key?('HOME')
-    exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
-    exe_path ||= begin
-      detected_path = (defined?(Bundler) ? Bundler.which('wkhtmltopdf') : `which wkhtmltopdf`).chomp
-      detected_path.present? && detected_path
-    rescue StandardError
-      nil
-    end
-    exe_path ||= possible_locations.map { |l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }
-    exe_path || ''
   end
 end
