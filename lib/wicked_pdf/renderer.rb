@@ -37,7 +37,7 @@ class WickedPdf
         render_opts[:locals] = options[hf][:html][:locals] if options[hf][:html][:locals]
         render_opts[:file] = options[hf][:html][:file] if options[:file]
 
-        path = render_tempfile("wicked_#{hf}_pdf.html", render_opts)
+        path = render_to_tempfile("wicked_#{hf}_pdf.html", render_opts)
         options[hf][:html][:url] = "file:///#{path}"
       end
       options
@@ -97,7 +97,7 @@ class WickedPdf
       end
     end
 
-    def render_tempfile(filename, options)
+    def render_to_tempfile(filename, options)
       tf = WickedPdfTempfile.new(filename)
       @hf_tempfiles.push(tf)
       tf.write controller.render_to_string(options)
