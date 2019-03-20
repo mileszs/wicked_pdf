@@ -39,12 +39,6 @@ class PdfHelperTest < ActionController::TestCase
     @ac = nil
   end
 
-  test 'should prerender header and footer :template options' do
-    options = @ac.send(:prerender_header_and_footer,
-                       :header => { :html => { :template => 'hf.html.erb' } })
-    assert_match %r{^file:\/\/\/.*wicked_header_pdf.*\.html}, options[:header][:html][:url]
-  end
-
   test 'should not interfere with already prepended patches' do
     # Emulate railtie
     if Rails::VERSION::MAJOR >= 5
@@ -83,14 +77,6 @@ class PdfHelperTest < ActionController::TestCase
         ActionController.send(:remove_const, :Base)
         ActionController.const_set(:Base, OriginalBase)
       end
-    end
-  end
-
-  test 'should call after_action instead of after_filter when able' do
-    ActionController::Base.expects(:after_filter).with(:clean_temp_files).never
-    ActionController::Base.expects(:after_action).with(:clean_temp_files).once
-    ActionController::Base.class_eval do
-      include ::WickedPdf::PdfHelper
     end
   end
 end
