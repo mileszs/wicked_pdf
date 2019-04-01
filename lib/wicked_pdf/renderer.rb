@@ -31,6 +31,7 @@ class WickedPdf
     def make_pdf(options = {})
       render_opts = {
         :template => options[:template],
+        :prefixes => options[:prefixes],
         :layout => options[:layout],
         :formats => options[:formats],
         :handlers => options[:handlers],
@@ -55,6 +56,7 @@ class WickedPdf
       if options[:show_as_html]
         render_opts = {
           :template => options[:template],
+          :prefixes => options[:prefixes],
           :layout => options[:layout],
           :formats => options[:formats],
           :handlers => options[:handlers],
