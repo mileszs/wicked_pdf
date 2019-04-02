@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.1] - 2019-03-16
+### Changed
+- [Fix `SystemStackError` in some setups](https://github.com/mileszs/wicked_pdf/pull/813)
+
 ## [1.2.0] - 2019-03-16
 ### Added
 - [Add `raise_on_all_errors: true` option to raise on any error that prints to STDOUT during PDF generation](https://github.com/mileszs/wicked_pdf/pull/751)
@@ -114,7 +118,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Asset helpers no longer add a file extension if it already is specified with one
 
 # Compare Releases
-- [1.2.0...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.2.0...HEAD)
+- [1.2.1...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.2.1...HEAD)
+- [1.2.0...1.2.1](https://github.com/mileszs/wicked_pdf/compare/1.1.0...1.2.0)
 - [1.1.0...1.2.0](https://github.com/mileszs/wicked_pdf/compare/1.1.0...1.2.0)
 - [1.0.6...1.1.0](https://github.com/mileszs/wicked_pdf/compare/1.0.6...1.1.0)
 - [1.0.5...1.0.6](https://github.com/mileszs/wicked_pdf/compare/1.0.5...1.0.6)
