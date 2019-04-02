@@ -2,8 +2,6 @@ class WickedPdf
   class Renderer
     attr_reader :controller
 
-    delegate :request, :send_data, :controller_path, :action_name, :to => :controller
-
     def initialize(controller)
       @controller = controller
       @hf_tempfiles = []
@@ -24,8 +22,8 @@ class WickedPdf
 
     def set_basic_auth(options = {})
       options[:basic_auth] ||= WickedPdf.config.fetch(:basic_auth) { false }
-      return unless options[:basic_auth] && request.env['HTTP_AUTHORIZATION']
-      request.env['HTTP_AUTHORIZATION'].split(' ').last
+      return unless options[:basic_auth] && controller.request.env['HTTP_AUTHORIZATION']
+      controller.request.env['HTTP_AUTHORIZATION'].split(' ').last
     end
 
     def make_pdf(options = {})
@@ -51,7 +49,7 @@ class WickedPdf
     def make_and_send_pdf(pdf_name, options = {})
       options[:wkhtmltopdf] ||= nil
       options[:layout] ||= false
-      options[:template] ||= File.join(controller_path, action_name)
+      options[:template] ||= File.join(controller.controller_path, controller.action_name)
       options[:disposition] ||= 'inline'
       if options[:show_as_html]
         render_opts = {
@@ -66,11 +64,11 @@ class WickedPdf
         render_opts[:inline] = options[:inline] if options[:inline]
         render_opts[:locals] = options[:locals] if options[:locals]
         render_opts[:file] = options[:file] if options[:file]
-        render(render_opts)
+        controller.render(render_opts)
       else
         pdf_content = make_pdf(options)
         File.open(options[:save_to_file], 'wb') { |file| file << pdf_content } if options[:save_to_file]
-        send_data(pdf_content, :filename => pdf_name + '.pdf', :type => 'application/pdf', :disposition => options[:disposition]) unless options[:save_only]
+        controller.send_data(pdf_content, :filename => pdf_name + '.pdf', :type => 'application/pdf', :disposition => options[:disposition]) unless options[:save_only]
       end
     end
 
