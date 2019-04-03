@@ -9,8 +9,7 @@ class WickedPdf
 
       class WickedRailtie < Rails::Railtie
         initializer 'wicked_pdf.register' do |_app|
-          if ActionController::Base.respond_to?(:prepend) &&
-             Object.method(:new).respond_to?(:super_method)
+          if ActionController::Base.respond_to?(:prepend)
             ActionController::Base.send :prepend, PdfHelper
           else
             ActionController::Base.send :include, PdfHelper
