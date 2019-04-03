@@ -1,6 +1,6 @@
 class WickedPdf
   module Progress
-    require 'pty' # no support for windows
+    require 'pty' if RbConfig::CONFIG['target_os'] !~ /mswin|mingw/ # no support for windows
     require 'English'
 
     def track_progress?(options)
