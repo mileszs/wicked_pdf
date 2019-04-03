@@ -8,7 +8,7 @@ class WickedPdf
     if Rails::VERSION::MAJOR >= 4
 
       class WickedRailtie < Rails::Railtie
-        initializer 'wicked_pdf.register' do |_app|
+        initializer 'wicked_pdf.register', :after => 'remotipart.controller_helper' do |_app|
           if ActionController::Base.respond_to?(:prepend) &&
              Object.method(:new).respond_to?(:super_method)
             ActionController::Base.send :prepend, PdfHelper
