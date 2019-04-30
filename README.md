@@ -126,6 +126,9 @@ In this case, you can use that standard Rails helpers and point to the current C
 ```
 
 ### Advanced Usage with all available options
+
+_NOTE: Certain options are only supported in specific versions of wkhtmltopdf._
+
 ```ruby
 class ThingsController < ApplicationController
   def show
