@@ -293,7 +293,8 @@ class WickedPdf
                                   :dpi,
                                   :page_size,
                                   :page_width,
-                                  :title])
+                                  :title,
+                                  :log_level])
       r += make_options(options, [:lowquality,
                                   :grayscale,
                                   :no_pdf_compression], '', :boolean)
