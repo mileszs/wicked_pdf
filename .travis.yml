@@ -44,6 +44,10 @@ matrix:
         - gem install bundler -v '< 2'
     - rvm: 2.4
       gemfile: gemfiles/5.1.gemfile
+      before_install:
+        - "find /home/travis/.rvm/rubies -wholename '*default/bundler-*.gemspec' -delete"
+        - rvm @global do gem uninstall bundler -a -x -I || true
+        - gem install bundler -v '< 2'
     - rvm: 2.5
       gemfile: gemfiles/5.2.gemfile
     - rvm: 2.5
