@@ -297,7 +297,8 @@ class WickedPdf
                                   :log_level])
       r += make_options(options, [:lowquality,
                                   :grayscale,
-                                  :no_pdf_compression], '', :boolean)
+                                  :no_pdf_compression,
+                                  :quiet], '', :boolean)
       r += make_options(options, [:image_dpi,
                                   :image_quality,
                                   :page_height], '', :numeric)
