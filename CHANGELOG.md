@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking Changes
 - None
 ### New Features
-- None
+- [Add support for `log_level` and `quiet` options](https://github.com/mileszs/wicked_pdf/pull/834)
 ### Fixes
 - None
 
