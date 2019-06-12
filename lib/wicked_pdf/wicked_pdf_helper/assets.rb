@@ -1,4 +1,7 @@
 require 'open-uri'
+
+require_relative './assets/asset_wrapper'
+
 # If webpacker is used, need to check for version
 require 'webpacker/version' if defined?(Webpacker)
 
@@ -108,6 +111,11 @@ class WickedPdf
       def find_asset(path)
         if Rails.application.assets.respond_to?(:find_asset)
           Rails.application.assets.find_asset(path, :base_path => Rails.application.root.to_s)
+        elsif Rails.application.respond_to?(:assets_manifest) && Rails.application.assets_manifest.respond_to?(:find_sources)
+          asset = Rails.application.assets_manifest.find_sources(path, :base_path => Rails.application.root.to_s).first
+          if asset
+            AssetWrapper.new(asset, "#{Rails.application.assets_manifest.dir}/#{Rails.application.assets_manifest.assets[path]}")
+          end
         else
           Sprockets::Railtie.build_environment(Rails.application).find_asset(path, :base_path => Rails.application.root.to_s)
         end

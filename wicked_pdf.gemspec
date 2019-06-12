@@ -35,4 +35,6 @@ DESC
   spec.add_development_dependency 'sqlite3', '~> 1.3.6'
   spec.add_development_dependency 'mocha', '= 1.3'
   spec.add_development_dependency 'test-unit'
+  spec.add_development_dependency 'bootsnap'
+  spec.add_development_dependency 'rdoc'
 end
