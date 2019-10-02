@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
     you simply write an HTML view as you would normally, and let Wicked take care of the hard stuff.
 DESC
 
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.2')
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
