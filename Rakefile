@@ -46,7 +46,7 @@ end
 
 desc 'Remove dummy application'
 task :dummy_remove do
-  FileUtils.rm_r Dir.glob('test/dummy/*')
+  FileUtils.rm_r Dir.glob('test/dummy/')
 end
 
 desc 'Generate documentation for the wicked_pdf gem.'

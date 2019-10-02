@@ -7,11 +7,11 @@ before_install:
   - sudo apt-get update -qq
 bundler_args: --verbose
 sudo: required
+services:
+  - xvfb
 before_script:
   - bundle list
   - sudo apt-get install -y wkhtmltopdf
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
 env: WKHTMLTOPDF_BIN=/usr/bin/wkhtmltopdf
 script:
   - bundle exec rake
@@ -50,8 +50,14 @@ matrix:
         - gem install bundler -v '< 2'
     - rvm: 2.5
       gemfile: gemfiles/5.2.gemfile
+      before_install:
+        - gem update --system
+        - gem install bundler
     - rvm: 2.5
       gemfile: gemfiles/rails_edge.gemfile
+      before_install:
+        - gem update --system
+        - gem install bundler
     - rvm: 2.6
       gemfile: gemfiles/5.2.gemfile
       before_install:
@@ -71,6 +77,8 @@ matrix:
       before_install:
         - gem install bundler -v '~> 2'
   allow_failures:
+    - rvm: 1.8.7
+    - rvm: 1.9.2
     - rvm: 2.5
       gemfile: gemfiles/rails_edge.gemfile
     - rvm: 2.6
