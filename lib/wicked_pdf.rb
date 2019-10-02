@@ -4,24 +4,10 @@
 require 'logger'
 require 'digest/md5'
 require 'rbconfig'
+require 'open3'
 
-if (RbConfig::CONFIG['target_os'] =~ /mswin|mingw/) && (RUBY_VERSION < '1.9')
-  require 'win32/open3'
-else
-  require 'open3'
-end
-
-begin
-  require 'active_support/core_ext/module/attribute_accessors'
-rescue LoadError
-  require 'active_support/core_ext/class/attribute_accessors'
-end
-
-begin
-  require 'active_support/core_ext/object/blank'
-rescue LoadError
-  require 'active_support/core_ext/blank'
-end
+require 'active_support/core_ext/module/attribute_accessors'
+require 'active_support/core_ext/object/blank'
 
 require 'wicked_pdf/version'
 require 'wicked_pdf/railtie'
