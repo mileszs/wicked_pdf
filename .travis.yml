@@ -17,21 +17,9 @@ script:
   - bundle exec rake
 matrix:
   include:
-    - rvm: 1.8.7
-      before_install:
-        - sudo apt-get update -qq
-        - gem update --system 1.8.25
-        - gem --version
-      gemfile: gemfiles/2.3.gemfile
-    - rvm: 1.9.2
-      gemfile: gemfiles/3.0.gemfile
-    - rvm: 1.9.3
-      gemfile: gemfiles/3.1.gemfile
-    - rvm: 2.0
-      gemfile: gemfiles/3.2.gemfile
-    - rvm: 2.0
+    - rvm: 2.2
       gemfile: gemfiles/4.0.gemfile
-    - rvm: 2.1
+    - rvm: 2.2
       gemfile: gemfiles/4.1.gemfile
     - rvm: 2.2
       gemfile: gemfiles/4.2.gemfile
@@ -77,8 +65,6 @@ matrix:
       before_install:
         - gem install bundler -v '~> 2'
   allow_failures:
-    - rvm: 1.8.7
-    - rvm: 1.9.2
     - rvm: 2.5
       gemfile: gemfiles/rails_edge.gemfile
     - rvm: 2.6

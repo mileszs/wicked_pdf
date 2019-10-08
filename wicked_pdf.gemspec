@@ -22,6 +22,7 @@ DESC
     'changelog_uri' => 'https://github.com/mileszs/wicked_pdf/blob/master/CHANGELOG.md'
   }
 
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.2')
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
@@ -34,7 +35,7 @@ DESC
   spec.add_development_dependency 'rails'
   spec.add_development_dependency 'bundler', RUBY_VERSION >= '2.5' ? '~> 2' : '~> 1.3'
   spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'rubocop', '~> 0.50.0' if RUBY_VERSION >= '2.0.0'
+  spec.add_development_dependency 'rubocop', '~> 0.68.0'
   spec.add_development_dependency 'sqlite3', '~> 1.3.6'
   spec.add_development_dependency 'mocha', '= 1.3'
   spec.add_development_dependency 'test-unit'
