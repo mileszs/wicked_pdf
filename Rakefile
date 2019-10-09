@@ -17,8 +17,6 @@ end
 
 desc 'Run RuboCop'
 task :rubocop do
-  next unless RUBY_VERSION >= '2.0.0'
-
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new
 end
@@ -35,11 +33,7 @@ desc 'Generate dummy application for test cases'
 task :dummy_generate do
   Rake::Task[:dummy_remove].invoke
   puts 'Creating dummy application to run tests'
-  if Rails::VERSION::MAJOR > 2
-    system('rails new test/dummy --database=sqlite3')
-  else
-    system('rails test/dummy')
-  end
+  system('rails new test/dummy --database=sqlite3')
   system('touch test/dummy/db/schema.rb')
   FileUtils.cp 'test/fixtures/database.yml', 'test/dummy/config/'
   FileUtils.rm_r Dir.glob('test/dummy/test/*')
