@@ -66,11 +66,13 @@ class WickedPdf
     def set_basic_auth(options = {})
       options[:basic_auth] ||= WickedPdf.config.fetch(:basic_auth) { false }
       return unless options[:basic_auth] && request.env['HTTP_AUTHORIZATION']
+
       request.env['HTTP_AUTHORIZATION'].split(' ').last
     end
 
     def clean_temp_files
       return unless defined?(@hf_tempfiles)
+
       @hf_tempfiles.each(&:close!)
     end
 
@@ -121,6 +123,7 @@ class WickedPdf
     def prerender_header_and_footer(options)
       [:header, :footer].each do |hf|
         next unless options[hf] && options[hf][:html] && options[hf][:html][:template]
+
         @hf_tempfiles = [] unless defined?(@hf_tempfiles)
         @hf_tempfiles.push(tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html"))
         options[hf][:html][:layout] ||= options[:layout]

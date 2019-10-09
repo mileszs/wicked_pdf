@@ -79,6 +79,7 @@ class WickedPdf
     pdf = generated_pdf_file.read
     raise "Error generating PDF\n Command Error: #{err}" if options[:raise_on_all_errors] && !err.empty?
     raise "PDF could not be generated!\n Command Error: #{err}" if pdf && pdf.rstrip.empty?
+
     pdf
   rescue StandardError => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
@@ -90,6 +91,7 @@ class WickedPdf
 
   def in_development_mode?
     return Rails.env == 'development' if defined?(Rails.env)
+
     RAILS_ENV == 'development' if defined?(RAILS_ENV)
   end
 
@@ -135,6 +137,7 @@ class WickedPdf
   def parse_extra(options)
     return [] if options[:extra].nil?
     return options[:extra].split if options[:extra].respond_to?(:split)
+
     options[:extra]
   end
 
@@ -151,6 +154,7 @@ class WickedPdf
     if value.is_a?(Array)
       return value.collect { |v| make_option(name, v, type) }
     end
+
     if type == :name_value
       parts = value.to_s.split(' ')
       ["--#{name.tr('_', '-')}", *parts]
@@ -175,6 +179,7 @@ class WickedPdf
 
   def make_options(options, names, prefix = '', type = :string)
     return [] if options.nil?
+
     names.collect do |o|
       if options[o].blank?
         []
@@ -191,6 +196,7 @@ class WickedPdf
     unless options.blank?
       [:header, :footer].collect do |hf|
         next if options[hf].blank?
+
         opt_hf = options[hf]
         r += make_options(opt_hf, [:center, :font_name, :left, :right], hf.to_s)
         r += make_options(opt_hf, [:font_size, :spacing], hf.to_s, :numeric)
@@ -214,6 +220,7 @@ class WickedPdf
   def parse_cover(argument)
     arg = argument.to_s
     return [] if arg.blank?
+
     # Filesystem path or URL - hand off to wkhtmltopdf
     if argument.is_a?(Pathname) || (arg[0, 4] == 'http')
       [valid_option('cover'), arg]
@@ -228,6 +235,7 @@ class WickedPdf
 
   def parse_toc(options)
     return [] if options.nil?
+
     r = [valid_option('toc')]
     unless options.blank?
       r += make_options(options, [:font_name, :header_text], 'toc')
@@ -331,11 +339,11 @@ class WickedPdf
     possible_locations += %w[~/bin] if ENV.key?('HOME')
     exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
     exe_path ||= begin
-      detected_path = (defined?(Bundler) ? Bundler.which('wkhtmltopdf') : `which wkhtmltopdf`).chomp
-      detected_path.present? && detected_path
-    rescue StandardError
-      nil
-    end
+                   detected_path = (defined?(Bundler) ? Bundler.which('wkhtmltopdf') : `which wkhtmltopdf`).chomp
+                   detected_path.present? && detected_path
+                 rescue StandardError
+                   nil
+                 end
     exe_path ||= possible_locations.map { |l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }
     exe_path || ''
   end
