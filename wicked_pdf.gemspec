@@ -33,10 +33,10 @@ DESC
   spec.add_dependency 'activesupport'
 
   spec.add_development_dependency 'rails'
-  spec.add_development_dependency 'bundler', RUBY_VERSION >= '2.5' ? '~> 2' : '~> 1.3'
+  spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rubocop', '~> 0.68.0'
-  spec.add_development_dependency 'sqlite3', '~> 1.3.6'
+  spec.add_development_dependency 'sqlite3', '~> 1.3'
   spec.add_development_dependency 'mocha', '= 1.3'
   spec.add_development_dependency 'test-unit'
 end

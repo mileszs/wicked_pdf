@@ -18,6 +18,7 @@ Bundler/OrderedGems:
     - 'gemfiles/5.0.gemfile'
     - 'gemfiles/5.1.gemfile'
     - 'gemfiles/5.2.gemfile'
+    - 'gemfiles/6.0.gemfile'
     - 'gemfiles/rails_edge.gemfile'
 
 # Offense count: 2
@@ -140,6 +141,7 @@ Style/HashSyntax:
     - 'gemfiles/5.0.gemfile'
     - 'gemfiles/5.1.gemfile'
     - 'gemfiles/5.2.gemfile'
+    - 'gemfiles/6.0.gemfile'
     - 'gemfiles/rails_edge.gemfile'
 
 # Offense count: 3
