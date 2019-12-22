@@ -19,7 +19,15 @@ if (assets_dir = Rails.root.join('app/assets')) && File.directory?(assets_dir)
   File.open(destination, 'w') { |f| f.write(source) }
 
   # Copy JS file
-  destination = assets_dir.join('javascripts/wicked.js')
+  js_dir = assets_dir.join('javascripts')
+  Dir.mkdir(js_dir) unless File.directory?(js_dir)
+  destination = js_dir.join('wicked.js')
   source = File.read('test/fixtures/wicked.js')
+  File.open(destination, 'w') { |f| f.write(source) }
+
+  config_dir = assets_dir.join('config')
+  Dir.mkdir(config_dir) unless File.directory?(config_dir)
+  source = File.read('test/fixtures/manifest.js')
+  destination = config_dir.join('manifest.js')
   File.open(destination, 'w') { |f| f.write(source) }
 end

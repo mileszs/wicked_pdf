@@ -42,6 +42,12 @@ task :dummy_generate do
   system('touch test/dummy/db/schema.rb')
   FileUtils.cp 'test/fixtures/database.yml', 'test/dummy/config/'
   FileUtils.rm_r Dir.glob('test/dummy/test/*')
+
+  # rails 6 needs this to be present before start:
+  FileUtils.mkdir_p('test/dummy/app/assets/config')
+  FileUtils.mkdir_p('test/dummy/app/assets/javascripts')
+  FileUtils.cp 'test/fixtures/manifest.js', 'test/dummy/app/assets/config/'
+  FileUtils.cp 'test/fixtures/wicked.js', 'test/dummy/app/assets/javascripts/'
 end
 
 desc 'Remove dummy application'
