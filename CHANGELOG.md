@@ -10,6 +10,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 - None
 
+## [2.0.1] - 2020-02-22
+### Fixes
+- [Replace open-uri with more secure Net:HTTP.get](https://github.com/mileszs/wicked_pdf/pull/864)
+
 ## [2.0.0] - 2020-02-22
 ### Breaking changes
 - [Remove support for older Ruby and Rails versions](https://github.com/mileszs/wicked_pdf/pull/854) - This project no longer supports Ruby < 2.2 and Rails < 4. It may work for you, but we are no longer worrying about breaking backwards compatibility for versions older than these. If you are on an affected version, you can continue to use the 1.x releases. Patches to fix broken behavior on old versions may not be accepted unless they are highly decoupled from the rest of the code base.
