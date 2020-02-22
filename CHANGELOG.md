@@ -12,14 +12,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.0] - 2020-02-22
 ### Breaking changes
-- [Remove old Ruby](https://github.com/mileszs/wicked_pdf/pull/854) - now require at least Ruby 2.2
+- [Remove support for older Ruby and Rails versions](https://github.com/mileszs/wicked_pdf/pull/854) - This project no longer supports Ruby < 2.2 and Rails < 4. It may work for you, but we are no longer worrying about breaking backwards compatibility for versions older than these. If you are on an affected version, you can continue to use the 1.x releases. Patches to fix broken behavior on old versions may not be accepted unless they are highly decoupled from the rest of the code base.
 
 ### New Features
-- [Add rubygems metadata hash to gemspec](https://github.com/mileszs/wicked_pdf/pull/856)
+- [Add Rubygems metadata hash to gemspec](https://github.com/mileszs/wicked_pdf/pull/856)
 - [Add support for Rails 6](https://github.com/mileszs/wicked_pdf/pull/869)
 
 ### Fixes
-- [Fix webpacker helpers in production environment](https://github.com/mileszs/wicked_pdf/pull/837)
+- [Fix Webpacker helpers in production environment](https://github.com/mileszs/wicked_pdf/pull/837)
 - [Fix unit tests](https://github.com/mileszs/wicked_pdf/pull/852)
 
 ## [1.4.0] - 2019-05-23
@@ -86,7 +86,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.0.6] - 2016-04-04
 ### Fixes
-- Revert shellescaping of options. The fix was causing more issues than it solved (like "[page] of [topage]" being escaped, and thus not parsed by `wkhtmltopdf`). See #514 for details.
+- Revert shell escaping of options. The fix was causing more issues than it solved (like "[page] of [topage]" being escaped, and thus not parsed by `wkhtmltopdf`). See #514 for details.
 
 ## [1.0.5] - 2016-03-28
 ### Fixes
@@ -122,13 +122,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### New Features
 - Check version of `wkhtmltopdf` before deciding to pass arguments with or without dashes
-- New arguments and options for the table of contents supported in newer versions of wkhtmltopf: `text_size_shrink`, `level_indentation`, `disable_dotted_lines`, `disable_toc_links`, `xsl_style_sheet`
+- New arguments and options for the table of contents supported in newer versions of wkhtmltopdf: `text_size_shrink`, `level_indentation`, `disable_dotted_lines`, `disable_toc_links`, `xsl_style_sheet`
 - Merge in global options to `pdf_from_html_file` and `pdf_from_string`
 - Add ability to generate pdf from a web resource: `pdf_from_url(url)`
 - Removed explicit dependency on [Rails](https://github.com/rails/rails), since parts of this library may be used without it.
 
 ### Fixes
-- Comment out the `:exe_path` option in the generated initalizer by default (since many systems won't have `wkthmltopdf` installed in that specific location)
+- Comment out the `:exe_path` option in the generated initializer by default (since many systems won't have `wkthmltopdf` installed in that specific location)
 - Issues with `file://` paths on Windows-based systems
 - Issues with parsed options/argument ordering on versions of `wkthmltopdf` > 0.9
 - Issues with middleware headers when running Rails app mounted in a subdirectory
@@ -137,24 +137,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Issue with header/footer `:content` being deleted after the first page
 - Issues with options being modified during processing (including global config options)
 - Issues with asset helpers recognizing assets specified without a protocol
-- Issues with `url()` references and embedded `data:base64` assests in stylesheets rendered with `wicked_pdf_stylesheet_link_tag`
+- Issues with `url()` references and embedded `data:base64` assets in stylesheets rendered with `wicked_pdf_stylesheet_link_tag`
 - Asset helpers no longer add a file extension if it already is specified with one
 
 # Compare Releases
-- [1.2.2...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.2.2...HEAD)
-- [1.2.2...1.3.0](https://github.com/mileszs/wicked_pdf/compare/1.2.2...1.3.0)
-- [1.2.1...1.2.2](https://github.com/mileszs/wicked_pdf/compare/1.2.1...1.2.2)
-- [1.2.0...1.2.1](https://github.com/mileszs/wicked_pdf/compare/1.1.0...1.2.0)
+- [1.4.0...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.2.2...HEAD)
+- [1.3.0...1.4.0](https://github.com/mileszs/wicked_pdf/compare/1.3.0...1.4.0)
+- [1.2.0...1.3.0](https://github.com/mileszs/wicked_pdf/compare/1.2.0...1.3.0)
 - [1.1.0...1.2.0](https://github.com/mileszs/wicked_pdf/compare/1.1.0...1.2.0)
-- [1.0.6...1.1.0](https://github.com/mileszs/wicked_pdf/compare/1.0.6...1.1.0)
-- [1.0.5...1.0.6](https://github.com/mileszs/wicked_pdf/compare/1.0.5...1.0.6)
-- [1.0.4...1.0.5](https://github.com/mileszs/wicked_pdf/compare/1.0.4...1.0.5)
-- [1.0.3...1.0.4](https://github.com/mileszs/wicked_pdf/compare/1.0.3...1.0.4)
-- [1.0.2...1.0.3](https://github.com/mileszs/wicked_pdf/compare/1.0.2...1.0.3)
-- [1.0.1...1.0.2](https://github.com/mileszs/wicked_pdf/compare/1.0.1...1.0.2)
-- [1.0.0...1.0.1](https://github.com/mileszs/wicked_pdf/compare/1.0.0...1.0.1)
+- [1.0.0...1.1.0](https://github.com/mileszs/wicked_pdf/compare/1.0.0...1.0.0)
 - [0.11.0...1.0.0](https://github.com/mileszs/wicked_pdf/compare/0.11.0...1.0.0)
-- [0.10.2...0.11.0](https://github.com/mileszs/wicked_pdf/compare/0.10.2...0.11.0)
-- [0.10.1...0.10.2](https://github.com/mileszs/wicked_pdf/compare/0.10.1...0.10.2)
-- [0.10.0...0.10.1](https://github.com/mileszs/wicked_pdf/compare/0.10.0...0.10.1)
-- [0.9.10...0.10.0](https://github.com/mileszs/wicked_pdf/compare/0.9.10...0.10.0)
