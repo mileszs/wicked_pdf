@@ -1,4 +1,4 @@
-require 'open-uri'
+require 'net/http'
 # If webpacker is used, need to check for version
 require 'webpacker/version' if defined?(Webpacker)
 
@@ -146,8 +146,7 @@ class WickedPdf
       end
 
       def read_from_uri(uri)
-        encoding = ':UTF-8' if RUBY_VERSION > '1.8'
-        asset = open(uri, "r#{encoding}", &:read)
+        asset = Net::HTTP.get(URI(uri))
         asset = gzip(asset) if WickedPdf.config[:expect_gzipped_remote_assets]
         asset
       end
