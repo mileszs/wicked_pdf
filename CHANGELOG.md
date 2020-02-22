@@ -10,7 +10,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 - None
 
-## [1.5.0] - 2020-01-28
+## [2.0.0] - 2020-02-22
+### Breaking changes
+- [Remove old Ruby](https://github.com/mileszs/wicked_pdf/pull/854) - now require at least Ruby 2.2
+
 ### New Features
 - [Add rubygems metadata hash to gemspec](https://github.com/mileszs/wicked_pdf/pull/856)
 - [Add support for Rails 6](https://github.com/mileszs/wicked_pdf/pull/869)
@@ -18,7 +21,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 - [Fix webpacker helpers in production environment](https://github.com/mileszs/wicked_pdf/pull/837)
 - [Fix unit tests](https://github.com/mileszs/wicked_pdf/pull/852)
-- [Remove old Ruby](https://github.com/mileszs/wicked_pdf/pull/854) - now require at least Ruby 2.2
 
 ## [1.4.0] - 2019-05-23
 ### New Features
