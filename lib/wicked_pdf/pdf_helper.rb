@@ -135,7 +135,7 @@ class WickedPdf
         render_opts[:file] = options[hf][:html][:file] if options[:file]
         tf.write render_to_string(render_opts)
         tf.flush
-        options[hf][:html][:url] = "file:///#{tf.path}"
+        options[hf][:html][:url] = options[:skip_file_prefix] ? tf.path : "file:///#{tf.path}"
       end
       options
     end
