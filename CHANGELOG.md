@@ -10,6 +10,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 - None
 
+## [2.0.2] - 2020-03-17
+### Fixes
+- Force UTF-8 encoding in assets helper
+
 ## [2.0.1] - 2020-02-22
 ### Fixes
 - [Replace open-uri with more secure Net:HTTP.get](https://github.com/mileszs/wicked_pdf/pull/864)

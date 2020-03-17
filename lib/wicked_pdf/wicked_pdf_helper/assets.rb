@@ -147,6 +147,7 @@ class WickedPdf
 
       def read_from_uri(uri)
         asset = Net::HTTP.get(URI(uri))
+        asset.force_encoding('UTF-8') if asset
         asset = gzip(asset) if WickedPdf.config[:expect_gzipped_remote_assets]
         asset
       end
