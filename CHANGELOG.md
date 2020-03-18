@@ -12,7 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.2] - 2020-03-17
 ### Fixes
-- Force UTF-8 encoding in assets helper
+- [Force UTF-8 encoding in assets helper](https://github.com/mileszs/wicked_pdf/pull/894)
 
 ## [2.0.1] - 2020-02-22
 ### Fixes
@@ -149,7 +149,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Asset helpers no longer add a file extension if it already is specified with one
 
 # Compare Releases
-- [1.4.0...HEAD](https://github.com/mileszs/wicked_pdf/compare/1.2.2...HEAD)
+- [2.0.2...HEAD (unreleased changes)](https://github.com/mileszs/wicked_pdf/compare/2.0.2...HEAD)
+- [2.0.0...2.0.2](https://github.com/mileszs/wicked_pdf/compare/2.0.0...2.0.2)
+- [1.4.0...2.0.0](https://github.com/mileszs/wicked_pdf/compare/1.4.0...2.0.0)
 - [1.3.0...1.4.0](https://github.com/mileszs/wicked_pdf/compare/1.3.0...1.4.0)
 - [1.2.0...1.3.0](https://github.com/mileszs/wicked_pdf/compare/1.2.0...1.3.0)
 - [1.1.0...1.2.0](https://github.com/mileszs/wicked_pdf/compare/1.1.0...1.2.0)
