@@ -79,6 +79,16 @@ class WickedPdf
         end
       end
 
+      def wicked_pdf_asset_pack_path(asset)
+        return unless defined?(Webpacker)
+
+        if running_in_development?
+          asset_pack_path(asset)
+        else
+          wicked_pdf_asset_path webpacker_source_url(asset)
+        end
+      end
+
       private
 
       # borrowed from actionpack/lib/action_view/helpers/asset_url_helper.rb
