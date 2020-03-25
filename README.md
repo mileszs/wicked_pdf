@@ -109,10 +109,12 @@ Using wicked_pdf_helpers with asset pipeline raises `Asset names passed to helpe
 
 #### Webpacker usage
 
-wicked_pdf supports webpack stylesheets and javascript assets.
+wicked_pdf supports webpack assets.
 
 Use `wicked_pdf_stylesheet_pack_tag` for stylesheets
 Use `wicked_pdf_javascript_pack_tag` for javascripts
+
+Use `wicked_pdf_asset_pack_path` to access an asset directly, for example: `image_tag wicked_pdf_asset_pack_path("media/images/foobar.png")`
 
 #### Asset pipeline usage
 

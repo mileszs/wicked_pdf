@@ -10,6 +10,11 @@ Metrics/BlockLength:
   Exclude:
     - 'wicked_pdf.gemspec'
 
+Metrics/ModuleLength:
+  Exclude:
+    # Excluding to keep the logic in one module for the time being.
+    - 'lib/wicked_pdf/wicked_pdf_helper/assets.rb'
+
 # I'd like wicked_pdf to keep Ruby 1.8 compatibility for now
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
