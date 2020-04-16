@@ -186,6 +186,7 @@ class ThingsController < ApplicationController
                disable_external_links:         true,
                print_media_type:               true,
                disable_smart_shrinking:        true,
+               disable_local_file_access:      true,
                use_xserver:                    true,
                background:                     false,                     # background needs to be true to enable background colors to render
                no_background:                  true,
