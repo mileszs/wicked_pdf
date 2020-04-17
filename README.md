@@ -189,6 +189,7 @@ class ThingsController < ApplicationController
                use_xserver:                    true,
                background:                     false,                     # background needs to be true to enable background colors to render
                no_background:                  true,
+               no_stop_slow_scripts:           false,
                viewport_size:                  'TEXT',                    # available only with use_xserver or patched QT
                extra:                          '',                        # directly inserted into the command to wkhtmltopdf
                raise_on_all_errors:            nil,                       # raise error for any stderr output.  Such as missing media, image assets
