@@ -146,6 +146,7 @@ class ThingsController < ApplicationController
         render pdf:                            'file_name',
                disposition:                    'attachment',                 # default 'inline'
                template:                       'things/show',
+               locals:                         {foo: @bar},
                file:                           "#{Rails.root}/files/foo.erb",
                inline:                         '<!doctype html><html><head></head><body>INLINE HTML</body></html>',
                layout:                         'pdf',                        # for a pdf.pdf.erb file
