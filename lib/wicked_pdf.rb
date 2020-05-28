@@ -211,18 +211,25 @@ class WickedPdf
     r
   end
 
-  def parse_cover(argument)
-    arg = argument.to_s
-    return [] if arg.blank?
+  def parse_cover(args)
+    content = args.is_a?(Hash) ? args[:content].to_s : args.to_s
+    return [] if content.blank?
+
+    page_object = if args.is_a?(Hash) && args[:include_header_footer]
+                    valid_option('page')
+                  else
+                    valid_option('cover')
+                  end
+
     # Filesystem path or URL - hand off to wkhtmltopdf
-    if argument.is_a?(Pathname) || (arg[0, 4] == 'http')
-      [valid_option('cover'), arg]
+    if content.is_a?(Pathname) || (content[0, 4] == 'http')
+      [page_object, content]
     else # HTML content
       @hf_tempfiles ||= []
       @hf_tempfiles << tf = WickedPdfTempfile.new('wicked_cover_pdf.html')
-      tf.write arg
+      tf.write content
       tf.flush
-      [valid_option('cover'), tf.path]
+      [page_object, tf.path]
     end
   end
 
