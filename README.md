@@ -188,8 +188,8 @@ class ThingsController < ApplicationController
                print_media_type:               true,
 
                # define as true the key 'disable_local_file_access' or 'enable_local_file_access', not both
-               disable_local_file_access:      false,
-               enable_local_file_access:       true,
+               disable_local_file_access:      true,
+               enable_local_file_access:       false,
 
                disable_smart_shrinking:        true,
                use_xserver:                    true,
