@@ -186,6 +186,11 @@ class ThingsController < ApplicationController
                disable_internal_links:         true,
                disable_external_links:         true,
                print_media_type:               true,
+
+               # define as true the key 'disable_local_file_access' or 'enable_local_file_access', not both
+               disable_local_file_access:      false,
+               enable_local_file_access:       true,
+
                disable_smart_shrinking:        true,
                use_xserver:                    true,
                background:                     false,                     # background needs to be true to enable background colors to render
