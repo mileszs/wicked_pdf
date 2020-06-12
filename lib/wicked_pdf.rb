@@ -57,6 +57,7 @@ class WickedPdf
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
     generated_pdf_file = WickedPdfTempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
     command = [@exe_path]
+    command.unshift(find_xvfb_run_binary_path) if options[:use_xvfb]
     command += parse_options(options)
     command << url
     command << generated_pdf_file.path.to_s
@@ -328,9 +329,13 @@ class WickedPdf
     r
   end
 
-  def find_wkhtmltopdf_binary_path
+  def possible_binary_locations
     possible_locations = (ENV['PATH'].split(':') + %w[/usr/bin /usr/local/bin]).uniq
     possible_locations += %w[~/bin] if ENV.key?('HOME')
+  end
+
+  def find_wkhtmltopdf_binary_path
+    possible_locations = possible_binary_locations
     exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
     exe_path ||= begin
       detected_path = (defined?(Bundler) ? Bundler.which('wkhtmltopdf') : `which wkhtmltopdf`).chomp
@@ -340,5 +345,12 @@ class WickedPdf
     end
     exe_path ||= possible_locations.map { |l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }
     exe_path || ''
+  end
+
+  def find_xvfb_run_binary_path
+    possible_locations = possible_binary_locations
+    path = possible_locations.map { |l| File.expand_path("#{l}/xvfb-run") }.find { |location| File.exist?(location) }
+    raise StandardError.new('Could not find binary xvfb-run on the system.') unless path
+    path
   end
 end
