@@ -10,6 +10,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 - None
 
+## [2.1.0] - 2020-06-14
+### Fixes
+- [Document no_stop_slow_scripts in README](https://github.com/mileszs/wicked_pdf/pull/905)
+- [Document how to use locals in README](https://github.com/mileszs/wicked_pdf/pull/915)
+
+### New Features
+- [Improved support for Webpacker assets with `wicked_pdf_asset_pack_path`](https://github.com/mileszs/wicked_pdf/pull/896)
+- [Support enabling/disabling local file access compatible with wkhtmltopdf 0.12.6](https://github.com/mileszs/wicked_pdf/pull/920)
+- [Add option `use_xvfb` to emulate an X server](https://github.com/mileszs/wicked_pdf/pull/909)
+
 ## [2.0.2] - 2020-03-17
 ### Fixes
 - [Force UTF-8 encoding in assets helper](https://github.com/mileszs/wicked_pdf/pull/894)
@@ -149,7 +159,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Asset helpers no longer add a file extension if it already is specified with one
 
 # Compare Releases
-- [2.0.2...HEAD (unreleased changes)](https://github.com/mileszs/wicked_pdf/compare/2.0.2...HEAD)
+- [2.1.0...HEAD (unreleased changes)](https://github.com/mileszs/wicked_pdf/compare/2.1.0...HEAD)
+- [2.0.2...2.1.0](https://github.com/mileszs/wicked_pdf/compare/2.0.2...2.1.0)
 - [2.0.0...2.0.2](https://github.com/mileszs/wicked_pdf/compare/2.0.0...2.0.2)
 - [1.4.0...2.0.0](https://github.com/mileszs/wicked_pdf/compare/1.4.0...2.0.0)
 - [1.3.0...1.4.0](https://github.com/mileszs/wicked_pdf/compare/1.3.0...1.4.0)
