@@ -175,7 +175,8 @@ class WickedPdfTest < ActiveSupport::TestCase
     [
       :book, :default_header, :disable_javascript, :grayscale, :lowquality,
       :enable_plugins, :disable_internal_links, :disable_external_links,
-      :print_media_type, :disable_smart_shrinking, :use_xserver, :no_background
+      :keep_relative_links, :print_media_type, :disable_smart_shrinking,
+      :use_xserver, :no_background
     ].each do |o|
       assert_equal "--#{o.to_s.tr('_', '-')}", @wp.get_parsed_options(o => true).strip
     end
