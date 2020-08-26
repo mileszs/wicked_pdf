@@ -332,6 +332,7 @@ class WickedPdf
   def possible_binary_locations
     possible_locations = (ENV['PATH'].split(':') + %w[/usr/bin /usr/local/bin]).uniq
     possible_locations += %w[~/bin] if ENV.key?('HOME')
+    possible_locations
   end
 
   def find_wkhtmltopdf_binary_path
