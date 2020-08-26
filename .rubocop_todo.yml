@@ -66,16 +66,16 @@ Metrics/AbcSize:
 # Offense count: 2
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
-  Max: 292
+  Max: 305
 
 # Offense count: 7
 Metrics/CyclomaticComplexity:
-  Max: 11
+  Max: 13
 
 # Offense count: 17
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/MethodLength:
-  Max: 30
+  Max: 32
 
 # Offense count: 2
 # Configuration parameters: CountComments.
@@ -84,7 +84,7 @@ Metrics/ModuleLength:
 
 # Offense count: 6
 Metrics/PerceivedComplexity:
-  Max: 12
+  Max: 13
 
 # Offense count: 2
 Naming/AccessorMethodName:

@@ -351,7 +351,7 @@ class WickedPdf
   def find_xvfb_run_binary_path
     possible_locations = possible_binary_locations
     path = possible_locations.map { |l| File.expand_path("#{l}/xvfb-run") }.find { |location| File.exist?(location) }
-    raise StandardError.new('Could not find binary xvfb-run on the system.') unless path
+    raise StandardError, 'Could not find binary xvfb-run on the system.' unless path
     path
   end
 end
