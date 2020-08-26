@@ -332,6 +332,7 @@ class WickedPdf
   def possible_binary_locations
     possible_locations = (ENV['PATH'].split(':') + %w[/usr/bin /usr/local/bin]).uniq
     possible_locations += %w[~/bin] if ENV.key?('HOME')
+    possible_locations
   end
 
   def find_wkhtmltopdf_binary_path
@@ -350,7 +351,7 @@ class WickedPdf
   def find_xvfb_run_binary_path
     possible_locations = possible_binary_locations
     path = possible_locations.map { |l| File.expand_path("#{l}/xvfb-run") }.find { |location| File.exist?(location) }
-    raise StandardError.new('Could not find binary xvfb-run on the system.') unless path
+    raise StandardError, 'Could not find binary xvfb-run on the system.' unless path
     path
   end
 end
