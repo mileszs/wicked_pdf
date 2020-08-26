@@ -13,7 +13,9 @@ class WickedPdf
           else
             ActionController::Base.send :include, PdfHelper
           end
-          ActionView::Base.send :include, WickedPdfHelper::Assets
+        end
+        ActiveSupport.on_load(:action_view) do
+          include WickedPdfHelper::Assets
         end
       end
     end
