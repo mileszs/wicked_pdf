@@ -316,6 +316,7 @@ class WickedPdf
                                   :enable_plugins,
                                   :disable_internal_links,
                                   :disable_external_links,
+                                  :keep_relative_links,
                                   :print_media_type,
                                   :disable_local_file_access,
                                   :enable_local_file_access,
