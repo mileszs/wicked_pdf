@@ -106,13 +106,6 @@ Style/RegexpLiteral:
     - 'lib/wicked_pdf/wicked_pdf_helper/assets.rb'
     - 'test/unit/wicked_pdf_test.rb'
 
-# Offense count: 29
-# Cop supports --auto-correct.
-# Configuration parameters: MinSize.
-# SupportedStyles: percent, brackets
-Style/SymbolArray:
-  EnforcedStyle: brackets
-
 # Offense count: 111
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
