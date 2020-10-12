@@ -75,7 +75,7 @@ Metrics/CyclomaticComplexity:
 # Offense count: 17
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/MethodLength:
-  Max: 32
+  Max: 40
 
 # Offense count: 2
 # Configuration parameters: CountComments.
@@ -118,6 +118,8 @@ Style/Documentation:
     - 'lib/wicked_pdf/pdf_helper.rb'
     - 'lib/wicked_pdf/progress.rb'
     - 'lib/wicked_pdf/railtie.rb'
+    - 'lib/wicked_pdf/binary.rb'
+    - 'lib/wicked_pdf/option_parser.rb'
     - 'lib/wicked_pdf/tempfile.rb'
     - 'lib/wicked_pdf/wicked_pdf_helper.rb'
     - 'lib/wicked_pdf/wicked_pdf_helper/assets.rb'

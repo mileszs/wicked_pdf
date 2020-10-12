@@ -36,6 +36,7 @@ class WickedPdf
     def parse_extra(options)
       return [] if options[:extra].nil?
       return options[:extra].split if options[:extra].respond_to?(:split)
+
       options[:extra]
     end
 
@@ -53,6 +54,7 @@ class WickedPdf
       unless options.blank?
         [:header, :footer].collect do |hf|
           next if options[hf].blank?
+
           opt_hf = options[hf]
           r += make_options(opt_hf, [:center, :font_name, :left, :right], hf.to_s)
           r += make_options(opt_hf, [:font_size, :spacing], hf.to_s, :numeric)
@@ -76,6 +78,7 @@ class WickedPdf
     def parse_cover(argument)
       arg = argument.to_s
       return [] if arg.blank?
+
       # Filesystem path or URL - hand off to wkhtmltopdf
       if argument.is_a?(Pathname) || (arg[0, 4] == 'http')
         [valid_option('cover'), arg]
@@ -90,6 +93,7 @@ class WickedPdf
 
     def parse_toc(options)
       return [] if options.nil?
+
       r = [valid_option('toc')]
       unless options.blank?
         r += make_options(options, [:font_name, :header_text], 'toc')
@@ -193,6 +197,7 @@ class WickedPdf
 
     def make_options(options, names, prefix = '', type = :string)
       return [] if options.nil?
+
       names.collect do |o|
         if options[o].blank?
           []
@@ -205,9 +210,8 @@ class WickedPdf
     end
 
     def make_option(name, value, type = :string)
-      if value.is_a?(Array)
-        return value.collect { |v| make_option(name, v, type) }
-      end
+      return value.collect { |v| make_option(name, v, type) } if value.is_a?(Array)
+
       if type == :name_value
         parts = value.to_s.split(' ')
         ["--#{name.tr('_', '-')}", *parts]
