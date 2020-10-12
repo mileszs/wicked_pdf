@@ -78,6 +78,7 @@ class WickedPdf
     pdf = generated_pdf_file.read
     raise "Error generating PDF\n Command Error: #{err}" if options[:raise_on_all_errors] && !err.empty?
     raise "PDF could not be generated!\n Command Error: #{err}" if pdf && pdf.rstrip.empty?
+
     pdf
   rescue StandardError => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
@@ -89,6 +90,7 @@ class WickedPdf
 
   def in_development_mode?
     return Rails.env == 'development' if defined?(Rails.env)
+
     RAILS_ENV == 'development' if defined?(RAILS_ENV)
   end
 

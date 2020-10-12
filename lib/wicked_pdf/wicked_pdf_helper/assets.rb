@@ -10,6 +10,7 @@ class WickedPdf
       def wicked_pdf_asset_base64(path)
         asset = find_asset(path)
         raise "Could not find asset '#{path}'" if asset.nil?
+
         base64 = Base64.encode64(asset.to_s).gsub(/\s+/, '')
         "data:#{asset.content_type};base64,#{Rack::Utils.escape(base64)}"
       end
@@ -31,6 +32,7 @@ class WickedPdf
 
       def wicked_pdf_stylesheet_pack_tag(*sources)
         return unless defined?(Webpacker)
+
         if running_in_development?
           stylesheet_pack_tag(*sources)
         else
@@ -172,6 +174,7 @@ class WickedPdf
 
       def webpacker_source_url(source)
         return unless defined?(Webpacker) && defined?(Webpacker::VERSION)
+
         # In Webpacker 3.2.0 asset_pack_url is introduced
         if Webpacker::VERSION >= '3.2.0'
           asset_pack_url(source)
@@ -184,6 +187,7 @@ class WickedPdf
 
       def running_in_development?
         return unless defined?(Webpacker)
+
         # :dev_server method was added in webpacker 3.0.0
         if Webpacker.respond_to?(:dev_server)
           Webpacker.dev_server.running?
