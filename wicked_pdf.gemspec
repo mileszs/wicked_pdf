@@ -1,4 +1,3 @@
-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'wicked_pdf/version'
@@ -32,11 +31,11 @@ DESC
 
   spec.add_dependency 'activesupport'
 
-  spec.add_development_dependency 'rails'
   spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'mocha', '= 1.3'
+  spec.add_development_dependency 'rails'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rubocop', '~> 0.68.0'
   spec.add_development_dependency 'sqlite3', '~> 1.3'
-  spec.add_development_dependency 'mocha', '= 1.3'
   spec.add_development_dependency 'test-unit'
 end

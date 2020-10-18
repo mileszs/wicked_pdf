@@ -5,7 +5,7 @@ require 'rails/version'
 require 'bundler/gem_tasks'
 
 desc 'Default: run unit tests.'
-task :default => [:setup_and_run_tests, :rubocop]
+task :default => %i[setup_and_run_tests rubocop]
 
 desc 'Test the wicked_pdf plugin.'
 Rake::TestTask.new(:test) do |t|
@@ -18,15 +18,14 @@ end
 desc 'Run RuboCop'
 task :rubocop do
   next unless RUBY_VERSION >= '2.0.0'
+
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new
 end
 
 desc 'Setup and run all tests'
 task :setup_and_run_tests do
-  unless File.exist?('test/dummy/config/environment.rb')
-    Rake::Task[:dummy_generate].invoke
-  end
+  Rake::Task[:dummy_generate].invoke unless File.exist?('test/dummy/config/environment.rb')
   Rake::Task[:test].invoke
 end
 

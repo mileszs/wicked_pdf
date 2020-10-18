@@ -1,5 +1,3 @@
-
-
 class WkhtmltopdfLocationTest < ActiveSupport::TestCase
   setup do
     @saved_config = WickedPdf.config

@@ -18,9 +18,7 @@ class WickedPdf
       end
     end
 
-    if Mime::Type.lookup_by_extension(:pdf).nil?
-      Mime::Type.register('application/pdf', :pdf)
-    end
+    Mime::Type.register('application/pdf', :pdf) if Mime::Type.lookup_by_extension(:pdf).nil?
 
   end
 end

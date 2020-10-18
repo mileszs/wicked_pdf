@@ -6,59 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: TreatCommentsAsGroupSeparators, Include.
-# Include: **/*.gemfile, **/Gemfile, **/gems.rb
-Bundler/OrderedGems:
-  Exclude:
-    - 'gemfiles/4.0.gemfile'
-    - 'gemfiles/4.1.gemfile'
-    - 'gemfiles/4.2.gemfile'
-    - 'gemfiles/5.0.gemfile'
-    - 'gemfiles/5.1.gemfile'
-    - 'gemfiles/5.2.gemfile'
-    - 'gemfiles/6.0.gemfile'
-    - 'gemfiles/rails_edge.gemfile'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: TreatCommentsAsGroupSeparators, Include.
-# Include: **/*.gemspec
-Gemspec/OrderedDependencies:
-  Exclude:
-    - 'wicked_pdf.gemspec'
-
-# Offense count: 16
-# Cop supports --auto-correct.
-Layout/EmptyLineAfterGuardClause:
-  Exclude:
-    - 'Rakefile'
-    - 'lib/wicked_pdf.rb'
-    - 'lib/wicked_pdf/pdf_helper.rb'
-    - 'lib/wicked_pdf/wicked_pdf_helper/assets.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Layout/LeadingBlankLines:
-  Exclude:
-    - 'test/unit/wkhtmltopdf_location_test.rb'
-    - 'wicked_pdf.gemspec'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/RescueEnsureAlignment:
-  Exclude:
-    - 'lib/wicked_pdf.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: final_newline, final_blank_line
-Layout/TrailingBlankLines:
-  Exclude:
-    - 'gemfiles/4.0.gemfile'
-
 # Offense count: 11
 Metrics/AbcSize:
   Max: 45
@@ -66,7 +13,7 @@ Metrics/AbcSize:
 # Offense count: 2
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
-  Max: 305
+  Max: 250
 
 # Offense count: 7
 Metrics/CyclomaticComplexity:
@@ -75,7 +22,7 @@ Metrics/CyclomaticComplexity:
 # Offense count: 17
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/MethodLength:
-  Max: 32
+  Max: 40
 
 # Offense count: 2
 # Configuration parameters: CountComments.
@@ -91,11 +38,6 @@ Naming/AccessorMethodName:
   Exclude:
     - 'lib/wicked_pdf/middleware.rb'
     - 'lib/wicked_pdf/pdf_helper.rb'
-
-# Offense count: 1
-Security/Open:
-  Exclude:
-    - 'lib/wicked_pdf/wicked_pdf_helper/assets.rb'
 
 # Offense count: 1
 Style/CaseEquality:
@@ -118,6 +60,8 @@ Style/Documentation:
     - 'lib/wicked_pdf/pdf_helper.rb'
     - 'lib/wicked_pdf/progress.rb'
     - 'lib/wicked_pdf/railtie.rb'
+    - 'lib/wicked_pdf/binary.rb'
+    - 'lib/wicked_pdf/option_parser.rb'
     - 'lib/wicked_pdf/tempfile.rb'
     - 'lib/wicked_pdf/wicked_pdf_helper.rb'
     - 'lib/wicked_pdf/wicked_pdf_helper/assets.rb'
@@ -144,14 +88,6 @@ Style/HashSyntax:
     - 'gemfiles/6.0.gemfile'
     - 'gemfiles/rails_edge.gemfile'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/IfUnlessModifier:
-  Exclude:
-    - 'Rakefile'
-    - 'lib/wicked_pdf.rb'
-    - 'lib/wicked_pdf/railtie.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
@@ -169,21 +105,6 @@ Style/RegexpLiteral:
     - 'lib/wicked_pdf/middleware.rb'
     - 'lib/wicked_pdf/wicked_pdf_helper/assets.rb'
     - 'test/unit/wicked_pdf_test.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'gemfiles/4.0.gemfile'
-
-# Offense count: 29
-# Cop supports --auto-correct.
-# Configuration parameters: MinSize.
-# SupportedStyles: percent, brackets
-Style/SymbolArray:
-  EnforcedStyle: brackets
 
 # Offense count: 111
 # Cop supports --auto-correct.
