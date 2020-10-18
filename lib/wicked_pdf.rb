@@ -76,7 +76,7 @@ class WickedPdf
     generated_pdf_file.rewind
     generated_pdf_file.binmode
     pdf = generated_pdf_file.read
-    raise "Error generating PDF\n Command Error: #{err}" if options[:raise_on_all_errors] && !err.empty?
+    raise "Error generating PDF\n Command Error: #{err}" if options[:raise_on_all_errors] && !err.empty? && !err.strip.ends_with?('Done')
     raise "PDF could not be generated!\n Command Error: #{err}" if pdf && pdf.rstrip.empty?
 
     pdf
