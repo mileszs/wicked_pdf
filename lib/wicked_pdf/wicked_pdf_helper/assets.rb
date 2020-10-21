@@ -15,6 +15,20 @@ class WickedPdf
         "data:#{asset.content_type};base64,#{Rack::Utils.escape(base64)}"
       end
 
+      # Using `image_tag` with URLs when generating PDFs (specifically large PDFs with lots of pages) can cause buffer/stack overflows.
+      #
+      def wicked_pdf_url_base64(url)
+        response = Net::HTTP.get_response(URI(url))
+
+        if response.is_a?(Net::HTTPSuccess)
+          base64 = Base64.encode64(response.body).gsub(/\s+/, '')
+          "data:#{response.content_type};base64,#{Rack::Utils.escape(base64)}"
+        else
+          Rails.logger.warn("[wicked_pdf] #{response.code} #{response.message}: #{url}")
+          nil
+        end
+      end
+
       def wicked_pdf_stylesheet_link_tag(*sources)
         stylesheet_contents = sources.collect do |source|
           source = WickedPdfHelper.add_extension(source, 'css')
