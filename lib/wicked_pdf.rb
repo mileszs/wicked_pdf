@@ -47,7 +47,7 @@ class WickedPdf
     pdf = pdf_from_html_file(string_file.path, options)
     pdf
   ensure
-    string_file.close! if string_file
+    string_file.close if string_file
   end
 
   def pdf_from_url(url, options = {})
