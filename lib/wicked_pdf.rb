@@ -44,7 +44,8 @@ class WickedPdf
     string_file.write(string)
     string_file.close
 
-    pdf = pdf_from_html_file(string_file.path, options)
+    action = options[:skip_file_prefix] ? 'pdf_from_url' : 'pdf_from_html_file'
+    pdf = send(action, string_file.path, options)
     pdf
   ensure
     string_file.close if string_file
