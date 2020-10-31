@@ -61,7 +61,7 @@ class WickedPdf
           r += make_options(opt_hf, [:line], hf.to_s, :boolean)
           if options[hf] && options[hf][:content]
             @hf_tempfiles = [] unless defined?(@hf_tempfiles)
-            @hf_tempfiles.push(tf = WickedPdfTempfile.new("wicked_#{hf}_pdf.html"))
+            @hf_tempfiles.push(tf = WickedPdf::Tempfile.new("wicked_#{hf}_pdf.html"))
             tf.write options[hf][:content]
             tf.flush
             options[hf][:html] = {}
@@ -84,7 +84,7 @@ class WickedPdf
         [valid_option('cover'), arg]
       else # HTML content
         @hf_tempfiles ||= []
-        @hf_tempfiles << tf = WickedPdfTempfile.new('wicked_cover_pdf.html')
+        @hf_tempfiles << tf = WickedPdf::Tempfile.new('wicked_cover_pdf.html')
         tf.write arg
         tf.flush
         [valid_option('cover'), tf.path]

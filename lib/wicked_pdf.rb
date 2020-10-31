@@ -39,27 +39,17 @@ class WickedPdf
   def pdf_from_string(string, options = {})
     options = options.dup
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
-    string_file = WickedPdfTempfile.new('wicked_pdf.html', options[:temp_path])
-    string_file.binmode
-    string_io = StringIO.new(string)
-    until string_io.eof?
-      string_file.write(string_io.read(1024 * 1024)) # Read 1 MB chunks at a time to avoid `Errno::EINVAL` errors like `Invalid argument @ io_fread` and `Invalid argument @ io_write`.
-    end
-    string_file.close
-
-    pdf = pdf_from_html_file(string_file.path, options)
-    pdf
-  rescue Errno::EINVAL => e
-    Rails.logger.error '[wicked_pdf] The HTML file is too large! Try reducing the size or using the return_file option instead.'
-    raise e
+    string_file = WickedPdf::Tempfile.new('wicked_pdf.html', options[:temp_path])
+    string_file.write_in_chunks(string)
+    pdf_from_html_file(string_file.path, options)
   ensure
     string_file.close if string_file
   end
 
-  def pdf_from_url(url, options = {}) # rubocop:disable Metrics/PerceivedComplexity
+  def pdf_from_url(url, options = {})
     # merge in global config options
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
-    generated_pdf_file = WickedPdfTempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
+    generated_pdf_file = WickedPdf::Tempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
     command = [@binary.path]
     command.unshift(@binary.xvfb_run_path) if options[:use_xvfb]
     command += parse_options(options)
@@ -79,21 +69,13 @@ class WickedPdf
       return_file = options.delete(:return_file)
       return generated_pdf_file
     end
-    generated_pdf_file.rewind
-    generated_pdf_file.binmode
 
-    pdf = ''
-    until generated_pdf_file.eof?
-      pdf << generated_pdf_file.read(1024 * 1024) # Read 1 MB chunks at a time to avoid `Errno::EINVAL` errors like `Invalid argument @ io_fread` and `Invalid argument @ io_write`.
-    end
+    pdf = generated_pdf_file.read_in_chunks
 
     raise "Error generating PDF\n Command Error: #{err}" if options[:raise_on_all_errors] && !err.empty?
     raise "PDF could not be generated!\n Command Error: #{err}" if pdf && pdf.rstrip.empty?
 
     pdf
-  rescue Errno::EINVAL => e
-    Rails.logger.error '[wicked_pdf] The PDF file is too large! Try reducing the size or using the return_file option instead.'
-    raise e
   rescue StandardError => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
   ensure
