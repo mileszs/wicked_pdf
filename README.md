@@ -43,7 +43,8 @@ If your wkhtmltopdf executable is not on your webserver's path, you can configur
 
 ```ruby
 WickedPdf.config = {
-  exe_path: '/usr/local/bin/wkhtmltopdf'
+  exe_path: '/usr/local/bin/wkhtmltopdf',
+  enable_local_file_access: true
 }
 ```
 
@@ -451,6 +452,22 @@ However, the wicked_pdf_* helpers will use file:/// paths for assets when using 
 If one image from your HTML cannot be found (relative or wrong path for example), others images with right paths **may not** be displayed in the output PDF as well (it seems to be an issue with wkhtmltopdf).
 
 wkhtmltopdf may render at different resolutions on different platforms. For example, Linux prints at 75 dpi (native for WebKit) while on Windows it's at the desktop's DPI (which is normally 96 dpi). [Use `:zoom => 0.78125`](https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2184) (75/96) to match Linux rendering to Windows.
+
+### Security considerations
+
+WickedPdf renders page content on the server by saving HTML and assets to temporary files on disk, then executing `wkhtmltopdf` to convert that HTML to a PDF file.
+
+It is highly recommended if you allow user-generated HTML/CSS/JS to be converted to PDF, you sanitize it first, or at least disallow requesting content from internal IP addresses and hostnames.
+
+For example, these could potentially leak internal AWS metadata:
+```html
+<iframe src="http://169.254.169.254/latest/meta-data/"></iframe>
+<object data="http://169.254.169.254/latest/meta-data/" type="text/html">
+```
+
+Thank you to Adam Gold from [Snyk](https://snyk.io) for reporting this.
+We are considering adding host allow & block lists and/or potentially HTML element sanitizing.
+Please open an issue or PR to help us out with this.
 
 ### Inspiration
 

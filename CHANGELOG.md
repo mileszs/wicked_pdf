@@ -4,11 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [master branch] - Unreleased
 ### Breaking Changes
-- None
+- [Remove support for Ruby 1.x and Rails 2.x](https://github.com/mileszs/wicked_pdf/pull/859)
 ### New Features
-- None
-### Fixes
-- None
+- [Add support for --keep-relative-links flag](https://github.com/mileszs/wicked_pdf/pull/930)
+- [Do not unlink HTML temp files immediately (to enable HTML tempfile inspection)](https://github.com/mileszs/wicked_pdf/pull/950)
+- [Read HTML string and generated PDF file in chunks (to reduce memory overhead of generating large PDFs)](https://github.com/mileszs/wicked_pdf/pull/949)
+- [Add `wicked_pdf_url_base64` helper](https://github.com/mileszs/wicked_pdf/pull/947)
 
 ## [2.1.0] - 2020-06-14
 ### Fixes
