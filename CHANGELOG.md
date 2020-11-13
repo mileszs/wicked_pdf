@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [master branch] - Unreleased
 ### Breaking Changes
 - [Remove support for Ruby 1.x and Rails 2.x](https://github.com/mileszs/wicked_pdf/pull/859)
+- [Remove code for unsupported rails and ruby versions](https://github.com/mileszs/wicked_pdf/pull/925)
 ### New Features
 - [Add support for --keep-relative-links flag](https://github.com/mileszs/wicked_pdf/pull/930)
 - [Do not unlink HTML temp files immediately (to enable HTML tempfile inspection)](https://github.com/mileszs/wicked_pdf/pull/950)
