@@ -58,11 +58,13 @@ class WickedPdf
 
     print_command(command.inspect) if in_development_mode?
 
+    err = ''
     if track_progress?(options)
       invoke_with_progress(command, options)
     else
-      err = Open3.popen3(*command) do |_stdin, _stdout, stderr|
-        stderr.read
+      _out, err, status = Open3.capture3(*command)
+      if !err.empty? || !status.success?
+        err = status.to_s + "\n" + err
       end
     end
     if options[:return_file]
