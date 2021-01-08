@@ -63,9 +63,7 @@ class WickedPdf
       invoke_with_progress(command, options)
     else
       _out, err, status = Open3.capture3(*command)
-      if !err.empty? || !status.success?
-        err = status.to_s + "\n" + err
-      end
+      err = [status.to_s, err].join("\n") if !err.empty? || !status.success?
     end
     if options[:return_file]
       return_file = options.delete(:return_file)
