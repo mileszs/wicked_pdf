@@ -191,7 +191,7 @@ class ThingsController < ApplicationController
 
                # define as true the key 'disable_local_file_access' or 'enable_local_file_access', not both
                disable_local_file_access:      true,
-               enable_local_file_access:       false,
+               enable_local_file_access:       false,                     # must be true when using wkhtmltopdf > 0.12.6
 
                disable_smart_shrinking:        true,
                use_xserver:                    true,
