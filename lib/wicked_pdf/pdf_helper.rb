@@ -22,7 +22,7 @@ class WickedPdf
     def render_to_string(*args)
       options = args.first
       if options.is_a?(Hash) && options.key?(:pdf)
-        render_to_string_with_wicked_pdf(options, *args, &block)
+        render_to_string_with_wicked_pdf(options)
       else
         super
       end
