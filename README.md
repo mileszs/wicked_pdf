@@ -112,10 +112,9 @@ Using wicked_pdf_helpers with asset pipeline raises `Asset names passed to helpe
 
 wicked_pdf supports webpack assets.
 
-Use `wicked_pdf_stylesheet_pack_tag` for stylesheets
-Use `wicked_pdf_javascript_pack_tag` for javascripts
-
-Use `wicked_pdf_asset_pack_path` to access an asset directly, for example: `image_tag wicked_pdf_asset_pack_path("media/images/foobar.png")`
+- Use `wicked_pdf_stylesheet_pack_tag` for stylesheets
+- Use `wicked_pdf_javascript_pack_tag` for javascripts
+- Use `wicked_pdf_asset_pack_path` to access an asset directly, for example: `image_tag wicked_pdf_asset_pack_path("media/images/foobar.png")`
 
 #### Asset pipeline usage
 
@@ -127,11 +126,11 @@ It is best to precompile assets used in PDF views. This will help avoid issues w
 
 In this case, you can use that standard Rails helpers and point to the current CDN for whichever framework you are using. For jQuery, it would look somethng like this, given the current versions at the time of this writing.
 ```html
-    <!doctype html>
-    <html>
-      <head>
-        <%= javascript_include_tag "http://code.jquery.com/jquery-1.10.0.min.js" %>
-        <%= javascript_include_tag "http://code.jquery.com/ui/1.10.3/jquery-ui.min.js" %>
+<!doctype html>
+<html>
+  <head>
+    <%= javascript_include_tag "http://code.jquery.com/jquery-1.10.0.min.js" %>
+    <%= javascript_include_tag "http://code.jquery.com/ui/1.10.3/jquery-ui.min.js" %>
 ```
 
 ### Advanced Usage with all available options
@@ -444,7 +443,7 @@ http://localhost:3001/CONTROLLER/X.pdf?debug
 
 However, the wicked_pdf_* helpers will use file:/// paths for assets when using :show_as_html, and your browser's cross-domain safety feature will kick in, and not render them. To get around this, you can load your assets like so in your templates:
 ```html
-    <%= params.key?('debug') ? image_tag('foo') : wicked_pdf_image_tag('foo') %>
+<%= params.key?('debug') ? image_tag('foo') : wicked_pdf_image_tag('foo') %>
 ```
 
 #### Gotchas
