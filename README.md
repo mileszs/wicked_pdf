@@ -432,6 +432,10 @@ JESii's post [WickedPDF, wkhtmltopdf, and Heroku...a tricky combination](http://
 
 Berislav Babic's post [Send PDF attachments from Rails with WickedPdf and ActionMailer](http://berislavbabic.com/send-pdf-attachments-from-rails-with-wickedpdf-and-actionmailer/)
 
+Corsego's 2021 post [Complete guide to generating PDFs with gem wicked_pdf](https://blog.corsego.com/gem-wicked-pdf)
+
+PDFTron's post [How to Generate PDFs With Ruby on Rails](https://www.pdftron.com/blog/rails/how-to-generate-pdf-with-ruby-on-rails/)
+
 StackOverflow [questions with the tag "wicked-pdf"](http://stackoverflow.com/questions/tagged/wicked-pdf)
 
 ### Debugging
