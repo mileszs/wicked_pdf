@@ -338,7 +338,8 @@ class PdfJob
   end
 end
 ```
-If you need to display utf encoded characters, add this to your pdf views or layouts:
+If you need to display utf encoded characters, add this to your pdf views or layouts.
+Characters still do not display correctly, please install the font of the corresponding language:
 ```html
 <meta charset="utf-8" />
 ```
