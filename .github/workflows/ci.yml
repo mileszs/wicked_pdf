@@ -11,29 +11,29 @@ jobs:
         gemfile: [""]
         ruby-version: [""]
         include:
-          - gemfile: 4.0
+          - gemfile: "4.0"
             ruby-version: 2.2
-          - gemfile: 4.1
+          - gemfile: "4.1"
             ruby-version: 2.2
-          - gemfile: 4.2
+          - gemfile: "4.2"
             ruby-version: 2.2
-          - gemfile: 5.0
+          - gemfile: "5.0"
             ruby-version: 2.3
-          - gemfile: 5.1
+          - gemfile: "5.1"
             ruby-version: 2.4
-          - gemfile: 5.2
+          - gemfile: "5.2"
             ruby-version: 2.5
-          - gemfile: 5.2
+          - gemfile: "5.2"
             ruby-version: 2.6
-          - gemfile: 6.0
+          - gemfile: "6.0"
             ruby-version: 2.6
-          - gemfile: 6.0
+          - gemfile: "6.0"
             ruby-version: 2.7
-          - gemfile: 6.0
+          - gemfile: "6.0"
             ruby-version: 3.0
-          - gemfile: rails_edge
+          - gemfile: "rails_edge"
             ruby-version: 2.7
-          - gemfile: rails_edge
+          - gemfile: "rails_edge"
             ruby-version: 3.0
 
     env:
