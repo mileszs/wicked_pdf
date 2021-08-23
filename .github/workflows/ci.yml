@@ -8,8 +8,8 @@ jobs:
 
     strategy:
       matrix:
-        gemfile: []
-        ruby-version: []
+        gemfile: [""]
+        ruby-version: [""]
         include:
           - gemfile: 4.0
             ruby-version: 2.2
