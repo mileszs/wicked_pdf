@@ -22,8 +22,6 @@ jobs:
             ruby-version: 2.6
           - gemfile: "6.0"
             ruby-version: 2.7
-          - gemfile: "6.1"
-            ruby-version: 3.0
           - gemfile: "rails_edge"
             ruby-version: 2.7
 
