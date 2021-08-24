@@ -7,11 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        gemfile: ["rails_edge"]
-        ruby-version: [3.0]
+        gemfile: ["5.0"]
+        ruby-version: [2.3]
         include:
-          - gemfile: "5.0"
-            ruby-version: 2.3
           - gemfile: "5.1"
             ruby-version: 2.4
           - gemfile: "5.2"
