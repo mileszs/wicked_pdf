@@ -50,6 +50,11 @@ jobs:
           sudo apt-get update -y -qq
           sudo apt-get install -y wkhtmltopdf
 
+      - name: Update rubygems and bundler
+        run: |
+          gem update --system
+          gem install bundler
+
       - name: Install gem dependencies
         run: bundle install
 
