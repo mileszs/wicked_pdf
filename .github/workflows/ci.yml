@@ -51,6 +51,7 @@ jobs:
           sudo apt-get install -y wkhtmltopdf
 
       - name: Update rubygems and bundler
+        if: ${{ matrix.ruby-version != '2.2' && matrix.ruby-version != '2.3' }}
         run: |
           gem update --system
           gem install bundler
