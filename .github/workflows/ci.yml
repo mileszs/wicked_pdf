@@ -20,8 +20,6 @@ jobs:
             ruby-version: 2.6
           - gemfile: "6.0"
             ruby-version: 2.7
-          - gemfile: "rails_edge"
-            ruby-version: 2.7
 
     env:
       BUNDLE_GEMFILE: /home/runner/work/wicked_pdf/wicked_pdf/gemfiles/${{ matrix.gemfile }}.gemfile
@@ -39,11 +37,6 @@ jobs:
         run: |
           sudo apt-get update -y -qq
           sudo apt-get install -y wkhtmltopdf
-
-      - name: Update rubygems and bundler
-        run: |
-          gem update --system
-          gem install bundler
 
       - name: Install gem dependencies
         run: bundle install
