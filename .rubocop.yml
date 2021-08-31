@@ -7,6 +7,9 @@ AllCops:
     - 'gemfiles/bin/*'
     - 'test/dummy/**/*'
 
+Bundler/OrderedGems:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
