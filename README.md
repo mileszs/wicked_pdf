@@ -438,6 +438,16 @@ PDFTron's post [How to Generate PDFs With Ruby on Rails](https://www.pdftron.com
 
 StackOverflow [questions with the tag "wicked-pdf"](http://stackoverflow.com/questions/tagged/wicked-pdf)
 
+### Screencasts
+
+* SupeRails Screencast [EN]
+
+[![Ruby on Rails #17 generate, save, send PDFs with gem wicked_pdf](https://i3.ytimg.com/vi/tFvtwEmW-GE/hqdefault.jpg)](https://youtu.be/tFvtwEmW-GE)
+
+* codigofacilito Screencast [ES]
+
+[![Generar PDF con Ruby on Rails - Tutorial](https://i3.ytimg.com/vi/jeWM_gusmJc/hqdefault.jpg)](https://youtu.be/jeWM_gusmJc)
+
 ### Debugging
 
 Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster.
