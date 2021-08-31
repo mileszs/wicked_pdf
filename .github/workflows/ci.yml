@@ -4,22 +4,31 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   tests:
+    name: Tests with Ruby ${{ matrix.ruby-version }} and Rails ${{ matrix.gemfile }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         gemfile: ["5.0"]
-        ruby-version: [2.3]
+        ruby-version: [2.6]
         include:
+          - gemfile: "5.0"
+            ruby-version: 2.7
           - gemfile: "5.1"
-            ruby-version: 2.4
-          - gemfile: "5.2"
-            ruby-version: 2.5
+            ruby-version: 2.6
+          - gemfile: "5.1"
+            ruby-version: 2.7
           - gemfile: "5.2"
             ruby-version: 2.6
+          - gemfile: "5.2"
+            ruby-version: 2.7
           - gemfile: "6.0"
             ruby-version: 2.6
           - gemfile: "6.0"
             ruby-version: 2.7
+          - gemfile: "6.1"
+            ruby-version: 2.7
+          - gemfile: "6.1"
+            ruby-version: 3.0
 
     env:
       BUNDLE_GEMFILE: /home/runner/work/wicked_pdf/wicked_pdf/gemfiles/${{ matrix.gemfile }}.gemfile
@@ -41,5 +50,5 @@ jobs:
       - name: Install gem dependencies
         run: bundle install
 
-      - name: Run tests with Ruby ${{ matrix.ruby-version }} and Gemfile ${{ matrix.gemfile }}
+      - name: Run tests with Ruby ${{ matrix.ruby-version }} and Rails ${{ matrix.gemfile }}
         run: bundle exec rake
