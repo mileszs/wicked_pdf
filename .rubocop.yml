@@ -7,6 +7,9 @@ AllCops:
     - 'gemfiles/bin/*'
     - 'test/dummy/**/*'
 
+Metrics/PerceivedComplexity:
+  Enabled: false
+
 Bundler/OrderedGems:
   Enabled: false
 
