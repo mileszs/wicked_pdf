@@ -7,6 +7,9 @@ AllCops:
     - 'gemfiles/bin/*'
     - 'test/dummy/**/*'
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 Metrics/BlockLength:
   Exclude:
     - 'wicked_pdf.gemspec'
