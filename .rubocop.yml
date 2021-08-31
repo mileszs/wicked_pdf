@@ -10,6 +10,42 @@ AllCops:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/RedundantBegin:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/RedundantRegexpEscape:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
+
+Lint/SendWithMixinArgument:
+  Enabled: false
+
+Lint/RedundantCopDisableDirective:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Style/StringConcatenation:
+  Enabled: false
+
+Style/RedundantFetchBlock:
+  Enabled: false
+
+Style/CaseLikeIf:
+  Enabled: false
+ 
+Style/SoleNestedConditional:
+  Enabled: false
+
+Style/RedundantReturn:
+  Enabled: false
+
 Metrics/BlockLength:
   Exclude:
     - 'wicked_pdf.gemspec'
