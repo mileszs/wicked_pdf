@@ -191,7 +191,7 @@ class WickedPdf
 
         # In Webpacker 3.2.0 asset_pack_url is introduced
         if Webpacker::VERSION >= '3.2.0'
-          asset_pack_url(source)
+          asset_pack_path(source, host: Rails.application.config.asset_host || root_url)
         else
           source_path = asset_pack_path(source)
           # Remove last slash from root path
