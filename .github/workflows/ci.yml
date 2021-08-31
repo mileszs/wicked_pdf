@@ -1,0 +1,45 @@
+name: CI
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        gemfile: ["5.0"]
+        ruby-version: [2.3]
+        include:
+          - gemfile: "5.1"
+            ruby-version: 2.4
+          - gemfile: "5.2"
+            ruby-version: 2.5
+          - gemfile: "5.2"
+            ruby-version: 2.6
+          - gemfile: "6.0"
+            ruby-version: 2.6
+          - gemfile: "6.0"
+            ruby-version: 2.7
+
+    env:
+      BUNDLE_GEMFILE: /home/runner/work/wicked_pdf/wicked_pdf/gemfiles/${{ matrix.gemfile }}.gemfile
+      WKHTMLTOPDF_BIN: /usr/bin/wkhtmltopdf
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Ruby ${{ matrix.ruby-version }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+
+      - name: Install OS dependencies
+        run: |
+          sudo apt-get update -y -qq
+          sudo apt-get install -y wkhtmltopdf
+
+      - name: Install gem dependencies
+        run: bundle install
+
+      - name: Run tests with Ruby ${{ matrix.ruby-version }} and Gemfile ${{ matrix.gemfile }}
+        run: bundle exec rake
