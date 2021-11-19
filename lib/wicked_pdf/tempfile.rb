@@ -13,6 +13,7 @@ class WickedPdf
       binmode
       string_io = StringIO.new(input_string)
       write(string_io.read(chunk_size)) until string_io.eof?
+      flush
       close
       self
     rescue Errno::EINVAL => e
