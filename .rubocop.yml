@@ -1,10 +1,59 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.2
+  NewCops: disable
+  TargetRubyVersion: 2.6
   Exclude:
     - 'gemfiles/bin/*'
     - 'test/dummy/**/*'
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/RedundantBegin:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/RedundantRegexpEscape:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
+
+Lint/SendWithMixinArgument:
+  Enabled: false
+
+Lint/RedundantCopDisableDirective:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Style/StringConcatenation:
+  Enabled: false
+
+Style/RedundantFetchBlock:
+  Enabled: false
+
+Style/CaseLikeIf:
+  Enabled: false
+ 
+Style/SoleNestedConditional:
+  Enabled: false
+
+Style/RedundantReturn:
+  Enabled: false
 
 Metrics/BlockLength:
   Exclude:
