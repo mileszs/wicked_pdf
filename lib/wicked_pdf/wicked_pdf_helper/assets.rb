@@ -1,6 +1,4 @@
 require 'net/http'
-# If webpacker is used, need to check for version
-require 'webpacker/version' if defined?(Webpacker)
 
 class WickedPdf
   module WickedPdfHelper
@@ -187,10 +185,10 @@ class WickedPdf
       end
 
       def webpacker_source_url(source)
-        return unless defined?(Webpacker) && defined?(Webpacker::VERSION)
+        return unless webpacker_version
 
         # In Webpacker 3.2.0 asset_pack_url is introduced
-        if Webpacker::VERSION >= '3.2.0'
+        if webpacker_version >= '3.2.0'
           if (host = Rails.application.config.asset_host)
             asset_pack_path(source, :host => host)
           else
@@ -204,7 +202,7 @@ class WickedPdf
       end
 
       def running_in_development?
-        return unless defined?(Webpacker)
+        return unless webpacker_version
 
         # :dev_server method was added in webpacker 3.0.0
         if Webpacker.respond_to?(:dev_server)
@@ -212,6 +210,15 @@ class WickedPdf
         else
           Rails.env.development? || Rails.env.test?
         end
+      end
+
+      def webpacker_version
+        return unless defined?(Webpacker)
+
+        # If webpacker is used, need to check for version
+        require 'webpacker/version'
+
+        Webpacker::VERSION
       end
     end
   end
