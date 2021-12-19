@@ -6,10 +6,8 @@ class WickedPdf
   if defined?(Rails.env)
     class WickedRailtie < Rails::Railtie
       initializer 'wicked_pdf.register', :after => 'remotipart.controller_helper' do |_app|
-        ActiveSupport.on_load(:action_controller) do
-          ActionController::Base.send :prepend, PdfHelper
-          ActionView::Base.send :include, WickedPdfHelper::Assets
-        end
+        ActiveSupport.on_load(:action_controller) { ActionController::Base.send :prepend, PdfHelper }
+        ActiveSupport.on_load(:action_view) { include WickedPdfHelper::Assets }
       end
     end
 
