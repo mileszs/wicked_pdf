@@ -4,13 +4,58 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [master branch] - Unreleased
 ### Breaking Changes
-- [Remove support for Ruby 1.x and Rails 2.x](https://github.com/mileszs/wicked_pdf/pull/859)
-- [Remove code for unsupported rails and ruby versions](https://github.com/mileszs/wicked_pdf/pull/925)
 ### New Features
-- [Add support for --keep-relative-links flag](https://github.com/mileszs/wicked_pdf/pull/930)
+### Fixes
+- [Update Changelog.](https://github.com/mileszs/wicked_pdf/pull/1013)
+
+## [2.5.4] December 20th 2021 769f9df487f3c1e31dc91431666baa78d2aa24fb
+### New Features
+- [Test with Rails 7](https://github.com/mileszs/wicked_pdf/pull/998)
+### Fixes
+- [Include view helper on view load.](https://github.com/mileszs/wicked_pdf/pull/992)
+
+## [2.5.3] December 15th 2021 7991877de634067b4245fb47fdad65da43761887
+- [Fix check for webpacker version](https://github.com/mileszs/wicked_pdf/pull/964)
+- [Complete transition to Github actions](https://github.com/mileszs/wicked_pdf/pull/987)
+
+## [2.5.2] November 2021 - fix webpacker_source_url bdd0ca3eca759e277ce5461141b1506f56fefcd1
+- [fix: `webpacker_source_url`](https://github.com/mileszs/wicked_pdf/pull/993)
+- [update README](https://github.com/mileszs/wicked_pdf/pull/968)
+
+## [2.5.1] September 2021 - fix webpacker helper, github actions and Readme updates ae725e8055dc8f51a392c27767b4dcdcfffe155d
+- [Add comment about enable_local_file_access to README](https://github.com/mileszs/wicked_pdf/commit/2dc96dde2e0fd7362395064f2480cac1edcc1f48)
+- [README updates](https://github.com/mileszs/wicked_pdf/pull/974) &&
+- [Github actions](https://github.com/mileszs/wicked_pdf/pull/986)
+- [Screencast links](https://github.com/mileszs/wicked_pdf/pull/976)
+- [fix url generating in webpacker helper](https://github.com/mileszs/wicked_pdf/pull/973)
+
+## [2.5.0] November 2020 Release - 2b1d47a84fce3600e7cbe2f50843af1a7b84d4a6
+- [Remove code for unsupported rails and ruby versions](https://github.com/mileszs/wicked_pdf/pull/925)
+
+## [2.4.1] b56c46a05895def395ebc75ed8e822551c2c478f
+- [Extract reading in chunk](https://github.com/mileszs/wicked_pdf/pull/951)
+- [add ruby 2.7 to the test matrix](https://github.com/mileszs/wicked_pdf/pull/952)
+
+## [2.4.0] 8c007a77057e1a6680469d1ef53aa19a108fe209
+### New Features
 - [Do not unlink HTML temp files immediately (to enable HTML tempfile inspection)](https://github.com/mileszs/wicked_pdf/pull/950)
 - [Read HTML string and generated PDF file in chunks (to reduce memory overhead of generating large PDFs)](https://github.com/mileszs/wicked_pdf/pull/949)
 - [Add `wicked_pdf_url_base64` helper](https://github.com/mileszs/wicked_pdf/pull/947)
+
+## [2.3.1] - Allow bundler 2.x ee6a5e1f807c872af37c1382f629dd4cac3040a8
+- [Adjust gemspec development dependencies](https://github.com/mileszs/wicked_pdf/pull/814)
+
+## [2.3.0] - Remove support for Ruby 1.x and Rails 2.x 66149c67e54cd3a63dd27528f5b78255fdd5ac43
+- [Remove support for Ruby 1.x and Rails 2.x](https://github.com/mileszs/wicked_pdf/pull/859)
+
+## [2.2.0] - October 2020 release f8abe706f5eb6dba2fcded473c81f2176e9d717e
+### Fixes
+- [Make CI green again](https://github.com/mileszs/wicked_pdf/pull/939)
+- [rubocop fixes](https://github.com/mileszs/wicked_pdf/pull/945)
+### New Features
+- [Add support for --keep-relative-links flag](https://github.com/mileszs/wicked_pdf/pull/930)
+- [Encapsulate binary path and version handling](https://github.com/mileszs/wicked_pdf/pull/816) && [#815](https://github.com/mileszs/wicked_pdf/pull/815)
+
 
 ## [2.1.0] - 2020-06-14
 ### Fixes
