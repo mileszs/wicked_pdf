@@ -5,6 +5,20 @@ class WickedPdf
     module Assets
       ASSET_URL_REGEX = /url\(['"]?([^'"]+?)['"]?\)/
 
+      class PropshaftAsset < SimpleDelegator
+        def content_type
+          super.to_s
+        end
+
+        def to_s
+          content
+        end
+
+        def filename
+          path.to_s
+        end
+      end
+
       def wicked_pdf_asset_base64(path)
         asset = find_asset(path)
         raise "Could not find asset '#{path}'" if asset.nil?
@@ -132,6 +146,8 @@ class WickedPdf
       def find_asset(path)
         if Rails.application.assets.respond_to?(:find_asset)
           Rails.application.assets.find_asset(path, :base_path => Rails.application.root.to_s)
+        elsif defined?(Propshaft::Assembly) && Rails.application.assets.is_a?(Propshaft::Assembly)
+          PropshaftAsset.new(Rails.application.assets.load_path.find(path))
         else
           Sprockets::Railtie.build_environment(Rails.application).find_asset(path, :base_path => Rails.application.root.to_s)
         end
