@@ -4,9 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [master branch] - Unreleased
 ### Breaking Changes
+
+## [2.6.0]
 ### New Features
+- [Support Propshaft in find_asset helper](https://github.com/mileszs/wicked_pdf/pull/1010)
 ### Fixes
-- [Update Changelog.](https://github.com/mileszs/wicked_pdf/pull/1013)
+- [Update Changelog with changes from 2.1.0](https://github.com/mileszs/wicked_pdf/pull/1013)
+- [Fix CI build for Rails 7.](https://github.com/mileszs/wicked_pdf/pull/1014)
 
 ## [2.5.4] December 20th 2021 769f9df487f3c1e31dc91431666baa78d2aa24fb
 ### New Features
