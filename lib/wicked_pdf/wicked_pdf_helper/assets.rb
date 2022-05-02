@@ -1,4 +1,5 @@
 require 'net/http'
+require 'delegate'
 
 class WickedPdf
   module WickedPdfHelper
