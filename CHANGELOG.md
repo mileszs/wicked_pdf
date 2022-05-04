@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [master branch] - Unreleased
 ### Breaking Changes
 
+## [2.6.2]
+### Fixes
+- [Fix undefined local variable or method 'block' for render_to_string](https://github.com/mileszs/wicked_pdf/pull/962)
+- [Add require for `delegate`, which is no longer loaded by default in Ruby 2.7+](https://github.com/mileszs/wicked_pdf/pull/1019)
 ## [2.6.0]
 ### New Features
 - [Support Propshaft in find_asset helper](https://github.com/mileszs/wicked_pdf/pull/1010)
