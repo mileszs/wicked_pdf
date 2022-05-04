@@ -30,7 +30,7 @@ jobs:
           - gemfile: "6.1"
             ruby-version: 3.0
           - gemfile: "7.0"
-            ruby-version: 3.0
+            ruby-version: 3.1
 
     env:
       BUNDLE_GEMFILE: /home/runner/work/wicked_pdf/wicked_pdf/gemfiles/${{ matrix.gemfile }}.gemfile
