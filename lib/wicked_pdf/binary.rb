@@ -45,7 +45,7 @@ class WickedPdf
     def find_binary_path
       exe_path ||= WickedPdf.config[:exe_path] unless WickedPdf.config.empty?
       exe_path ||= possible_which_path
-      exe_path ||= possible_locations.map { |l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }
+      exe_path ||= possible_binary_locations.map { |l| File.expand_path("#{l}/#{EXE_NAME}") }.find { |location| File.exist?(location) }
       exe_path || ''
     end
 
