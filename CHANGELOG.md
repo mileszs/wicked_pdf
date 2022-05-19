@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [master branch] - Unreleased
 ### Breaking Changes
 
+## [2.6.3]
+### Fixes
+- [Fix typo of #possible_binary_locations](https://github.com/mileszs/wicked_pdf/pull/1025)
+- [Drop unused executables gemspec directive](https://github.com/mileszs/wicked_pdf/pull/1024)
+
 ## [2.6.2]
 ### Fixes
 - [Fix undefined local variable or method 'block' for render_to_string](https://github.com/mileszs/wicked_pdf/pull/962)
