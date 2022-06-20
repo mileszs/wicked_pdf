@@ -76,6 +76,11 @@ class WickedPdfOptionParserTest < ActiveSupport::TestCase
       assert_equal "--#{o.to_s.tr('_', '-')} opts", parse_options(o => 'opts').strip
     end
 
+    %i[allow].each do |o|
+      assert_equal "--#{o.to_s.tr('_', '-')} opts", parse_options(o => 'opts').strip
+      assert_equal "--#{o.to_s.tr('_', '-')} opts1 --#{o.to_s.tr('_', '-')} opts2", parse_options(o => %w[opts1 opts2]).strip
+    end
+
     %i[cookie post].each do |o|
       assert_equal "--#{o.to_s.tr('_', '-')} name value", parse_options(o => 'name value').strip
 
@@ -90,7 +95,7 @@ class WickedPdfOptionParserTest < ActiveSupport::TestCase
     %i[
       book default_header disable_javascript grayscale lowquality
       enable_plugins disable_internal_links disable_external_links
-      print_media_type disable_smart_shrinking use_xserver no_background
+      print_media_type disable_smart_shrinking use_xserver no_background disable_local_file_access
     ].each do |o|
       assert_equal "--#{o.to_s.tr('_', '-')}", parse_options(o => true).strip
     end
