@@ -168,7 +168,8 @@ class WickedPdf
                                       encoding
                                       user_style_sheet
                                       viewport_size
-                                      window_status])
+                                      window_status
+                                      allow])
         r += make_options(options, %i[cookie
                                       post], '', :name_value)
         r += make_options(options, %i[redirect_delay
