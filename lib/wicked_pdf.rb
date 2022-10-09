@@ -46,13 +46,14 @@ class WickedPdf
     string_file.close if string_file
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def pdf_from_url(url, options = {})
     # merge in global config options
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
     generated_pdf_file = WickedPdf::Tempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
     command = [@binary.path]
     command.unshift(@binary.xvfb_run_path) if options[:use_xvfb]
-    command += parse_options(options)
+    command += option_parser.parse(options)
     command << url
     command << generated_pdf_file.path.to_s
 
@@ -61,9 +62,8 @@ class WickedPdf
     if track_progress?(options)
       invoke_with_progress(command, options)
     else
-      err = Open3.popen3(*command) do |_stdin, _stdout, stderr|
-        stderr.read
-      end
+      _out, err, status = Open3.capture3(*command)
+      err = [status.to_s, err].join("\n") if !err.empty? || !status.success?
     end
     if options[:return_file]
       return_file = options.delete(:return_file)
@@ -79,6 +79,7 @@ class WickedPdf
   rescue StandardError => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
   ensure
+    clean_temp_files
     generated_pdf_file.close! if generated_pdf_file && !return_file
   end
 
@@ -98,7 +99,13 @@ class WickedPdf
     Rails.logger.debug '[wicked_pdf]: ' + cmd
   end
 
-  def parse_options(options)
-    OptionParser.new(binary_version).parse(options)
+  def option_parser
+    @option_parser ||= OptionParser.new(binary_version)
+  end
+
+  def clean_temp_files
+    return unless option_parser.hf_tempfiles.present?
+
+    option_parser.hf_tempfiles.each { |file| File.delete(file) }
   end
 end
