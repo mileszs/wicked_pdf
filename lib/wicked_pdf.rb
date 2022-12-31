@@ -43,7 +43,8 @@ class WickedPdf
     string_file.write_in_chunks(string)
     pdf_from_html_file(string_file.path, options)
   ensure
-    string_file.close if string_file
+    close_method = options.key?(:keep_temp) ? :close : :close!
+    string_file.send(close_method)
   end
 
   def pdf_from_url(url, options = {}) # rubocop:disable Metrics/CyclomaticComplexity
