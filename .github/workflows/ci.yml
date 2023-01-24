@@ -28,7 +28,7 @@ jobs:
           - gemfile: "6.1"
             ruby-version: 2.7
           - gemfile: "6.1"
-            ruby-version: 3.0
+            ruby-version: '3.0'
           - gemfile: "7.0"
             ruby-version: 3.1
           - gemfile: "7.0"
