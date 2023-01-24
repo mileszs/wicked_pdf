@@ -28,29 +28,29 @@ jobs:
           - gemfile: "6.1"
             ruby-version: 2.7
           - gemfile: "6.1"
-            ruby-version: 3.0
+            ruby-version: '3.0'
           - gemfile: "7.0"
             ruby-version: 3.1
+          - gemfile: "7.0"
+            ruby-version: 3.2
 
     env:
-      BUNDLE_GEMFILE: /home/runner/work/wicked_pdf/wicked_pdf/gemfiles/${{ matrix.gemfile }}.gemfile
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
       WKHTMLTOPDF_BIN: /usr/bin/wkhtmltopdf
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Install Ruby ${{ matrix.ruby-version }}
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby-version }}
+      - uses: actions/checkout@v3
 
       - name: Install OS dependencies
         run: |
           sudo apt-get update -y -qq
           sudo apt-get install -y wkhtmltopdf
 
-      - name: Install gem dependencies
-        run: bundle install
+      - name: Install Ruby ${{ matrix.ruby-version }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true
 
       - name: Run tests with Ruby ${{ matrix.ruby-version }} and Rails ${{ matrix.gemfile }}
         run: bundle exec rake
