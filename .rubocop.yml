@@ -2,10 +2,12 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   NewCops: disable
+  SuggestExtensions: false
   TargetRubyVersion: 2.6
   Exclude:
     - 'gemfiles/bin/*'
     - 'test/dummy/**/*'
+    - 'vendor/**/*'
 
 Metrics/PerceivedComplexity:
   Enabled: false
