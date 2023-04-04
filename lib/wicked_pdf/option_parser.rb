@@ -64,6 +64,7 @@ class WickedPdf
             @hf_tempfiles.push(tf = File.new(Dir::Tmpname.create(["wicked_#{hf}_pdf", '.html']) {}, 'w'))
             tf.write options[hf][:content]
             tf.flush
+            tf.close
             options[hf][:html] = {}
             options[hf][:html][:url] = "file:///#{tf.path}"
           end
@@ -87,6 +88,7 @@ class WickedPdf
         @hf_tempfiles << tf = WickedPdf::Tempfile.new('wicked_cover_pdf.html')
         tf.write arg
         tf.flush
+        tf.close
         [valid_option('cover'), tf.path]
       end
     end
