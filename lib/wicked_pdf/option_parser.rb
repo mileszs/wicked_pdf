@@ -2,10 +2,11 @@ class WickedPdf
   class OptionParser
     BINARY_VERSION_WITHOUT_DASHES = Gem::Version.new('0.12.0')
 
-    attr_reader :binary_version, :hf_tempfiles
+    attr_reader :binary_version
 
     def initialize(binary_version = WickedPdf::DEFAULT_BINARY_VERSION)
       @binary_version = binary_version
+      @hf_tempfiles = []
     end
 
     def parse(options)
@@ -29,6 +30,13 @@ class WickedPdf
       else
         name
       end
+    end
+
+    def clean_temp_files
+      return unless @hf_tempfiles.size > 0
+
+      @hf_tempfiles.each { |file| File.delete(file) }
+      @hf_tempfiles = []
     end
 
     private
@@ -60,7 +68,6 @@ class WickedPdf
           r += make_options(opt_hf, %i[font_size spacing], hf.to_s, :numeric)
           r += make_options(opt_hf, [:line], hf.to_s, :boolean)
           if options[hf] && options[hf][:content]
-            @hf_tempfiles = [] unless defined?(@hf_tempfiles)
             @hf_tempfiles.push(tf = File.new(Dir::Tmpname.create(["wicked_#{hf}_pdf", '.html']) {}, 'w'))
             tf.write options[hf][:content]
             tf.flush
@@ -84,7 +91,6 @@ class WickedPdf
       if argument.is_a?(Pathname) || (arg[0, 4] == 'http')
         [valid_option('cover'), arg]
       else # HTML content
-        @hf_tempfiles ||= []
         @hf_tempfiles << tf = WickedPdf::Tempfile.new('wicked_cover_pdf.html')
         tf.write arg
         tf.flush
