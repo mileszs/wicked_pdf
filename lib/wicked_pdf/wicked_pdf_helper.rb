@@ -18,13 +18,15 @@ class WickedPdf
     end
 
     def wicked_pdf_image_tag(img, options = {})
-      image_tag "file:///#{WickedPdfHelper.root_path.join('public', 'images', img)}", options
+      path = WickedPdfHelper.root_path.join('public', 'images', img)
+      image_tag URI.join('file:', '', path).to_s, options
     end
 
     def wicked_pdf_javascript_src_tag(jsfile, options = {})
       jsfile = WickedPdfHelper.add_extension(jsfile, 'js')
       type = ::Mime.respond_to?(:[]) ? ::Mime[:js] : ::Mime::JS # ::Mime[:js] cannot be used in Rails 2.3.
-      src = "file:///#{WickedPdfHelper.root_path.join('public', 'javascripts', jsfile)}"
+      path = WickedPdfHelper.root_path.join('public', 'javascripts', jsfile)
+      src = URI.join('file:', '', path).to_s
       content_tag('script', '', { 'type' => type, 'src' => path_to_javascript(src) }.merge(options))
     end
 
