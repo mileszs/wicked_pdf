@@ -78,7 +78,7 @@ class WickedPdf
     def make_and_send_pdf(pdf_name, options = {})
       options[:wkhtmltopdf] ||= nil
       options[:layout] ||= false
-      options[:template] ||= File.join(controller_path, action_name)
+      options[:template] ||= lookup_context.find(action_name, _prefixes, false).virtual_path
       options[:disposition] ||= 'inline'
       if options[:show_as_html]
         render_opts = {
