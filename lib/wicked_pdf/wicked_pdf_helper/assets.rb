@@ -1,5 +1,6 @@
 require 'net/http'
 require 'delegate'
+require 'stringio'
 
 class WickedPdf
   module WickedPdfHelper
