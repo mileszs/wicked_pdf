@@ -231,12 +231,11 @@ class WickedPdf
       end
 
       def webpacker_version
-        return unless defined?(Webpacker)
-
-        # If webpacker is used, need to check for version
-        require 'webpacker/version'
-
-        Webpacker::VERSION
+        if defined?(Shakapacker)
+          Shakapacker::VERSION
+        elsif defined?(Webpacker)
+          Webpacker::VERSION
+        end
       end
     end
   end
