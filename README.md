@@ -287,6 +287,9 @@ If you need to just create a pdf and not display it:
 # create a pdf from a string
 pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
 
+# create a pdf from a string using delete temporary files option
+pdf = WickedPdf.new.pdf_from_string('<h1>Delete temporary files</h1>', delete_temporary_files: true)
+
 # create a pdf file from a html file without converting it to string
 # Path must be absolute path
 pdf = WickedPdf.new.pdf_from_html_file('/your/absolute/path/here')
@@ -294,14 +297,14 @@ pdf = WickedPdf.new.pdf_from_html_file('/your/absolute/path/here')
 # create a pdf from a URL
 pdf = WickedPdf.new.pdf_from_url('https://github.com/mileszs/wicked_pdf')
 
-# create a pdf from string using templates, layouts and content option for header or footer
+# create a pdf from string using templates, layouts, and content option for header or footer
 pdf = WickedPdf.new.pdf_from_string(
   render_to_string('templates/pdf', layout: 'pdfs/layout_pdf.html'),
   footer: {
     content: render_to_string(
-  		'templates/footer',
-  		layout: 'pdfs/layout_pdf.html'
-  	)
+      'templates/footer',
+      layout: 'pdfs/layout_pdf.html'
+    )
   }
 )
 
