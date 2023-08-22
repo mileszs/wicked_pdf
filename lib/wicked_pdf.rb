@@ -43,9 +43,9 @@ class WickedPdf
     string_file.write_in_chunks(string)
     pdf_from_html_file(string_file.path, options)
   ensure
-    if options[:delete_temporary_files]
+    if options[:delete_temporary_files] && string_file
       string_file.close!
-    else
+    elsif string_file
       string_file.close
     end
   end
