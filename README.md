@@ -259,7 +259,8 @@ class ThingsController < ApplicationController
                             disable_toc_links: true,
                             disable_back_links:true,
                             xsl_style_sheet:   'file.xsl'}, # optional XSLT stylesheet to use for styling table of contents
-               progress: proc { |output| puts output } # proc called when console output changes
+               progress: proc { |output| puts output }, # proc called when console output changes
+               delete_temporary_files: true             # explicitly delete temporary files, default false
       end
     end
   end
@@ -286,9 +287,6 @@ If you need to just create a pdf and not display it:
 ```ruby
 # create a pdf from a string
 pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
-
-# create a pdf from a string using delete temporary files option
-pdf = WickedPdf.new.pdf_from_string('<h1>Delete temporary files</h1>', delete_temporary_files: true)
 
 # create a pdf file from a html file without converting it to string
 # Path must be absolute path
