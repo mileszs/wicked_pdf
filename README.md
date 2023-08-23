@@ -259,7 +259,8 @@ class ThingsController < ApplicationController
                             disable_toc_links: true,
                             disable_back_links:true,
                             xsl_style_sheet:   'file.xsl'}, # optional XSLT stylesheet to use for styling table of contents
-               progress: proc { |output| puts output } # proc called when console output changes
+               progress: proc { |output| puts output }, # proc called when console output changes
+               delete_temporary_files: true             # explicitly delete temporary files, default false
       end
     end
   end
@@ -294,14 +295,14 @@ pdf = WickedPdf.new.pdf_from_html_file('/your/absolute/path/here')
 # create a pdf from a URL
 pdf = WickedPdf.new.pdf_from_url('https://github.com/mileszs/wicked_pdf')
 
-# create a pdf from string using templates, layouts and content option for header or footer
+# create a pdf from string using templates, layouts, and content option for header or footer
 pdf = WickedPdf.new.pdf_from_string(
   render_to_string('templates/pdf', layout: 'pdfs/layout_pdf.html'),
   footer: {
     content: render_to_string(
-  		'templates/footer',
-  		layout: 'pdfs/layout_pdf.html'
-  	)
+      'templates/footer',
+      layout: 'pdfs/layout_pdf.html'
+    )
   }
 )
 
