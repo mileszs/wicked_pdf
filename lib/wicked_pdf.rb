@@ -109,6 +109,9 @@ class WickedPdf
   def clean_temp_files
     return unless option_parser.hf_tempfiles.present?
 
-    option_parser.hf_tempfiles.each { |file| File.delete(file) }
+    option_parser.hf_tempfiles.each do |file|
+      next unless File.exists?(file.path)
+      File.delete(file)
+    end
   end
 end
