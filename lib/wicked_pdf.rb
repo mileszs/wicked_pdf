@@ -110,7 +110,8 @@ class WickedPdf
     return unless option_parser.hf_tempfiles.present?
 
     option_parser.hf_tempfiles.each do |file|
-      next unless File.exists?(file.path)
+      next unless File.exist?(file.path)
+
       File.delete(file)
     end
   end
