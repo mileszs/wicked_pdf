@@ -1,10 +1,10 @@
 class WickedPdf
   module Progress
-    require 'pty' if RbConfig::CONFIG['target_os'] !~ /mswin|mingw/ # no support for windows
+    require 'pty' if RbConfig::CONFIG['target_os'] !~ /mswin|mingw/ && RUBY_ENGINE != 'truffleruby' # no support for windows and truffleruby
     require 'English'
 
     def track_progress?(options)
-      options[:progress] && !on_windows?
+      options[:progress] && !(on_windows? || RUBY_ENGINE == 'truffleruby')
     end
 
     def invoke_with_progress(command, options)
