@@ -175,15 +175,16 @@ class WickedPdf
       end
 
       def read_asset(source)
-        if precompiled_or_absolute_asset?(source)
-          pathname = asset_pathname(source)
-          if pathname =~ URI_REGEXP
-            read_from_uri(pathname)
-          elsif File.file?(pathname)
-            IO.read(pathname)
-          end
-        else
-          find_asset(source).to_s
+        asset = find_asset(source)
+        return asset.to_s if asset
+
+        return unless precompiled_or_absolute_asset?(source)
+        
+        pathname = asset_pathname(source)
+        if pathname =~ URI_REGEXP
+          read_from_uri(pathname)
+        elsif File.file?(pathname)
+          IO.read(pathname)
         end
       end
 
