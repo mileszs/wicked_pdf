@@ -24,6 +24,17 @@ class WickedPdf
 
   include Progress
 
+  def self.configure
+    config = OpenStruct.new(@@config)
+    yield config
+
+    @@config.merge! config.to_h
+  end
+
+  def self.clear_config
+    @@config = {}
+  end
+
   def initialize(wkhtmltopdf_binary_path = nil)
     @binary = Binary.new(wkhtmltopdf_binary_path, DEFAULT_BINARY_VERSION)
   end
