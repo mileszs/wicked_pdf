@@ -16,6 +16,9 @@ test/tmp
 test/version_tmp
 tmp
 *.swp
+test/dummy
 test/dummy/**/*
 gemfiles/*.lock
+gemfiles/bin/*
 .DS_Store
+.idea
