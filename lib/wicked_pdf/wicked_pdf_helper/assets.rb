@@ -7,6 +7,27 @@ class WickedPdf
     module Assets
       ASSET_URL_REGEX = /url\(['"]?([^'"]+?)['"]?\)/
 
+      class MissingAsset < StandardError; end
+
+      class MissingLocalAsset < MissingAsset
+        attr_reader :path
+
+        def initialize(path)
+          @path = path
+          super("Could not find asset '#{path}'")
+        end
+      end
+
+      class MissingRemoteAsset < MissingAsset
+        attr_reader :url, :response
+
+        def initialize(url, response)
+          @url = url
+          @response = response
+          super("Could not fetch asset '#{url}': server responded with #{response.code} #{response.message}")
+        end
+      end
+
       class PropshaftAsset < SimpleDelegator
         def content_type
           super.to_s
@@ -23,7 +44,7 @@ class WickedPdf
 
       def wicked_pdf_asset_base64(path)
         asset = find_asset(path)
-        raise "Could not find asset '#{path}'" if asset.nil?
+        raise MissingLocalAsset, path if asset.nil?
 
         base64 = Base64.encode64(asset.to_s).gsub(/\s+/, '')
         "data:#{asset.content_type};base64,#{Rack::Utils.escape(base64)}"
@@ -177,18 +198,33 @@ class WickedPdf
       def read_asset(source)
         asset = find_asset(source)
         return asset.to_s.force_encoding('UTF-8') if asset
-        return unless precompiled_or_absolute_asset?(source)
+
+        unless precompiled_or_absolute_asset?(source)
+          raise MissingLocalAsset, source if WickedPdf.config[:raise_on_missing_assets]
+
+          return
+        end
 
         pathname = asset_pathname(source)
         if pathname =~ URI_REGEXP
           read_from_uri(pathname)
         elsif File.file?(pathname)
           IO.read(pathname)
+        elsif WickedPdf.config[:raise_on_missing_assets]
+          raise MissingLocalAsset, pathname if WickedPdf.config[:raise_on_missing_assets]
         end
       end
 
       def read_from_uri(uri)
-        asset = Net::HTTP.get(URI(uri))
+        response = Net::HTTP.get_response(URI(uri))
+
+        unless response.is_a?(Net::HTTPSuccess)
+          raise MissingRemoteAsset.new(uri, response) if WickedPdf.config[:raise_on_missing_assets]
+
+          return
+        end
+
+        asset = response.body
         asset.force_encoding('UTF-8') if asset
         asset = gzip(asset) if WickedPdf.config[:expect_gzipped_remote_assets]
         asset
