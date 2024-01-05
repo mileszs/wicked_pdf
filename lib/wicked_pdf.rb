@@ -20,9 +20,17 @@ require 'wicked_pdf/progress'
 class WickedPdf
   DEFAULT_BINARY_VERSION = Gem::Version.new('0.9.9')
   @@config = {}
-  cattr_accessor :config
+  cattr_accessor :config, :silence_deprecations
 
   include Progress
+
+  def self.config=(config)
+    unless @@silence_deprecations
+      ::Kernel.warn "WickedPdf.config= is deprecated and will be removed in future versions. Use WickedPdf.configure instead."
+    end
+
+    @@config = config
+  end
 
   def self.configure
     config = OpenStruct.new(@@config)
