@@ -23,6 +23,13 @@ end
 
 desc 'Setup and run all tests'
 task :setup_and_run_tests do
+  ENV['BUNDLE_GEMFILE'] = File.join(__dir__, 'gemfiles', "#{ENV['RAILS_VERSION']}.gemfile") if ENV['RAILS_VERSION']
+
+  unless ENV['BUNDLE_GEMFILE']
+    puts 'You need to specify either BUNDLE_GEMFILE pointing to a Gemfile in gemfiles/ directory or RAILS_VERSION or the tests will fail.'
+    exit 1
+  end
+
   Rake::Task[:dummy_generate].invoke unless File.exist?('test/dummy/config/environment.rb')
   Rake::Task[:test].invoke
 end
