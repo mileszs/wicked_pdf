@@ -52,6 +52,26 @@ class WickedPdf
         end
       end
 
+      class LocalAsset
+        attr_reader :path
+
+        def initialize(path)
+          @path = path
+        end
+
+        def content_type
+          Mime::Type.lookup_by_extension(File.extname(path).delete('.'))
+        end
+
+        def to_s
+          IO.read(path)
+        end
+
+        def filename
+          path.to_s
+        end
+      end
+
       def wicked_pdf_asset_base64(path)
         asset = find_asset(path)
         raise MissingLocalAsset, path if asset.nil?
@@ -181,6 +201,10 @@ class WickedPdf
           Rails.application.assets.find_asset(path, :base_path => Rails.application.root.to_s)
         elsif defined?(Propshaft::Assembly) && Rails.application.assets.is_a?(Propshaft::Assembly)
           PropshaftAsset.new(Rails.application.assets.load_path.find(path))
+        elsif Rails.application.respond_to?(:assets_manifest)
+          if Rails.application.assets_manifest.assets[path]
+            LocalAsset.new(File.join(Rails.application.assets_manifest.dir, Rails.application.assets_manifest.assets[path]))
+          end
         else
           SprocketsEnvironment.find_asset(path, :base_path => Rails.application.root.to_s)
         end
