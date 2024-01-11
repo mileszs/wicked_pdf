@@ -42,6 +42,16 @@ class WickedPdf
         end
       end
 
+      class SprocketsEnvironment
+        def self.instance
+          @instance ||= Sprockets::Railtie.build_environment(Rails.application)
+        end
+
+        def self.find_asset(*args)
+          instance.find_asset(*args)
+        end
+      end
+
       def wicked_pdf_asset_base64(path)
         asset = find_asset(path)
         raise MissingLocalAsset, path if asset.nil?
@@ -172,7 +182,7 @@ class WickedPdf
         elsif defined?(Propshaft::Assembly) && Rails.application.assets.is_a?(Propshaft::Assembly)
           PropshaftAsset.new(Rails.application.assets.load_path.find(path))
         else
-          Sprockets::Railtie.build_environment(Rails.application).find_asset(path, :base_path => Rails.application.root.to_s)
+          SprocketsEnvironment.find_asset(path, :base_path => Rails.application.root.to_s)
         end
       end
 
