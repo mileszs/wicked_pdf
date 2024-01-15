@@ -4,45 +4,31 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   tests:
-    name: Tests with Ruby ${{ matrix.ruby-version }} and Rails ${{ matrix.gemfile }}
+    name: CI Rails ${{ matrix.rails }} on ${{ matrix.ruby }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        gemfile: ["5.0"]
-        ruby-version: [2.6]
+        rails: ["7.0.0", "6.1", "6.0.0"]
+        ruby: ["3.2.2", "3.1.4", "3.0.6", "2.7.8"]
         include:
-          - gemfile: "5.0"
-            ruby-version: 2.7
-          - gemfile: "5.1"
-            ruby-version: 2.6
-          - gemfile: "5.1"
-            ruby-version: 2.7
-          - gemfile: "5.2"
-            ruby-version: 2.6
-          - gemfile: "5.2"
-            ruby-version: 2.7
-          - gemfile: "6.0"
-            ruby-version: 2.6
-          - gemfile: "6.0"
-            ruby-version: 2.7
-          - gemfile: "6.1"
-            ruby-version: 2.7
-          - gemfile: "6.1"
-            ruby-version: '3.0'
-          - gemfile: "7.0"
-            ruby-version: 3.1
-          - gemfile: "7.0"
-            ruby-version: 3.2
-          - gemfile: "7.0"
-            ruby-version: 3.3
-          - gemfile: "7.1"
-            ruby-version: 3.2
-          - gemfile: "7.0"
-            ruby-version: truffleruby
+          - rails: "7.1.0"
+            ruby: "3.2.2"
+          - rails: "7.0.0"
+            ruby: "3.3.0"
+          - rails: "5.0"
+            ruby: 2.7
+          - rails: "5.1"
+            ruby: 2.7
+          - rails: "5.2"
+            ruby: 2.7
+          - rails: "7.0"
+            ruby: truffleruby
 
     env:
-      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
       WKHTMLTOPDF_BIN: /usr/bin/wkhtmltopdf
+      RUBY_VERSION: ${{ matrix.ruby }}
+      RAILS_VERSION: ${{ matrix.rails }}
 
     steps:
       - uses: actions/checkout@v3
@@ -52,11 +38,11 @@ jobs:
           sudo apt-get update -y -qq
           sudo apt-get install -y wkhtmltopdf
 
-      - name: Install Ruby ${{ matrix.ruby-version }}
+      - name: Install Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ matrix.ruby-version }}
+          ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
 
-      - name: Run tests with Ruby ${{ matrix.ruby-version }} and Rails ${{ matrix.gemfile }}
+      - name: Run tests with Ruby ${{ matrix.ruby }} and Rails ${{ matrix.rails }}
         run: bundle exec rake
