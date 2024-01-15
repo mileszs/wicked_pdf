@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [master branch] - Unreleased
 ### Breaking Changes
 
+### Fixes
+- [Fix Propshaft encoding issue](https://github.com/mileszs/wicked_pdf/pull/1096)
+
 ## [2.7.0]
 ### New Features
 - [Support Shakapacker 7](https://github.com/mileszs/wicked_pdf/pull/1067)
