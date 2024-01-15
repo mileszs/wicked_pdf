@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+
+gem 'bootsnap' # required to run `rake test` in Rails 7.0
+gem 'bundler', '~>2'
+gem 'rails', '~>7.0.0'
+gem 'sprockets-rails'
+gem 'rdoc'
+gem 'sprockets', '~>3.0'
+gem 'sqlite3', '~> 1.4'
+
+gemspec :path => '../'
