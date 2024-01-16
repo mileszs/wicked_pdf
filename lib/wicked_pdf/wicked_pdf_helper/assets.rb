@@ -202,9 +202,8 @@ class WickedPdf
         elsif defined?(Propshaft::Assembly) && Rails.application.assets.is_a?(Propshaft::Assembly)
           PropshaftAsset.new(Rails.application.assets.load_path.find(path))
         elsif Rails.application.respond_to?(:assets_manifest)
-          if Rails.application.assets_manifest.assets[path]
-            LocalAsset.new(File.join(Rails.application.assets_manifest.dir, Rails.application.assets_manifest.assets[path]))
-          end
+          asset_path = File.join(Rails.application.assets_manifest.dir, Rails.application.assets_manifest.assets[path])
+          LocalAsset.new(asset_path) if File.file?(asset_path)
         else
           SprocketsEnvironment.find_asset(path, :base_path => Rails.application.root.to_s)
         end
