@@ -12,7 +12,7 @@ class WickedPdfTest < ActiveSupport::TestCase
       c.test = 'foobar'
     end
 
-    assert WickedPdf.config == { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf', test: 'foobar' }
+    assert WickedPdf.config == { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf', :test => 'foobar' }
   end
 
   test 'should clear config through .clear_config class method' do

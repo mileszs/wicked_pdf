@@ -25,9 +25,7 @@ class WickedPdf
   include Progress
 
   def self.config=(config)
-    unless @@silence_deprecations
-      ::Kernel.warn "WickedPdf.config= is deprecated and will be removed in future versions. Use WickedPdf.configure instead."
-    end
+    ::Kernel.warn 'WickedPdf.config= is deprecated and will be removed in future versions. Use WickedPdf.configure instead.' unless @@silence_deprecations
 
     @@config = config
   end
