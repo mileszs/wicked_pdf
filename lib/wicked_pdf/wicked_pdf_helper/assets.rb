@@ -183,7 +183,7 @@ class WickedPdf
             IO.read(pathname)
           end
         else
-          find_asset(source).to_s
+          find_asset(source).to_s.force_encoding('UTF-8')
         end
       end
 
