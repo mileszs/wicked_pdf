@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixes
 - [Fix Propshaft encoding issue](https://github.com/mileszs/wicked_pdf/pull/1096)
+- [Add support for truffleruby (22.1.0) on Linux](https://github.com/mileszs/wicked_pdf/pull/1028) 
 
 ## [2.7.0]
 ### New Features
