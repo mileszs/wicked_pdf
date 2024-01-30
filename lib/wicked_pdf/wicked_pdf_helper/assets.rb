@@ -232,8 +232,10 @@ class WickedPdf
 
       def webpacker_version
         if defined?(Shakapacker)
+          require 'shakapacker/version'
           Shakapacker::VERSION
         elsif defined?(Webpacker)
+          require 'webpacker/version'
           Webpacker::VERSION
         end
       end
