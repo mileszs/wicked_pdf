@@ -7,6 +7,27 @@ class WickedPdf
     module Assets
       ASSET_URL_REGEX = /url\(['"]?([^'"]+?)['"]?\)/
 
+      class MissingAsset < StandardError; end
+
+      class MissingLocalAsset < MissingAsset
+        attr_reader :path
+
+        def initialize(path)
+          @path = path
+          super("Could not find asset '#{path}'")
+        end
+      end
+
+      class MissingRemoteAsset < MissingAsset
+        attr_reader :url, :response
+
+        def initialize(url, response)
+          @url = url
+          @response = response
+          super("Could not fetch asset '#{url}': server responded with #{response.code} #{response.message}")
+        end
+      end
+
       class PropshaftAsset < SimpleDelegator
         def content_type
           super.to_s
@@ -21,9 +42,39 @@ class WickedPdf
         end
       end
 
+      class SprocketsEnvironment
+        def self.instance
+          @instance ||= Sprockets::Railtie.build_environment(Rails.application)
+        end
+
+        def self.find_asset(*args)
+          instance.find_asset(*args)
+        end
+      end
+
+      class LocalAsset
+        attr_reader :path
+
+        def initialize(path)
+          @path = path
+        end
+
+        def content_type
+          Mime::Type.lookup_by_extension(File.extname(path).delete('.'))
+        end
+
+        def to_s
+          IO.read(path)
+        end
+
+        def filename
+          path.to_s
+        end
+      end
+
       def wicked_pdf_asset_base64(path)
         asset = find_asset(path)
-        raise "Could not find asset '#{path}'" if asset.nil?
+        raise MissingLocalAsset, path if asset.nil?
 
         base64 = Base64.encode64(asset.to_s).gsub(/\s+/, '')
         "data:#{asset.content_type};base64,#{Rack::Utils.escape(base64)}"
@@ -150,8 +201,11 @@ class WickedPdf
           Rails.application.assets.find_asset(path, :base_path => Rails.application.root.to_s)
         elsif defined?(Propshaft::Assembly) && Rails.application.assets.is_a?(Propshaft::Assembly)
           PropshaftAsset.new(Rails.application.assets.load_path.find(path))
+        elsif Rails.application.respond_to?(:assets_manifest)
+          asset_path = File.join(Rails.application.assets_manifest.dir, Rails.application.assets_manifest.assets[path])
+          LocalAsset.new(asset_path) if File.file?(asset_path)
         else
-          Sprockets::Railtie.build_environment(Rails.application).find_asset(path, :base_path => Rails.application.root.to_s)
+          SprocketsEnvironment.find_asset(path, :base_path => Rails.application.root.to_s)
         end
       end
 
@@ -175,20 +229,35 @@ class WickedPdf
       end
 
       def read_asset(source)
-        if precompiled_or_absolute_asset?(source)
-          pathname = asset_pathname(source)
-          if pathname =~ URI_REGEXP
-            read_from_uri(pathname)
-          elsif File.file?(pathname)
-            IO.read(pathname)
-          end
-        else
-          find_asset(source).to_s.force_encoding('UTF-8')
+        asset = find_asset(source)
+        return asset.to_s.force_encoding('UTF-8') if asset
+
+        unless precompiled_or_absolute_asset?(source)
+          raise MissingLocalAsset, source if WickedPdf.config[:raise_on_missing_assets]
+
+          return
+        end
+
+        pathname = asset_pathname(source)
+        if pathname =~ URI_REGEXP
+          read_from_uri(pathname)
+        elsif File.file?(pathname)
+          IO.read(pathname)
+        elsif WickedPdf.config[:raise_on_missing_assets]
+          raise MissingLocalAsset, pathname if WickedPdf.config[:raise_on_missing_assets]
         end
       end
 
       def read_from_uri(uri)
-        asset = Net::HTTP.get(URI(uri))
+        response = Net::HTTP.get_response(URI(uri))
+
+        unless response.is_a?(Net::HTTPSuccess)
+          raise MissingRemoteAsset.new(uri, response) if WickedPdf.config[:raise_on_missing_assets]
+
+          return
+        end
+
+        asset = response.body
         asset.force_encoding('UTF-8') if asset
         asset = gzip(asset) if WickedPdf.config[:expect_gzipped_remote_assets]
         asset

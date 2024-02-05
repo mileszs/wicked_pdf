@@ -37,4 +37,5 @@ DESC
   spec.add_development_dependency 'rubocop', '~> 1.46'
   spec.add_development_dependency 'sqlite3', '~> 1.3'
   spec.add_development_dependency 'test-unit'
+  spec.add_development_dependency 'webmock', '~> 3.19'
 end

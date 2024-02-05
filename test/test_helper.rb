@@ -7,6 +7,7 @@ require 'test/unit'
 require 'mocha'
 require 'rails/test_help'
 require 'mocha/test_unit'
+require 'webmock/minitest'
 
 require 'wicked_pdf'
 

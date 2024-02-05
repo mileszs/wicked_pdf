@@ -4,6 +4,15 @@ require 'action_view/test_case'
 class WickedPdfHelperAssetsTest < ActionView::TestCase
   include WickedPdf::WickedPdfHelper::Assets
 
+  setup do
+    @saved_config = WickedPdf.config
+    WickedPdf.config = {}
+  end
+
+  teardown do
+    WickedPdf.config = @saved_config
+  end
+
   if Rails::VERSION::MAJOR > 3 || (Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0)
     test 'wicked_pdf_asset_base64 returns a base64 encoded asset' do
       assert_match %r{data:text\/css;base64,.+}, wicked_pdf_asset_base64('wicked.css')
@@ -13,6 +22,58 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
       Rails.configuration.assets.expects(:compile => true)
       assert_equal "<style type='text/css'>/* Wicked styles */\n\n</style>",
                    wicked_pdf_stylesheet_link_tag('wicked')
+    end
+
+    test 'wicked_pdf_stylesheet_link_tag should raise if the stylesheet is not available and config is set' do
+      Rails.configuration.assets.expects(:compile => true)
+      WickedPdf.config[:raise_on_missing_assets] = true
+      assert_raise WickedPdf::WickedPdfHelper::Assets::MissingLocalAsset do
+        wicked_pdf_stylesheet_link_tag('non_existent')
+      end
+    end
+
+    test 'wicked_pdf_stylesheet_link_tag should return empty if the stylesheet is not available' do
+      Rails.configuration.assets.expects(:compile => true)
+      assert_equal "<style type='text/css'></style>",
+                   wicked_pdf_stylesheet_link_tag('non_existent')
+    end
+
+    test 'wicked_pdf_stylesheet_link_tag should raise if the absolute path stylesheet is not available and config is set' do
+      Rails.configuration.assets.expects(:compile => true)
+      WickedPdf.config[:raise_on_missing_assets] = true
+      expects(:precompiled_or_absolute_asset? => true).twice
+      assert_raise WickedPdf::WickedPdfHelper::Assets::MissingLocalAsset do
+        wicked_pdf_stylesheet_link_tag('/non_existent')
+      end
+    end
+
+    test 'wicked_pdf_stylesheet_link_tag should return empty if the absolute path stylesheet is not available' do
+      Rails.configuration.assets.expects(:compile => true).twice
+      assert_equal "<style type='text/css'></style>",
+                   wicked_pdf_stylesheet_link_tag('/non_existent')
+    end
+
+    test 'wicked_pdf_stylesheet_link_tag should inline the stylesheets passed in when assets are remote' do
+      stub_request(:get, 'https://www.example.com/wicked.css').to_return(:status => 200, :body => '/* Wicked styles */')
+      expects(:precompiled_or_absolute_asset? => true).twice
+      assert_equal "<style type='text/css'>/* Wicked styles */</style>",
+                   wicked_pdf_stylesheet_link_tag('https://www.example.com/wicked.css')
+    end
+
+    test 'wicked_pdf_stylesheet_link_tag should raise if remote assets are not available and config is set' do
+      WickedPdf.config[:raise_on_missing_assets] = true
+      stub_request(:get, 'https://www.example.com/wicked.css').to_return(:status => 404, :body => 'File not found')
+      expects(:precompiled_or_absolute_asset? => true).twice
+      assert_raise WickedPdf::WickedPdfHelper::Assets::MissingRemoteAsset do
+        wicked_pdf_stylesheet_link_tag('https://www.example.com/wicked.css')
+      end
+    end
+
+    test 'wicked_pdf_stylesheet_link_tag should return empty if remote assets are not available' do
+      stub_request(:get, 'https://www.example.com/wicked.css').to_return(:status => 404, :body => 'File not found')
+      expects(:precompiled_or_absolute_asset? => true).twice
+      assert_equal "<style type='text/css'></style>",
+                   wicked_pdf_stylesheet_link_tag('https://www.example.com/wicked.css')
     end
 
     test 'wicked_pdf_image_tag should return the same as image_tag when passed a full path' do

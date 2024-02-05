@@ -201,6 +201,7 @@ class ThingsController < ApplicationController
                viewport_size:                  'TEXT',                    # available only with use_xserver or patched QT
                extra:                          '',                        # directly inserted into the command to wkhtmltopdf
                raise_on_all_errors:            nil,                       # raise error for any stderr output.  Such as missing media, image assets
+               raise_on_missing_assets:        nil,                       # raise when trying to access a missing asset
                log_level:                      'info',                    # Available values: none, error, warn, or info - only available with wkhtmltopdf 0.12.5+
                quiet:                          false,                     # `false` is same as `log_level: 'info'`, `true` is same as `log_level: 'none'`
                outline: {   outline:           true,
