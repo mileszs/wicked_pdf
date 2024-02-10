@@ -12,6 +12,7 @@ require 'webmock/minitest'
 require 'wicked_pdf'
 
 Rails.backtrace_cleaner.remove_silencers!
+WickedPdf.silence_deprecations = true
 
 if (assets_dir = Rails.root.join('app/assets')) && File.directory?(assets_dir)
   # Copy CSS file

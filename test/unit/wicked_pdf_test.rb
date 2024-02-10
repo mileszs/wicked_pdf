@@ -7,6 +7,23 @@ class WickedPdfTest < ActiveSupport::TestCase
     @wp = WickedPdf.new
   end
 
+  test 'should update config through .configure class method' do
+    WickedPdf.configure do |c|
+      c.test = 'foobar'
+    end
+
+    assert WickedPdf.config == { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf', :test => 'foobar' }
+  end
+
+  test 'should clear config through .clear_config class method' do
+    backup_config = WickedPdf.config
+
+    WickedPdf.clear_config
+    assert WickedPdf.config == {}
+
+    WickedPdf.config = backup_config
+  end
+
   test 'should generate PDF from html document' do
     pdf = @wp.pdf_from_string HTML_DOCUMENT
     assert pdf.start_with?('%PDF-1.4')

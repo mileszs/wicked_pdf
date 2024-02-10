@@ -20,9 +20,26 @@ require 'wicked_pdf/progress'
 class WickedPdf
   DEFAULT_BINARY_VERSION = Gem::Version.new('0.9.9')
   @@config = {}
-  cattr_accessor :config
+  cattr_accessor :config, :silence_deprecations
 
   include Progress
+
+  def self.config=(config)
+    ::Kernel.warn 'WickedPdf.config= is deprecated and will be removed in future versions. Use WickedPdf.configure instead.' unless @@silence_deprecations
+
+    @@config = config
+  end
+
+  def self.configure
+    config = OpenStruct.new(@@config)
+    yield config
+
+    @@config.merge! config.to_h
+  end
+
+  def self.clear_config
+    @@config = {}
+  end
 
   def initialize(wkhtmltopdf_binary_path = nil)
     @binary = Binary.new(wkhtmltopdf_binary_path, DEFAULT_BINARY_VERSION)
