@@ -42,10 +42,10 @@ You can see what flags are supported for the current version in [wkhtmltopdf's a
 If your wkhtmltopdf executable is not on your webserver's path, you can configure it in an initializer:
 
 ```ruby
-WickedPdf.configure do |c|
-  c.exe_path = '/usr/local/bin/wkhtmltopdf'
-  c.enable_local_file_access = true
-end
+WickedPdf.config ||= {
+  c.exe_path: '/usr/local/bin/wkhtmltopdf',
+  c.enable_local_file_access: true
+}
 ```
 
 For more information about `wkhtmltopdf`, see the project's [homepage](http://wkhtmltopdf.org/).
