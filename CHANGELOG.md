@@ -1,13 +1,20 @@
 # Change Log
-All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
+All notable changes to this project should be documented in this file.
+This project attempts to adhere to [Semantic Versioning](http://semver.org/).
 
-## [master branch] - Unreleased
+## [[master branch] - Unreleased changes](https://github.com/mileszs/wicked_pdf/compare/2.8.0...HEAD)
 ### Breaking Changes
+### New Features
+### Fixes
+
+## [2.8.0]
+### New Features
+- [Add New config option `raise_on_missing_assets`](https://github.com/mileszs/wicked_pdf/pull/1094)
+- [Add support for truffleruby (22.1.0) on Linux](https://github.com/mileszs/wicked_pdf/pull/1028)
 
 ### Fixes
 - [Fix Propshaft encoding issue](https://github.com/mileszs/wicked_pdf/pull/1096)
-- [Add support for truffleruby (22.1.0) on Linux](https://github.com/mileszs/wicked_pdf/pull/1028) 
+- [Fix Webpacker & Shakapacker compatibility issue](https://github.com/mileszs/wicked_pdf/pull/1099)
 
 ## [2.7.0]
 ### New Features
@@ -235,13 +242,3 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Issues with `url()` references and embedded `data:base64` assets in stylesheets rendered with `wicked_pdf_stylesheet_link_tag`
 - Asset helpers no longer add a file extension if it already is specified with one
 
-# Compare Releases
-- [2.1.0...HEAD (unreleased changes)](https://github.com/mileszs/wicked_pdf/compare/2.1.0...HEAD)
-- [2.0.2...2.1.0](https://github.com/mileszs/wicked_pdf/compare/2.0.2...2.1.0)
-- [2.0.0...2.0.2](https://github.com/mileszs/wicked_pdf/compare/2.0.0...2.0.2)
-- [1.4.0...2.0.0](https://github.com/mileszs/wicked_pdf/compare/1.4.0...2.0.0)
-- [1.3.0...1.4.0](https://github.com/mileszs/wicked_pdf/compare/1.3.0...1.4.0)
-- [1.2.0...1.3.0](https://github.com/mileszs/wicked_pdf/compare/1.2.0...1.3.0)
-- [1.1.0...1.2.0](https://github.com/mileszs/wicked_pdf/compare/1.1.0...1.2.0)
-- [1.0.0...1.1.0](https://github.com/mileszs/wicked_pdf/compare/1.0.0...1.0.0)
-- [0.11.0...1.0.0](https://github.com/mileszs/wicked_pdf/compare/0.11.0...1.0.0)
