@@ -5,6 +5,7 @@ require 'logger'
 require 'digest/md5'
 require 'rbconfig'
 require 'open3'
+require 'uri'
 
 require 'active_support/core_ext/module/attribute_accessors'
 require 'active_support/core_ext/object/blank'
@@ -50,7 +51,7 @@ class WickedPdf
   end
 
   def pdf_from_html_file(filepath, options = {})
-    pdf_from_url("file:///#{filepath}", options)
+    pdf_from_url(URI.join('file:', '', filepath).to_s, options)
   end
 
   def pdf_from_string(string, options = {})
@@ -99,7 +100,7 @@ class WickedPdf
   rescue StandardError => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
   ensure
-    clean_temp_files
+    option_parser.clean_temp_files
     generated_pdf_file.close! if generated_pdf_file && !return_file
   end
 
@@ -121,11 +122,5 @@ class WickedPdf
 
   def option_parser
     @option_parser ||= OptionParser.new(binary_version)
-  end
-
-  def clean_temp_files
-    return unless option_parser.hf_tempfiles.present?
-
-    option_parser.hf_tempfiles.each { |file| File.delete(file) }
   end
 end

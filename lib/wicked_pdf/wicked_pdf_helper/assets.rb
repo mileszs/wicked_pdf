@@ -156,7 +156,7 @@ class WickedPdf
         if (pathname = asset_pathname(asset).to_s) =~ URI_REGEXP
           pathname
         else
-          "file:///#{pathname}"
+          URI.join('file:', '', pathname).to_s
         end
       end
 
