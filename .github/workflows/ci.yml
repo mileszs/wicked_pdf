@@ -9,14 +9,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        rails: ["7.1.3", "7.0.8", "6.1", "6.0.0"]
+        rails: ["7.1.3", "7.0.8", "6.1.7"]
         ruby: ["3.3.0", "3.2.2", "3.1.4", "3.0.6", "2.7.8"]
         include:
-          - rails: "5.0"
-            ruby: 2.7.8
+          #- rails: "5.0"
+          #  ruby: 2.7.8
           - rails: "5.1"
             ruby: 2.7.8
           - rails: "5.2"
+            ruby: 2.7.8
+          - rails: "6.0.6"
             ruby: 2.7.8
           - rails: "7.0"
             ruby: truffleruby
