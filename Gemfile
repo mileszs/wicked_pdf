@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 # use ENV vars, with default value as fallback for local setup
-ruby(ENV['RUBY_VERSION'] || '3.2.2')
+ruby(ENV['RUBY_VERSION'] || '3.2.2') unless ENV['RUBY_VERSION'] == 'truffleruby'
 
 gem 'bootsnap' # required to run `rake test`
 gem 'rails', "~> #{ENV['RAILS_VERSION'] || '7.0'}.0"
