@@ -6,6 +6,7 @@ This project attempts to adhere to [Semantic Versioning](http://semver.org/).
 ### Breaking Changes
 ### New Features
 ### Fixes
+- [Explicitly require OpenStruct, which isn't loaded by default anymore in new versions of Rake](https://github.com/mileszs/wicked_pdf/pull/1110)
 
 ## [2.8.0]
 ### New Features
