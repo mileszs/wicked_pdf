@@ -216,7 +216,13 @@ class WickedPdf
         assets = Rails.application.assets_manifest.assets
 
         if File.extname(path).empty?
-          assets.find { |asset, _v| File.basename(asset, File.extname(asset)) == path }&.last
+          assets.find do |asset, _v|
+            directory = File.dirname(asset)
+            asset_path = File.basename(asset, File.extname(asset))
+            asset_path = File.join(directory, asset_path) if directory != '.'
+
+            asset_path == path
+          end&.last
         else
           assets[path]
         end

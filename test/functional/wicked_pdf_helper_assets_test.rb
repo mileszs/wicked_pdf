@@ -26,6 +26,10 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
       assert_match %r{data:application\/javascript;base64,.+}, wicked_pdf_asset_base64('wicked')
     end
 
+    test 'wicked_pdf_asset_base64 works with nested files and without file extension when using sprockets' do
+      assert_match %r{data:application\/javascript;base64,.+}, wicked_pdf_asset_base64('subdirectory/nested')
+    end
+
     test 'wicked_pdf_asset_base64 works without file extension when using asset manifest' do
       stub_manifest = OpenStruct.new(
         :dir => Rails.root.join('app/assets'),
@@ -35,6 +39,17 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
       Rails.application.stubs(:assets_manifest).returns(stub_manifest)
 
       assert_match %r{data:text\/css;base64,.+}, wicked_pdf_asset_base64('wicked')
+    end
+
+    test 'wicked_pdf_asset_base64 works with nested files and without file extension when using asset manifest' do
+      stub_manifest = OpenStruct.new(
+        :dir => Rails.root.join('app/assets'),
+        :assets => { 'subdirectory/nested.js' => 'javascripts/subdirectory/nested.js' }
+      )
+      Rails.application.stubs(:assets).returns(nil)
+      Rails.application.stubs(:assets_manifest).returns(stub_manifest)
+
+      assert_match %r{data:text\/javascript;base64,.+}, wicked_pdf_asset_base64('subdirectory/nested')
     end
 
     test 'wicked_pdf_stylesheet_link_tag should inline the stylesheets passed in' do
