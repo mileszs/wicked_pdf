@@ -28,20 +28,6 @@ class WickedPdf
         end
       end
 
-      class PropshaftAsset < SimpleDelegator
-        def content_type
-          super.to_s
-        end
-
-        def to_s
-          content
-        end
-
-        def filename
-          path.to_s
-        end
-      end
-
       class SprocketsEnvironment
         def self.instance
           @instance ||= Sprockets::Railtie.build_environment(Rails.application)
@@ -69,6 +55,12 @@ class WickedPdf
 
         def filename
           path.to_s
+        end
+      end
+
+      class PropshaftAsset < LocalAsset
+        def to_s
+          Rails.application.assets.resolver.read(path)
         end
       end
 
@@ -200,7 +192,7 @@ class WickedPdf
         if Rails.application.assets.respond_to?(:find_asset)
           Rails.application.assets.find_asset(path, :base_path => Rails.application.root.to_s)
         elsif defined?(Propshaft::Assembly) && Rails.application.assets.is_a?(Propshaft::Assembly)
-          PropshaftAsset.new(Rails.application.assets.load_path.find(path))
+          PropshaftAsset.new(path)
         elsif Rails.application.respond_to?(:assets_manifest)
           asset_path = File.join(Rails.application.assets_manifest.dir, Rails.application.assets_manifest.assets[path])
           LocalAsset.new(asset_path) if File.file?(asset_path)
