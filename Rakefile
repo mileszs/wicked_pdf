@@ -23,6 +23,15 @@ end
 
 desc 'Setup and run all tests'
 task :setup_and_run_tests do
+  rails_version = ENV['RAILS_VERSION']
+
+  unless ENV['RAILS_VERSION']
+    rails_version = Dir.glob(File.join(__dir__, 'gemfiles', '*.gemfile')).max[%r{gemfiles/(.*?)\.gemfile}, 1]
+    puts "RAILS_VERSION has not been specified, defaulting to the latest available Rails version (#{rails_version})"
+  end
+
+  ENV['BUNDLE_GEMFILE'] = File.join(__dir__, 'gemfiles', "#{rails_version}.gemfile")
+
   Rake::Task[:dummy_generate].invoke unless File.exist?('test/dummy/config/environment.rb')
   Rake::Task[:test].invoke
 end
