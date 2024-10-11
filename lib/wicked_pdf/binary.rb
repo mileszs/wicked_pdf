@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class WickedPdf
   class Binary
-    EXE_NAME = 'wkhtmltopdf'.freeze
+    EXE_NAME = 'wkhtmltopdf'
 
     attr_reader :path, :default_version
 
