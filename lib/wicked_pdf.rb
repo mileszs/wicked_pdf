@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # wkhtml2pdf Ruby interface
 # http://wkhtmltopdf.org/
 

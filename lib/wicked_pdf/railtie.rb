@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'wicked_pdf/pdf_helper'
 require 'wicked_pdf/wicked_pdf_helper'
 require 'wicked_pdf/wicked_pdf_helper/assets'

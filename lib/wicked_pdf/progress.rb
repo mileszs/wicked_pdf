@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WickedPdf
   module Progress
     require 'pty' if RbConfig::CONFIG['target_os'] !~ /mswin|mingw/ && RUBY_ENGINE != 'truffleruby' # no support for windows and truffleruby
