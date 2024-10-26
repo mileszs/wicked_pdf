@@ -2,10 +2,15 @@
 All notable changes to this project should be documented in this file.
 This project attempts to adhere to [Semantic Versioning](http://semver.org/).
 
-## [[master branch] - Unreleased changes](https://github.com/mileszs/wicked_pdf/compare/2.8.1...HEAD)
+## [[master branch] - Unreleased changes](https://github.com/mileszs/wicked_pdf/compare/2.8.2...HEAD)
 ### Breaking Changes
 ### New Features
 ### Fixes
+
+## [2.8.2]
+### Fixes
+- [Fix for frozen_string_literal in Ruby 3.4](https://github.com/mileszs/wicked_pdf/pull/1118)
+- [Add OpenStruct dependency explicitly for Ruby 3.5](https://github.com/mileszs/wicked_pdf/pull/1131)
 
 ## [2.8.1]
 ### Fixes
