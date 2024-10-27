@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WickedPdf
   module PdfHelper
     def self.prepended(base)
