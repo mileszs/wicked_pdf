@@ -11,6 +11,10 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
 
   teardown do
     WickedPdf.config = @saved_config
+
+    # @see freerange/mocha#331
+    Rails.application.unstub(:assets)
+    Rails.application.unstub(:assets_manifest)
   end
 
   if Rails::VERSION::MAJOR > 3 || (Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0)
@@ -18,9 +22,58 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
       assert_match %r{data:text\/css;base64,.+}, wicked_pdf_asset_base64('wicked.css')
     end
 
+    test 'wicked_pdf_asset_base64 works without file extension when using sprockets' do
+      assert_match %r{data:application\/javascript;base64,.+}, wicked_pdf_asset_base64('wicked')
+    end
+
+    test 'wicked_pdf_asset_base64 works with nested files and without file extension when using sprockets' do
+      assert_match %r{data:application\/javascript;base64,.+}, wicked_pdf_asset_base64('subdirectory/nested')
+    end
+
+    test 'wicked_pdf_asset_base64 works without file extension when using asset manifest' do
+      stub_manifest = OpenStruct.new(
+        :dir => Rails.root.join('app/assets'),
+        :assets => { 'wicked.css' => 'stylesheets/wicked.css', 'wicked.js' => 'javascripts/wicked.js' }
+      )
+      Rails.application.stubs(:assets).returns(nil)
+      Rails.application.stubs(:assets_manifest).returns(stub_manifest)
+
+      assert_match %r{data:text\/css;base64,.+}, wicked_pdf_asset_base64('wicked')
+    end
+
+    test 'wicked_pdf_asset_base64 works with nested files and without file extension when using asset manifest' do
+      stub_manifest = OpenStruct.new(
+        :dir => Rails.root.join('app/assets'),
+        :assets => { 'subdirectory/nested.js' => 'javascripts/subdirectory/nested.js' }
+      )
+      Rails.application.stubs(:assets).returns(nil)
+      Rails.application.stubs(:assets_manifest).returns(stub_manifest)
+
+      assert_match %r{data:text\/javascript;base64,.+}, wicked_pdf_asset_base64('subdirectory/nested')
+    end
+
     test 'wicked_pdf_stylesheet_link_tag should inline the stylesheets passed in' do
       Rails.configuration.assets.expects(:compile => true)
       assert_equal "<style type='text/css'>/* Wicked styles */\n\n</style>",
+                   wicked_pdf_stylesheet_link_tag('wicked')
+    end
+
+    test 'wicked_pdf_stylesheet_link_tag should work without file extension when using sprockets' do
+      Rails.configuration.assets.expects(:compile => true)
+      assert_equal "<style type='text/css'>/* Wicked styles */\n\n</style>",
+                   wicked_pdf_stylesheet_link_tag('wicked')
+    end
+
+    test 'wicked_pdf_stylesheet_link_tag should work without file extension when using asset manifest' do
+      stub_manifest = OpenStruct.new(
+        :dir => Rails.root.join('app/assets'),
+        :assets => { 'wicked.css' => 'stylesheets/wicked.css', 'wicked.js' => 'javascripts/wicked.js' }
+      )
+
+      Rails.application.stubs(:assets).returns(nil)
+      Rails.application.stubs(:assets_manifest).returns(stub_manifest)
+
+      assert_equal "<style type='text/css'>/* Wicked styles */\n</style>",
                    wicked_pdf_stylesheet_link_tag('wicked')
     end
 
@@ -54,6 +107,21 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
     end
 
     test 'wicked_pdf_stylesheet_link_tag should inline the stylesheets passed in when assets are remote' do
+      stub_request(:get, 'https://www.example.com/wicked.css').to_return(:status => 200, :body => '/* Wicked styles */')
+      expects(:precompiled_or_absolute_asset? => true).twice
+      assert_equal "<style type='text/css'>/* Wicked styles */</style>",
+                   wicked_pdf_stylesheet_link_tag('https://www.example.com/wicked.css')
+    end
+
+    test 'wicked_pdf_stylesheet_link_tag should inline the stylesheets passed in when assets are remote and using asset manifest' do
+      stub_manifest = OpenStruct.new(
+        :dir => Rails.root.join('app/assets'),
+        :assets => { 'wicked.css' => 'stylesheets/wicked.css', 'wicked.js' => 'javascripts/wicked.js' }
+      )
+
+      Rails.application.stubs(:assets).returns(nil)
+      Rails.application.stubs(:assets_manifest).returns(stub_manifest)
+
       stub_request(:get, 'https://www.example.com/wicked.css').to_return(:status => 200, :body => '/* Wicked styles */')
       expects(:precompiled_or_absolute_asset? => true).twice
       assert_equal "<style type='text/css'>/* Wicked styles */</style>",

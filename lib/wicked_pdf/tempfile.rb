@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'tempfile'
 require 'stringio'
 
@@ -23,9 +25,9 @@ class WickedPdf
     def read_in_chunks
       rewind
       binmode
-      output_string = ''
-      output_string << read(chunk_size) until eof?
-      output_string
+      chunks = []
+      chunks << read(chunk_size) until eof?
+      chunks.join
     rescue Errno::EINVAL => e
       raise e, file_too_large_message
     end

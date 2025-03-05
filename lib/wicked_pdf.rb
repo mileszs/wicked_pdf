@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # wkhtml2pdf Ruby interface
 # http://wkhtmltopdf.org/
 
@@ -5,6 +7,7 @@ require 'logger'
 require 'digest/md5'
 require 'rbconfig'
 require 'open3'
+require 'ostruct'
 
 require 'active_support/core_ext/module/attribute_accessors'
 require 'active_support/core_ext/object/blank'

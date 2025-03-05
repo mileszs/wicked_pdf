@@ -4,7 +4,7 @@
 
 Wicked PDF uses the shell utility [wkhtmltopdf](http://wkhtmltopdf.org) to serve a PDF file to a user from HTML.  In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, then let Wicked PDF take care of the hard stuff.
 
-_Wicked PDF has been verified to work on Ruby versions 2.2 through 2.6; Rails 4 through 6.1_
+_Wicked PDF has been verified to work on Ruby versions 2.2 through 3.2; Rails 4 through 7.0_
 
 ### Installation
 
