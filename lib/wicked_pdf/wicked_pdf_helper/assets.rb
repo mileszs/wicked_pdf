@@ -104,7 +104,7 @@ class WickedPdf
       end
 
       def wicked_pdf_stylesheet_pack_tag(*sources)
-        return unless defined?(Webpacker)
+        return unless webpacker_class
 
         if running_in_development?
           stylesheet_pack_tag(*sources)
@@ -118,7 +118,7 @@ class WickedPdf
       end
 
       def wicked_pdf_javascript_pack_tag(*sources)
-        return unless defined?(Webpacker)
+        return unless webpacker_class
 
         if running_in_development?
           javascript_pack_tag(*sources)
@@ -155,7 +155,7 @@ class WickedPdf
       end
 
       def wicked_pdf_asset_pack_path(asset)
-        return unless defined?(Webpacker)
+        return unless webpacker_class
 
         if running_in_development?
           asset_pack_path(asset)
@@ -302,23 +302,28 @@ class WickedPdf
       end
 
       def running_in_development?
-        return unless webpacker_version
+        return unless webpacker_class
 
         # :dev_server method was added in webpacker 3.0.0
-        if Webpacker.respond_to?(:dev_server)
-          Webpacker.dev_server.running?
+        if webpacker_class.respond_to?(:dev_server)
+          webpacker_class.dev_server.running?
         else
           Rails.env.development? || Rails.env.test?
         end
       end
 
       def webpacker_version
+        return unless webpacker_class
+
+        require "#{webpacker_class.to_s.downcase}/version"
+        webpacker_class.const_get('VERSION')
+      end
+
+      def webpacker_class
         if defined?(Shakapacker)
-          require 'shakapacker/version'
-          Shakapacker::VERSION
+          Shakapacker
         elsif defined?(Webpacker)
-          require 'webpacker/version'
-          Webpacker::VERSION
+          Webpacker
         end
       end
     end
