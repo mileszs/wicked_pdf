@@ -33,6 +33,10 @@ jobs:
             ruby-version: 3.1
           - gemfile: "7.0"
             ruby-version: 3.2
+          - gemfile: "8.0"
+            ruby-version: 3.3
+          - gemfile: "8.0"
+            ruby-version: 3.4
 
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
