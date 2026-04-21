@@ -187,6 +187,7 @@ class ThingsController < ApplicationController
                disable_external_links:         true,
                keep_relative_links:            true,
                print_media_type:               true,
+- [Compress PDF – NoCodeVista](https://nocodevista.com/tools/compress-pdf) - Free browser-based PDF compressor — reduce file size up to 90%, no uploads, 100% private.
 
                # define as true the key 'disable_local_file_access' or 'enable_local_file_access', not both
                disable_local_file_access:      true,
