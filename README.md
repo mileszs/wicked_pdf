@@ -282,7 +282,31 @@ no_background: true           # Passes `--no-background`
 
 You can see the complete list of options under "Global Options" in wkhtmltopdf usage [docs](http://wkhtmltopdf.org/usage/wkhtmltopdf.txt).
 
+### The `cover` option
+
+`cover` must point at **already-rendered HTML**: either a path to a fully
+rendered HTML file, a URL, or a raw HTML string. It is passed straight to
+`wkhtmltopdf`, which cannot evaluate HAML, ERB or any other template format.
+
+Passing a template path such as
+`cover: Rails.root.join('views', 'layouts', 'pdf_cover.html.haml')` will fail
+with a `Failed loading page` error, because `wkhtmltopdf` tries to load the
+file literally.
+
+Pre-render the cover first, then hand wicked_pdf the rendered HTML:
+
+```ruby
+cover: render_to_string(
+  template: 'layouts/pdf_cover',
+  formats: [:html],
+  layout: false
+)
+```
+
+The same applies to headers and footers — see the `header` / `footer` options.
+
 ### Super Advanced Usage ###
+
 
 If you need to just create a pdf and not display it:
 ```ruby
