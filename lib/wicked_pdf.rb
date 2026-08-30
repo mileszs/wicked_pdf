@@ -71,6 +71,7 @@ class WickedPdf
   end
 
   def pdf_from_url(url, options = {}) # rubocop:disable Metrics/CyclomaticComplexity
+    options = options.dup
     # merge in global config options
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
     generated_pdf_file = WickedPdf::Tempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
