@@ -11,6 +11,7 @@ class WickedPdf
     end
 
     def parse(options)
+      @hf_tempfiles = []
       [
         parse_extra(options),
         parse_others(options),
@@ -57,17 +58,15 @@ class WickedPdf
         %i[header footer].collect do |hf|
           next if options[hf].blank?
 
-          opt_hf = options[hf]
+          opt_hf = options[hf].dup
           r += make_options(opt_hf, %i[center font_name left right], hf.to_s)
           r += make_options(opt_hf, %i[font_size spacing], hf.to_s, :numeric)
           r += make_options(opt_hf, [:line], hf.to_s, :boolean)
           if options[hf] && options[hf][:content]
-            @hf_tempfiles = [] unless defined?(@hf_tempfiles)
             @hf_tempfiles.push(tf = File.new(Dir::Tmpname.create(["wicked_#{hf}_pdf", '.html']) {}, 'w'))
             tf.write options[hf][:content]
             tf.flush
-            options[hf][:html] = {}
-            options[hf][:html][:url] = "file:///#{tf.path}"
+            opt_hf[:html] = { :url => "file:///#{tf.path}" }
           end
           unless opt_hf[:html].blank?
             r += make_option("#{hf}-html", opt_hf[:html][:url]) unless opt_hf[:html][:url].blank?
@@ -85,7 +84,6 @@ class WickedPdf
       if argument.is_a?(Pathname) || (arg[0, 4] == 'http')
         [valid_option('cover'), arg]
       else # HTML content
-        @hf_tempfiles ||= []
         @hf_tempfiles << tf = WickedPdf::Tempfile.new('wicked_cover_pdf.html')
         tf.write arg
         tf.flush
