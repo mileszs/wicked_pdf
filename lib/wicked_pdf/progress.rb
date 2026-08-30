@@ -12,7 +12,7 @@ class WickedPdf
     def invoke_with_progress(command, options)
       output = []
       begin
-        PTY.spawn(command.join(' ')) do |stdout, _stdin, pid|
+        PTY.spawn(*command) do |stdout, _stdin, pid|
           begin
             stdout.sync
             stdout.each_line("\r") do |line|
@@ -28,8 +28,11 @@ class WickedPdf
       rescue PTY::ChildExited
         puts 'The child process exited!'
       end
-      err = output.join('\n')
-      raise "#{command} failed (exitstatus 0). Output was: #{err}" unless $CHILD_STATUS && $CHILD_STATUS.exitstatus.zero?
+      err = output.join("\n")
+      exitstatus = $CHILD_STATUS && $CHILD_STATUS.exitstatus
+      raise "#{command} failed (exitstatus #{exitstatus}). Output was: #{err}" unless exitstatus == 0
+
+      err
     end
   end
 end

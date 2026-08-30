@@ -84,6 +84,7 @@ class WickedPdf
 
     if track_progress?(options)
       invoke_with_progress(command, options)
+      err = ''
     else
       _out, err, status = Open3.capture3(*command)
       err = [status.to_s, err].join("\n") if !err.empty? || !status.success?
