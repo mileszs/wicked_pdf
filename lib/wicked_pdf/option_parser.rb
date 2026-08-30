@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'base64'
+
 class WickedPdf
   class OptionParser
     BINARY_VERSION_WITHOUT_DASHES = Gem::Version.new('0.12.0')
