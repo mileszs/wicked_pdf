@@ -119,7 +119,7 @@ class WickedPdf
           :assigns => options[hf][:html][:assigns]
         }
         render_opts[:locals] = options[hf][:html][:locals] if options[hf][:html][:locals]
-        render_opts[:file] = options[hf][:html][:file] if options[:file]
+        render_opts[:file] = options[hf][:html][:file] if options[hf][:html][:file]
         tf.write render_to_string(render_opts)
         tf.flush
         options[hf][:html][:url] = "file:///#{tf.path}"
