@@ -21,7 +21,7 @@ DESC
     'changelog_uri' => 'https://github.com/mileszs/wicked_pdf/blob/master/CHANGELOG.md'
   }
 
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.2')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.3')
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
