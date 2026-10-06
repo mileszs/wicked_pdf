@@ -7,7 +7,6 @@ require 'logger'
 require 'digest/md5'
 require 'rbconfig'
 require 'open3'
-require 'ostruct'
 
 require 'active_support/core_ext/module/attribute_accessors'
 require 'active_support/core_ext/object/blank'
@@ -34,11 +33,38 @@ class WickedPdf
   end
 
   def self.configure
-    config = OpenStruct.new(@@config)
+    config = Configuration.new(@@config)
     yield config
 
     @@config.merge! config.to_h
   end
+
+  # Collects the options set inside a WickedPdf.configure block.
+  class Configuration
+    def initialize(config)
+      @config = config.each_with_object({}) { |(key, value), hash| hash[key.to_sym] = value }
+    end
+
+    def to_h
+      @config.dup
+    end
+
+    def method_missing(method_name, *args)
+      name = method_name.to_s
+      if name.end_with?('=') && args.size == 1
+        @config[name.chomp('=').to_sym] = args.first
+      elsif args.empty?
+        @config[method_name]
+      else
+        super
+      end
+    end
+
+    def respond_to_missing?(method_name, include_private = false)
+      method_name.to_s.end_with?('=') || @config.key?(method_name) || super
+    end
+  end
+  private_constant :Configuration
 
   def self.clear_config
     @@config = {}

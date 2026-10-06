@@ -15,6 +15,37 @@ class WickedPdfTest < ActiveSupport::TestCase
     assert WickedPdf.config == { :exe_path => ENV['WKHTMLTOPDF_BIN'] || '/usr/local/bin/wkhtmltopdf', :test => 'foobar' }
   end
 
+  test 'should merge .configure options into the existing config' do
+    backup_config = WickedPdf.config.dup
+    WickedPdf.config = { :exe_path => '/old/wkhtmltopdf', :layout => 'old.html' }
+
+    WickedPdf.configure do |c|
+      c.layout = 'pdf.html'
+      c.use_xvfb = true
+    end
+
+    assert_equal({ :exe_path => '/old/wkhtmltopdf', :layout => 'pdf.html', :use_xvfb => true }, WickedPdf.config)
+  ensure
+    WickedPdf.config = backup_config
+  end
+
+  test 'should read options back inside a .configure block' do
+    backup_config = WickedPdf.config.dup
+    WickedPdf.config = { :exe_path => '/old/wkhtmltopdf' }
+
+    WickedPdf.configure do |c|
+      assert_equal '/old/wkhtmltopdf', c.exe_path
+      c.layout = 'pdf.html'
+      assert_equal 'pdf.html', c.layout
+      assert_nil c.never_set_option
+      assert_respond_to c, :layout
+      assert_respond_to c, :any_option=
+      refute_respond_to c, :never_set_option
+    end
+  ensure
+    WickedPdf.config = backup_config
+  end
+
   test 'should clear config through .clear_config class method' do
     backup_config = WickedPdf.config
 

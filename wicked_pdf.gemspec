@@ -29,7 +29,6 @@ DESC
   spec.requirements << 'wkhtmltopdf'
 
   spec.add_dependency 'activesupport'
-  spec.add_dependency 'ostruct'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'mocha', '= 1.3'

@@ -4,6 +4,8 @@ require 'action_view/test_case'
 class WickedPdfHelperAssetsTest < ActionView::TestCase
   include WickedPdf::WickedPdfHelper::Assets
 
+  StubManifest = Struct.new(:dir, :assets, :keyword_init => true)
+
   setup do
     @saved_config = WickedPdf.config
     WickedPdf.config = {}
@@ -31,7 +33,7 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
     end
 
     test 'wicked_pdf_asset_base64 works without file extension when using asset manifest' do
-      stub_manifest = OpenStruct.new(
+      stub_manifest = StubManifest.new(
         :dir => Rails.root.join('app/assets'),
         :assets => { 'wicked.css' => 'stylesheets/wicked.css', 'wicked.js' => 'javascripts/wicked.js' }
       )
@@ -42,7 +44,7 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
     end
 
     test 'wicked_pdf_asset_base64 works with nested files and without file extension when using asset manifest' do
-      stub_manifest = OpenStruct.new(
+      stub_manifest = StubManifest.new(
         :dir => Rails.root.join('app/assets'),
         :assets => { 'subdirectory/nested.js' => 'javascripts/subdirectory/nested.js' }
       )
@@ -65,7 +67,7 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
     end
 
     test 'wicked_pdf_stylesheet_link_tag should work without file extension when using asset manifest' do
-      stub_manifest = OpenStruct.new(
+      stub_manifest = StubManifest.new(
         :dir => Rails.root.join('app/assets'),
         :assets => { 'wicked.css' => 'stylesheets/wicked.css', 'wicked.js' => 'javascripts/wicked.js' }
       )
@@ -114,7 +116,7 @@ class WickedPdfHelperAssetsTest < ActionView::TestCase
     end
 
     test 'wicked_pdf_stylesheet_link_tag should inline the stylesheets passed in when assets are remote and using asset manifest' do
-      stub_manifest = OpenStruct.new(
+      stub_manifest = StubManifest.new(
         :dir => Rails.root.join('app/assets'),
         :assets => { 'wicked.css' => 'stylesheets/wicked.css', 'wicked.js' => 'javascripts/wicked.js' }
       )
