@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
     In other words, rather than dealing with a PDF generation DSL of some sort,
     you simply write an HTML view as you would normally, and let Wicked take care of the hard stuff.
 DESC
-  spec.metadata =    {
+  spec.metadata = {
     'changelog_uri' => 'https://github.com/mileszs/wicked_pdf/blob/master/CHANGELOG.md'
   }
 

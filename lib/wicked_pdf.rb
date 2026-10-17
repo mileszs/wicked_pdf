@@ -42,7 +42,7 @@ class WickedPdf
   # Collects the options set inside a WickedPdf.configure block.
   class Configuration
     def initialize(config)
-      @config = config.each_with_object({}) { |(key, value), hash| hash[key.to_sym] = value }
+      @config = config.transform_keys(&:to_sym)
     end
 
     def to_h
