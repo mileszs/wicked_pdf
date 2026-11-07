@@ -6,6 +6,7 @@ This project attempts to adhere to [Semantic Versioning](http://semver.org/).
 ### Breaking Changes
 ### New Features
 ### Fixes
+- [Replace OpenStruct in `WickedPdf.configure` and drop the `ostruct` dependency](https://github.com/mileszs/wicked_pdf/pull/1155)
 
 ## [2.8.2]
 ### Fixes

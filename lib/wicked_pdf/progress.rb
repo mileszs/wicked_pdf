@@ -19,7 +19,7 @@ class WickedPdf
               output << line.chomp
               options[:progress].call(line) if options[:progress]
             end
-          rescue Errno::EIO # rubocop:disable Lint/HandleExceptions
+          rescue Errno::EIO # rubocop:disable Lint/SuppressedException
             # child process is terminated, this is expected behaviour
           ensure
             ::Process.wait pid
