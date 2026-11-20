@@ -31,6 +31,12 @@ class WickedPdfTest < ActiveSupport::TestCase
     assert pdf.length > 100
   end
 
+  test 'should reject a url that would be parsed as a wkhtmltopdf option' do
+    ['--enable-local-file-access', '-q', '--cookie-jar=/tmp/x'].each do |malicious_url|
+      assert_raises(ArgumentError) { @wp.pdf_from_url(malicious_url) }
+    end
+  end
+
   test 'should generate PDF from html document with long lines' do
     document_with_long_line_file = File.new('test/fixtures/document_with_long_line.html', 'r')
     pdf = @wp.pdf_from_string(document_with_long_line_file.read)
