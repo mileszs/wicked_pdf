@@ -71,6 +71,15 @@ class WickedPdf
   end
 
   def pdf_from_url(url, options = {}) # rubocop:disable Metrics/CyclomaticComplexity
+    # Guard against argument injection. wkhtmltopdf does not support a "--"
+    # end-of-options separator, so a url beginning with "-" would be parsed as
+    # a command-line option instead of an input URL. No valid URL or
+    # file path passed here begins with "-", so reject such values outright.
+    if url.to_s.start_with?('-')
+      raise ArgumentError, "Invalid url passed to pdf_from_url: #{url.inspect}. " \
+                           "A url must not begin with '-', which wkhtmltopdf would interpret as an option."
+    end
+
     # merge in global config options
     options.merge!(WickedPdf.config) { |_key, option, _config| option }
     generated_pdf_file = WickedPdf::Tempfile.new('wicked_pdf_generated_file.pdf', options[:temp_path])
@@ -99,6 +108,8 @@ class WickedPdf
     raise "PDF could not be generated!\n Command Error: #{err}" if pdf && pdf.rstrip.empty?
 
     pdf
+  rescue ArgumentError
+    raise
   rescue StandardError => e
     raise "Failed to execute:\n#{command}\nError: #{e}"
   ensure
