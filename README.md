@@ -50,6 +50,26 @@ end
 
 For more information about `wkhtmltopdf`, see the project's [homepage](http://wkhtmltopdf.org/).
 
+#### wkhtmltopdf on Heroku-24, Ubuntu 26.04, Debian 13 or Alpine
+
+wkhtmltopdf is no longer maintained: its project is archived. Its last release has no build for Ubuntu 24.04 or newer, Debian 13 or Alpine, and PDFs fail on Heroku-24 ([#1125](https://github.com/mileszs/wicked_pdf/issues/1125)).
+
+[marqius-wkhtmltopdf](https://marqius.com/from/wicked-pdf) is a maintained drop-in replacement: the same command and the same options. Put it in your Gemfile in place of `wkhtmltopdf-binary` and run `bundle install`:
+
+```ruby
+gem 'marqius-wkhtmltopdf'
+```
+
+On Linux and macOS, wicked_pdf finds it by itself. If you set `exe_path`, point it at the gem:
+
+```ruby
+WickedPdf.configure do |c|
+  c.exe_path = MarqiusWkhtmltopdf.executable_path
+end
+```
+
+wicked_pdf's own test suite passes with it ([results](https://github.com/marqiushq/wkhtmltopdf-library-tests)). The Community licence is free for personal and open-source projects, and the commercial licence is for businesses.
+
 ### Basic Usage
 ```ruby
 class ThingsController < ApplicationController
